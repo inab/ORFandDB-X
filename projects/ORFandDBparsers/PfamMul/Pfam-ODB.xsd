@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam" xmlns="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam" xmlns:msa="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA" xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en"><![CDATA[This schema has been designed to contain the same information as the stored
+in Pfam database in their extended MSA Stockholm format.]]></xsd:documentation>
+  </xsd:annotation>
+  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA" schemaLocation="MSA-ODB.xsd"/>
+  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"/>
+  <xsd:attribute name="acc" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[The Pfam accession number: PFxxxxx or PBxxxxxx]]></xsd:documentation>
+    </xsd:annotation>
+  </xsd:attribute>
+  <xsd:element name="PfamSet">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This is a Pfam entries container]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" minOccurs="1" name="entry">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[This element contains all the information from a single Pfam entry]]></xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="unbounded" minOccurs="1" name="id" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[A meaningful identifier of the entry/family.
+The first is the current one, and the next are the older ones.]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element maxOccurs="unbounded" minOccurs="1" name="author" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[One of the authors of the entry]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="buildCommand" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[Command used to build the HMM from the seed]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element maxOccurs="2" minOccurs="2" name="stats">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[This tag encloses miscelaneous values and stats]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="gatheringThreshold">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[Gathering threshold when using hmmsearch]]></xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:attribute name="sequence" type="xsd:double" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Sequence threshold (-T parameter)]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                        <xsd:attribute name="domain" type="xsd:double" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Domain threshold (--domT parameter)]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="cutoff">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[Noise and trusted cutoff statistics.
+These scores may not refer to the same sequence.]]></xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:attribute name="minSeqScore" type="xsd:double" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Lowest whole sequence score in bits of a match not in the full alignment]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                        <xsd:attribute name="maxSeqScore" type="xsd:double" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Highest whole sequence score in bits of a match not in the full alignment]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                        <xsd:attribute name="minDomScore" type="xsd:double" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Lowest per-domain score in bits of a match not in the full alignment]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                        <xsd:attribute name="maxDomScore" type="xsd:double" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Highest per-domain score in bits of a match not in the full alignment]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+                <xsd:attribute name="mode" use="required">
+                  <xsd:annotation>
+                    <xsd:documentation><![CDATA[hmmsearch domain mode]]></xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="fs"/>
+                      <xsd:enumeration value="ls"/>
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:attribute>
+              </xsd:element>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" ref="odb:link">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[Found links. Literature references are also classified here.]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[The CC field from the entry. It has textual information
+
+(This element may become odb:comment in the near future)]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType mixed="true">
+                  <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                    <xsd:element maxOccurs="1" minOccurs="1" ref="odb:link">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[An external reference, which can provide cross or hyper links to other database records.]]></xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:choice>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="maybeNested">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[Pfam family acc may be nested within this family.
+Family acc aand this family are allowed to overlap]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:attribute ref="acc" type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element maxOccurs="1" minOccurs="1" name="seed">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[This element contains all the information about the seed]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="1" name="gappedFragment">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[This gapped fragment element is an augmented version
+of the one defined for multiple sequence aligments.
+And so it contains it!]]></xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element maxOccurs="1" minOccurs="1" ref="msa:gappedFragment"/>
+                          <xsd:element maxOccurs="unbounded" minOccurs="0" ref="odb:link"/>
+                        </xsd:sequence>
+                        <xsd:attribute name="uniAcc" type="xsd:string" use="required">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[Due Pfam building, this is an UniProt Accession Number.
+There should also be an odb:link to this one (for completeness)]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="consensus">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[This gapped fragment element only contains consensus information]]></xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" ref="msa:gappedFragment"/>
+                      </xsd:sequence>
+                    </xsd:element>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="msa:residues"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="length" type="xsd:positiveInteger" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The length of the seed, in residues]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                  <xsd:attribute name="source" type="xsd:string" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The source suggesting seed members belong to a family]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                  <xsd:attribute name="alignmentMatches" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[Indicates the order that ls and fs matches are aligned to the model to give the full alignment]]></xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="globalfirst">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[ls matches are aligned first followed by fs matches that do not overlap]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="byscore">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[matches are aligned in order of evalue score - best first]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="localfirst">
+                          <xsd:annotation>
+                            <xsd:documentation><![CDATA[fs matches are aligned first followed by ls matches that do not overlap]]></xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:enumeration>
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                  <xsd:attribute name="method" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[Alignment method of seed]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                </xsd:complexType>
+                <xsd:key name="contentKey">
+                  <xsd:annotation>
+                    <xsd:documentation><![CDATA[This key both assures that there is no repeated id attributes and it is used as key for residues keyrefs]]></xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:selector xpath="gappedFragment/msa:gappedFragment/msa:content"/>
+                  <xsd:field xpath="@id"/>
+                </xsd:key>
+                <xsd:keyref name="rKeyRefcontent" refer="contentKey">
+                  <xsd:annotation>
+                    <xsd:documentation><![CDATA[This keyref assures that this residue refers to a valid content element inside a gappedFragment]]></xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:selector xpath="msa:residues/msa:rs/msa:r"/>
+                  <xsd:field xpath="@i"/>
+                </xsd:keyref>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute ref="acc" type="xsd:string" use="required"/>
+            <xsd:attribute name="rev" type="xsd:positiveInteger" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The revision number of this entry. It may not exists (if it is a Pfam-B entry), but it is important.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="description" type="xsd:string" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The description of the Pfam family.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="type">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The type of the family described by this entry.]]></xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="Family"/>
+                  <xsd:enumeration value="Domain"/>
+                  <xsd:enumeration value="Repeat"/>
+                  <xsd:enumeration value="Motif"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

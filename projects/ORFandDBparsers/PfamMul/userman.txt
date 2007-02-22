@@ -1,0 +1,442 @@
+
+           _/_/_/_/      _/_/_/_/_/     _/_/_/       _/      _/
+          _/      _/    _/           _/      _/     _/_/  _/_/ 
+         _/      _/    _/           _/      _/     _/  _/  _/  
+        _/_/_/_/      _/_/_/_/     _/_/_/_/_/     _/      _/   
+       _/            _/           _/      _/     _/      _/    
+      _/            _/           _/      _/     _/      _/     
+     _/            _/           _/      _/     _/      _/      
+
+
+
+
+
+  This document currently includes a more detailed description of the
+  fields used in the Pfam database.  The format of Pfam entries has
+  become stricter and we now enforce some ordering of the fields.
+  Pfam entries are composed of four sections shown in the figure
+  below.
+
+                 __________________________________
+                 |                                |
+                 |        Header Section          |
+                 |                                |
+                 |________________________________|
+                 |                                |
+                 |       Reference Section        |
+                 |                                |
+                 |________________________________|
+                 |                                |
+                 |        Comment Section         |
+                 |                                |
+                 |________________________________|
+                 |                                |
+                 |       Alignment Section        |
+                 |                                |
+                 |________________________________|
+
+
+
+
+
+  Header Section:
+  ---------------
+
+  The header section mainly contains compulsory fields.  These include
+  Pfam specific information such as accession numbers and identifiers,
+  as well as a short description of the family.  The only
+  non-compulsory field in the header section is the PI field.  All the
+  fields in this section are described below.
+
+  AC   Accession number:          PFxxxxx or PBxxxxxx
+
+       The Pfam-A accession numbers PFxxxxx are the stable identifier
+       for each Pfam families.  The Pfam-B accession PBxxxxxx numbers
+       are not stable between releases of Pfam.
+
+       PFxxxxx for Pfam entries
+       PBxxxxxx for Pfam-B entries
+
+  ID   Identification:            15 characters or less
+
+       This field is designed to be a meaningful identifier for the
+       family.
+
+       Capitalisation of the first letter will be
+       preferred. Underscores are used in place of space, and hyphens
+       are only used to mean hyphens.
+
+  DE   Definition:                80 characters or less
+
+       This must be a one line description of the Pfam family.
+
+  AU   Author:
+
+       Author of the entry.
+
+       The format for this record is shown below, this is a comma
+       separated list on a single line.
+
+       AU   Bloggs JJ, Bloggs JE
+
+  AL   Alignment method of seed:  
+
+       The method used to align the seed members.
+
+       This field has a restricted vocabulary. Currently the approved
+       AL lines are shown below.  It is important to note that this
+       field only gives a guide to the method used for alignment
+       construction.  You may find for example that Clustalw does not
+       give an identical alignment to that found in Pfam even if the
+       AL line shows Clustalw as the method.
+
+       AL   Clustalv
+       AL   Clustalw
+       AL   Clustalw_mask_xxxx
+       AL   Clustalw_manual
+       AL   Domainer
+       AL   HMM_built_from_alignment
+       AL   HMM_simulated_annealing
+       AL   Manual
+       AL   Prosite_pattern
+       AL   Prodom
+       AL   Structure_superposition
+       AL   Domainer
+       AL   pftools
+       AL   Unknown
+       AL   T_Coffee
+       AL   MAFFT
+       AL   Alignment kindly provided by SMART
+       AL   converted_from_SMART
+
+       Any method can have _manual appended to it, to indicate minor
+       changes.  e.g AL Clustalw_manual
+
+       Manual alignments are those from any method which have been
+       altered by hand.
+
+  BM   HMM building command lines.  
+
+       See the HMMER 2 user's manual for full instructions on building
+       HMMs. Also see URL:
+
+       http://hmmer.wustl.edu/
+
+       An example of the BM lines from a single entry
+
+       BM   hmmbuild -F HMM_ls SEED
+       BM   hmmcalibrate --seed 0 HMM_ls
+
+       All models are calibrated using a seed of zero to allow exact
+       replication of HMM construction.
+
+  SE   Source of seed:    
+
+       The source suggesting seed members belong to a family.
+
+  GA   Gathering threshold:   
+
+       Search threshold to build the full alignment.
+
+       GA lines are the thresholds in bits used in the hmmsearch
+       command line.  An example GA line is shown below:
+
+       GA   25.00 15.00; 12.00 5.00
+
+       The order of the thresholds is ls mode sequence, ls mode domain,
+       fs mode sequence, fs mode domain.
+
+       The corresponding hmmsearch command line for the ls mode HMM
+       would be:
+
+       hmmsearch -T 25 --domT 15 HMM DB
+
+       The -T option specifies the whole sequence score in bits, and
+       the --domT option specifies the per-domain threshold in bits.
+
+  NC   Noise cutoff:
+
+       This field refers to the bit scores of the highest scoring
+       match not in the full alignment.
+
+       An example NC line is shown below
+
+       NC   19.50 18.10; 11.10 4.60
+
+       As with the GA line, this field contains two sets of two
+       numbers - the first set refer to the ls mode HMM and the second
+       set to the fs mode HMM. The first number in each set refers to
+       the highest whole sequence score in bits of a match not in the
+       full alignment, and the second number specifies the highest
+       per-domain score in bits of a match not in the full alignment.
+       These two scores may not refer to the same sequence.
+
+  TC   Trusted cutoff:
+
+       This field refers to the bit scores of the lowest scoring match
+       in the full alignment.
+
+       An example TC line is shown below
+
+       TC   23.00 16.10; 17.30 6.10
+
+       As with the GA line, this field contains two sets of two
+       numbers - the first set refer to the ls mode HMM and the second
+       set to the fs mode HMM.  The first number in each set refers to
+       the lowest whole sequence score in bits of a match in the full
+       alignment, and the second number specifies the lowest
+       per-domain score in bits of a match in the full alignment.
+       These two scores may not refer to the same sequence.
+
+  TP   Type field:                 Single word
+
+       The type field is a compulsory field describing the type of
+       family.  At present it can be one of:
+
+       TP   Family
+       TP   Domain
+       TP   Repeat
+       TP   Motif
+
+  PI   Previous IDs:               Semi-colon list
+
+      The most recent names are stored on the left.  This field is
+      non-compulsory.
+
+
+  Reference Section:
+  ------------------
+
+  The reference section mainly contains cross-links to other
+  databases, and literature references.  All the fields in this
+  section are described below.
+
+
+  DC   Database Comment:           Comment for database reference.
+
+  DR   Database Reference:         Reference to external database.
+
+       All DR lines end in a semicolon.  Pfam carries links to a
+       variety of databases, this information is found in DR lines.
+       The format is
+
+       DR   Database; Primary-id;
+
+       For SCOP links a third field is added indicating the level of
+       placement in the SCOP hierarchy. Examples of each database link
+       are shown below.
+
+       For PDB links the second field contains the PDB identifier and
+       chain identifier if present. The third and fourth fields contain
+       the start and end points within the PDB entry.
+
+       DR   EXPERT; jeisen@leland.stanford.edu;
+       DR   MIM; 236200;
+       DR   PFAMB; PB000001;
+       DR   PRINTS; PR00012;
+       DR   PROSITE; PDOC00017;
+       DR   PROSITE_PROFILE; PS50225;
+       DR   SCOP; 7rxn; sf;
+       DR   SCOP; 1pii; fa;
+       DR   PDB; 2nad A; 123; 332;
+       DR   SMART; CBS;
+       DR   URL; http://www.gcrdb.uthscsa.edu/;
+       DR   LOAD; ku;
+       DR   HOMSTRAD; gdh;
+
+       Links to PDBSUM at are also derived from the SCOP DR lines.
+
+  RC   Reference Comment:          
+
+       Comment for literature reference.
+
+  RN   Reference Number:           Digit in square brackets
+
+       Reference numbers are used to precede literature references,
+       which have multiple line entries
+
+       RN   [1]
+
+  RM   Reference Medline:          Eight digit number
+
+       An example RM line is shown below
+
+       RM   91006031
+
+       The number can be found as the UI number in pubmed
+       http://www.ncbi.nlm.nih.gov/PubMed/
+
+  RT   Reference Title:                    
+
+       Title of paper.
+
+  RA   Reference Author:
+
+       All RA lines use the following format
+
+       RA   Bateman A, Eddy SR, Mesyanzhinov VV;
+
+  RL   Reference Location:
+
+       The reference line is in the format below.
+       RL  Journal abbreviation year;volume:page-page.
+
+       RL   Virus Genes 1997;14:163-165.
+       RL   J Mol Biol 1994;242:309-320.
+
+       Journal abbreviations can be checked at
+       http://expasy.hcuge.ch/cgi-bin/jourlist?jourlist.txt. Journal
+       abbreviation have no full stops, and page numbers are not
+       abbreviated.
+
+
+  Comment Section:
+  ----------------
+
+  The comment section contains functional information about the Pfam
+  family.  The only field in the comment section is the CC field.
+
+  CC   Comment:
+ 
+       Comment lines provide annotation and other information.
+       Annotation in CC lines does not have a strict format.
+
+       Links to Pfam families can be provided with the following
+       syntax:
+
+       Pfam:PFxxxxx.
+
+       Links to SWISS-PROT and SP-TrEMBL sequences can be provided
+       with the following syntax: 
+
+       Swiss:Accession.
+
+       Links to the enzyme classification database (EC) can be provided
+       with the following syntax:
+
+	EC:X.X.X.X 
+
+
+  Alignment Section:
+  ------------------
+
+  AM   buildmethod             Indicates the order that ls and fs matches are
+			       aligned to the model to give the full alignment.
+			       
+			       globalfirst - ls matches are aligned first followed 
+					     by fs matches that do not overlap.
+
+			       byscore     - matches are aligned in order of 
+					     evalue score - best first.
+				
+                               localfirst  - fs matches are aligned first followed 
+					     by ls matches that do not overlap.
+
+  NE   Pfam accession;         Pfam family <accession> may be nested within this
+			       family.  Family <accession> aand this family are
+			       allowed to overlap.
+  
+  NL   Sequence/start-stop;    Indicates the location of the nested domain
+			       within the full alignment.  Tied to a sequence
+
+  SQ   Sequence:               Number of sequences, start of alignment.
+
+  //                           End of alignment
+
+
+  The alignment is in Stockholm format.  This includes mark-ups of four
+  types:
+
+     #=GF <featurename> <Generic per-File annotation, free text>
+     #=GC <featurename> <Generic per-Column annotation, exactly 1 char per column>
+     #=GS <seqname> <featurename> <Generic per-Sequence annotation, free text>
+     #=GR <seqname> <featurename> <Generic per-Sequence AND per-Column mark up, exactly 1 char per column>
+
+  Recommended placements:
+
+     #=GF Above the alignment
+     #=GC Below the alignment
+     #=GS Above the alignment or just below the corresponding sequence
+     #=GR Just below the corresponding sequence
+
+  The alignment formats have the following size limits:
+
+     <aligned sequence>: max 4096 characters.
+     <seqname>: max 50 characters.
+     <featurename> max 50 characters.
+
+  These details can also be found on the web, see URL:
+
+     http://www.cgr.ki.se/cgr/groups/sonnhammer/Stockholm.html
+
+  Structural mark ups are now provided by Pfam.  For each sequence of
+  known structure we provide #=GR lines with feuturenames SS and SA
+  for secondary structure and surface accessibility respectively. For
+  the whole family we provide consensus #=GC lines with feature names
+  SS_cons and SA_cons.
+
+  Pfam marks up active site residues in the multiple sequence
+  alignments.  Active site residues are derived from the Swiss-Prot
+  feature table.  Active sites which are not annotated in the Swiss-Prot
+  feature table as being probable, potential or by similarity are
+  given the feature name AS.  
+
+  Pfam predicts a residue to be an active site residue if it aligns
+  in a Pfam alignment with a Swiss-Prot annotated active site, and is of
+  the same amino acid type.  Active sites which are predicted by Pfam
+  are given the feature name pAS.
+
+  Active site residues which are annotated in Swiss-Prot as being
+  probable, potential or by similarity are marked as predicted active
+  sites, as long as they do no overlap with a Pfam predicted active site.
+  Active sites which are annotated as probable, potential or by
+  similarity by Swiss-Prot are given the feature name sAS.
+
+  In all cases, active sites are marked with an asterix.  Below is an example: 
+
+
+     #=GR SERA_ECOLI/12-325 AS      ...........*..............
+     #=GR SERA_ECO57/12-325 pAS     ...........*..............
+     #=GR YN14_YEAST/124-327 sAS    ........*.................
+
+
+  The consensus sequence for both the SEED and full alignment are provided by
+  Pfam, denoted by #=GC seq_cons at the beginning of the line.  In all cases 
+  a threshold of 60% is used (i.e 60% or above, of the amino acids in this
+  column belong to this class of residue). Below is the key to the alignment 
+  mark up.  The program used was orginally from the Consensus program by Nigel
+  Brown of the EMBL.
+  
+    class           key  residues
+    A               A    A
+    C               C    C
+    D               D    D
+    E               E    E
+    F               F    F
+    G               G    G
+    H               H    H
+    I               I    I
+    K               K    K
+    L               L    L
+    M               M    M
+    N               N    N
+    P               P    P
+    Q               Q    Q
+    R               R    R
+    S               S    S
+    T               T    T
+    V               V    V
+    W               W    W
+    Y               Y    Y
+    alcohol         o    S,T
+    aliphatic       l    I,L,V
+    any             .    A,C,D,E,F,G,H,I,K,L,M,N,P,Q,R,S,T,V,W,Y
+    aromatic        a    F,H,W,Y
+    charged         c    D,E,H,K,R
+    hydrophobic     h    A,C,F,G,H,I,K,L,M,R,T,V,W,Y
+    negative        -    D,E
+    polar           p    C,D,E,H,K,N,Q,R,S,T
+    positive        +    H,K,R
+    small           s    A,C,D,G,N,P,S,T,V
+    tiny            u    A,G,S
+    turnlike        t    A,C,D,E,G,H,K,N,Q,R,S,T

@@ -1,0 +1,103 @@
+*[OK]	Tratamiento de MOVED TO en allelicVariant, para indicar dónde fue
+	movido (ampliar movedTo y su ámbito de aplicación).
+*[OK]	Tratamiento de REMOVED en allelicVariant, para indicar que fue
+	eliminado.
+*	Parseado correcto y completo de mutation. (Convertir a mayúsculas siempre)
+	Es el símbolo del gen, seguido por una o más mutaciones, separadas por
+	la partícula AND cuando no se usa en inserciones delecciones combinadas(creo):
+	CHRND, 2-BP INS, 756AG
+	APRT, 254-BP DEL AND 8-BP INS
+	APRT, TER-SER
+	ALB, 1-BP INS, AAT267AAAT, FS274TER
+	APOA4, 12-BP INS, GLU-GLN-GLN-GLN INS, CODONS 361-362
+	# Casos raros de cojones
+	CNTF, IVS1AS, G-A, -6, 4-BP INS, FS63TER
+	54-BP EX DEL, AS, AG-TG
+	FBN1, IVS54DS, G-C, +1, 123-BP DEL
+	FBN1, 6354C-T, EX51DEL, ILE2118ILE
+	GNAT2, 461+24G-A
+	HBB, INS, 1-BP, G, CODONS 8/9
+	+ Tipos:
+		- [OK] Sustitución de aminoácido: El más sencillo
+			([A-Z]{3})([0-9]+)([A-Z]{3})
+			# Sustitución por stop codon:
+			([A-Z]{3})([0-9]+)TER
+			# Sustitución de stop codon:
+			TER-([A-Z]{3})
+		- Sustitución de nucleótidos:
+			(-?[0-9]+)([ATCG]+)-([ATCG]+)
+			([ATCG])(-?[0-9]+)([ATCG])
+		- Sustitución dentro de un exón, transformando en un terminal:
+			EX([0-9]+), ([ATCG])-([ATCG]), ([A-Z]{3})-TER
+		- Sustitución dentro de un intrón:
+			IVS((?:[0-9]+)?)((?:[DA]S)?), ([ATCG])-([ATCG]), ([+-][0-9]+)
+		- Inserción en un exón:
+			([A-Z]{3}) INS, EX([0-9]+)
+		- Delección de exón entero por sustitución de nucleótidos:
+			(-?[0-9]+)([ATCG]+)-([ATCG]+), EX([0-9]+)DEL
+			EX([0-9]+)DEL
+		- Inserción/Delección de nucleótidos:
+			([0-9]+)-KB ((?:INS)|(?:DEL))
+			([0-9]+)-BP ((?:INS)|(?:DEL))
+			([0-9]+)-BP ((?:INS)|(?:DEL)), NT(-?[0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), ([ATCG-]*)(-?[0-9]+)([ATCG-]*)(?: (?:OR)|(?:AND) ([ATCG-]*)(-?[0-9]+)([ATCG-]*))*
+			([0-9]+)-BP ((?:INS)|(?:DEL)), (-?[0-9]+)\/(-?[0-9]+)([ATCG-]*)(?: (?:OR)|(?:AND) ([ATCG-]*)(-?[0-9]+)([ATCG-]*))*
+			# Es un frame shift, con modificación del codón a terminal
+			([0-9]+)-BP ((?:INS)|(?:DEL)), ([ATCG]*)(-?[0-9]+)([ATCG]*)(?: (?:INS)|(?:DEL))?, FS(-?[0-9]+)TER
+			([0-9]+)-BP ((?:INS)|(?:DEL)), FS(-?[0-9]+)TER
+			([0-9]+)-BP,? DEL, (-?[0-9]+)[ATCG] DEL, FS(-?[0-9]+)TER
+			# Indica inserción/delección en un exón
+			([0-9]+)-BP ((?:INS)|(?:DEL)), EX([0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), ([ATCG-]*), EXON ([0-9]+)
+			# Indica inserción/delección en un intrón
+			([0-9]+)-BP ((?:INS)|(?:DEL)), IVS([0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), IVS([0-9]+), ([ATCG])
+			([0-9]+)-BP ((?:INS)|(?:DEL)), IVS([0-9]+), ([+-][0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), IVS([0-9]+), ([ATCG]), ([+-][0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), IVS([0-9]+), ([ATCG])-([ATCG]), ([+-][0-9]+)
+			# Indica inserción/delección en un intrón????
+			IVS([0-9]+)DS, ([0-9]+)-BP ((?:INS)|(?:DEL)), ([ATCG])
+			IVS([0-9]+)DS, ([0-9]+)-BP ((?:INS)|(?:DEL)), ([+-][0-9]+) TO ([+-][0-9]+)
+			IVS([0-9]+), ([0-9]+)-BP ((?:INS)|(?:DEL)), ([+-][0-9]+)-([0-9]+)
+			# Indica delección en un intrón que afecta a un sitio de splice
+			IVS([0-9]+), ([0-9]+)-BP, SS DEL
+			# Indica delección en intrón y exón
+			IVS([0-9]+)DS, ([0-9]+)-BP DEL, EX([0-9]+)DEL
+			# Indica delección que afecta a exón e intrón
+			([0-9]+)-BP DEL, EX([0-9]+)/IVS([0-9]+)(?: BOUNDARY)?
+			# Indica inserción/delección en un codón
+			([0-9]+)-BP ((?:INS)|(?:DEL)), CODON ([0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), CODON ([0-9]+), ([ATCG])
+			([0-9]+)-BP ((?:INS)|(?:DEL)), CODONS ([0-9]+)-([0-9]+)
+			# Indica inserción/delección en un codón, con frameshift
+			([0-9]+)-BP ((?:INS)|(?:DEL)), CODON ([0-9]+), FS
+			# Este es inserción por duplicación de codones
+			([0-9]+)-BP ((?:INS)|(?:DEL)), DUP CODONS ([0-9]+)-([0-9]+)
+			# Indica inserción/delección de nucleótidos codificantes (aminoácidos)
+			([0-9]+)-BP DEL, ([A-Z]{3})([0-9]+)DEL(?: (:?AND)|(:?OR) ([A-Z]{3})([0-9]+)DEL)?
+			([0-9]+)-BP ((?:INS)|(?:DEL)), ([A-Z]{3}(?:-[A-Z]{3})*) (?:INS)|(?:DEL)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), ([A-Z]{3}(?:-[A-Z]{3})*) (?:INS)|(?:DEL), CODON ([0-9]+)
+			([0-9]+)-BP ((?:INS)|(?:DEL)), ([A-Z]{3}(?:-[A-Z]{3})*) (?:INS)|(?:DEL), CODONS ([0-9]+)-([0-9]+)
+			# Este es frameshift por delección de nucleótido
+			([0-9]+)-BP DEL, ([A-Z]{3})([0-9]+)([A-Z]{3}), FS
+			# Inserción y duplicación combinada:
+			([0-9]+)-BP ((?:INS)|(?:DEL))((:? AND )|(:?, )|\/)([0-9]+)-BP ((?:INS)|(?:DEL))
+			([0-9]+)-BP ((?:INS)|(?:DEL))((:? AND )|(:?, )|\/)([0-9]+)-BP ((?:INS)|(?:DEL)), NT(-?[0-9]+)
+			NT(-?[0-9]+), ([0-9]+)-BP ((?:INS)|(?:DEL))((:? AND )|(:?, )|\/)([0-9]+)-BP ((?:INS)|(?:DEL))
+			([0-9]+)-BP INS-DUP
+		- Duplicación de nucleótidos:
+			([0-9]+)-BP DUP
+			([0-9]+)-BP DUP, (-?[0-9]+)([ATCG]*)
+			([0-9]+)-BP DUP, NT(-?[0-9]+)
+			IVS([0-9]+), ([0-9]+)-BP DUP
+			# Duplicación de un exón
+			([0-9]+)-BP DUP, EX([0-9]+)
+			# Repetición en tándem
+			([0-9]+)-BP TANDEM REPEAT
+		- Duplicación de aminoácidos:
+			([0-9]+)-BP DUP, ([A-Z]{3})([0-9]+)([A-Z]{3})(?:, ([A-Z]{3})([0-9]+)([A-Z]{3}))*
+		- Duplicación de exones enteros:
+			EX([0-9]+)-([0-9]+) DUP
+		- Frameshift:
+			FS
+*	Dar tratamiento al parseado de mutation.

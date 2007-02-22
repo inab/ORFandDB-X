@@ -1,0 +1,45 @@
+Escenario 1
+===========
+Varios ficheros, cada uno de más del tamaño de bloque.
+Cada fichero se realiza de forma independiente.
+
+Escenario 2
+===========
+Varios ficheros, cada uno de más del tamaño de bloque.
+Los ficheros se procesan conjuntamente.
+
+Estados
+-------
+
+A: Comienzo de lectura de fichero. No se tiene cabecera.
+B: Comienzo de lectura de fichero. Se tiene cabecera.
+C: Lectura de cuerpo. No se ha superado tamaño.
+D: Lectura de cuerpo. Se ha superado tamaño y no se tiene fin de registro y no se tiene pie.
+E: Lectura de cuerpo. Se ha superado tamaño y no se tiene pie.
+F: Lectura de cuerpo. Se ha superado tamaño y no se tiene fin de registro y se tiene pie.
+G: Lectura de cuerpo. Se ha superado tamaño y se tiene pie.
+H: Fin de cuerpo.
+
+I: Lectura de pie.
+J: Lectura de cabecera.
+K: Tag de registro.
+L: Tag de fin de fichero.
+M: Ficheros conjuntos
+N: Cabecera de fichero
+
+Pseudocódigo
+------------
+
+# Cabecera
+unless(M) {
+	N=undef;
+}
+$state=(M && N)?B:A;
+until(K) {
+	if(A) {
+		J++;
+	}
+}
+print J
+
+# Cuerpo

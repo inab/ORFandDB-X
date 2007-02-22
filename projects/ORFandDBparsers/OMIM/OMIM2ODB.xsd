@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" xmlns="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">This schema describes the XML representation of OMIM database for ORFandDB/X</xsd:documentation>
+  </xsd:annotation>
+  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"/>
+  <xsd:attribute name="mimNumber">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[The value of this attribute comes from OMIM NO field
+and also from different references inside OMIM.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:positiveInteger">
+        <xsd:totalDigits fixed="true" value="6"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:attribute>
+  <xsd:attributeGroup name="mimID">
+    <xsd:attribute ref="mimNumber" use="required"/>
+    <xsd:attribute name="allelicID" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[This attribute is used by allelicVariant and ref elements.
+It should be xsd:positiveInteger]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:attributeGroup>
+  <xsd:complexType name="historyEntry">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="date" type="xsd:date" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="codeType">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This complex type is used by statusCode and methodCode elements, because they have similar semantical structure]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="key" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType mixed="true" name="paragraphRefType">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element maxOccurs="1" minOccurs="1" ref="odb:link">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[An external reference, which can provide cross or hyper links to other database records.]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <!--<xsd:element maxOccurs="1" minOccurs="1" name="ref">
+  <xsd:annotation>
+    <xsd:documentation><![CDATA[A reference, which can provide cross or hyper links to other OMIM records.]]></xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attributeGroup ref="mimID"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:element>
+-->
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="sectionType">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="para" type="paragraphRefType">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A paragraph element, which contain text and references]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="section" type="sectionType">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[It is a subsection. Like a section, but just inside another (sub)section]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="sectionType">
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:element name="alias" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[The contents of the different instances of this element come from the second line from OMIM TI field.
+Also, it is used to store information in the OMIM AV field context (element allelicVariation).]]></xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="text" type="sectionType">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[All the contents of this element comes from OMIM TX and AV fields]]></xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="movedTo">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This element is only used when an entry has moved]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attributeGroup ref="mimID"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="OMIM">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This is the main element (and the root one) of the OMIM database in XML format]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="1" minOccurs="1">
+        <xsd:element maxOccurs="1" minOccurs="1" name="codes">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[This element contains information about known gene and status codes]]></xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence maxOccurs="1" minOccurs="1">
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="statusCode" type="codeType"/>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="methodCode" type="codeType"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element maxOccurs="unbounded" minOccurs="1" name="record">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[All the information from an OMIM entry is modelled by this element structure]]></xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:choice maxOccurs="1" minOccurs="1">
+                <xsd:sequence maxOccurs="1" minOccurs="1">
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" ref="alias"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="locus">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[Locus information from genemap file]]></xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexType>
+                      <xsd:sequence maxOccurs="1" minOccurs="1">
+                        <xsd:element maxOccurs="unbounded" minOccurs="1" name="geneSymbol" type="xsd:string"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="mappingMethod" type="xsd:string"/>
+                      </xsd:sequence>
+                      <xsd:attribute name="id" type="xsd:string" use="required"/>
+                      <xsd:attribute name="status" type="xsd:string" use="required"/>
+                      <xsd:attribute name="eDate" type="xsd:date" use="required"/>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="included" type="xsd:string">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The contents of the different instances of this element come from the third line from OMIM TI field]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="seeAlso" type="xsd:string">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[Contents of OMIM SA fields are represented using this element]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="movedTo"/>
+              </xsd:choice>
+              <xsd:element maxOccurs="1" minOccurs="1" ref="text">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[All the contents of this element comes from OMIM TX field]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="allelicVariant">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[The contents of this element come from OMIM AV field]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:choice maxOccurs="1" minOccurs="1">
+                    <xsd:sequence maxOccurs="1" minOccurs="1">
+                      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="alias"/>
+                      <xsd:element maxOccurs="1" minOccurs="1" ref="text"/>
+                    </xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="movedTo"/>
+                  </xsd:choice>
+                  <xsd:attribute name="name" type="xsd:string" use="required"/>
+                  <xsd:attribute default="normal" name="type" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The value of this attribute is derived from the content of 'name' attribute
+
+If name contains REMOVED FROM DATABASE or MOVED TO [0-9]{6}\.[0-9]{4}
+then the attribute is 'removed', otherwise is 'normal' (which is the
+default value).]]></xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="normal"/>
+                        <xsd:enumeration value="removed"/>
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                  <xsd:attribute name="mutation" type="xsd:string" use="required"/>
+                  <xsd:attribute ref="allelicID" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="bibref">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[The contents of OMIM RF field are represented using this element]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                      <xsd:attribute name="num" type="xsd:positiveInteger" use="required"/>
+                    </xsd:extension>
+                  </xsd:simpleContent>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element maxOccurs="1" minOccurs="0" name="clinicalSynopsis">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[If the OMIM CS field exists, its content is modelled by this element and its children.]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence maxOccurs="1" minOccurs="1">
+                    <xsd:element maxOccurs="unbounded" minOccurs="1" name="key">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element maxOccurs="unbounded" minOccurs="1" name="term" type="paragraphRefType">
+                            <xsd:annotation>
+                              <xsd:documentation><![CDATA[Even the description of a term can contain references to other OMIM records.]]></xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element maxOccurs="1" minOccurs="1" name="entryHistory">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[Information about OMIM CD, CN and ED fields is stored as children of this element]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence maxOccurs="1" minOccurs="1">
+                    <xsd:element maxOccurs="1" minOccurs="0" name="created" type="historyEntry">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[OMIM CD field]]></xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="atribution" type="historyEntry">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[OMIM CN field]]></xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="edited" type="historyEntry">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[OMIM ED field]]></xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute default="none" name="type" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The value of this attribute is derived from first character in OMIM TI field
+
+(none)	->	none
+#	->	number
++	->	plus
+*	->	asterisk
+%	->	percent
+^ (caret)	->	removed
+
+other different one -> unknown
+
+An asterisk (*) before an entry number indicates a gene of known sequence.
+
+A number symbol (#) before an entry number indicates that it is a descriptive entry, usually of a phenotype, and does not represent a unique locus. The reason for the use of the #-sign is given in the first paragraph of the entry. Discussion of any gene(s) related to the phenotype resides in another entry(ies) as described in the first paragraph.
+
+A plus sign (+) before an entry number indicates that the entry contains the description of a gene of known sequence and a phenotype.
+
+A percent sign (%) before an entry number indicates that the entry describes a confirmed mendelian phenotype or phenotypic locus for which the underlying molecular basis is not known.
+
+No symbol before an entry number generally indicates a description of a phenotype for which the mendelian basis, although suspected, has not been clearly established or that the separateness of this phenotype from that in another entry is unclear.
+
+A caret symbol (^) before an entry number means the entry no longer exists because it was removed from the database or moved to another entry as indicated.]]></xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="none"/>
+                  <xsd:enumeration value="number"/>
+                  <xsd:enumeration value="plus"/>
+                  <xsd:enumeration value="asterisk"/>
+                  <xsd:enumeration value="percent"/>
+                  <xsd:enumeration value="removed"/>
+                  <xsd:enumeration value="unknown"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute ref="mimNumber" use="required"/>
+            <xsd:attribute name="title" type="xsd:string" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The value of this attribute comes from the first character in the first line of the OMIM TI field]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

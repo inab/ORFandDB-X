@@ -1,0 +1,30 @@
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+    <index xmlns:mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM">
+    	<!--
+        <fulltext default="none" attributes="false" alphanum="true">
+		<include path="//mim:alias"/>
+		<include path="//mim:allelicVariant/@name"/>
+		<include path="//mim:allelicVariant/@mutation"/>
+		<include path="//mim:extref"/>
+		<include path="//mim:extref/@id"/>
+		<include path="//mim:geneSymbol"/>
+		<include path="//mim:included"/>
+		<include path="//mim:para"/>
+		<include path="//mim:record/@title"/>
+		<include path="//mim:record/@mimNumber"/>
+		<include path="//mim:ref"/>
+		<include path="//mim:ref/@mimNumber"/>
+		<include path="//mim:section/@name"/>
+		<include path="//mim:term"/>
+	</fulltext>
+	-->
+        <fulltext default="all" attributes="true" alphanum="true" />
+        <create path="//mim:ref/@mimNumber" type="xs:string"/>
+        <create path="//mim:movedTo/@mimNumber" type="xs:string"/>
+        <create path="//mim:record/@mimNumber" type="xs:string"/>
+        <create path="//mim:geneSymbol" type="xs:string"/>
+
+        <create qname="mimNumber" type="xs:string"/>
+        <create qname="mim:geneSymbol" type="xs:string"/>
+    </index>
+</collection>

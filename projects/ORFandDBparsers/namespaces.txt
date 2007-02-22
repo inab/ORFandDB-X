@@ -1,0 +1,6 @@
+Parser	Namespace
+======	=========
+(ORFandDB)	http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0
+OMIM	http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM
+MSA	http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA
+Pfam	http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam

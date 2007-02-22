@@ -1,0 +1,7 @@
+Program		Pipe In	Pipe Out File In File Out	Multiple	CmpHandle	Done
+=======		=======	======== ======= ========	========	=========	====
+taxid2odb	No	Yes	 Yes*	 Yes		No		No		Yes
+blast2odb	Yes	Yes	 Yes	 Yes		Yes		Yes*		Yes
+asn2xml		Yes	Yes	 Yes	 Yes		Yes		Yes*		No
+enzyme		No	Yes	 Yes	 Yes		No		No		No
+nativexslt	Yes	Yes	 Yes	 Yes		Yes		Yes		No
