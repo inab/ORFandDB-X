@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index xmlns:go="net:sf:psidev:mi" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+		<fulltext default="none" attributes="true" alphanum="true">
+			<include path="//@rdf:about" />
+			<include path="//@rdf:resource" />
+			<include path="//go:reference" />
+		</fulltext>
+		<create path="//go:accession" type="xs:string"/>
+		<create path="//go:synonym" type="xs:string"/>
+		<!-- And QName indexes -->
+		<create qname="go:accession" type="xs:string"/>
+		<create qname="go:synonym" type="xs:string"/>
+	</index>
+</collection>

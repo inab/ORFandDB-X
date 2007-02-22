@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index xmlns:u="http://uniprot.org/uniprot">
+		<fulltext default="none" attributes="false" alphanum="false" />
+		<create path="//u:accession" type="xs:string"/>
+		<create path="//u:name" type="xs:string"/>
+		<!-- Links to other pieces of information -->
+		<create path="//u:dbReference/@id" type="xs:string"/>
+		<!-- Links to uniprotkw -->
+		<create path="//u:keyword/@id" type="xs:string"/>
+		<!-- And QName indexes -->
+		<create qname="u:accession" type="xs:string"/>
+		<create qname="u:name" type="xs:string"/>
+		<create qname="id" type="xs:string"/>
+	</index>
+</collection>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index xmlns:h="org:hprd:dtd:hprd" xmlns:i="net:sf:psidev:mi">
+		<fulltext default="none" attributes="false" alphanum="false" />
+		<create path="//h:entry_cdna" type="xs:string"/>
+		<create path="//h:entry_protein" type="xs:string"/>
+		<create path="//@h:id" type="xs:string"/>
+		
+		<create path="//i:experimentDescription/@i:id" type="xs:string"/>
+		<create path="//i:interactor/@i:id" type="xs:string"/>
+		<create path="//i:experimentRef" type="xs:string"/>
+		<create path="//i:interactorRef" type="xs:string"/>
+		<create path="//@i:id" type="xs:string"/>
+		<create path="//@i:secondary" type="xs:string"/>
+		<create path="//@i:ncbiTaxId" type="xs:string"/>
+		<!-- And QName indexes -->
+		<create qname="h:entry_cdna" type="xs:string"/>
+		<create qname="h:entry_protein" type="xs:string"/>
+		<create qname="i:experimentRef" type="xs:string"/>
+		<create qname="i:interactorRef" type="xs:string"/>
+		<create qname="id" type="xs:string"/>
+		<create qname="secondary" type="xs:string"/>
+		<create qname="ncbiTaxId" type="xs:string"/>
+	</index>
+</collection>

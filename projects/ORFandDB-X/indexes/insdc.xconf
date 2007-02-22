@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- INSDSeq (EMBL, GenBank, DDBJ) format -->
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index>
+		<fulltext default="none" attributes="false" alphanum="false" />
+		<create path="//INSDSeq_locus" type="xs:string"/>
+		<create path="//INSDSeq_primary-accession" type="xs:string"/>
+		<create path="//INSDSeq_accession-version" type="xs:string"/>
+		<create path="//INSDQualifier_name" type="xs:string"/>
+		<create path="//INSDKeyword" type="xs:string"/>
+		<!-- And QName indexes -->
+		<create qname="INSDSeq_locus" type="xs:string"/>
+		<create qname="INSDSeq_primary-accession" type="xs:string"/>
+		<create qname="INSDSeq_accession-version" type="xs:string"/>
+		<create qname="INSDQualifier_name" type="xs:string"/>
+		<create qname="INSDKeyword" type="xs:string"/>
+	</index>
+</collection>

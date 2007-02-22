@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index>
+		<fulltext default="none" attributes="false" alphanum="true">
+			<include path="//AbstractText" />
+			<include path="//ArticleTitle" />
+			<include path="//Author" />
+		</fulltext>
+		<create path="//PMID" type="xs:string"/>
+		<!-- And QName indexes -->
+		<create qname="PMID" type="xs:string"/>
+	</index>
+</collection>

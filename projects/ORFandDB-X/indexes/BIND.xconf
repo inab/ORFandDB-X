@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index>
+		<fulltext default="none" attributes="false" alphanum="true">
+			<include path="//BIND-object_descr" />
+			<include path="//BIND-descr_simple-descr" />
+			<include path="//BIND-condition_descr" />
+			<include path="//BIND-pub-object_descr" />
+			<include path="//Object-id_str" />
+			<include path="//Title_E_name" />
+			<include path="//Auth-list_names_ml_E" />
+			<include path="//Medline-entry_abstract" />
+		</fulltext>
+		<create path="//PubMedId" type="xs:string"/>
+		<create path="//Medline-mesh_term" type="xs:string" />
+		<create path="//Geninfo-id" type="xs:string"/>
+		<create path="//Object-id_id" type="xs:string"/>
+		<!-- And QName indexes -->
+		<create qname="PubMedId" type="xs:string"/>
+		<create qname="Medline-mesh_term" type="xs:string" />
+		<create qname="Geninfo-id" type="xs:string"/>
+		<create qname="Object-id_id" type="xs:string"/>
+	</index>
+</collection>
