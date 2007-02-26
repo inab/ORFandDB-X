@@ -13,15 +13,16 @@
 		<create path="//PDBx:pdbx_database_id_PubMed" type="xs:string"/>
 		<create path="//PDBx:pdbx_entity_name/@name" type="xs:string"/>
 		<create path="//PDBx:pdbx_entity_name/@name_type" type="xs:string"/>
+		
 		<!-- And QName indexes -->
 		<create qname="PDBx:pdbx_keywords" type="xs:string"/>
 		<create qname="PDBx:pdbx_db_accession" type="xs:string"/>
 		<create qname="PDBx:db_name" type="xs:string"/>
 		<create qname="PDBx:db_code" type="xs:string"/>
 		<create qname="PDBx:pdbx_database_id_PubMed" type="xs:string"/>
-		<create qname="datablockName" type="xs:string"/>
-		<create qname="entry_id" type="xs:string"/>
-		<create qname="name" type="xs:string"/>
-		<create qname="name_type" type="xs:string"/>
+		<create qname="@datablockName" type="xs:string"/>
+		<create qname="@entry_id" type="xs:string"/>
+		<create qname="@name" type="xs:string"/>
+		<create qname="@name_type" type="xs:string"/>
 	</index>
 </collection>

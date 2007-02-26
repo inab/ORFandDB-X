@@ -9,10 +9,11 @@
 		<create path="//@secondary" type="xs:string"/>
 		<create path="//@ref" type="xs:string"/>
 		<create path="//@ncbiTaxId" type="xs:string"/>
+		
 		<!-- And QName indexes -->
-		<create qname="id" type="xs:string"/>
-		<create qname="secondary" type="xs:string"/>
-		<create qname="ref" type="xs:string"/>
-		<create qname="ncbiTaxId" type="xs:string"/>
+		<create qname="@id" type="xs:string"/>
+		<create qname="@secondary" type="xs:string"/>
+		<create qname="@ref" type="xs:string"/>
+		<create qname="@ncbiTaxId" type="xs:string"/>
 	</index>
 </collection>

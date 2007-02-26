@@ -10,10 +10,11 @@
 		<create path="//classification/@id" type="xs:string"/>
 		-->
 		<create path="//cite/@idref" type="xs:string"/>
+		
 		<!-- And QName indexes -->
-		<create qname="id" type="xs:string"/>
-		<create qname="dbkey" type="xs:string"/>
-		<create qname="ipr_ref" type="xs:string"/>
-		<create qname="idref" type="xs:string"/>
+		<create qname="@id" type="xs:string"/>
+		<create qname="@dbkey" type="xs:string"/>
+		<create qname="@ipr_ref" type="xs:string"/>
+		<create qname="@idref" type="xs:string"/>
 	</index>
 </collection>

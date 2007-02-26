@@ -4,7 +4,8 @@
 	<index>
 		<fulltext default="none" attributes="false" alphanum="false" />
 		<create path="//keyword/@id" type="xs:string"/>
+		
 		<!-- And QName indexes -->
-		<create qname="id" type="xs:string"/>
+		<create qname="@id" type="xs:string"/>
 	</index>
 </collection>

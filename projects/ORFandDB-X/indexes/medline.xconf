@@ -8,6 +8,7 @@
 			<include path="//Author" />
 		</fulltext>
 		<create path="//PMID" type="xs:string"/>
+		
 		<!-- And QName indexes -->
 		<create qname="PMID" type="xs:string"/>
 	</index>
