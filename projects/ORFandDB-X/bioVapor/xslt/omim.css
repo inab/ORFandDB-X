@@ -1,0 +1,7 @@
+.expander {  cursor: pointer; -moz-user-select: none  }
+
+.expander-plus {   color: red  }
+
+.expander-closed {  color: blue  }
+
+.expander-closed .expander-content {   display: none  }

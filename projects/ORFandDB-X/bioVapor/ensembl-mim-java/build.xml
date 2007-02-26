@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project basedir="." default="build" name="ensembl-mim-java">
+	<description>EnsEMBL-MIM glue classes by jmfernandez Ant script $Id$</description>
+
+	<property location="src" name="src" />
+	<property value="resources" name="res" />
+	<property location="build" name="build" />
+	<property value="libs" name="rellibs" />
+	<property location="${rellibs}" name="libs" />
+	<property location="dist" name="dist" />
+
+	<fileset dir="." id="libfiles">
+		<include name="${rellibs}/ensj-39.2.jar"/>
+		<include name="${rellibs}/mysql-connector-java-3.1.8-bin.jar"/>
+	</fileset>
+	<path id="org.cnio.scombio.biovapor.javalibs">
+		<fileset refid="libfiles"/>
+	</path>
+
+	<target name="init">
+		<!-- Creating the timestamp -->
+		<tstamp/>
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target depends="init" description="compiles the source" name="compile">
+		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}">
+			<classpath refid="org.cnio.scombio.biovapor.javalibs" />
+		</javac>
+		<copy todir="${build}">
+			<fileset defaultexcludes="no" dir=".">
+				<filename name="${res}/**"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="copyjars">
+		<copy todir="${dist}" flatten="true" verbose="true">
+			<fileset refid="libfiles"/>
+		</copy>
+	</target>
+
+	<target depends="compile,copyjars" description="generates the internal distribution" name="build">
+		<jar basedir="${build}" jarfile="${dist}/${ant.project.name}.jar"/>
+	</target>
+
+	<target description="clean up ${ant.project.name}" name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>

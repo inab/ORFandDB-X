@@ -1,0 +1,19 @@
+module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM";
+
+import module namespace ens="http://www.cnio.es/scombio/biovapor/ensembl" at "java:org.cnio.scombio.biovapor.exist.EnsemblModule";
+
+declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
+{
+	collection('OMIM')//mim:record[@mimNumber=$mimNumber]
+};
+
+declare function mim:getRecordsFromEnsID($ensID as xs:string) as element(mim:record)*
+{
+	for $mimNumber in ens:getmimrefs($ensID)
+		return collection('OMIM')//mim:record[@mimNumber=$mimNumber]
+};
+
+declare function mim:getEnsIDWithFTS($term as xs:string) as xs:string*
+{
+	distinct-values(for $entry in collection('OMIM')//mim:record[. &= $term] return ens:fetchbymimrefs($entry/@mimNumber))
+};

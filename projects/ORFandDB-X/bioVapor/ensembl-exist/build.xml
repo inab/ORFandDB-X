@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project basedir="." default="build" name="ensembl-exist">
+	<description>EnsEMBL-MIM-eXist glue classes by jmfernandez Ant script $Id$</description>
+
+	<property location="src" name="src" />
+	<property location="build" name="build" />
+	<property location="libs" name="libs" />
+	<property location="dist" name="dist" />
+	
+	<dirname property="antfile.dir" file="${ant.file}"/>
+	<dirname property="antfile.dir.parent" file="${antfile.dir}"/>
+	
+	<property name="ensembl-mim-java.dir" location="${antfile.dir.parent}/ensembl-mim-java" />
+	
+	<fileset dir="${ensembl-mim-java.dir}/dist" id="libfiles">
+		<include name="ensj-39.2.jar"/>
+		<include name="mysql-connector-java-3.1.8-bin.jar"/>
+		<include name="ensembl-mim-java.jar"/>
+	</fileset>
+	
+	<path id="org.cnio.scombio.biovapor.javalibs">
+		<fileset refid="libfiles"/>
+		<fileset dir="${libs}">
+			<include name="exist.jar"/>
+			<include name="xmldb.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<!-- Creating the timestamp -->
+		<tstamp/>
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target depends="init,copyjars" description="compiles the source" name="compile">
+		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}">
+			<classpath refid="org.cnio.scombio.biovapor.javalibs" />
+		</javac>
+	</target>
+	
+	<target depends="compile.ensembl-mim-java" name="copyjars">
+		<copy todir="${dist}" flatten="true" verbose="true">
+			<fileset refid="libfiles"/>
+		</copy>
+	</target>
+	
+	<target depends="compile,copyjars" description="generates the internal distribution" name="build">
+		<jar basedir="${build}" jarfile="${dist}/${ant.project.name}.jar"/>
+	</target>
+	
+	<target depends="build" description="It copies the files to the destination" name="install">
+		<scp sftp="true" todir="jmfernandez:nR8Bg3zL@jabba:/databases/eXist/eXist-vapor/lib/user">
+			<fileset dir="${dist}">
+				<include name="*.jar"/>
+			</fileset>
+		</scp>
+	</target>
+	
+	<target depends="clean.ensembl-mim-java" description="clean up ${ant.project.name}" name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+	
+	<target depends="init" description="compiles ensembl-mim-java" name="compile.ensembl-mim-java">
+		<ant inheritAll="false" inheritRefs="false" dir="${ensembl-mim-java.dir}" />
+	</target>
+	
+	<target description="clean up ensembl-mim-java" name="clean.ensembl-mim-java">
+		<ant inheritAll="false" inheritRefs="false" dir="${ensembl-mim-java.dir}" target="clean" />
+	</target>
+	
+</project>

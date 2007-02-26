@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema targetNamespace="http://www.cnio.es/scombio/bioVapor/0.3" xmlns="http://www.cnio.es/scombio/bioVapor/0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">bioVapor v0.3 message schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2006</xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="content">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[Any content, which can be even text]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType mixed="true">
+      <xsd:sequence maxOccurs="1" minOccurs="1">
+        <xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="viewType">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This complexType is re-used by view and defaultView]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence maxOccurs="1" minOccurs="1">
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="param">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A processing parameter, with its name, content and flag about if it should containt the input.
+Depending on the kind of processing, it can make sense or not.]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+              <xsd:attribute name="name" type="xsd:string" use="required">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[The name of the parameter]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:attribute>
+              <xsd:attribute default="false" name="inputParam" type="xsd:boolean" use="required">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[If it is true, then the parameter should be filled with the result content, once it is decoded (if it is needed).]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:attribute>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" ref="content"/>
+    </xsd:sequence>
+    <xsd:attribute default="none" name="showMode" use="required">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[If we have to process the content, then we have to tell the kind of processing.]]></xsd:documentation>
+      </xsd:annotation>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="nothing"/>
+          <xsd:enumeration value="CSS"/>
+          <xsd:enumeration value="XSLT"/>
+          <xsd:enumeration value="javascript"/>
+          <xsd:enumeration value="applet"/>
+          <xsd:enumeration value="plugin"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute default="application/xml" name="mime" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[This attribute defines the MIME type of the result]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="encoding" use="optional">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[The content encoding. A result could be an image, for instance, and if we are providing it inline, then it must be encoded in something.]]></xsd:documentation>
+      </xsd:annotation>
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="none"/>
+          <xsd:enumeration value="base64"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute name="href" type="xsd:anyURI" use="optional">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[If this attribute exists, then content element is ignored, and the information is fetched from the provided URI.]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:element name="message">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[A result message. It only wraps outputs, so a widget/service can return more than one output]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="1" minOccurs="1">
+        <xsd:element maxOccurs="1" minOccurs="0" name="defaultView" type="viewType">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[If this element exists, it defines the default way to show the contained information inside result/content tags.]]></xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="0" name="pagerView" type="viewType">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[If this element exists, it defines the default way to show the pager for the contained information inside result/content tags.]]></xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="result">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[This tag wraps a single result generated by the widget/service]]></xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence maxOccurs="1" minOccurs="1">
+              <xsd:element maxOccurs="1" minOccurs="0" name="view" type="viewType">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[If this element exists, it defines the way to show the contained information]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element maxOccurs="1" minOccurs="0" ref="content"/>
+            </xsd:sequence>
+            <xsd:attribute name="namespace" type="xsd:anyURI" use="required"/>
+            <xsd:attribute name="id" type="xsd:string" use="required"/>
+            <xsd:attribute name="href" type="xsd:anyURI" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[If this attribute exists, then content element is ignored, and the information is fetched from the provided URI.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="query" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[EnsEMBL ID which generated the contents of this message]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="timestamp" type="xsd:dateTime" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[When it was generated this message]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="namespace" type="xsd:string" use="optional">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[The optional namespace that a widget can receive/manipulate/use]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
