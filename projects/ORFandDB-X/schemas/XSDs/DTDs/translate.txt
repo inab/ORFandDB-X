@@ -1,0 +1,2 @@
+java dtd2xsd -entity -comment 100000 - - - - ~/projects/xmldb/XSDs/DTDs/match.dtd
+perl dtd2xsd.pl -ns http://www.ebi.ac.uk/interpro/match -pcdata ~/projects/xmldb/XSDs/DTDs/match.dtd

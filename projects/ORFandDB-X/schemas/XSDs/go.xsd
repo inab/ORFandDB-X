@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.geneontology.org/dtds/go.dtd#" xmlns="http://www.geneontology.org/dtds/go.dtd#" xmlns:go="http://www.geneontology.org/dtds/go.dtd#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation><![CDATA[  The Gene Ontology DTD
+The idea is that GO is dumped as a linear list of terms.
+The relationships between the terms are represented in
+RDF, using the rdf:about and rdf:resource tags.  RDF was
+chosen because of it's flexibilty at representing graphs
+and widespread tool support.
+
+Basically, one can think of rdf:about and rdf:resource
+as being similar to xml's id and idref, respectively.
+RDF, however, can represent multiple parentage.  The
+other thing to know about rdf is that the id's should be
+universally unique, so GO:0003700 becomes:
+http://www.geneontology.org/go#GO:0003700]]></xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+  <xs:element name="go">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="go:version"/>
+        <xs:element ref="rdf:RDF"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="timestamp" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <!--<xs:element name="rdf:RDF">
+  <xs:annotation>
+    <xs:documentation>  RDF requires any rdf nodes to be inside the
+      rdf:RDF tag   </xs:documentation>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:term"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+-->
+  <xs:element name="term">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="go:accession"/>
+        <xs:element ref="go:name"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:synonym"/>
+        <xs:element minOccurs="0" ref="go:definition"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:comment"/>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="go:part_of"/>
+          <xs:element ref="go:is_a"/>
+        </xs:choice>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:dbxref"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:association"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:history"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="go:is_obsolete"/>
+      </xs:sequence>
+      <xs:attribute name="focus">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute ref="rdf:about" use="required"/>
+      <xs:attribute name="n_associations" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="accession" type="xs:string"/>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="is_obsolete" type="xs:string"/>
+  <xs:element name="comment" type="xs:string"/>
+  <xs:element name="synonym" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>Synonyms are simply represented as a text string.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="definition" type="xs:string"/>
+  <xs:element name="part_of">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Each term can be is_a and part_of many terms
+This is represented with an rdf:resource att
+Right now, you can also add a common name
+for the linked term.  Is this smart?]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="is_a">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Each term can be is_a and part_of many terms
+This is represented with an rdf:resource att
+Right now, you can also add a common name
+for the linked term.  Is this smart?]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="association">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="go:evidence"/>
+        <xs:element ref="go:gene_product"/>
+      </xs:sequence>
+      <xs:attribute fixed="Resource" ref="rdf:parseType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="evidence">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="go:dbxref"/>
+      </xs:sequence>
+      <xs:attribute name="evidence_code" use="required">
+        <xs:annotation>
+          <xs:documentation><![CDATA[IC, ND and NR really do not belong, but the curators
+are using them, so I'm including them for now
+for the sake of completeness.]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="IEA"/>
+            <xs:enumeration value="IMP"/>
+            <xs:enumeration value="IGI"/>
+            <xs:enumeration value="IPI"/>
+            <xs:enumeration value="ISS"/>
+            <xs:enumeration value="IDA"/>
+            <xs:enumeration value="IEP"/>
+            <xs:enumeration value="TAS"/>
+            <xs:enumeration value="NAS"/>
+            <xs:enumeration value="IC"/>
+            <xs:enumeration value="ND"/>
+            <xs:enumeration value="NR"/>
+            <xs:enumeration value="RCA"/>
+            <xs:enumeration value="NULL"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gene_product">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="go:name"/>
+        <xs:element ref="go:dbxref"/>
+      </xs:sequence>
+      <xs:attribute fixed="Resource" ref="rdf:parseType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbxref">
+    <xs:annotation>
+      <xs:documentation><![CDATA[I'm using reference instead of accession
+since these don't have to be primary db
+accessions in the traditional sense.
+Do they?]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="go:database_symbol"/>
+        <xs:element ref="go:reference"/>
+      </xs:sequence>
+      <xs:attribute fixed="Resource" ref="rdf:parseType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="database_symbol" type="xs:string"/>
+  <xs:element name="reference">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="type" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="history">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Each term should have one history node at
+creation.  Another history node is added
+each time a term is deleted, split, moved
+or merged.]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="go:date"/>
+        <xs:element ref="go:person"/>
+        <xs:element ref="go:rationale"/>
+        <xs:choice>
+          <xs:element ref="go:created"/>
+          <xs:element ref="go:deleted"/>
+          <xs:element ref="go:split"/>
+          <xs:element ref="go:merged"/>
+          <xs:element ref="go:moved"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="obsolete">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="date" type="xs:string"/>
+  <xs:element name="person" type="xs:string"/>
+  <xs:element name="rationale" type="xs:string"/>
+  <xs:element name="created">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="deleted">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="split">
+    <xs:annotation>
+      <xs:documentation><![CDATA[In go:split, go:merged and go:moved, the  
+rdf:resource ref should point to the
+"parent" term, ie the term that this
+term was split from.]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="merged">
+    <xs:annotation>
+      <xs:documentation><![CDATA[In go:split, go:merged and go:moved, the  
+rdf:resource ref should point to the
+"parent" term, ie the term that this
+term was split from.]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="moved">
+    <xs:annotation>
+      <xs:documentation><![CDATA[In go:split, go:merged and go:moved, the  
+rdf:resource ref should point to the
+"parent" term, ie the term that this
+term was split from.]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute ref="rdf:resource" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,62 @@
+<!-- ============================================
+     ::DATATOOL:: Generated from "biotree.asn"
+     ::DATATOOL:: by application DATATOOL version 1.5.0
+     ::DATATOOL:: on 06/06/2006 23:03:48
+     ============================================ -->
+
+<!-- ============================================ -->
+<!-- This section is mapped from module "NCBI-BioTree"
+================================================= -->
+<!--
+$Revision: 1.2 $
+*********************************************************************
+
+  biotree.asn
+
+     BioTree ASN
+     Anatoliy Kuznetsov
+
+*********************************************************************
+-->
+<!-- Elements used by other modules:
+          BioTreeContainer -->
+
+<!-- ============================================ -->
+
+
+
+<!ELEMENT BioTreeContainer (
+        BioTreeContainer_treetype?, 
+        BioTreeContainer_fdict, 
+        BioTreeContainer_nodes)>
+
+<!ELEMENT BioTreeContainer_treetype (#PCDATA)> <!-- hint on what kind of tree is that -->
+<!ELEMENT BioTreeContainer_fdict (FeatureDictSet)> <!-- features dictionary  -->
+<!ELEMENT BioTreeContainer_nodes (NodeSet)> <!-- set of nodes with encoded topology -->
+<!ELEMENT NodeSet (Node*)>
+
+<!ELEMENT Node (
+        Node_id, 
+        Node_parent?, 
+        Node_features?)>
+
+<!ELEMENT Node_id (%INTEGER;)> <!-- node uid -->
+<!ELEMENT Node_parent (%INTEGER;)> <!-- parent node id -->
+<!ELEMENT Node_features (NodeFeatureSet)>
+<!ELEMENT NodeFeatureSet (NodeFeature*)>
+
+<!ELEMENT NodeFeature (
+        NodeFeature_featureid, 
+        NodeFeature_value)>
+
+<!ELEMENT NodeFeature_featureid (%INTEGER;)>
+<!ELEMENT NodeFeature_value (#PCDATA)>
+<!ELEMENT FeatureDictSet (FeatureDescr*)>
+
+<!ELEMENT FeatureDescr (
+        FeatureDescr_id, 
+        FeatureDescr_name)>
+
+<!ELEMENT FeatureDescr_id (%INTEGER;)> <!-- feature id -->
+<!ELEMENT FeatureDescr_name (#PCDATA)> <!-- feature name -->
+

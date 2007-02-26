@@ -1,0 +1,228 @@
+<!-- ============================================
+     ::DATATOOL:: Generated from "scoremat.asn"
+     ::DATATOOL:: by application DATATOOL version 1.5.0
+     ::DATATOOL:: on 06/06/2006 23:03:48
+     ============================================ -->
+
+<!-- ============================================ -->
+<!-- This section is mapped from module "NCBI-ScoreMat"
+================================================= -->
+<!--
+$Id: scoremat.asn,v 1.10 2004/10/12 14:05:52 camacho Exp $
+ ===========================================================================
+
+                            PUBLIC DOMAIN NOTICE
+               National Center for Biotechnology Information
+
+  This software/database is a "United States Government Work" under the
+  terms of the United States Copyright Act.  It was written as part of
+  the author's official duties as a United States Government employee and
+  thus cannot be copyrighted.  This software/database is freely available
+  to the public for use. The National Library of Medicine and the U.S.
+  Government have not placed any restriction on its use or reproduction.
+
+  Although all reasonable efforts have been taken to ensure the accuracy
+  and reliability of the software and data, the NLM and the U.S.
+  Government do not and cannot warrant the performance or results that
+  may be obtained by using this software or data. The NLM and the U.S.
+  Government disclaim all warranties, express or implied, including
+  warranties of performance, merchantability or fitness for any particular
+  purpose.
+
+  Please cite the author in any work or product based on this material.
+
+ ===========================================================================
+
+ Author:  Christiam Camacho
+
+ File Description:
+      ASN.1 definitions for scoring matrix
+
+ ===========================================================================
+ $Log: scoremat.asn,v $
+ Revision 1.10  2004/10/12 14:05:52  camacho
+ Reorganization and documentation of score matrix specification.
+
+ Revision 1.9  2004/08/05 17:29:47  camacho
+ Changes to Score-matrix specification:
+ 1. is_protein has a default value of TRUE
+ 2. identifier becomes optional
+ 3. unassigned and other members of freq-Ratios are removed.
+
+ Revision 1.8  2004/07/19 17:34:54  papadopo
+ change weights and position frequencies to type REAL, remove their 
+ associated scaling factors
+
+ Revision 1.7  2004/02/23 15:42:24  camacho
+ 1. Gave default value to Score-matrix::byrow field
+ 2. Updated documentation
+
+ Revision 1.6  2003/08/25 19:03:28  bauer
+ added raw frequencies and weights as optional score-matrix components
+
+ Revision 1.5  2003/06/16 12:19:56  madden
+ Do not use Blast4-ka-block, other changes worked out with structure group
+
+ Revision 1.2  2002/12/03 14:01:45  camacho
+ Data type changes
+
+ Revision 1.1  2002/12/02 22:15:27  camacho
+ Initial revision
+
+ ===========================================================================
+-->
+<!-- Elements used by other modules:
+          Pssm,
+          PssmIntermediateData,
+          PssmFinalData,
+          PssmParameters,
+          PssmWithParameters -->
+
+<!-- Elements referenced from other modules:
+          Object-id FROM NCBI-General,
+          Seq-entry FROM NCBI-Seqset -->
+
+<!-- ============================================ -->
+
+
+<!--
+ a rudimentary block/core-model, to be used with block-based alignment 
+ routines and threading
+-->
+
+
+<!ELEMENT BlockProperty (
+        BlockProperty_type, 
+        BlockProperty_intvalue?, 
+        BlockProperty_textvalue?)>
+
+<!ELEMENT BlockProperty_type (%INTEGER;)>
+<!ATTLIST BlockProperty_type value (
+        unassigned |
+        threshold |
+        minscore |
+        maxscore |
+        meanscore |
+        variance |
+        name |
+        is-optional |
+        other ) #IMPLIED >
+<!--
+    threshold -  score threshold for heuristics
+    minscore -  observed minimum score in CD
+    maxscore -  observed maximum score in CD
+    meanscore -  observed mean score in CD
+    variance -  observed score variance
+    name -  just name the block
+    is-optional -  block may not have to be used    
+-->
+
+<!ELEMENT BlockProperty_intvalue (%INTEGER;)>
+<!ELEMENT BlockProperty_textvalue (#PCDATA)>
+
+<!ELEMENT CoreBlock (
+        CoreBlock_start, 
+        CoreBlock_stop, 
+        CoreBlock_minstart?, 
+        CoreBlock_maxstop?, 
+        CoreBlock_property?)>
+
+<!ELEMENT CoreBlock_start (%INTEGER;)> <!-- begin of block on query -->
+<!ELEMENT CoreBlock_stop (%INTEGER;)> <!-- end of block on query -->
+<!ELEMENT CoreBlock_minstart (%INTEGER;)> <!-- optional N-terminal extension -->
+<!ELEMENT CoreBlock_maxstop (%INTEGER;)> <!-- optional C-terminal extension -->
+<!ELEMENT CoreBlock_property (BlockProperty*)>
+
+<!ELEMENT LoopConstraint (
+        LoopConstraint_minlength?, 
+        LoopConstraint_maxlength?)>
+
+<!ELEMENT LoopConstraint_minlength (%INTEGER;)> <!-- minimum length of unaligned region -->
+<!ELEMENT LoopConstraint_maxlength (%INTEGER;)> <!-- maximum length of unaligned region -->
+
+<!ELEMENT CoreDef (
+        CoreDef_nblocks, 
+        CoreDef_blocks, 
+        CoreDef_loops)>
+
+<!ELEMENT CoreDef_nblocks (%INTEGER;)> <!-- number of core elements/blocks -->
+<!ELEMENT CoreDef_blocks (CoreBlock*)> <!-- nblocks locations -->
+<!ELEMENT CoreDef_loops (LoopConstraint*)> <!-- (nblocks+1) constraints  -->
+
+<!ELEMENT PssmFinalData (
+        PssmFinalData_scores, 
+        PssmFinalData_lambda, 
+        PssmFinalData_kappa, 
+        PssmFinalData_h, 
+        PssmFinalData_scalingFactor?)>
+
+<!ELEMENT PssmFinalData_scores (PssmFinalData_scores_E*)>
+<!ELEMENT PssmFinalData_scores_E (%INTEGER;)>
+<!ELEMENT PssmFinalData_lambda (%REAL;)>
+<!ELEMENT PssmFinalData_kappa (%REAL;)>
+<!ELEMENT PssmFinalData_h (%REAL;)>
+<!ELEMENT PssmFinalData_scalingFactor (%INTEGER;)>
+
+<!ELEMENT PssmIntermediateData (
+        PssmIntermediateData_resFreqsPerPos?, 
+        PssmIntermediateData_weightedResFreqsPerPos?, 
+        PssmIntermediateData_freqRatios)>
+
+<!ELEMENT PssmIntermediateData_resFreqsPerPos (PssmIntermediateData_resFreqsPerPos_E*)>
+<!ELEMENT PssmIntermediateData_resFreqsPerPos_E (%INTEGER;)>
+<!ELEMENT PssmIntermediateData_weightedResFreqsPerPos (PssmIntermediateData_weightedResFreqsPerPos_E*)>
+<!ELEMENT PssmIntermediateData_weightedResFreqsPerPos_E (%REAL;)>
+<!ELEMENT PssmIntermediateData_freqRatios (PssmIntermediateData_freqRatios_E*)>
+<!ELEMENT PssmIntermediateData_freqRatios_E (%REAL;)>
+
+<!ELEMENT Pssm (
+        Pssm_isProtein?, 
+        Pssm_identifier?, 
+        Pssm_numRows, 
+        Pssm_numColumns, 
+        Pssm_rowLabels?, 
+        Pssm_byRow?, 
+        Pssm_query?, 
+        Pssm_intermediateData?, 
+        Pssm_finalData?)>
+
+<!ELEMENT Pssm_isProtein EMPTY>
+<!ATTLIST Pssm_isProtein value ( true | false ) "true" >
+
+<!ELEMENT Pssm_identifier (Object-id)>
+<!ELEMENT Pssm_numRows (%INTEGER;)> <!-- number of rows -->
+<!ELEMENT Pssm_numColumns (%INTEGER;)> <!-- number of columns -->
+<!ELEMENT Pssm_rowLabels (Pssm_rowLabels_E*)>
+<!ELEMENT Pssm_rowLabels_E (#PCDATA)>
+<!ELEMENT Pssm_byRow EMPTY>
+<!ATTLIST Pssm_byRow value ( true | false ) "false" >
+
+<!ELEMENT Pssm_query (Seq-entry)>
+<!ELEMENT Pssm_intermediateData (PssmIntermediateData)>
+<!ELEMENT Pssm_finalData (PssmFinalData)>
+
+<!ELEMENT FormatRpsDbParameters (
+        FormatRpsDbParameters_matrixName, 
+        FormatRpsDbParameters_gapOpen?, 
+        FormatRpsDbParameters_gapExtend?)>
+
+<!ELEMENT FormatRpsDbParameters_matrixName (#PCDATA)>
+<!ELEMENT FormatRpsDbParameters_gapOpen (%INTEGER;)>
+<!ELEMENT FormatRpsDbParameters_gapExtend (%INTEGER;)>
+
+<!ELEMENT PssmParameters (
+        PssmParameters_pseudocount?, 
+        PssmParameters_rpsdbparams?, 
+        PssmParameters_constraints?)>
+
+<!ELEMENT PssmParameters_pseudocount (%INTEGER;)>
+<!ELEMENT PssmParameters_rpsdbparams (FormatRpsDbParameters)>
+<!ELEMENT PssmParameters_constraints (CoreDef)>
+
+<!ELEMENT PssmWithParameters (
+        PssmWithParameters_pssm, 
+        PssmWithParameters_params?)>
+
+<!ELEMENT PssmWithParameters_pssm (Pssm)>
+<!ELEMENT PssmWithParameters_params (PssmParameters)>
+

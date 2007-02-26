@@ -1,0 +1,614 @@
+<!-- ============================================
+     ::DATATOOL:: Generated from "blast.asn"
+     ::DATATOOL:: by application DATATOOL version 1.5.0
+     ::DATATOOL:: on 06/20/2006 23:03:48
+     ============================================ -->
+
+<!-- ============================================ -->
+<!-- This section is mapped from module "NCBI-Blast4"
+================================================= -->
+<!--
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            PUBLIC DOMAIN NOTICE
+                National Center for Biotechnology Information
+
+  This software/database is a "United States Government Work" under the terms
+  of the United States Copyright Act.  It was written as part of the author's
+  official duties as a United States Government employee and thus cannot be
+  copyrighted.  This software/database is freely available to the public for
+  use.  The National Library of Medicine and the U.S. Government have not
+  placed any restriction on its use or reproduction.
+
+  Although all reasonable efforts have been taken to ensure the accuracy and
+  reliability of the software and data, the NLM and the U.S. Government do not
+  and cannot warrant the performance or results that may be obtained by using
+  this software or data.  The NLM and the U.S. Government disclaim all
+  warranties, express or implied, including warranties of performance,
+  merchantability or fitness for any particular purpose.
+
+  Please cite the authors in any work or product based on this material.
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Authors: Tom Madden, Tim Boemker
+
+  ASN.1 interface to BLAST.
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<!-- Elements used by other modules:
+          Blast4-ka-block,
+          Blast4-value,
+          Blast4-parameter,
+          Blast4-parameters -->
+
+<!-- Elements referenced from other modules:
+          Bioseq FROM NCBI-Sequence,
+          Seq-data FROM NCBI-Sequence,
+          Bioseq-set FROM NCBI-Seqset,
+          PssmWithParameters FROM NCBI-ScoreMat,
+          Seq-id,
+          Seq-loc FROM NCBI-Seqloc,
+          Seq-align,
+          Seq-align-set FROM NCBI-Seqalign -->
+
+<!-- ============================================ -->
+
+
+<!--
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Requests
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+
+<!ELEMENT Blast4-request (
+        Blast4-request_ident?, 
+        Blast4-request_body)>
+
+<!ELEMENT Blast4-request_ident (#PCDATA)>
+<!ELEMENT Blast4-request_body (Blast4-request-body)>
+
+<!ELEMENT Blast4-request-body (
+        Blast4-request-body_finish-params | 
+        Blast4-request-body_get-databases | 
+        Blast4-request-body_get-matrices | 
+        Blast4-request-body_get-parameters | 
+        Blast4-request-body_get-paramsets | 
+        Blast4-request-body_get-programs | 
+        Blast4-request-body_get-search-results | 
+        Blast4-request-body_get-sequences | 
+        Blast4-request-body_queue-search | 
+        Blast4-request-body_get-request-info | 
+        Blast4-request-body_get-sequence-parts)>
+
+<!ELEMENT Blast4-request-body_finish-params (Blast4-finish-params-request)>
+<!ELEMENT Blast4-request-body_get-databases EMPTY>
+<!ELEMENT Blast4-request-body_get-matrices EMPTY>
+<!ELEMENT Blast4-request-body_get-parameters EMPTY>
+<!ELEMENT Blast4-request-body_get-paramsets EMPTY>
+<!ELEMENT Blast4-request-body_get-programs EMPTY>
+<!ELEMENT Blast4-request-body_get-search-results (Blast4-get-search-results-request)>
+<!ELEMENT Blast4-request-body_get-sequences (Blast4-get-sequences-request)>
+<!ELEMENT Blast4-request-body_queue-search (Blast4-queue-search-request)>
+<!ELEMENT Blast4-request-body_get-request-info (Blast4-get-request-info-request)>
+<!ELEMENT Blast4-request-body_get-sequence-parts (Blast4-get-seq-parts-request)>
+
+<!ELEMENT Blast4-finish-params-request (
+        Blast4-finish-params-request_program, 
+        Blast4-finish-params-request_service, 
+        Blast4-finish-params-request_paramset?, 
+        Blast4-finish-params-request_params?)>
+
+<!ELEMENT Blast4-finish-params-request_program (#PCDATA)>
+<!ELEMENT Blast4-finish-params-request_service (#PCDATA)>
+<!ELEMENT Blast4-finish-params-request_paramset (#PCDATA)>
+<!ELEMENT Blast4-finish-params-request_params (Blast4-parameters)>
+
+<!ELEMENT Blast4-get-search-results-request (
+        Blast4-get-search-results-request_request-id)>
+
+<!ELEMENT Blast4-get-search-results-request_request-id (#PCDATA)>
+
+<!ELEMENT Blast4-get-sequences-request (
+        Blast4-get-sequences-request_database, 
+        Blast4-get-sequences-request_seq-ids)>
+
+<!ELEMENT Blast4-get-sequences-request_database (Blast4-database)>
+<!ELEMENT Blast4-get-sequences-request_seq-ids (Seq-id*)>
+
+<!ELEMENT Blast4-queries (
+        Blast4-queries_pssm | 
+        Blast4-queries_seq-loc-list | 
+        Blast4-queries_bioseq-set)>
+
+<!ELEMENT Blast4-queries_pssm (PssmWithParameters)>
+<!ELEMENT Blast4-queries_seq-loc-list (Seq-loc*)>
+<!ELEMENT Blast4-queries_bioseq-set (Bioseq-set)>
+
+<!ELEMENT Blast4-queue-search-request (
+        Blast4-queue-search-request_program, 
+        Blast4-queue-search-request_service, 
+        Blast4-queue-search-request_queries, 
+        Blast4-queue-search-request_subject, 
+        Blast4-queue-search-request_paramset?, 
+        Blast4-queue-search-request_algorithm-options?, 
+        Blast4-queue-search-request_program-options?)>
+
+<!ELEMENT Blast4-queue-search-request_program (#PCDATA)>
+<!ELEMENT Blast4-queue-search-request_service (#PCDATA)>
+<!ELEMENT Blast4-queue-search-request_queries (Blast4-queries)>
+<!ELEMENT Blast4-queue-search-request_subject (Blast4-subject)>
+<!ELEMENT Blast4-queue-search-request_paramset (#PCDATA)>
+<!ELEMENT Blast4-queue-search-request_algorithm-options (Blast4-parameters)>
+<!ELEMENT Blast4-queue-search-request_program-options (Blast4-parameters)>
+
+<!ELEMENT Blast4-get-request-info-request (
+        Blast4-get-request-info-request_request-id)>
+
+<!ELEMENT Blast4-get-request-info-request_request-id (#PCDATA)>
+
+<!ELEMENT Blast4-get-request-info-reply (
+        Blast4-get-request-info-reply_database, 
+        Blast4-get-request-info-reply_program, 
+        Blast4-get-request-info-reply_service, 
+        Blast4-get-request-info-reply_created-by, 
+        Blast4-get-request-info-reply_queries, 
+        Blast4-get-request-info-reply_algorithm-options, 
+        Blast4-get-request-info-reply_program-options)>
+
+<!ELEMENT Blast4-get-request-info-reply_database (Blast4-database)>
+<!ELEMENT Blast4-get-request-info-reply_program (#PCDATA)>
+<!ELEMENT Blast4-get-request-info-reply_service (#PCDATA)>
+<!ELEMENT Blast4-get-request-info-reply_created-by (#PCDATA)>
+<!ELEMENT Blast4-get-request-info-reply_queries (Blast4-queries)>
+<!ELEMENT Blast4-get-request-info-reply_algorithm-options (Blast4-parameters)>
+<!ELEMENT Blast4-get-request-info-reply_program-options (Blast4-parameters)>
+
+<!ELEMENT Blast4-get-seq-parts-request (
+        Blast4-get-seq-parts-request_database, 
+        Blast4-get-seq-parts-request_id, 
+        Blast4-get-seq-parts-request_need-meta-data, 
+        Blast4-get-seq-parts-request_start?, 
+        Blast4-get-seq-parts-request_end?)>
+
+<!ELEMENT Blast4-get-seq-parts-request_database (Blast4-database)>
+<!ELEMENT Blast4-get-seq-parts-request_id (Seq-id)>
+<!ELEMENT Blast4-get-seq-parts-request_need-meta-data EMPTY>
+<!ATTLIST Blast4-get-seq-parts-request_need-meta-data value ( true | false ) #REQUIRED >
+
+<!ELEMENT Blast4-get-seq-parts-request_start (%INTEGER;)>
+<!ELEMENT Blast4-get-seq-parts-request_end (%INTEGER;)>
+
+<!ELEMENT Blast4-reply (
+        Blast4-reply_errors?, 
+        Blast4-reply_body)>
+
+<!ELEMENT Blast4-reply_errors (Blast4-error*)>
+<!ELEMENT Blast4-reply_body (Blast4-reply-body)>
+
+<!ELEMENT Blast4-reply-body (
+        Blast4-reply-body_finish-params | 
+        Blast4-reply-body_get-databases | 
+        Blast4-reply-body_get-matrices | 
+        Blast4-reply-body_get-parameters | 
+        Blast4-reply-body_get-paramsets | 
+        Blast4-reply-body_get-programs | 
+        Blast4-reply-body_get-search-results | 
+        Blast4-reply-body_get-sequences | 
+        Blast4-reply-body_queue-search | 
+        Blast4-reply-body_get-queries | 
+        Blast4-reply-body_get-request-info | 
+        Blast4-reply-body_get-sequence-parts)>
+
+<!ELEMENT Blast4-reply-body_finish-params (Blast4-finish-params-reply)>
+<!ELEMENT Blast4-reply-body_get-databases (Blast4-get-databases-reply)>
+<!ELEMENT Blast4-reply-body_get-matrices (Blast4-get-matrices-reply)>
+<!ELEMENT Blast4-reply-body_get-parameters (Blast4-get-parameters-reply)>
+<!ELEMENT Blast4-reply-body_get-paramsets (Blast4-get-paramsets-reply)>
+<!ELEMENT Blast4-reply-body_get-programs (Blast4-get-programs-reply)>
+<!ELEMENT Blast4-reply-body_get-search-results (Blast4-get-search-results-reply)>
+<!ELEMENT Blast4-reply-body_get-sequences (Blast4-get-sequences-reply)>
+<!ELEMENT Blast4-reply-body_queue-search (Blast4-queue-search-reply)>
+<!ELEMENT Blast4-reply-body_get-queries (Blast4-get-queries-reply)>
+<!ELEMENT Blast4-reply-body_get-request-info (Blast4-get-request-info-reply)>
+<!ELEMENT Blast4-reply-body_get-sequence-parts (Blast4-get-seq-parts-reply)>
+<!ELEMENT Blast4-finish-params-reply (Blast4-parameters)>
+<!ELEMENT Blast4-get-databases-reply (Blast4-database-info*)>
+<!ELEMENT Blast4-get-matrices-reply (Blast4-matrix-id*)>
+<!ELEMENT Blast4-get-parameters-reply (Blast4-parameter-info*)>
+<!ELEMENT Blast4-get-paramsets-reply (Blast4-paramset-info*)>
+<!ELEMENT Blast4-get-programs-reply (Blast4-program-info*)>
+
+<!ELEMENT Blast4-get-search-results-reply (
+        Blast4-get-search-results-reply_alignments?, 
+        Blast4-get-search-results-reply_phi-alignments?, 
+        Blast4-get-search-results-reply_masks?, 
+        Blast4-get-search-results-reply_ka-blocks?, 
+        Blast4-get-search-results-reply_search-stats?, 
+        Blast4-get-search-results-reply_pssm?)>
+
+<!ELEMENT Blast4-get-search-results-reply_alignments (Seq-align-set)>
+<!ELEMENT Blast4-get-search-results-reply_phi-alignments (Blast4-phi-alignments)>
+<!ELEMENT Blast4-get-search-results-reply_masks (Blast4-mask*)>
+<!ELEMENT Blast4-get-search-results-reply_ka-blocks (Blast4-ka-block*)>
+<!ELEMENT Blast4-get-search-results-reply_search-stats (Blast4-get-search-results-reply_search-stats_E*)>
+<!ELEMENT Blast4-get-search-results-reply_search-stats_E (#PCDATA)>
+<!ELEMENT Blast4-get-search-results-reply_pssm (PssmWithParameters)>
+<!ELEMENT Blast4-get-sequences-reply (Bioseq*)>
+
+<!ELEMENT Blast4-queue-search-reply (
+        Blast4-queue-search-reply_request-id?)>
+
+<!ELEMENT Blast4-queue-search-reply_request-id (#PCDATA)>
+
+<!ELEMENT Blast4-get-queries-reply (
+        Blast4-get-queries-reply_queries)>
+
+<!ELEMENT Blast4-get-queries-reply_queries (Blast4-queries)>
+
+<!ELEMENT Blast4-get-seq-parts-reply (
+        Blast4-get-seq-parts-reply_bioseq?, 
+        Blast4-get-seq-parts-reply_ids?, 
+        Blast4-get-seq-parts-reply_length?, 
+        Blast4-get-seq-parts-reply_data?)>
+
+<!ELEMENT Blast4-get-seq-parts-reply_bioseq (Bioseq)>
+<!ELEMENT Blast4-get-seq-parts-reply_ids (Seq-id*)>
+<!ELEMENT Blast4-get-seq-parts-reply_length (%INTEGER;)>
+<!ELEMENT Blast4-get-seq-parts-reply_data (Seq-data)>
+
+<!ELEMENT Blast4-error (
+        Blast4-error_code, 
+        Blast4-error_message?)>
+
+<!ELEMENT Blast4-error_code (%INTEGER;)>
+<!ELEMENT Blast4-error_message (#PCDATA)>
+<!ELEMENT Blast4-error-flags %ENUM;>
+<!ATTLIST Blast4-error-flags value (
+        warning |
+        error ) #REQUIRED >
+
+<!ELEMENT Blast4-error-code (%INTEGER;)>
+<!ATTLIST Blast4-error-code value (
+        conversion-warning |
+        internal-error |
+        not-implemented |
+        not-allowed |
+        bad-request |
+        bad-request-id |
+        search-pending ) #IMPLIED >
+
+
+<!ELEMENT Blast4-cutoff (
+        Blast4-cutoff_e-value | 
+        Blast4-cutoff_raw-score)>
+
+<!ELEMENT Blast4-cutoff_e-value (%REAL;)>
+<!ELEMENT Blast4-cutoff_raw-score (%INTEGER;)>
+
+<!ELEMENT Blast4-database (
+        Blast4-database_name, 
+        Blast4-database_type)>
+
+<!ELEMENT Blast4-database_name (#PCDATA)>
+<!ELEMENT Blast4-database_type (Blast4-residue-type)>
+<!ELEMENT Blast4-seqtech (%INTEGER;)>
+<!ATTLIST Blast4-seqtech value (
+        unknown |
+        standard |
+        est |
+        sts |
+        survey |
+        genemap |
+        physmap |
+        derived |
+        concept-trans |
+        seq-pept |
+        both |
+        seq-pept-overlap |
+        seq-pept-homol |
+        concept-trans-a |
+        htgs-1 |
+        htgs-2 |
+        htgs-3 |
+        fli-cdna |
+        htgs-0 |
+        htc |
+        wgs |
+        other ) #IMPLIED >
+<!--
+    standard -  standard sequencing
+    est -  Expressed Sequence Tag
+    sts -  Sequence Tagged Site
+    survey -  one-pass genomic sequence
+    genemap -  from genetic mapping techniques
+    physmap -  from physical mapping techniques
+    derived -  derived from other data, not a primary entity
+    concept-trans -  conceptual translation
+    seq-pept -  peptide was sequenced
+    both -  concept transl. w/ partial pept. seq.
+    seq-pept-overlap -  sequenced peptide, ordered by overlap
+    seq-pept-homol -  sequenced peptide, ordered by homology
+    concept-trans-a -  conceptual transl. supplied by author
+    htgs-1 -  unordered High Throughput sequence contig
+    htgs-2 -  ordered High Throughput sequence contig
+    htgs-3 -  finished High Throughput sequence
+    fli-cdna -  full length insert cDNA
+    htgs-0 -  single genomic reads for coordination
+    htc -  high throughput cDNA
+    wgs -  whole genome shotgun sequencing
+    other -  use Source.techexp
+-->
+
+
+<!ELEMENT Blast4-database-info (
+        Blast4-database-info_database, 
+        Blast4-database-info_description, 
+        Blast4-database-info_last-updated, 
+        Blast4-database-info_total-length, 
+        Blast4-database-info_num-sequences, 
+        Blast4-database-info_seqtech, 
+        Blast4-database-info_taxid)>
+
+<!ELEMENT Blast4-database-info_database (Blast4-database)>
+<!ELEMENT Blast4-database-info_description (#PCDATA)>
+<!ELEMENT Blast4-database-info_last-updated (#PCDATA)>
+<!ELEMENT Blast4-database-info_total-length (%INTEGER;)>
+<!ELEMENT Blast4-database-info_num-sequences (%INTEGER;)>
+<!ELEMENT Blast4-database-info_seqtech (Blast4-seqtech)>
+<!ELEMENT Blast4-database-info_taxid (%INTEGER;)>
+<!ELEMENT Blast4-frame-type %ENUM;>
+<!ATTLIST Blast4-frame-type value (
+        notset |
+        plus1 |
+        plus2 |
+        plus3 |
+        minus1 |
+        minus2 |
+        minus3 ) #REQUIRED >
+
+
+<!ELEMENT Blast4-ka-block (
+        Blast4-ka-block_lambda, 
+        Blast4-ka-block_k, 
+        Blast4-ka-block_h, 
+        Blast4-ka-block_gapped)>
+
+<!ELEMENT Blast4-ka-block_lambda (%REAL;)>
+<!ELEMENT Blast4-ka-block_k (%REAL;)>
+<!ELEMENT Blast4-ka-block_h (%REAL;)>
+<!ELEMENT Blast4-ka-block_gapped EMPTY>
+<!ATTLIST Blast4-ka-block_gapped value ( true | false ) #REQUIRED >
+
+
+<!ELEMENT Blast4-mask (
+        Blast4-mask_locations, 
+        Blast4-mask_frame)>
+
+<!ELEMENT Blast4-mask_locations (Seq-loc*)>
+<!ELEMENT Blast4-mask_frame (Blast4-frame-type)>
+
+<!ELEMENT Blast4-matrix-id (
+        Blast4-matrix-id_residue-type, 
+        Blast4-matrix-id_name)>
+
+<!ELEMENT Blast4-matrix-id_residue-type (Blast4-residue-type)>
+<!ELEMENT Blast4-matrix-id_name (#PCDATA)>
+
+<!ELEMENT Blast4-parameter (
+        Blast4-parameter_name, 
+        Blast4-parameter_value)>
+
+<!ELEMENT Blast4-parameter_name (#PCDATA)>
+<!ELEMENT Blast4-parameter_value (Blast4-value)>
+
+<!ELEMENT Blast4-parameter-info (
+        Blast4-parameter-info_name, 
+        Blast4-parameter-info_type)>
+
+<!ELEMENT Blast4-parameter-info_name (#PCDATA)>
+<!ELEMENT Blast4-parameter-info_type (#PCDATA)>
+
+<!ELEMENT Blast4-paramset-info (
+        Blast4-paramset-info_program, 
+        Blast4-paramset-info_name)>
+
+<!ELEMENT Blast4-paramset-info_program (#PCDATA)>
+<!ELEMENT Blast4-paramset-info_name (#PCDATA)>
+
+<!ELEMENT Blast4-program-info (
+        Blast4-program-info_program, 
+        Blast4-program-info_services)>
+
+<!ELEMENT Blast4-program-info_program (#PCDATA)>
+<!ELEMENT Blast4-program-info_services (Blast4-program-info_services_E*)>
+<!ELEMENT Blast4-program-info_services_E (#PCDATA)>
+<!ELEMENT Blast4-residue-type %ENUM;>
+<!ATTLIST Blast4-residue-type value (
+        unknown |
+        protein |
+        nucleotide ) #REQUIRED >
+
+<!ELEMENT Blast4-strand-type %ENUM;>
+<!ATTLIST Blast4-strand-type value (
+        forward-strand |
+        reverse-strand |
+        both-strands ) #REQUIRED >
+
+
+<!ELEMENT Blast4-subject (
+        Blast4-subject_database | 
+        Blast4-subject_sequences)>
+
+<!ELEMENT Blast4-subject_database (#PCDATA)>
+<!ELEMENT Blast4-subject_sequences (Bioseq*)>
+<!ELEMENT Blast4-parameters (Blast4-parameter*)>
+
+<!ELEMENT Blast4-phi-alignments (
+        Blast4-phi-alignments_num-alignments, 
+        Blast4-phi-alignments_seq-locs)>
+
+<!ELEMENT Blast4-phi-alignments_num-alignments (%INTEGER;)>
+<!ELEMENT Blast4-phi-alignments_seq-locs (Seq-loc*)>
+
+<!ELEMENT Blast4-value (
+        Blast4-value_big-integer | 
+        Blast4-value_bioseq | 
+        Blast4-value_boolean | 
+        Blast4-value_cutoff | 
+        Blast4-value_integer | 
+        Blast4-value_matrix | 
+        Blast4-value_real | 
+        Blast4-value_seq-align | 
+        Blast4-value_seq-id | 
+        Blast4-value_seq-loc | 
+        Blast4-value_strand-type | 
+        Blast4-value_string | 
+        Blast4-value_big-integer-list | 
+        Blast4-value_bioseq-list | 
+        Blast4-value_boolean-list | 
+        Blast4-value_cutoff-list | 
+        Blast4-value_integer-list | 
+        Blast4-value_matrix-list | 
+        Blast4-value_real-list | 
+        Blast4-value_seq-align-list | 
+        Blast4-value_seq-id-list | 
+        Blast4-value_seq-loc-list | 
+        Blast4-value_strand-type-list | 
+        Blast4-value_string-list | 
+        Blast4-value_bioseq-set | 
+        Blast4-value_seq-align-set | 
+        Blast4-value_query-mask)>
+
+<!ELEMENT Blast4-value_big-integer (%INTEGER;)>
+<!ELEMENT Blast4-value_bioseq (Bioseq)>
+<!ELEMENT Blast4-value_boolean EMPTY>
+<!ATTLIST Blast4-value_boolean value ( true | false ) #REQUIRED >
+
+<!ELEMENT Blast4-value_cutoff (Blast4-cutoff)>
+<!ELEMENT Blast4-value_integer (%INTEGER;)>
+<!ELEMENT Blast4-value_matrix (PssmWithParameters)>
+<!ELEMENT Blast4-value_real (%REAL;)>
+<!ELEMENT Blast4-value_seq-align (Seq-align)>
+<!ELEMENT Blast4-value_seq-id (Seq-id)>
+<!ELEMENT Blast4-value_seq-loc (Seq-loc)>
+<!ELEMENT Blast4-value_strand-type (Blast4-strand-type)>
+<!ELEMENT Blast4-value_string (#PCDATA)>
+<!ELEMENT Blast4-value_big-integer-list (Blast4-value_big-integer-list_E*)>
+<!ELEMENT Blast4-value_big-integer-list_E (%INTEGER;)>
+<!ELEMENT Blast4-value_bioseq-list (Bioseq*)>
+<!ELEMENT Blast4-value_boolean-list (Blast4-value_boolean-list_E*)>
+<!ELEMENT Blast4-value_boolean-list_E EMPTY>
+<!ATTLIST Blast4-value_boolean-list_E value ( true | false ) #REQUIRED >
+
+<!ELEMENT Blast4-value_cutoff-list (Blast4-cutoff*)>
+<!ELEMENT Blast4-value_integer-list (Blast4-value_integer-list_E*)>
+<!ELEMENT Blast4-value_integer-list_E (%INTEGER;)>
+<!ELEMENT Blast4-value_matrix-list (PssmWithParameters*)>
+<!ELEMENT Blast4-value_real-list (Blast4-value_real-list_E*)>
+<!ELEMENT Blast4-value_real-list_E (%REAL;)>
+<!ELEMENT Blast4-value_seq-align-list (Seq-align*)>
+<!ELEMENT Blast4-value_seq-id-list (Seq-id*)>
+<!ELEMENT Blast4-value_seq-loc-list (Seq-loc*)>
+<!ELEMENT Blast4-value_strand-type-list (Blast4-strand-type*)>
+<!ELEMENT Blast4-value_string-list (Blast4-value_string-list_E*)>
+<!ELEMENT Blast4-value_string-list_E (#PCDATA)>
+<!ELEMENT Blast4-value_bioseq-set (Bioseq-set)>
+<!ELEMENT Blast4-value_seq-align-set (Seq-align-set)>
+<!ELEMENT Blast4-value_query-mask (Blast4-mask)>
+

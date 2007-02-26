@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns='http://www.ebi.ac.uk/interpro/match' targetNamespace='http://www.ebi.ac.uk/interpro/match'>
+<xs:element name="interpro">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" ref="match"/>
+</xs:sequence>
+<xs:attribute name="id" type="xs:string" use="required"/>
+<xs:attribute name="name" type="xs:string" use="required"/>
+<xs:attribute name="type" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="Domain"/>
+<xs:enumeration value="Family"/>
+<xs:enumeration value="PTM"/>
+<xs:enumeration value="Repeat"/>
+<xs:enumeration value="Active_site"/>
+<xs:enumeration value="Binding_site"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+<xs:attribute name="parent_id" type="xs:string"/>
+</xs:complexType>
+</xs:element>
+<xs:element name="interpromatch">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" ref="protein"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="location">
+<xs:complexType>
+<xs:attribute name="start" type="xs:string"/>
+<xs:attribute name="end" type="xs:string"/>
+<xs:attribute name="status" type="xs:string" use="required"/>
+<xs:attribute name="evidence" type="xs:string" use="required"/>
+<xs:attribute name="score" type="xs:string" use="required"/>
+</xs:complexType>
+</xs:element>
+<xs:element name="match">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" ref="location"/>
+</xs:sequence>
+<xs:attribute name="id" type="xs:string" use="required"/>
+<xs:attribute name="name" type="xs:string" use="required"/>
+<xs:attribute name="dbname" type="xs:string" use="required"/>
+</xs:complexType>
+</xs:element>
+<xs:element name="protein">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" ref="interpro"/>
+</xs:sequence>
+<xs:attribute name="id" type="xs:string" use="required"/>
+<xs:attribute name="name" type="xs:string" use="required"/>
+<xs:attribute name="length" type="xs:string" use="required"/>
+<xs:attribute name="crc64" type="xs:string" use="required"/>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+

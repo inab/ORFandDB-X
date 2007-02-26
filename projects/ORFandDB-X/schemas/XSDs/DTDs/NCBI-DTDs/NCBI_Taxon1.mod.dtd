@@ -1,0 +1,197 @@
+<!-- ============================================
+     ::DATATOOL:: Generated from "taxon1.asn"
+     ::DATATOOL:: by application DATATOOL version 1.5.0
+     ::DATATOOL:: on 06/06/2006 23:03:48
+     ============================================ -->
+
+<!-- ============================================ -->
+<!-- This section is mapped from module "NCBI-Taxon1"
+================================================= -->
+<!--
+$Revision: 6.6 $
+**********************************************************************
+
+  NCBI Taxonomy Server
+  by James Ostell, 1995
+  Version 1.0 - July 1995
+
+**********************************************************************
+-->
+<!-- Elements referenced from other modules:
+          Org-ref FROM NCBI-Organism -->
+
+<!-- ============================================ -->
+
+
+<!-- Requests to the Taxon server -->
+
+
+<!ELEMENT Taxon1-req (
+        Taxon1-req_init | 
+        Taxon1-req_findname | 
+        Taxon1-req_getdesignator | 
+        Taxon1-req_getunique | 
+        Taxon1-req_getidbyorg | 
+        Taxon1-req_getorgnames | 
+        Taxon1-req_getcde | 
+        Taxon1-req_getranks | 
+        Taxon1-req_getdivs | 
+        Taxon1-req_getgcs | 
+        Taxon1-req_getlineage | 
+        Taxon1-req_getchildren | 
+        Taxon1-req_getbyid | 
+        Taxon1-req_lookup | 
+        Taxon1-req_getorgmod | 
+        Taxon1-req_fini | 
+        Taxon1-req_id4gi | 
+        Taxon1-req_taxachildren | 
+        Taxon1-req_taxalineage | 
+        Taxon1-req_maxtaxid | 
+        Taxon1-req_getproptypes | 
+        Taxon1-req_getorgprop | 
+        Taxon1-req_searchname)>
+
+<!ELEMENT Taxon1-req_init EMPTY> <!-- initialize the server -->
+<!ELEMENT Taxon1-req_findname (#PCDATA)> <!-- find orgnames match string -->
+<!ELEMENT Taxon1-req_getdesignator (#PCDATA)> <!-- find designator -->
+<!ELEMENT Taxon1-req_getunique (#PCDATA)> <!-- get taxid for unique name -->
+<!ELEMENT Taxon1-req_getidbyorg (Org-ref)> <!-- get taxid matches orgref -->
+<!ELEMENT Taxon1-req_getorgnames (%INTEGER;)> <!-- get all organism names -->
+<!ELEMENT Taxon1-req_getcde EMPTY> <!-- get name classes -->
+<!ELEMENT Taxon1-req_getranks EMPTY> <!-- get ranks -->
+<!ELEMENT Taxon1-req_getdivs EMPTY> <!-- get divisions -->
+<!ELEMENT Taxon1-req_getgcs EMPTY> <!-- get gencodes -->
+<!ELEMENT Taxon1-req_getlineage (%INTEGER;)> <!-- get lineage for org -->
+<!ELEMENT Taxon1-req_getchildren (%INTEGER;)> <!-- get children -->
+<!ELEMENT Taxon1-req_getbyid (%INTEGER;)> <!-- get Org-ref by TaxonID -->
+<!ELEMENT Taxon1-req_lookup (Org-ref)> <!-- lookup by data -->
+<!ELEMENT Taxon1-req_getorgmod (Taxon1-info)> <!-- lookup for OrgMod -->
+<!ELEMENT Taxon1-req_fini EMPTY> <!-- close the server -->
+<!ELEMENT Taxon1-req_id4gi (%INTEGER;)> <!-- get taxid by gi -->
+<!ELEMENT Taxon1-req_taxachildren (%INTEGER;)> <!-- get children -->
+<!ELEMENT Taxon1-req_taxalineage (%INTEGER;)> <!-- get extended lineage for org -->
+<!ELEMENT Taxon1-req_maxtaxid EMPTY> <!-- get max taxid -->
+<!ELEMENT Taxon1-req_getproptypes EMPTY> <!-- get property types -->
+<!ELEMENT Taxon1-req_getorgprop (Taxon1-info)> <!-- get properties for organism -->
+<!ELEMENT Taxon1-req_searchname (Taxon1-info)> <!-- fancy search (token set, wild card) -->
+
+<!ELEMENT Taxon1-resp (
+        Taxon1-resp_error | 
+        Taxon1-resp_init | 
+        Taxon1-resp_findname | 
+        Taxon1-resp_getdesignator | 
+        Taxon1-resp_getunique | 
+        Taxon1-resp_getidbyorg | 
+        Taxon1-resp_getorgnames | 
+        Taxon1-resp_getcde | 
+        Taxon1-resp_getranks | 
+        Taxon1-resp_getdivs | 
+        Taxon1-resp_getgcs | 
+        Taxon1-resp_getlineage | 
+        Taxon1-resp_getchildren | 
+        Taxon1-resp_getbyid | 
+        Taxon1-resp_lookup | 
+        Taxon1-resp_getorgmod | 
+        Taxon1-resp_fini | 
+        Taxon1-resp_id4gi | 
+        Taxon1-resp_taxabyid | 
+        Taxon1-resp_taxachildren | 
+        Taxon1-resp_taxalineage | 
+        Taxon1-resp_maxtaxid | 
+        Taxon1-resp_getproptypes | 
+        Taxon1-resp_getorgprop | 
+        Taxon1-resp_searchname)>
+
+<!ELEMENT Taxon1-resp_error (Taxon1-error)> <!-- sent on any error -->
+<!ELEMENT Taxon1-resp_init EMPTY> <!-- sent by successful initiation -->
+<!ELEMENT Taxon1-resp_findname (Taxon1-name*)>
+<!ELEMENT Taxon1-resp_getdesignator (%INTEGER;)>
+<!ELEMENT Taxon1-resp_getunique (%INTEGER;)>
+<!ELEMENT Taxon1-resp_getidbyorg (%INTEGER;)>
+<!ELEMENT Taxon1-resp_getorgnames (Taxon1-name*)>
+<!ELEMENT Taxon1-resp_getcde (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getranks (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getdivs (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getgcs (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getlineage (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getchildren (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getbyid (Taxon1-data)>
+<!ELEMENT Taxon1-resp_lookup (Taxon1-data)>
+<!ELEMENT Taxon1-resp_getorgmod (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_fini EMPTY>
+<!ELEMENT Taxon1-resp_id4gi (%INTEGER;)>
+<!ELEMENT Taxon1-resp_taxabyid (Taxon2-data)>
+<!ELEMENT Taxon1-resp_taxachildren (Taxon1-name*)>
+<!ELEMENT Taxon1-resp_taxalineage (Taxon1-name*)>
+<!ELEMENT Taxon1-resp_maxtaxid (%INTEGER;)>
+<!ELEMENT Taxon1-resp_getproptypes (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_getorgprop (Taxon1-info*)>
+<!ELEMENT Taxon1-resp_searchname (Taxon1-name*)>
+
+<!ELEMENT Taxon1-info (
+        Taxon1-info_ival1, 
+        Taxon1-info_ival2, 
+        Taxon1-info_sval?)>
+
+<!ELEMENT Taxon1-info_ival1 (%INTEGER;)>
+<!ELEMENT Taxon1-info_ival2 (%INTEGER;)>
+<!ELEMENT Taxon1-info_sval (#PCDATA)>
+
+<!ELEMENT Taxon1-name (
+        Taxon1-name_taxid, 
+        Taxon1-name_cde, 
+        Taxon1-name_oname?, 
+        Taxon1-name_uname?)>
+
+<!ELEMENT Taxon1-name_taxid (%INTEGER;)>
+<!ELEMENT Taxon1-name_cde (%INTEGER;)>
+<!ELEMENT Taxon1-name_oname (#PCDATA)>
+<!ELEMENT Taxon1-name_uname (#PCDATA)>
+
+<!ELEMENT Taxon1-error (
+        Taxon1-error_level, 
+        Taxon1-error_msg?)>
+
+<!ELEMENT Taxon1-error_level %ENUM;>
+<!ATTLIST Taxon1-error_level value (
+        none |
+        info |
+        warn |
+        error |
+        fatal ) #REQUIRED >
+<!--
+    none -  not an error, just a message
+    info -  informational error
+-->
+
+<!ELEMENT Taxon1-error_msg (#PCDATA)>
+
+<!ELEMENT Taxon1-data (
+        Taxon1-data_org?, 
+        Taxon1-data_div, 
+        Taxon1-data_embl-code?, 
+        Taxon1-data_is-species-level)>
+
+<!ELEMENT Taxon1-data_org (Org-ref)> <!-- Org-ref with Org-name and db filled in -->
+<!ELEMENT Taxon1-data_div (#PCDATA)> <!-- GenBank division -->
+<!ELEMENT Taxon1-data_embl-code (#PCDATA)> <!-- 2 letter EMBL code -->
+<!ELEMENT Taxon1-data_is-species-level EMPTY> <!-- species level or below -->
+<!ATTLIST Taxon1-data_is-species-level value ( true | false ) #REQUIRED >
+
+
+<!ELEMENT Taxon2-data (
+        Taxon2-data_org?, 
+        Taxon2-data_blast-name?, 
+        Taxon2-data_is-uncultured, 
+        Taxon2-data_is-species-level)>
+
+<!ELEMENT Taxon2-data_org (Org-ref)> <!-- Org-ref with Org-name and db filled in -->
+<!ELEMENT Taxon2-data_blast-name (Taxon2-data_blast-name_E*)> <!-- inherited blast name -->
+<!ELEMENT Taxon2-data_blast-name_E (#PCDATA)>
+<!ELEMENT Taxon2-data_is-uncultured EMPTY> <!-- belongs to environmental bin -->
+<!ATTLIST Taxon2-data_is-uncultured value ( true | false ) #REQUIRED >
+
+<!ELEMENT Taxon2-data_is-species-level EMPTY> <!-- species level or below -->
+<!ATTLIST Taxon2-data_is-species-level value ( true | false ) #REQUIRED >
+
+

@@ -1,0 +1,130 @@
+<!-- DTD for the Eukaryotic Promoter Database -->
+
+<!-- ELEMENTS -->
+
+<!ELEMENT epd (Entry+)>
+   <!ELEMENT Entry (ID_line,AC_line,DT_line,DE_line+,OS_line,Similarity,Cross-links,References+,ME_line+,SE_line,FL_line,IF_line+,Taxonomy,KW_line+,Old_format,End_of_Entry)>
+      <!ELEMENT ID_line (#PCDATA)>
+
+
+      <!ELEMENT AC_line (#PCDATA)>
+      <!ELEMENT DT_line (Creation_lines,Annotation_lines)>
+         <!ELEMENT Creation_lines (Day1,Month1,Year1,Creation)>
+               <!ELEMENT Day1 (#PCDATA)>
+               <!ELEMENT Month1 (#PCDATA)>
+               <!ELEMENT Year1 (#PCDATA)>
+	       <!ELEMENT Creation (#PCDATA)>
+         <!ELEMENT Annotation_lines (Day2,Month2,Year2,Annotation)>
+               <!ELEMENT Day2 (#PCDATA)>
+               <!ELEMENT Month2 (#PCDATA)>
+               <!ELEMENT Year2 (#PCDATA)>
+	       <!ELEMENT Annotation (#PCDATA)>
+
+      <!ELEMENT DE_line (#PCDATA)>
+
+      <!ELEMENT OS_line (#PCDATA)>
+
+      <!ELEMENT Similarity (HG_line,AP_line,NP_line+)>
+         <!ELEMENT HG_line (No_similarity|Homology)>
+            <!ELEMENT No_similarity EMPTY>
+            <!ELEMENT Homology (Homology_number,Homology_description+)>
+	       <!ELEMENT Homology_number (#PCDATA)>
+	       <!ELEMENT Homology_description (#PCDATA)>
+         <!ELEMENT AP_line (No_similarity|Alternative*)>
+            <!ELEMENT Alternative (Alternative_number,Alternative_total,Alternative_exon,Alternative_site,Alternative_major?)>
+	       <!ELEMENT Alternative_number (#PCDATA)>
+	       <!ELEMENT Alternative_total (#PCDATA)>
+	       <!ELEMENT Alternative_exon (#PCDATA)>
+	       <!ELEMENT Alternative_site (#PCDATA)>
+	       <!ELEMENT Alternative_major (#PCDATA)>
+         <!ELEMENT NP_line (No_similarity|Neighbour*)>
+            <!ELEMENT Neighbour (Neighbour_AC,Neighbour_ID,Neighbour_position)>
+	       <!ELEMENT Neighbour_AC (#PCDATA)>
+	       <!ELEMENT Neighbour_ID (#PCDATA)>
+	       <!ELEMENT Neighbour_position (#PCDATA)>
+
+      <!ELEMENT Cross-links (EPD_link*,EPDEX_link?,EMBL_first,EMBL*,SWISSPROT?,TRANSFAC*,RefSeq?,MIM?,FLYBASE?,MGD?)>
+         <!ELEMENT EPD_link (EPD_AC,EPD_ID,EPD_type,EPD_pos?)>
+	    <!ELEMENT EPD_AC (#PCDATA)>
+	    <!ELEMENT EPD_ID (#PCDATA)>
+	    <!ELEMENT EPD_type (#PCDATA)>
+	    <!ELEMENT EPD_pos (#PCDATA)>
+         <!ELEMENT EPDEX_link (EPDEX_AC,EPDEX_ID)>
+	    <!ELEMENT EPDEX_AC (#PCDATA)>
+	    <!ELEMENT EPDEX_ID (#PCDATA)>
+         <!ELEMENT EMBL_first (EMBL_SV,EMBL_ID,EMBL_Position)>
+         <!ELEMENT EMBL (EMBL_SV,EMBL_ID,EMBL_Position)>
+	    <!ELEMENT EMBL_SV (#PCDATA)>
+	    <!ELEMENT EMBL_ID (#PCDATA)>
+	    <!ELEMENT EMBL_Position (#PCDATA)>
+         <!ELEMENT SWISSPROT (SP_AC,SP_ID)>
+	    <!ELEMENT SP_AC (#PCDATA)>
+	    <!ELEMENT SP_ID (#PCDATA)>
+         <!ELEMENT TRANSFAC (TF_AC,TF_ID,TF_Position,TF_Type)>
+	    <!ELEMENT TF_AC (#PCDATA)>
+	    <!ELEMENT TF_ID (#PCDATA)>
+	    <!ELEMENT TF_Position (#PCDATA)>
+	    <!ELEMENT TF_Type (#PCDATA)>
+	 <!ELEMENT RefSeq (RefSeq_AC)>
+	    <!ELEMENT RefSeq_AC (#PCDATA)>
+         <!ELEMENT MIM (MIM_AC)>
+	    <!ELEMENT MIM_AC (#PCDATA)>
+         <!ELEMENT FLYBASE (FB_AC,FB_ID)>
+	    <!ELEMENT FB_AC (#PCDATA)>
+	    <!ELEMENT FB_ID (#PCDATA)>
+         <!ELEMENT MGD (MGD_AC,MGD_ID)>
+	    <!ELEMENT MGD_AC (#PCDATA)>
+	    <!ELEMENT MGD_ID (#PCDATA)>
+
+      <!ELEMENT References (RN_line,RX_line,RA_line+,RT_line+,RL_line)>
+         <!ELEMENT RN_line (#PCDATA)>
+         <!ELEMENT RX_line (#PCDATA)>
+         <!ELEMENT RA_line (#PCDATA)>
+         <!ELEMENT RT_line (#PCDATA)>
+         <!ELEMENT RL_line (Journal_author?,Journal_name,Volume?,Page_number,Journal_issue,Journal_editor?)>
+	    <!ELEMENT Journal_author (#PCDATA)>
+	    <!ELEMENT Journal_name (#PCDATA)>
+	    <!ELEMENT Volume (#PCDATA)>
+	    <!ELEMENT Page_number (#PCDATA)>
+	    <!ELEMENT Journal_issue (#PCDATA)>
+	    <!ELEMENT Journal_editor (#PCDATA)>
+
+      <!ELEMENT ME_line (#PCDATA)>
+
+      <!ELEMENT SE_line (#PCDATA)>
+
+      <!ELEMENT FL_line (#PCDATA)>
+      
+      <!ELEMENT IF_line (POS,BASE,NEDO?,MGC?)>
+            <!ELEMENT POS (#PCDATA)>
+	    <!ELEMENT BASE (#PCDATA)>
+	    <!ELEMENT NEDO (#PCDATA)>
+	    <!ELEMENT MGC (#PCDATA)>
+      
+      <!ELEMENT Taxonomy (TX_line*)>
+         <!ELEMENT TX_line (#PCDATA)>
+
+      <!ELEMENT KW_line (#PCDATA)>
+
+      <!ELEMENT Old_format (FP_line,DO1_line,DO2_line,RF_line)>
+         <!ELEMENT FP_line (#PCDATA)>
+	 <!ELEMENT DO1_line (#PCDATA)>
+	 <!ELEMENT DO2_line (#PCDATA)>
+	 <!ELEMENT RF_line (REFS_ABB+)>
+	    <!ELEMENT REFS_ABB (#PCDATA)>
+
+      <!ELEMENT End_of_Entry EMPTY>
+
+
+<!-- List of Attributes -->
+
+<!ATTLIST epd xmlns CDATA #FIXED "http://www.epd.isb-sib.ch/">
+<!ATTLIST ID_line Type (standard|preliminary) "standard"
+                      Site_type (single|multiple|region) #REQUIRED
+                      Taxonomic_division (PLN|NEM|ART|MLS|ECH|VRT) #REQUIRED>
+
+<!ATTLIST No_similarity None CDATA #FIXED "none.">
+
+<!ATTLIST RX_line Journal_source (MEDLINE|OTHER) "MEDLINE">
+
+<!ATTLIST End_of_Entry End_pattern CDATA #FIXED "//">

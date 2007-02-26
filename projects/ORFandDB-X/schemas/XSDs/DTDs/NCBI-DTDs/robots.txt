@@ -1,0 +1,152 @@
+# robots.txt - robot exclusion file - back-end server version - no robots!
+# ========================================================================
+#
+# $Id: robots.txt,v 1.1 2006/06/01 17:46:49 janderso Exp $
+#
+##############################################################################
+# NOTE: this file is in the cfengine system. Local changes will be overriden #
+##############################################################################
+#
+# Version: 20 February 1998, Rand S. Huntzinger 
+#
+# Version: 15 May 2000, Charlie D. Cook
+#
+# Version: 25 March 2002, Andrey L. Vovk
+# open /mailman for htdig/3.1.6
+#
+# Version: 05 March 2003, Andrey L. Vovk
+# open /Entrez and /entrez for googlebot
+#
+# Version: 03 April 2003, Andrey L. Vovk
+# close all for Teleport Pro
+#
+# 4/20/06 - Charlie D. Cook
+#	Removing /blast as per ticket 68978, Scott McGinnis
+#
+# 4/28/06 - Charlie D. Cook
+#	Putting some /blast stuff back
+#
+# 20060522 - JSJA
+#	Removing /UniGene per ticket 69797
+#
+# ========================================================================
+
+User-agent: htdig/3.1.6
+Disallow: /htbin-post
+Disallow: /cgi-bin/BLAST
+Disallow: /entrez
+Disallow: /cgi-bin/COG
+Disallow: /Entrez
+Disallow: /genmap
+Disallow: /LocusLink
+Disallow: /cgi-bin/Entrez
+Disallow: /sutils
+Disallow: /htbin-post/Taxonomy
+Disallow: /Taxonomy/Browser
+Disallow: /Taxonomy/Selector
+Disallow: /Taxonomy/CommonTree
+Disallow: /entrez/sutils
+Disallow: /geo/query
+Disallow: /mapview
+Disallow: /blast/B
+Disallow: /blast/d
+Disallow: /blast/D
+Disallow: /blast/g
+
+User-agent: Googlebot
+Disallow: /htbin-post
+Disallow: /cgi-bin/BLAST
+Disallow: /cgi-bin/COG
+Disallow: /COG
+Disallow: /genmap
+Disallow: /LocusLink
+Disallow: /mailman
+Disallow: /cgi-bin/Entrez
+Disallow: /sutils
+Disallow: /entrez/viewer.fcgi
+Disallow: /htbin-post/Taxonomy
+Disallow: /Taxonomy/Browser
+Disallow: /Taxonomy/Selector
+Disallow: /Taxonomy/CommonTree
+Disallow: /entrez/sutils
+Disallow: /geo/query
+Disallow: /genome
+Disallow: /Genomes
+Disallow: /GENOMES
+Disallow: /SAGE
+Disallow: /SNP
+Disallow: /IEB/ToolBox/SB
+Disallow: /Structure/CDTrack
+Disallow: /Structure/DEMO
+Disallow: /Structure/dgs
+Disallow: /Structure/Entrez
+Disallow: /Structure/GIFS
+Disallow: /Structure/lexington
+Disallow: /Structure/mmdb
+Disallow: /Structure/VA
+Disallow: /Structure/vast
+Disallow: /Structure/cdd/cddfind.cgi
+Disallow: /Structure/cdd/qrpsb.cgi
+Disallow: /Structure/cdd/cddsrv.cgi
+Disallow: /Structure/cdd/nph-viewpng.cgi
+Disallow: /Structure/cdd/wrpsb.cgi
+Disallow: /Structure/VAST/nrpdbsrv.cgi
+Disallow: /Structure/cblast/cblast.cgi
+Disallow: /Structure/cblastplus/cblast.cgi
+Disallow: /Coffeebreak
+Disallow: /gorf
+Disallow: /genomes
+Disallow: /mapview
+Disallow: /blast/B
+Disallow: /blast/d
+Disallow: /blast/D
+Disallow: /blast/g
+
+
+User-agent: Teleport Pro
+Disallow: /htbin-post
+Disallow: /cgi-bin/BLAST
+Disallow: /entrez
+Disallow: /cgi-bin/COG
+Disallow: /Entrez
+Disallow: /genmap
+Disallow: /LocusLink
+Disallow: /mailman
+Disallow: /genome
+Disallow: /cgi-bin/Entrez
+Disallow: /sutils
+Disallow: /htbin-post/Taxonomy
+Disallow: /Taxonomy/Browser
+Disallow: /Taxonomy/Selector
+Disallow: /Taxonomy/CommonTree
+Disallow: /entrez/sutils
+Disallow: /geo/query
+Disallow: /mapview
+Disallow: /blast/B
+Disallow: /blast/d
+Disallow: /blast/D
+Disallow: /blast/g
+
+
+User-agent: *
+Disallow: /htbin-post
+Disallow: /cgi-bin/BLAST
+Disallow: /entrez
+Disallow: /cgi-bin/COG
+Disallow: /Entrez
+Disallow: /genmap
+Disallow: /LocusLink
+Disallow: /mailman
+Disallow: /cgi-bin/Entrez
+Disallow: /sutils
+Disallow: /htbin-post/Taxonomy
+Disallow: /Taxonomy/Browser
+Disallow: /Taxonomy/Selector
+Disallow: /Taxonomy/CommonTree
+Disallow: /entrez/sutils
+Disallow: /geo/query
+Disallow: /mapview
+Disallow: /blast/B
+Disallow: /blast/d
+Disallow: /blast/D
+Disallow: /blast/g

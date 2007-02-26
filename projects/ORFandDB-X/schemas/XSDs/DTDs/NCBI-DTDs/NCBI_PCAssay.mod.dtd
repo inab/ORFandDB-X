@@ -1,0 +1,356 @@
+<!-- ============================================
+     ::DATATOOL:: Generated from "pcassay.asn"
+     ::DATATOOL:: by application DATATOOL version 1.5.0
+     ::DATATOOL:: on 06/06/2006 23:03:48
+     ============================================ -->
+
+<!-- ============================================ -->
+<!-- This section is mapped from module "NCBI-PCAssay"
+================================================= -->
+<!--
+ $Id: pcassay.asn,v 1.12 2006/01/10 12:54:50 bolton Exp $
+ ===========================================================================
+
+                            PUBLIC DOMAIN NOTICE
+               National Center for Biotechnology Information
+
+  This software/database is a "United States Government Work" under the
+  terms of the United States Copyright Act.  It was written as part of
+  the author's official duties as a United States Government employee and
+  thus cannot be copyrighted.  This software/database is freely available
+  to the public for use. The National Library of Medicine and the U.S.
+  Government have not placed any restriction on its use or reproduction.
+
+  Although all reasonable efforts have been taken to ensure the accuracy
+  and reliability of the software and data, the NLM and the U.S.
+  Government do not and cannot warrant the performance or results that
+  may be obtained by using this software or data. The NLM and the U.S.
+  Government disclaim all warranties, express or implied, including
+  warranties of performance, merchantability or fitness for any particular
+  purpose.
+
+  Please cite the author in any work or product based on this material.
+
+ ===========================================================================
+
+ Authors:  NCBI Structure Group
+
+ File Description:
+      ASN.1 definitions for PubChem biological assay data database
+
+ ===========================================================================
+-->
+<!-- Elements referenced from other modules:
+          Pub FROM NCBI-Pub,
+          Date,
+          Object-id FROM NCBI-General,
+          PC-ID,
+          PC-Source,
+          PC-XRefData FROM NCBI-PCSubstance -->
+
+<!-- ============================================ -->
+
+
+<!--
+ EXPORTS ;
+ Container for multiple Assay Data Submissions
+-->
+
+<!ELEMENT PC-AssayContainer (PC-AssaySubmit*)>
+
+<!ELEMENT PC-AssaySubmit (
+        PC-AssaySubmit_assay, 
+        PC-AssaySubmit_data?, 
+        PC-AssaySubmit_revoke?)>
+
+<!-- Assay Description or pre-existing Identifier -->
+
+
+<!ELEMENT PC-AssaySubmit_assay (
+        PC-AssaySubmit_assay_aid | 
+        PC-AssaySubmit_assay_aid-source | 
+        PC-AssaySubmit_assay_descr | 
+        PC-AssaySubmit_assay_aidver)>
+
+<!ELEMENT PC-AssaySubmit_assay_aid (%INTEGER;)> <!--   Assay Identifier -->
+<!ELEMENT PC-AssaySubmit_assay_aid-source (PC-Source)> <!--   External Assay Identifier -->
+<!ELEMENT PC-AssaySubmit_assay_descr (PC-AssayDescription)> <!--   Assay Description (new or updated) -->
+<!ELEMENT PC-AssaySubmit_assay_aidver (PC-ID)> <!--   Assay Identifier/Version (for internal use) -->
+<!ELEMENT PC-AssaySubmit_data (PC-AssayResults*)> <!-- Assay Data Deposition (vector) -->
+<!ELEMENT PC-AssaySubmit_revoke (PC-AssaySubmit_revoke_E*)> <!-- List of SID's whose data is to be suppressed -->
+<!ELEMENT PC-AssaySubmit_revoke_E (%INTEGER;)>
+<!ELEMENT PC-AssayResultsSet (PC-AssayResults*)>
+
+<!ELEMENT PC-AssayResults (
+        PC-AssayResults_sid, 
+        PC-AssayResults_sid-source?, 
+        PC-AssayResults_version?, 
+        PC-AssayResults_comment?, 
+        PC-AssayResults_outcome?, 
+        PC-AssayResults_rank?, 
+        PC-AssayResults_data?, 
+        PC-AssayResults_url?, 
+        PC-AssayResults_xref?)>
+
+<!--
+ Tested Substance ID/Version  [Either valid ID or, 
+   if "sid-source" is used, this is a "0" value]
+   Note: A valid ID is greater than "0"
+-->
+
+<!ELEMENT PC-AssayResults_sid (%INTEGER;)>
+<!--
+ External Identifier for this Substance
+   Note: May be used in-lieu of "sid"
+   Note: This is non-optional if "sid" is "0"
+-->
+
+<!ELEMENT PC-AssayResults_sid-source (PC-Source)>
+<!--
+ Version identifier for this AID-SID Result
+   Note: Incoming data should set this to be "0"
+-->
+
+<!ELEMENT PC-AssayResults_version (%INTEGER;)>
+<!ELEMENT PC-AssayResults_comment (#PCDATA)> <!-- Annotation or qualifier for this Result -->
+<!-- Assay Outcome -->
+
+<!ELEMENT PC-AssayResults_outcome (%INTEGER;)>
+<!ATTLIST PC-AssayResults_outcome value (
+        inactive |
+        active |
+        inconclusive |
+        unspecified ) #IMPLIED >
+<!--
+    inactive -    Substance is considered Inactive
+    active -    Substance is considered Active
+    inconclusive -    Substance is Inconclusive
+    unspecified -    Substance Outcome is Unspecified
+-->
+
+<!--
+ Rank of Assay Outcome (for result ordering)
+   Note: Larger numbers are more active
+-->
+
+<!ELEMENT PC-AssayResults_rank (%INTEGER;)>
+<!ELEMENT PC-AssayResults_data (PC-AssayData*)> <!-- Assay Data Reported for this SID (vector) -->
+<!ELEMENT PC-AssayResults_url (#PCDATA)> <!-- Depositor provided URL for this Result -->
+<!ELEMENT PC-AssayResults_xref (PC-AnnotatedXRef*)> <!-- Annotated Cross-Reference Information -->
+
+<!ELEMENT PC-AssayData (
+        PC-AssayData_tid, 
+        PC-AssayData_value)>
+
+<!--
+ Assay Result Field Type ID (TID)
+   Note: Result Field ID's must be greater than "0"
+-->
+
+<!ELEMENT PC-AssayData_tid (%INTEGER;)>
+<!-- Assay Result, must be the same as defined for TID -->
+
+
+<!ELEMENT PC-AssayData_value (
+        PC-AssayData_value_ival | 
+        PC-AssayData_value_fval | 
+        PC-AssayData_value_bval | 
+        PC-AssayData_value_sval)>
+
+<!ELEMENT PC-AssayData_value_ival (%INTEGER;)>
+<!ELEMENT PC-AssayData_value_fval (%REAL;)>
+<!ELEMENT PC-AssayData_value_bval EMPTY>
+<!ATTLIST PC-AssayData_value_bval value ( true | false ) #REQUIRED >
+
+<!ELEMENT PC-AssayData_value_sval (#PCDATA)>
+
+<!ELEMENT PC-AssayDescription (
+        PC-AssayDescription_aid, 
+        PC-AssayDescription_aid-source?, 
+        PC-AssayDescription_name, 
+        PC-AssayDescription_description?, 
+        PC-AssayDescription_protocol?, 
+        PC-AssayDescription_comment?, 
+        PC-AssayDescription_xref?, 
+        PC-AssayDescription_results, 
+        PC-AssayDescription_pub?, 
+        PC-AssayDescription_revision?)>
+
+<!--
+ Assay Description ID/Version  [Either valid ID 
+   or, if "aid-source" is used, a "0" dummy value]
+   Note: Version is for internal use (only?)
+   Note: A valid ID is greater than "0"
+-->
+
+<!ELEMENT PC-AssayDescription_aid (PC-ID)>
+<!--
+ External Identifier for this Assay Description
+   Note: May be used in-lieu of "aid"
+   Note: This is non-optional if "aid" ID is "0"
+-->
+
+<!ELEMENT PC-AssayDescription_aid-source (PC-Source)>
+<!ELEMENT PC-AssayDescription_name (#PCDATA)> <!-- Short Assay Name (for display purposes) -->
+<!ELEMENT PC-AssayDescription_description (PC-AssayDescription_description_E*)> <!-- Description of Assay -->
+<!ELEMENT PC-AssayDescription_description_E (#PCDATA)>
+<!ELEMENT PC-AssayDescription_protocol (PC-AssayDescription_protocol_E*)> <!-- Procedure used to generate results -->
+<!ELEMENT PC-AssayDescription_protocol_E (#PCDATA)>
+<!ELEMENT PC-AssayDescription_comment (PC-AssayDescription_comment_E*)> <!-- Comments or additional information -->
+<!ELEMENT PC-AssayDescription_comment_E (#PCDATA)>
+<!ELEMENT PC-AssayDescription_xref (PC-AnnotatedXRef*)> <!-- Annotated Cross-Reference Information -->
+<!ELEMENT PC-AssayDescription_results (PC-ResultType*)> <!-- Result Definitions (vector) -->
+<!ELEMENT PC-AssayDescription_pub (Pub*)> <!-- Depositor provided publications for this assay -->
+<!ELEMENT PC-AssayDescription_revision (%INTEGER;)> <!-- Revision identifier for textual description -->
+
+<!ELEMENT PC-AnnotatedXRef (
+        PC-AnnotatedXRef_xref, 
+        PC-AnnotatedXRef_comment?)>
+
+<!ELEMENT PC-AnnotatedXRef_xref (PC-XRefData)> <!-- Cross-Reference Information -->
+<!ELEMENT PC-AnnotatedXRef_comment (#PCDATA)> <!-- Annotation qualifier describing Cross-Reference meaning -->
+
+<!ELEMENT PC-ResultType (
+        PC-ResultType_tid, 
+        PC-ResultType_name, 
+        PC-ResultType_description?, 
+        PC-ResultType_type, 
+        PC-ResultType_constraints?, 
+        PC-ResultType_unit?, 
+        PC-ResultType_sunit?, 
+        PC-ResultType_transform?, 
+        PC-ResultType_stransform?)>
+
+<!ELEMENT PC-ResultType_tid (%INTEGER;)> <!-- Assay Result Field Type ID (TID) -->
+<!ELEMENT PC-ResultType_name (#PCDATA)> <!-- Result Field Name (short name for display) -->
+<!ELEMENT PC-ResultType_description (PC-ResultType_description_E*)> <!-- Result Field Description -->
+<!ELEMENT PC-ResultType_description_E (#PCDATA)>
+<!-- Result Data Type -->
+
+<!ELEMENT PC-ResultType_type (%INTEGER;)>
+<!ATTLIST PC-ResultType_type value (
+        float |
+        int |
+        bool |
+        string ) #IMPLIED >
+
+<!--
+ Allowed Values, used for validating incoming data
+ If type is "float"
+-->
+
+
+<!ELEMENT PC-ResultType_constraints (
+        PC-ResultType_constraints_fset | 
+        PC-ResultType_constraints_fmin | 
+        PC-ResultType_constraints_fmax | 
+        PC-ResultType_constraints_frange | 
+        PC-ResultType_constraints_iset | 
+        PC-ResultType_constraints_imin | 
+        PC-ResultType_constraints_imax | 
+        PC-ResultType_constraints_irange | 
+        PC-ResultType_constraints_sset)>
+
+<!ELEMENT PC-ResultType_constraints_fset (PC-ResultType_constraints_fset_E*)> <!--   Allowed values must be equal to one of these -->
+<!ELEMENT PC-ResultType_constraints_fset_E (%REAL;)>
+<!ELEMENT PC-ResultType_constraints_fmin (%REAL;)> <!--   Allowed values (x) must be [ fmin <= x ] -->
+<!ELEMENT PC-ResultType_constraints_fmax (%REAL;)> <!--   Allowed values (x) must be [ x <= fmax ] -->
+<!ELEMENT PC-ResultType_constraints_frange (PC-RealMinMax)> <!--   Minimum/Maximum Range [ min <= x <= max ] -->
+<!ELEMENT PC-ResultType_constraints_iset (PC-ResultType_constraints_iset_E*)> <!--   Allowed values must be equal to one of these -->
+<!ELEMENT PC-ResultType_constraints_iset_E (%INTEGER;)>
+<!ELEMENT PC-ResultType_constraints_imin (%INTEGER;)> <!--   Allowed values (x) must be [ imin <= x ] -->
+<!ELEMENT PC-ResultType_constraints_imax (%INTEGER;)> <!--   Allowed values (x) must be [ x <= imax ] -->
+<!ELEMENT PC-ResultType_constraints_irange (PC-IntegerMinMax)> <!--   Minimum/Maximum Range [ min <= x <= max ] -->
+<!ELEMENT PC-ResultType_constraints_sset (PC-ResultType_constraints_sset_E*)> <!--   Allowed values must be equal to one of these -->
+<!ELEMENT PC-ResultType_constraints_sset_E (#PCDATA)>
+<!-- Units for Value -->
+
+<!ELEMENT PC-ResultType_unit (%INTEGER;)>
+<!ATTLIST PC-ResultType_unit value (
+        ppt |
+        ppm |
+        ppb |
+        mm |
+        um |
+        nm |
+        pm |
+        fm |
+        mgml |
+        ugml |
+        ngml |
+        pgml |
+        fgml |
+        m |
+        percent |
+        ratio |
+        sec |
+        rsec |
+        min |
+        rmin |
+        day |
+        rday |
+        none |
+        unspecified ) #IMPLIED >
+<!--
+    ppt -  Parts per Thousand
+    ppm -  Parts per Million
+    ppb -  Parts per Billion
+    mm -  milliM
+    um -  microM
+    nm -  nanoM
+    pm -  picoM
+    fm -  femtoM
+    mgml -  milligrams per mL
+    ugml -  micrograms per mL
+    ngml -  nanograms per mL
+    pgml -  picograms per mL
+    fgml -  femtograms per mL
+    m -  Molar
+    percent -  Percent
+    ratio -  Ratio
+    sec -  Seconds
+    rsec -  Reciprocal Seconds
+    min -  Minutes
+    rmin -  Reciprocal Minutes
+    day -  Days
+    rday -  Reciprocal Days
+-->
+
+<!ELEMENT PC-ResultType_sunit (#PCDATA)> <!-- Unit Type (as a String) -->
+<!-- Value Type Details -->
+
+<!ELEMENT PC-ResultType_transform (%INTEGER;)>
+<!ATTLIST PC-ResultType_transform value (
+        linear |
+        ln |
+        log |
+        reciprocal |
+        negative |
+        nlog |
+        nln ) #IMPLIED >
+<!--
+    linear -  Linear Scale (x)
+    ln -  Natural Log Scale (ln x)
+    log -  Log Base 10 Scale (log10 x)
+    reciprocal -  Reciprocal Scale (1/x)
+    negative -  Negative Linear Scale (-x)
+    nlog -  Negative Log Base 10 Scale (-log10 x)
+    nln -  Negative Natural Log Scane (-ln x)
+-->
+
+<!ELEMENT PC-ResultType_stransform (#PCDATA)> <!-- Value Transform Type (as a String) -->
+
+<!ELEMENT PC-IntegerMinMax (
+        PC-IntegerMinMax_min, 
+        PC-IntegerMinMax_max)>
+
+<!ELEMENT PC-IntegerMinMax_min (%INTEGER;)> <!-- Minimum Value Allowed -->
+<!ELEMENT PC-IntegerMinMax_max (%INTEGER;)> <!-- Maximum Value Allowed -->
+
+<!ELEMENT PC-RealMinMax (
+        PC-RealMinMax_min, 
+        PC-RealMinMax_max)>
+
+<!ELEMENT PC-RealMinMax_min (%REAL;)> <!-- Minimum Value Allowed -->
+<!ELEMENT PC-RealMinMax_max (%REAL;)> <!-- Maximum Value Allowed -->
+

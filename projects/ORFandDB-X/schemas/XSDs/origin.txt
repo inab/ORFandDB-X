@@ -1,0 +1,16 @@
+(!)Not existing
+(*)modified
+(+)generated from DTD
+
+Namespace	Schema	Location
+http://uniprot.org/uniprot	uniprot.xsd	/drives/databases/UniProt/current_release/knowledgebase/complete/uniprot.xsd.gz
+!http://uniprot.org/uniprot/keywords	keyword.xsd	/drives/databases/UniProt/current_release/knowledgebase/complete/docs/keyword.xsd.gz
+!http://www.ebi.ac.uk/interpro	*interpro.xsd	/drives/databases/InterPro/interpro.xsd
+!http://www.ebi.ac.uk/interpro/match	+interpro_match.xsd	/drives/databases/InterPro/match.dtd
+http://www.geneontology.org/dtds/go.dtd#	+go.xsd	/drives/databases/GO/go_daily-rdf.dtd.gz
+http://uniprot.org/uniref	uniref.xsd	http://www.uniprot.org/support/docs/uniref.xsd
+http://www.epd.isb-sib.ch/	+epd.xsd	ftp://ftp.epd.unil.ch/pub/databases/epd/views/epd.dtd
+http://deposit.pdb.org/pdbML/pdbx.xsd	pdbx.xsd	http://pdbml.rcsb.org/schema/pdbx.xsd
+http://deposit.pdb.org/pdbML/pdbx-ext.xsd	pdbx-ext.xsd	http://pdbml.rcsb.org/schema/pdbx-ext.xsd
+!http://www.nlm.nih.gov/databases/dtd/	+nlmmedline_060101.xsd	http://www.nlm.nih.gov/databases/dtd/nlmmedline_060101.dtd
+!http://www.mged.org/Workgroups/MAGE/	+MAGE-ML.xsd	http://www.omg.org/cgi-bin/apps/doc?dtc/03-05-03.dtd
