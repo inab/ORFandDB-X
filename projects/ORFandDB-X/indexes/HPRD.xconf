@@ -5,15 +5,15 @@
 		<fulltext default="none" attributes="false" alphanum="false" />
 		<create path="//h:entry_cdna" type="xs:string"/>
 		<create path="//h:entry_protein" type="xs:string"/>
-		<create path="//@h:id" type="xs:string"/>
+		<create path="//@id" type="xs:string"/>
 		
-		<create path="//i:experimentDescription/@i:id" type="xs:string"/>
-		<create path="//i:interactor/@i:id" type="xs:string"/>
+		<create path="//i:experimentDescription/@id" type="xs:string"/>
+		<create path="//i:interactor/@id" type="xs:string"/>
 		<create path="//i:experimentRef" type="xs:string"/>
 		<create path="//i:interactorRef" type="xs:string"/>
-		<create path="//@i:id" type="xs:string"/>
-		<create path="//@i:secondary" type="xs:string"/>
-		<create path="//@i:ncbiTaxId" type="xs:string"/>
+		<create path="//@id" type="xs:string"/>
+		<create path="//@secondary" type="xs:string"/>
+		<create path="//@ncbiTaxId" type="xs:string"/>
 		<!-- And QName indexes -->
 		<create qname="h:entry_cdna" type="xs:string"/>
 		<create qname="h:entry_protein" type="xs:string"/>
