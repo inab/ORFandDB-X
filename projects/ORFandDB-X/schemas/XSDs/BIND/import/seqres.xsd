@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Seqres
+================================================= -->
+<!-- Definition of Seq-graph -->
+
+<xs:element name="Seq-graph" type="Seq-graph-a-type" />
+<xs:complexType name="Seq-graph-a-type">
+<xs:sequence>
+<xs:element name="Seq-graph_title" type="Seq-graph_title-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_comment" type="Seq-graph_comment-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_loc" type="Seq-graph_loc-a-type" />
+<xs:element name="Seq-graph_title-x" type="Seq-graph_title-x-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_title-y" type="Seq-graph_title-y-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_comp" type="Seq-graph_comp-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_a" type="Seq-graph_a-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_b" type="Seq-graph_b-a-type" minOccurs="0" />
+<xs:element name="Seq-graph_numval" type="Seq-graph_numval-a-type" />
+<xs:element name="Seq-graph_graph" type="Seq-graph_graph-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Seq-graph_title" type = "xs:string" />
+<xs:simpleType name="Seq-graph_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_comment" type = "xs:string" />
+<xs:simpleType name="Seq-graph_comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seq-graph_loc-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-graph_title-x" type = "xs:string" />
+<xs:simpleType name="Seq-graph_title-x-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_title-y" type = "xs:string" />
+<xs:simpleType name="Seq-graph_title-y-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_comp" type = "xs:integer" />
+<xs:simpleType name="Seq-graph_comp-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_a" type = "xs:decimal" />
+<xs:simpleType name="Seq-graph_a-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_b" type = "xs:decimal" />
+<xs:simpleType name="Seq-graph_b-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_numval" type = "xs:integer" />
+<xs:simpleType name="Seq-graph_numval-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Seq-graph_graph" type="Seq-graph_graph-a-type" />
+<xs:complexType name="Seq-graph_graph-a-type">
+<xs:choice>
+<xs:element name="Seq-graph_graph_real" type="Seq-graph_graph_real-a-type" />
+<xs:element name="Seq-graph_graph_int" type="Seq-graph_graph_int-a-type" />
+<xs:element name="Seq-graph_graph_byte" type="Seq-graph_graph_byte-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Seq-graph_graph_real-a-type">
+<xs:sequence>
+<xs:element name="Real-graph" type="Real-graph-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-graph_graph_int-a-type">
+<xs:sequence>
+<xs:element name="Int-graph" type="Int-graph-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-graph_graph_byte-a-type">
+<xs:sequence>
+<xs:element name="Byte-graph" type="Byte-graph-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Real-graph -->
+
+<xs:element name="Real-graph" type="Real-graph-a-type" />
+<xs:complexType name="Real-graph-a-type">
+<xs:sequence>
+<xs:element name="Real-graph_max" type="Real-graph_max-a-type" />
+<xs:element name="Real-graph_min" type="Real-graph_min-a-type" />
+<xs:element name="Real-graph_axis" type="Real-graph_axis-a-type" />
+<xs:element name="Real-graph_values" type="Real-graph_values-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Real-graph_max" type = "xs:decimal" />
+<xs:simpleType name="Real-graph_max-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Real-graph_min" type = "xs:decimal" />
+<xs:simpleType name="Real-graph_min-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Real-graph_axis" type = "xs:decimal" />
+<xs:simpleType name="Real-graph_axis-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:complexType name="Real-graph_values-a-type" >
+<xs:sequence>
+<xs:element name="Real-graph_values_E" type="Real-graph_values_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Real-graph_values_E" type = "xs:decimal" />
+<xs:simpleType name="Real-graph_values_E-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Int-graph -->
+
+<xs:element name="Int-graph" type="Int-graph-a-type" />
+<xs:complexType name="Int-graph-a-type">
+<xs:sequence>
+<xs:element name="Int-graph_max" type="Int-graph_max-a-type" />
+<xs:element name="Int-graph_min" type="Int-graph_min-a-type" />
+<xs:element name="Int-graph_axis" type="Int-graph_axis-a-type" />
+<xs:element name="Int-graph_values" type="Int-graph_values-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Int-graph_max" type = "xs:integer" />
+<xs:simpleType name="Int-graph_max-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Int-graph_min" type = "xs:integer" />
+<xs:simpleType name="Int-graph_min-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Int-graph_axis" type = "xs:integer" />
+<xs:simpleType name="Int-graph_axis-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Int-graph_values-a-type" >
+<xs:sequence>
+<xs:element name="Int-graph_values_E" type="Int-graph_values_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Int-graph_values_E" type = "xs:integer" />
+<xs:simpleType name="Int-graph_values_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Byte-graph -->
+
+<xs:element name="Byte-graph" type="Byte-graph-a-type" />
+<xs:complexType name="Byte-graph-a-type">
+<xs:sequence>
+<xs:element name="Byte-graph_max" type="Byte-graph_max-a-type" />
+<xs:element name="Byte-graph_min" type="Byte-graph_min-a-type" />
+<xs:element name="Byte-graph_axis" type="Byte-graph_axis-a-type" />
+<xs:element name="Byte-graph_values" type="Byte-graph_values-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Byte-graph_max" type = "xs:integer" />
+<xs:simpleType name="Byte-graph_max-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Byte-graph_min" type = "xs:integer" />
+<xs:simpleType name="Byte-graph_min-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Byte-graph_axis" type = "xs:integer" />
+<xs:simpleType name="Byte-graph_axis-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Byte-graph_values" type = "xs:hexBinary" />
+<xs:simpleType name="Byte-graph_values-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+</xs:schema>

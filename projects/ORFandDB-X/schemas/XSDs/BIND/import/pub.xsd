@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Pub
+================================================= -->
+<!-- Definition of Pub -->
+
+<xs:element name="Pub" type="Pub-a-type" />
+<xs:complexType name="Pub-a-type">
+<xs:choice>
+<xs:element name="Pub_gen" type="Pub_gen-a-type" />
+<xs:element name="Pub_sub" type="Pub_sub-a-type" />
+<xs:element name="Pub_medline" type="Pub_medline-a-type" />
+<xs:element name="Pub_muid" type="Pub_muid-a-type" />
+<xs:element name="Pub_article" type="Pub_article-a-type" />
+<xs:element name="Pub_journal" type="Pub_journal-a-type" />
+<xs:element name="Pub_book" type="Pub_book-a-type" />
+<xs:element name="Pub_proc" type="Pub_proc-a-type" />
+<xs:element name="Pub_patent" type="Pub_patent-a-type" />
+<xs:element name="Pub_pat-id" type="Pub_pat-id-a-type" />
+<xs:element name="Pub_man" type="Pub_man-a-type" />
+<xs:element name="Pub_equiv" type="Pub_equiv-a-type" />
+<xs:element name="Pub_pmid" type="Pub_pmid-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Pub_gen-a-type">
+<xs:sequence>
+<xs:element name="Cit-gen" type="Cit-gen-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_sub-a-type">
+<xs:sequence>
+<xs:element name="Cit-sub" type="Cit-sub-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_medline-a-type">
+<xs:sequence>
+<xs:element name="Medline-entry" type="Medline-entry-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Pub_muid" type = "xs:integer" />
+<xs:simpleType name="Pub_muid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Pub_article-a-type">
+<xs:sequence>
+<xs:element name="Cit-art" type="Cit-art-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_journal-a-type">
+<xs:sequence>
+<xs:element name="Cit-jour" type="Cit-jour-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_book-a-type">
+<xs:sequence>
+<xs:element name="Cit-book" type="Cit-book-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_proc-a-type">
+<xs:sequence>
+<xs:element name="Cit-proc" type="Cit-proc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_patent-a-type">
+<xs:sequence>
+<xs:element name="Cit-pat" type="Cit-pat-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_pat-id-a-type">
+<xs:sequence>
+<xs:element name="Id-pat" type="Id-pat-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_man-a-type">
+<xs:sequence>
+<xs:element name="Cit-let" type="Cit-let-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_equiv-a-type">
+<xs:sequence>
+<xs:element name="Pub-equiv" type="Pub-equiv-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub_pmid-a-type">
+<xs:sequence>
+<xs:element name="PubMedId" type="PubMedId-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Pub-equiv -->
+
+<xs:complexType name="Pub-equiv-a-type" >
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Pub-set -->
+
+<xs:element name="Pub-set" type="Pub-set-a-type" />
+<xs:complexType name="Pub-set-a-type">
+<xs:choice>
+<xs:element name="Pub-set_pub" type="Pub-set_pub-a-type" />
+<xs:element name="Pub-set_medline" type="Pub-set_medline-a-type" />
+<xs:element name="Pub-set_article" type="Pub-set_article-a-type" />
+<xs:element name="Pub-set_journal" type="Pub-set_journal-a-type" />
+<xs:element name="Pub-set_book" type="Pub-set_book-a-type" />
+<xs:element name="Pub-set_proc" type="Pub-set_proc-a-type" />
+<xs:element name="Pub-set_patent" type="Pub-set_patent-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Pub-set_pub-a-type" >
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub-set_medline-a-type" >
+<xs:sequence>
+<xs:element name="Medline-entry" type="Medline-entry-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub-set_article-a-type" >
+<xs:sequence>
+<xs:element name="Cit-art" type="Cit-art-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub-set_journal-a-type" >
+<xs:sequence>
+<xs:element name="Cit-jour" type="Cit-jour-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub-set_book-a-type" >
+<xs:sequence>
+<xs:element name="Cit-book" type="Cit-book-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub-set_proc-a-type" >
+<xs:sequence>
+<xs:element name="Cit-proc" type="Cit-proc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pub-set_patent-a-type" >
+<xs:sequence>
+<xs:element name="Cit-pat" type="Cit-pat-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

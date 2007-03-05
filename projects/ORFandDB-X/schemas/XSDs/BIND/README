@@ -1,0 +1,83 @@
+The Blueprint Initiative
+Samuel Lunenfeld Research Institute
+
+
+(c)2005 The Blueprint Initiative of Mount Sinai Hospital.
+All Rights Reserved.
+
+
+README: BLUEPRINT FTP AREA
+ftp://ftp.bind.ca/pub/BIND/spec/w3schema/
+
+
+LAST UPDATE OF THIS README: February 2, 2005
+
+
+This directory contains the BIND specification v3.1 in W3C XML Schema format. 
+Files are released as indicated on their data/timestamp.
+
+
+FILES---------------------------------------------------------------------------
+
+bind.xsd            Mail BIND specification
+
+bind-config.xsd     BIND web configuration specification
+
+bindprof.xsd        BIND profile specification
+
+import              Directory containing BIND dependant NCBI Schemas.  These 
+                    schemas should be included in bind.xsd for proper XML 
+                    validation.
+
+--------------------------------------------------------------------------------
+
+If you use BIND, please cite:
+
+Bader GD, Betel D, Hogue CW. (2003) BIND: the Biomolecular 
+Interaction Network Database. Nucleic Acids Res. 31(1):248-50 PMID: 12519993
+
+The Blueprint Initiative
+Samuel Lunenfeld Research Institute
+Mt. Sinai Hospital
+522 University Avenue, 9th Floor, Suite 900
+Toronto, Ontario, Canada M5G 1W7
+Phone: 416-596-8505
+Fax:   416-596-8077
+
+BIND Inquires:     info@bind.ca
+SeqHound Inquires: seqhound@blueprint.org
+TraDES Inquiries:  trades@blueprint.org
+Other:             info@blueprint.org
+
+LICENCE-------------------------------------------------------------------------
+
+This program is free software; you can redistribute it and/or modify it under 
+the terms of the GNU General Public License as published by the Free Software 
+Foundation; either version 2 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, write to the
+       Free Software Foundation, Inc.,
+       59 Temple Place, Suite 330, Boston, MA
+       02111-1307  USA
+or visit  <http://www.gnu.org/copyleft/gpl.html>
+
+SPECIAL EXCEPTIONS
+
+As a special exception, Mount Sinai Hospital gives permission to link this 
+program with the following non-GPL programs or libraries, and distribute the 
+resulting executable, without including the source code for these in the source 
+distribution:
+
+a) CodeBase 6.5 or greater from Sequiter Software Inc.
+
+b) The C or C++ interface to Oracle 8.x or greater, from Oracle Corporation or 
+   IBM DB2 UDB.
+
+--------------------------------------------------------------------------------

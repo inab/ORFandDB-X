@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module MMDB-Features
+================================================= -->
+<!-- Definition of Biostruc-feature-set -->
+
+<xs:element name="Biostruc-feature-set" type="Biostruc-feature-set-a-type" />
+<xs:complexType name="Biostruc-feature-set-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature-set_id" type="Biostruc-feature-set_id-a-type" />
+<xs:element name="Biostruc-feature-set_descr" type="Biostruc-feature-set_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc-feature-set_features" type="Biostruc-feature-set_features-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-feature-set_id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature-set-id" type="Biostruc-feature-set-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature-set_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-feature-set-descr" type="Biostruc-feature-set-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature-set_features-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-feature" type="Biostruc-feature-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-feature-set-id -->
+
+<xs:element name="Biostruc-feature-set-id" type = "xs:integer" />
+<xs:simpleType name="Biostruc-feature-set-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Biostruc-feature-set-descr -->
+
+<xs:element name="Biostruc-feature-set-descr" type="Biostruc-feature-set-descr-a-type" />
+<xs:complexType name="Biostruc-feature-set-descr-a-type">
+<xs:choice>
+<xs:element name="Biostruc-feature-set-descr_name" type="Biostruc-feature-set-descr_name-a-type" />
+<xs:element name="Biostruc-feature-set-descr_pdb-comment" type="Biostruc-feature-set-descr_pdb-comment-a-type" />
+<xs:element name="Biostruc-feature-set-descr_other-comment" type="Biostruc-feature-set-descr_other-comment-a-type" />
+<xs:element name="Biostruc-feature-set-descr_attribution" type="Biostruc-feature-set-descr_attribution-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Biostruc-feature-set-descr_name" type = "xs:string" />
+<xs:simpleType name="Biostruc-feature-set-descr_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biostruc-feature-set-descr_pdb-comment" type = "xs:string" />
+<xs:simpleType name="Biostruc-feature-set-descr_pdb-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biostruc-feature-set-descr_other-comment" type = "xs:string" />
+<xs:simpleType name="Biostruc-feature-set-descr_other-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Biostruc-feature-set-descr_attribution-a-type">
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-feature -->
+
+<xs:element name="Biostruc-feature" type="Biostruc-feature-a-type" />
+<xs:complexType name="Biostruc-feature-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature_id" type="Biostruc-feature_id-a-type" minOccurs="0" />
+<xs:element name="Biostruc-feature_name" type="Biostruc-feature_name-a-type" minOccurs="0" />
+<xs:element name="Biostruc-feature_type" type="Biostruc-feature_type-a-type" minOccurs="0" />
+<xs:element name="Biostruc-feature_property" type="Biostruc-feature_property-a-type" minOccurs="0" />
+<xs:element name="Biostruc-feature_location" type="Biostruc-feature_location-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-feature_id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature-id" type="Biostruc-feature-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biostruc-feature_name" type = "xs:string" />
+<xs:simpleType name="Biostruc-feature_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biostruc-feature_type" type="Biostruc-feature_type-a-type" />
+<xs:complexType name="Biostruc-feature_type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="helix" />
+<xs:enumeration value="strand" />
+<xs:enumeration value="sheet" />
+<xs:enumeration value="turn" />
+<xs:enumeration value="site" />
+<xs:enumeration value="footnote" />
+<xs:enumeration value="comment" />
+<xs:enumeration value="subgraph" />
+<xs:enumeration value="region" />
+<xs:enumeration value="core" />
+<xs:enumeration value="supercore" />
+<xs:enumeration value="color" />
+<xs:enumeration value="render" />
+<xs:enumeration value="label" />
+<xs:enumeration value="transform" />
+<xs:enumeration value="camera" />
+<xs:enumeration value="script" />
+<xs:enumeration value="alignment" />
+<xs:enumeration value="similarity" />
+<xs:enumeration value="multalign" />
+<xs:enumeration value="indirect" />
+<xs:enumeration value="cn3dstate" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="Biostruc-feature_property" type="Biostruc-feature_property-a-type" />
+<xs:complexType name="Biostruc-feature_property-a-type">
+<xs:choice>
+<xs:element name="Biostruc-feature_property_color" type="Biostruc-feature_property_color-a-type" />
+<xs:element name="Biostruc-feature_property_render" type="Biostruc-feature_property_render-a-type" />
+<xs:element name="Biostruc-feature_property_transform" type="Biostruc-feature_property_transform-a-type" />
+<xs:element name="Biostruc-feature_property_camera" type="Biostruc-feature_property_camera-a-type" />
+<xs:element name="Biostruc-feature_property_script" type="Biostruc-feature_property_script-a-type" />
+<xs:element name="Biostruc-feature_property_user" type="Biostruc-feature_property_user-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_property_color-a-type">
+<xs:sequence>
+<xs:element name="Color-prop" type="Color-prop-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_property_render-a-type">
+<xs:sequence>
+<xs:element name="Render-prop" type="Render-prop-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_property_transform-a-type">
+<xs:sequence>
+<xs:element name="Transform" type="Transform-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_property_camera-a-type">
+<xs:sequence>
+<xs:element name="Camera" type="Camera-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_property_script-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-script" type="Biostruc-script-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_property_user-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biostruc-feature_location" type="Biostruc-feature_location-a-type" />
+<xs:complexType name="Biostruc-feature_location-a-type">
+<xs:choice>
+<xs:element name="Biostruc-feature_location_subgraph" type="Biostruc-feature_location_subgraph-a-type" />
+<xs:element name="Biostruc-feature_location_region" type="Biostruc-feature_location_region-a-type" />
+<xs:element name="Biostruc-feature_location_alignment" type="Biostruc-feature_location_alignment-a-type" />
+<xs:element name="Biostruc-feature_location_similarity" type="Biostruc-feature_location_similarity-a-type" />
+<xs:element name="Biostruc-feature_location_indirect" type="Biostruc-feature_location_indirect-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_location_subgraph-a-type">
+<xs:sequence>
+<xs:element name="Chem-graph-pntrs" type="Chem-graph-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_location_region-a-type">
+<xs:sequence>
+<xs:element name="Region-pntrs" type="Region-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_location_alignment-a-type">
+<xs:sequence>
+<xs:element name="Chem-graph-alignment" type="Chem-graph-alignment-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_location_similarity-a-type">
+<xs:sequence>
+<xs:element name="Region-similarity" type="Region-similarity-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-feature_location_indirect-a-type">
+<xs:sequence>
+<xs:element name="Other-feature" type="Other-feature-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Other-feature -->
+
+<xs:element name="Other-feature" type="Other-feature-a-type" />
+<xs:complexType name="Other-feature-a-type">
+<xs:sequence>
+<xs:element name="Other-feature_biostruc-id" type="Other-feature_biostruc-id-a-type" />
+<xs:element name="Other-feature_set" type="Other-feature_set-a-type" />
+<xs:element name="Other-feature_feature" type="Other-feature_feature-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Other-feature_biostruc-id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Other-feature_set-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature-set-id" type="Biostruc-feature-set-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Other-feature_feature-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature-id" type="Biostruc-feature-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-feature-id -->
+
+<xs:element name="Biostruc-feature-id" type = "xs:integer" />
+<xs:simpleType name="Biostruc-feature-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Chem-graph-pntrs -->
+
+<xs:element name="Chem-graph-pntrs" type="Chem-graph-pntrs-a-type" />
+<xs:complexType name="Chem-graph-pntrs-a-type">
+<xs:choice>
+<xs:element name="Chem-graph-pntrs_atoms" type="Chem-graph-pntrs_atoms-a-type" />
+<xs:element name="Chem-graph-pntrs_residues" type="Chem-graph-pntrs_residues-a-type" />
+<xs:element name="Chem-graph-pntrs_molecules" type="Chem-graph-pntrs_molecules-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Chem-graph-pntrs_atoms-a-type">
+<xs:sequence>
+<xs:element name="Atom-pntrs" type="Atom-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chem-graph-pntrs_residues-a-type">
+<xs:sequence>
+<xs:element name="Residue-pntrs" type="Residue-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chem-graph-pntrs_molecules-a-type">
+<xs:sequence>
+<xs:element name="Molecule-pntrs" type="Molecule-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Atom-pntrs -->
+
+<xs:element name="Atom-pntrs" type="Atom-pntrs-a-type" />
+<xs:complexType name="Atom-pntrs-a-type">
+<xs:sequence>
+<xs:element name="Atom-pntrs_number-of-ptrs" type="Atom-pntrs_number-of-ptrs-a-type" />
+<xs:element name="Atom-pntrs_molecule-ids" type="Atom-pntrs_molecule-ids-a-type" />
+<xs:element name="Atom-pntrs_residue-ids" type="Atom-pntrs_residue-ids-a-type" />
+<xs:element name="Atom-pntrs_atom-ids" type="Atom-pntrs_atom-ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Atom-pntrs_number-of-ptrs" type = "xs:integer" />
+<xs:simpleType name="Atom-pntrs_number-of-ptrs-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Atom-pntrs_molecule-ids-a-type" >
+<xs:sequence>
+<xs:element name="Molecule-id" type="Molecule-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atom-pntrs_residue-ids-a-type" >
+<xs:sequence>
+<xs:element name="Residue-id" type="Residue-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atom-pntrs_atom-ids-a-type" >
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Residue-pntrs -->
+
+<xs:element name="Residue-pntrs" type="Residue-pntrs-a-type" />
+<xs:complexType name="Residue-pntrs-a-type">
+<xs:choice>
+<xs:element name="Residue-pntrs_explicit" type="Residue-pntrs_explicit-a-type" />
+<xs:element name="Residue-pntrs_interval" type="Residue-pntrs_interval-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Residue-pntrs_explicit-a-type">
+<xs:sequence>
+<xs:element name="Residue-explicit-pntrs" type="Residue-explicit-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-pntrs_interval-a-type" >
+<xs:sequence>
+<xs:element name="Residue-interval-pntr" type="Residue-interval-pntr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Residue-explicit-pntrs -->
+
+<xs:element name="Residue-explicit-pntrs" type="Residue-explicit-pntrs-a-type" />
+<xs:complexType name="Residue-explicit-pntrs-a-type">
+<xs:sequence>
+<xs:element name="Residue-explicit-pntrs_number-of-ptrs" type="Residue-explicit-pntrs_number-of-ptrs-a-type" />
+<xs:element name="Residue-explicit-pntrs_molecule-ids" type="Residue-explicit-pntrs_molecule-ids-a-type" />
+<xs:element name="Residue-explicit-pntrs_residue-ids" type="Residue-explicit-pntrs_residue-ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Residue-explicit-pntrs_number-of-ptrs" type = "xs:integer" />
+<xs:simpleType name="Residue-explicit-pntrs_number-of-ptrs-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Residue-explicit-pntrs_molecule-ids-a-type" >
+<xs:sequence>
+<xs:element name="Molecule-id" type="Molecule-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-explicit-pntrs_residue-ids-a-type" >
+<xs:sequence>
+<xs:element name="Residue-id" type="Residue-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Residue-interval-pntr -->
+
+<xs:element name="Residue-interval-pntr" type="Residue-interval-pntr-a-type" />
+<xs:complexType name="Residue-interval-pntr-a-type">
+<xs:sequence>
+<xs:element name="Residue-interval-pntr_molecule-id" type="Residue-interval-pntr_molecule-id-a-type" />
+<xs:element name="Residue-interval-pntr_from" type="Residue-interval-pntr_from-a-type" />
+<xs:element name="Residue-interval-pntr_to" type="Residue-interval-pntr_to-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Residue-interval-pntr_molecule-id-a-type">
+<xs:sequence>
+<xs:element name="Molecule-id" type="Molecule-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-interval-pntr_from-a-type">
+<xs:sequence>
+<xs:element name="Residue-id" type="Residue-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-interval-pntr_to-a-type">
+<xs:sequence>
+<xs:element name="Residue-id" type="Residue-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Molecule-pntrs -->
+
+<xs:element name="Molecule-pntrs" type="Molecule-pntrs-a-type" />
+<xs:complexType name="Molecule-pntrs-a-type">
+<xs:sequence>
+<xs:element name="Molecule-pntrs_number-of-ptrs" type="Molecule-pntrs_number-of-ptrs-a-type" />
+<xs:element name="Molecule-pntrs_molecule-ids" type="Molecule-pntrs_molecule-ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Molecule-pntrs_number-of-ptrs" type = "xs:integer" />
+<xs:simpleType name="Molecule-pntrs_number-of-ptrs-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Molecule-pntrs_molecule-ids-a-type" >
+<xs:sequence>
+<xs:element name="Molecule-id" type="Molecule-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Region-pntrs -->
+
+<xs:element name="Region-pntrs" type="Region-pntrs-a-type" />
+<xs:complexType name="Region-pntrs-a-type">
+<xs:sequence>
+<xs:element name="Region-pntrs_model-id" type="Region-pntrs_model-id-a-type" />
+<xs:element name="Region-pntrs_region" type="Region-pntrs_region-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Region-pntrs_model-id-a-type">
+<xs:sequence>
+<xs:element name="Model-id" type="Model-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Region-pntrs_region" type="Region-pntrs_region-a-type" />
+<xs:complexType name="Region-pntrs_region-a-type">
+<xs:choice>
+<xs:element name="Region-pntrs_region_site" type="Region-pntrs_region_site-a-type" />
+<xs:element name="Region-pntrs_region_boundary" type="Region-pntrs_region_boundary-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Region-pntrs_region_site-a-type" >
+<xs:sequence>
+<xs:element name="Region-coordinates" type="Region-coordinates-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Region-pntrs_region_boundary-a-type" >
+<xs:sequence>
+<xs:element name="Region-boundary" type="Region-boundary-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Region-coordinates -->
+
+<xs:element name="Region-coordinates" type="Region-coordinates-a-type" />
+<xs:complexType name="Region-coordinates-a-type">
+<xs:sequence>
+<xs:element name="Region-coordinates_model-coord-set-id" type="Region-coordinates_model-coord-set-id-a-type" />
+<xs:element name="Region-coordinates_number-of-coords" type="Region-coordinates_number-of-coords-a-type" minOccurs="0" />
+<xs:element name="Region-coordinates_coordinate-indices" type="Region-coordinates_coordinate-indices-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Region-coordinates_model-coord-set-id-a-type">
+<xs:sequence>
+<xs:element name="Model-coordinate-set-id" type="Model-coordinate-set-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Region-coordinates_number-of-coords" type = "xs:integer" />
+<xs:simpleType name="Region-coordinates_number-of-coords-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Region-coordinates_coordinate-indices-a-type" >
+<xs:sequence>
+<xs:element name="Region-coordinates_coordinate-indices_E" type="Region-coordinates_coordinate-indices_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Region-coordinates_coordinate-indices_E" type = "xs:integer" />
+<xs:simpleType name="Region-coordinates_coordinate-indices_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Region-boundary -->
+
+<xs:element name="Region-boundary" type="Region-boundary-a-type" />
+<xs:complexType name="Region-boundary-a-type">
+<xs:choice>
+<xs:element name="Region-boundary_sphere" type="Region-boundary_sphere-a-type" />
+<xs:element name="Region-boundary_cone" type="Region-boundary_cone-a-type" />
+<xs:element name="Region-boundary_cylinder" type="Region-boundary_cylinder-a-type" />
+<xs:element name="Region-boundary_brick" type="Region-boundary_brick-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Region-boundary_sphere-a-type">
+<xs:sequence>
+<xs:element name="Sphere" type="Sphere-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Region-boundary_cone-a-type">
+<xs:sequence>
+<xs:element name="Cone" type="Cone-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Region-boundary_cylinder-a-type">
+<xs:sequence>
+<xs:element name="Cylinder" type="Cylinder-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Region-boundary_brick-a-type">
+<xs:sequence>
+<xs:element name="Brick" type="Brick-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Chem-graph-alignment -->
+
+<xs:element name="Chem-graph-alignment" type="Chem-graph-alignment-a-type" />
+<xs:complexType name="Chem-graph-alignment-a-type">
+<xs:sequence>
+<xs:element name="Chem-graph-alignment_dimension" type="Chem-graph-alignment_dimension-a-type" minOccurs="0" />
+<xs:element name="Chem-graph-alignment_biostruc-ids" type="Chem-graph-alignment_biostruc-ids-a-type" />
+<xs:element name="Chem-graph-alignment_alignment" type="Chem-graph-alignment_alignment-a-type" />
+<xs:element name="Chem-graph-alignment_domain" type="Chem-graph-alignment_domain-a-type" minOccurs="0" />
+<xs:element name="Chem-graph-alignment_transform" type="Chem-graph-alignment_transform-a-type" minOccurs="0" />
+<xs:element name="Chem-graph-alignment_aligndata" type="Chem-graph-alignment_aligndata-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Chem-graph-alignment_dimension" type = "xs:integer" />
+<xs:simpleType name="Chem-graph-alignment_dimension-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Chem-graph-alignment_biostruc-ids-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chem-graph-alignment_alignment-a-type" >
+<xs:sequence>
+<xs:element name="Chem-graph-pntrs" type="Chem-graph-pntrs-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chem-graph-alignment_domain-a-type" >
+<xs:sequence>
+<xs:element name="Chem-graph-pntrs" type="Chem-graph-pntrs-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chem-graph-alignment_transform-a-type" >
+<xs:sequence>
+<xs:element name="Transform" type="Transform-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chem-graph-alignment_aligndata-a-type" >
+<xs:sequence>
+<xs:element name="Align-stats" type="Align-stats-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Align-stats -->
+
+<xs:element name="Align-stats" type="Align-stats-a-type" />
+<xs:complexType name="Align-stats-a-type">
+<xs:sequence>
+<xs:element name="Align-stats_descr" type="Align-stats_descr-a-type" minOccurs="0" />
+<xs:element name="Align-stats_scale-factor" type="Align-stats_scale-factor-a-type" minOccurs="0" />
+<xs:element name="Align-stats_vast-score" type="Align-stats_vast-score-a-type" minOccurs="0" />
+<xs:element name="Align-stats_vast-mlogp" type="Align-stats_vast-mlogp-a-type" minOccurs="0" />
+<xs:element name="Align-stats_align-res" type="Align-stats_align-res-a-type" minOccurs="0" />
+<xs:element name="Align-stats_rmsd" type="Align-stats_rmsd-a-type" minOccurs="0" />
+<xs:element name="Align-stats_blast-score" type="Align-stats_blast-score-a-type" minOccurs="0" />
+<xs:element name="Align-stats_blast-mlogp" type="Align-stats_blast-mlogp-a-type" minOccurs="0" />
+<xs:element name="Align-stats_other-score" type="Align-stats_other-score-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Align-stats_descr" type = "xs:string" />
+<xs:simpleType name="Align-stats_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Align-stats_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Align-stats_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_vast-score" type = "xs:integer" />
+<xs:simpleType name="Align-stats_vast-score-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_vast-mlogp" type = "xs:integer" />
+<xs:simpleType name="Align-stats_vast-mlogp-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_align-res" type = "xs:integer" />
+<xs:simpleType name="Align-stats_align-res-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_rmsd" type = "xs:integer" />
+<xs:simpleType name="Align-stats_rmsd-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_blast-score" type = "xs:integer" />
+<xs:simpleType name="Align-stats_blast-score-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_blast-mlogp" type = "xs:integer" />
+<xs:simpleType name="Align-stats_blast-mlogp-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Align-stats_other-score" type = "xs:integer" />
+<xs:simpleType name="Align-stats_other-score-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Region-similarity -->
+
+<xs:element name="Region-similarity" type="Region-similarity-a-type" />
+<xs:complexType name="Region-similarity-a-type">
+<xs:sequence>
+<xs:element name="Region-similarity_dimension" type="Region-similarity_dimension-a-type" minOccurs="0" />
+<xs:element name="Region-similarity_biostruc-ids" type="Region-similarity_biostruc-ids-a-type" />
+<xs:element name="Region-similarity_similarity" type="Region-similarity_similarity-a-type" />
+<xs:element name="Region-similarity_transform" type="Region-similarity_transform-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Region-similarity_dimension" type = "xs:integer" />
+<xs:simpleType name="Region-similarity_dimension-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Region-similarity_biostruc-ids-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Region-similarity_similarity-a-type" >
+<xs:sequence>
+<xs:element name="Region-pntrs" type="Region-pntrs-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Region-similarity_transform-a-type" >
+<xs:sequence>
+<xs:element name="Transform" type="Transform-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Sphere -->
+
+<xs:element name="Sphere" type="Sphere-a-type" />
+<xs:complexType name="Sphere-a-type">
+<xs:sequence>
+<xs:element name="Sphere_center" type="Sphere_center-a-type" />
+<xs:element name="Sphere_radius" type="Sphere_radius-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Sphere_center-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Sphere_radius-a-type">
+<xs:sequence>
+<xs:element name="RealValue" type="RealValue-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cone -->
+
+<xs:element name="Cone" type="Cone-a-type" />
+<xs:complexType name="Cone-a-type">
+<xs:sequence>
+<xs:element name="Cone_axis-top" type="Cone_axis-top-a-type" />
+<xs:element name="Cone_axis-bottom" type="Cone_axis-bottom-a-type" />
+<xs:element name="Cone_radius-bottom" type="Cone_radius-bottom-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cone_axis-top-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cone_axis-bottom-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cone_radius-bottom-a-type">
+<xs:sequence>
+<xs:element name="RealValue" type="RealValue-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cylinder -->
+
+<xs:element name="Cylinder" type="Cylinder-a-type" />
+<xs:complexType name="Cylinder-a-type">
+<xs:sequence>
+<xs:element name="Cylinder_axis-top" type="Cylinder_axis-top-a-type" />
+<xs:element name="Cylinder_axis-bottom" type="Cylinder_axis-bottom-a-type" />
+<xs:element name="Cylinder_radius" type="Cylinder_radius-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cylinder_axis-top-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cylinder_axis-bottom-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cylinder_radius-a-type">
+<xs:sequence>
+<xs:element name="RealValue" type="RealValue-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Brick -->
+
+<xs:element name="Brick" type="Brick-a-type" />
+<xs:complexType name="Brick-a-type">
+<xs:sequence>
+<xs:element name="Brick_corner-000" type="Brick_corner-000-a-type" />
+<xs:element name="Brick_corner-001" type="Brick_corner-001-a-type" />
+<xs:element name="Brick_corner-010" type="Brick_corner-010-a-type" />
+<xs:element name="Brick_corner-011" type="Brick_corner-011-a-type" />
+<xs:element name="Brick_corner-100" type="Brick_corner-100-a-type" />
+<xs:element name="Brick_corner-101" type="Brick_corner-101-a-type" />
+<xs:element name="Brick_corner-110" type="Brick_corner-110-a-type" />
+<xs:element name="Brick_corner-111" type="Brick_corner-111-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Brick_corner-000-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-001-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-010-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-011-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-100-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-101-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-110-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Brick_corner-111-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Model-space-point -->
+
+<xs:element name="Model-space-point" type="Model-space-point-a-type" />
+<xs:complexType name="Model-space-point-a-type">
+<xs:sequence>
+<xs:element name="Model-space-point_scale-factor" type="Model-space-point_scale-factor-a-type" />
+<xs:element name="Model-space-point_x" type="Model-space-point_x-a-type" />
+<xs:element name="Model-space-point_y" type="Model-space-point_y-a-type" />
+<xs:element name="Model-space-point_z" type="Model-space-point_z-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Model-space-point_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Model-space-point_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Model-space-point_x" type = "xs:integer" />
+<xs:simpleType name="Model-space-point_x-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Model-space-point_y" type = "xs:integer" />
+<xs:simpleType name="Model-space-point_y-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Model-space-point_z" type = "xs:integer" />
+<xs:simpleType name="Model-space-point_z-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of RealValue -->
+
+<xs:element name="RealValue" type="RealValue-a-type" />
+<xs:complexType name="RealValue-a-type">
+<xs:sequence>
+<xs:element name="RealValue_scale-factor" type="RealValue_scale-factor-a-type" />
+<xs:element name="RealValue_scaled-integer-value" type="RealValue_scaled-integer-value-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="RealValue_scale-factor" type = "xs:integer" />
+<xs:simpleType name="RealValue_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="RealValue_scaled-integer-value" type = "xs:integer" />
+<xs:simpleType name="RealValue_scaled-integer-value-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Transform -->
+
+<xs:element name="Transform" type="Transform-a-type" />
+<xs:complexType name="Transform-a-type">
+<xs:sequence>
+<xs:element name="Transform_id" type="Transform_id-a-type" />
+<xs:element name="Transform_moves" type="Transform_moves-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Transform_id" type = "xs:integer" />
+<xs:simpleType name="Transform_id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Transform_moves-a-type" >
+<xs:sequence>
+<xs:element name="Move" type="Move-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Move -->
+
+<xs:element name="Move" type="Move-a-type" />
+<xs:complexType name="Move-a-type">
+<xs:choice>
+<xs:element name="Move_rotate" type="Move_rotate-a-type" />
+<xs:element name="Move_translate" type="Move_translate-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Move_rotate-a-type">
+<xs:sequence>
+<xs:element name="Rot-matrix" type="Rot-matrix-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Move_translate-a-type">
+<xs:sequence>
+<xs:element name="Trans-matrix" type="Trans-matrix-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Rot-matrix -->
+
+<xs:element name="Rot-matrix" type="Rot-matrix-a-type" />
+<xs:complexType name="Rot-matrix-a-type">
+<xs:sequence>
+<xs:element name="Rot-matrix_scale-factor" type="Rot-matrix_scale-factor-a-type" />
+<xs:element name="Rot-matrix_rot-11" type="Rot-matrix_rot-11-a-type" />
+<xs:element name="Rot-matrix_rot-12" type="Rot-matrix_rot-12-a-type" />
+<xs:element name="Rot-matrix_rot-13" type="Rot-matrix_rot-13-a-type" />
+<xs:element name="Rot-matrix_rot-21" type="Rot-matrix_rot-21-a-type" />
+<xs:element name="Rot-matrix_rot-22" type="Rot-matrix_rot-22-a-type" />
+<xs:element name="Rot-matrix_rot-23" type="Rot-matrix_rot-23-a-type" />
+<xs:element name="Rot-matrix_rot-31" type="Rot-matrix_rot-31-a-type" />
+<xs:element name="Rot-matrix_rot-32" type="Rot-matrix_rot-32-a-type" />
+<xs:element name="Rot-matrix_rot-33" type="Rot-matrix_rot-33-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Rot-matrix_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-11" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-11-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-12" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-12-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-13" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-13-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-21" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-21-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-22" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-22-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-23" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-23-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-31" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-31-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-32" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-32-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Rot-matrix_rot-33" type = "xs:integer" />
+<xs:simpleType name="Rot-matrix_rot-33-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Trans-matrix -->
+
+<xs:element name="Trans-matrix" type="Trans-matrix-a-type" />
+<xs:complexType name="Trans-matrix-a-type">
+<xs:sequence>
+<xs:element name="Trans-matrix_scale-factor" type="Trans-matrix_scale-factor-a-type" />
+<xs:element name="Trans-matrix_tran-1" type="Trans-matrix_tran-1-a-type" />
+<xs:element name="Trans-matrix_tran-2" type="Trans-matrix_tran-2-a-type" />
+<xs:element name="Trans-matrix_tran-3" type="Trans-matrix_tran-3-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Trans-matrix_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Trans-matrix_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Trans-matrix_tran-1" type = "xs:integer" />
+<xs:simpleType name="Trans-matrix_tran-1-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Trans-matrix_tran-2" type = "xs:integer" />
+<xs:simpleType name="Trans-matrix_tran-2-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Trans-matrix_tran-3" type = "xs:integer" />
+<xs:simpleType name="Trans-matrix_tran-3-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Camera -->
+
+<xs:element name="Camera" type="Camera-a-type" />
+<xs:complexType name="Camera-a-type">
+<xs:sequence>
+<xs:element name="Camera_x" type="Camera_x-a-type" />
+<xs:element name="Camera_y" type="Camera_y-a-type" />
+<xs:element name="Camera_distance" type="Camera_distance-a-type" />
+<xs:element name="Camera_angle" type="Camera_angle-a-type" />
+<xs:element name="Camera_scale" type="Camera_scale-a-type" />
+<xs:element name="Camera_modelview" type="Camera_modelview-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Camera_x" type = "xs:integer" />
+<xs:simpleType name="Camera_x-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Camera_y" type = "xs:integer" />
+<xs:simpleType name="Camera_y-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Camera_distance" type = "xs:integer" />
+<xs:simpleType name="Camera_distance-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Camera_angle" type = "xs:integer" />
+<xs:simpleType name="Camera_angle-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Camera_scale" type = "xs:integer" />
+<xs:simpleType name="Camera_scale-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Camera_modelview-a-type">
+<xs:sequence>
+<xs:element name="GL-matrix" type="GL-matrix-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of GL-matrix -->
+
+<xs:element name="GL-matrix" type="GL-matrix-a-type" />
+<xs:complexType name="GL-matrix-a-type">
+<xs:sequence>
+<xs:element name="GL-matrix_scale" type="GL-matrix_scale-a-type" />
+<xs:element name="GL-matrix_m11" type="GL-matrix_m11-a-type" />
+<xs:element name="GL-matrix_m12" type="GL-matrix_m12-a-type" />
+<xs:element name="GL-matrix_m13" type="GL-matrix_m13-a-type" />
+<xs:element name="GL-matrix_m14" type="GL-matrix_m14-a-type" />
+<xs:element name="GL-matrix_m21" type="GL-matrix_m21-a-type" />
+<xs:element name="GL-matrix_m22" type="GL-matrix_m22-a-type" />
+<xs:element name="GL-matrix_m23" type="GL-matrix_m23-a-type" />
+<xs:element name="GL-matrix_m24" type="GL-matrix_m24-a-type" />
+<xs:element name="GL-matrix_m31" type="GL-matrix_m31-a-type" />
+<xs:element name="GL-matrix_m32" type="GL-matrix_m32-a-type" />
+<xs:element name="GL-matrix_m33" type="GL-matrix_m33-a-type" />
+<xs:element name="GL-matrix_m34" type="GL-matrix_m34-a-type" />
+<xs:element name="GL-matrix_m41" type="GL-matrix_m41-a-type" />
+<xs:element name="GL-matrix_m42" type="GL-matrix_m42-a-type" />
+<xs:element name="GL-matrix_m43" type="GL-matrix_m43-a-type" />
+<xs:element name="GL-matrix_m44" type="GL-matrix_m44-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="GL-matrix_scale" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_scale-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m11" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m11-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m12" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m12-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m13" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m13-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m14" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m14-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m21" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m21-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m22" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m22-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m23" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m23-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m24" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m24-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m31" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m31-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m32" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m32-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m33" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m33-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m34" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m34-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m41" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m41-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m42" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m42-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m43" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m43-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="GL-matrix_m44" type = "xs:integer" />
+<xs:simpleType name="GL-matrix_m44-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Color-prop -->
+
+<xs:element name="Color-prop" type="Color-prop-a-type" />
+<xs:complexType name="Color-prop-a-type">
+<xs:sequence>
+<xs:element name="Color-prop_r" type="Color-prop_r-a-type" minOccurs="0" />
+<xs:element name="Color-prop_g" type="Color-prop_g-a-type" minOccurs="0" />
+<xs:element name="Color-prop_b" type="Color-prop_b-a-type" minOccurs="0" />
+<xs:element name="Color-prop_name" type="Color-prop_name-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Color-prop_r" type = "xs:integer" />
+<xs:simpleType name="Color-prop_r-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Color-prop_g" type = "xs:integer" />
+<xs:simpleType name="Color-prop_g-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Color-prop_b" type = "xs:integer" />
+<xs:simpleType name="Color-prop_b-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Color-prop_name" type = "xs:string" />
+<xs:simpleType name="Color-prop_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Render-prop -->
+
+<xs:element name="Render-prop" type="Render-prop-a-type" />
+<xs:complexType name="Render-prop-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="default" />
+<xs:enumeration value="wire" />
+<xs:enumeration value="space" />
+<xs:enumeration value="stick" />
+<xs:enumeration value="ballNStick" />
+<xs:enumeration value="thickWire" />
+<xs:enumeration value="hide" />
+<xs:enumeration value="name" />
+<xs:enumeration value="number" />
+<xs:enumeration value="pdbNumber" />
+<xs:enumeration value="objWireFrame" />
+<xs:enumeration value="objPolygons" />
+<xs:enumeration value="colorsetCPK" />
+<xs:enumeration value="colorsetbyChain" />
+<xs:enumeration value="colorsetbyTemp" />
+<xs:enumeration value="colorsetbyRes" />
+<xs:enumeration value="colorsetbyLen" />
+<xs:enumeration value="colorsetbySStru" />
+<xs:enumeration value="colorsetbyHydro" />
+<xs:enumeration value="colorsetbyObject" />
+<xs:enumeration value="colorsetbyDomain" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Biostruc-script -->
+
+<xs:complexType name="Biostruc-script-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-script-step" type="Biostruc-script-step-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Biostruc-script-step -->
+
+<xs:element name="Biostruc-script-step" type="Biostruc-script-step-a-type" />
+<xs:complexType name="Biostruc-script-step-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-script-step_step-id" type="Biostruc-script-step_step-id-a-type" />
+<xs:element name="Biostruc-script-step_step-name" type="Biostruc-script-step_step-name-a-type" minOccurs="0" />
+<xs:element name="Biostruc-script-step_feature-do" type="Biostruc-script-step_feature-do-a-type" minOccurs="0" />
+<xs:element name="Biostruc-script-step_camera-move" type="Biostruc-script-step_camera-move-a-type" minOccurs="0" />
+<xs:element name="Biostruc-script-step_pause" type="Biostruc-script-step_pause-a-type" minOccurs="0" />
+<xs:element name="Biostruc-script-step_waitevent" type="Biostruc-script-step_waitevent-a-type" />
+<xs:element name="Biostruc-script-step_extra" type="Biostruc-script-step_extra-a-type" />
+<xs:element name="Biostruc-script-step_jump" type="Biostruc-script-step_jump-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-script-step_step-id-a-type">
+<xs:sequence>
+<xs:element name="Step-id" type="Step-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biostruc-script-step_step-name" type = "xs:string" />
+<xs:simpleType name="Biostruc-script-step_step-name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Biostruc-script-step_feature-do-a-type" >
+<xs:sequence>
+<xs:element name="Other-feature" type="Other-feature-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-script-step_camera-move-a-type">
+<xs:sequence>
+<xs:element name="Transform" type="Transform-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biostruc-script-step_pause" type = "xs:integer" />
+<xs:simpleType name="Biostruc-script-step_pause-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Biostruc-script-step_waitevent" type="Biostruc-script-step_waitevent-a-type"/>
+<xs:complexType name="Biostruc-script-step_waitevent-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Biostruc-script-step_extra" type = "xs:integer" />
+<xs:simpleType name="Biostruc-script-step_extra-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Biostruc-script-step_jump-a-type">
+<xs:sequence>
+<xs:element name="Step-id" type="Step-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Step-id -->
+
+<xs:element name="Step-id" type = "xs:integer" />
+<xs:simpleType name="Step-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+</xs:schema>

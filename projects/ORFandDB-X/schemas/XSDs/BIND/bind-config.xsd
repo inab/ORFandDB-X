@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="bind-config">
+        <xs:annotation>
+            <xs:documentation>BIND Software main configuration files</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="submit-db">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element name="datasource" type="xs:string"/>
+                            <xs:element name="connection">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="url" type="xs:string"/>
+                                        <xs:element name="driver" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="browse-db">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element name="datasource" type="xs:string"/>
+                            <xs:element name="connection">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="url" type="xs:string"/>
+                                        <xs:element name="driver" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="archive-db">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element name="datasource" type="xs:string"/>
+                            <xs:element name="connection">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="url" type="xs:string"/>
+                                        <xs:element name="driver" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="web">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="script-timeout" type="xs:int"/>
+                            <xs:element name="session-timeout" type="xs:int"/>
+                            <xs:element name="popups">
+                                <xs:complexType>
+                                    <xs:attribute name="value" use="required">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="false"/>
+                                                <xs:enumeration value="true"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="textbox-size">
+                                <xs:complexType>
+                                    <xs:attribute name="height" type="xs:int" use="required"/>
+                                    <xs:attribute name="width" type="xs:int" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="mail">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="host" type="xs:string"/>
+                                        <xs:element name="sender-email" type="xs:string"/>
+                                        <xs:element name="web-email" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Application">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="debug-level" type="xs:int"/>
+                            <xs:element name="error-handler" type="xs:string"/>
+                            <xs:element name="seqhound" type="xs:boolean"/>
+                            <xs:element name="mappers">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="interaction" type="xs:string"/>
+                                        <xs:element name="complex" type="xs:string"/>
+                                        <xs:element name="pathway" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="bka">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="url" type="xs:string"/>
+                                        <xs:element name="dbid" type="xs:string"/>
+                                        <xs:element name="password" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

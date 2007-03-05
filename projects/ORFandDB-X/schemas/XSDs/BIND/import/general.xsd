@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-General
+================================================= -->
+<!-- Definition of Date -->
+
+<xs:element name="Date" type="Date-a-type" />
+<xs:complexType name="Date-a-type">
+<xs:choice>
+<xs:element name="Date_str" type="Date_str-a-type" />
+<xs:element name="Date_std" type="Date_std-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Date_str" type = "xs:string" />
+<xs:simpleType name="Date_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Date_std-a-type">
+<xs:sequence>
+<xs:element name="Date-std" type="Date-std-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Date-std -->
+
+<xs:element name="Date-std" type="Date-std-a-type" />
+<xs:complexType name="Date-std-a-type">
+<xs:sequence>
+<xs:element name="Date-std_year" type="Date-std_year-a-type" />
+<xs:element name="Date-std_month" type="Date-std_month-a-type" minOccurs="0" />
+<xs:element name="Date-std_day" type="Date-std_day-a-type" minOccurs="0" />
+<xs:element name="Date-std_season" type="Date-std_season-a-type" minOccurs="0" />
+<xs:element name="Date-std_hour" type="Date-std_hour-a-type" minOccurs="0" />
+<xs:element name="Date-std_minute" type="Date-std_minute-a-type" minOccurs="0" />
+<xs:element name="Date-std_second" type="Date-std_second-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Date-std_year" type = "xs:integer" />
+<xs:simpleType name="Date-std_year-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Date-std_month" type = "xs:integer" />
+<xs:simpleType name="Date-std_month-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Date-std_day" type = "xs:integer" />
+<xs:simpleType name="Date-std_day-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Date-std_season" type = "xs:string" />
+<xs:simpleType name="Date-std_season-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Date-std_hour" type = "xs:integer" />
+<xs:simpleType name="Date-std_hour-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Date-std_minute" type = "xs:integer" />
+<xs:simpleType name="Date-std_minute-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Date-std_second" type = "xs:integer" />
+<xs:simpleType name="Date-std_second-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Dbtag -->
+
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+<xs:complexType name="Dbtag-a-type">
+<xs:sequence>
+<xs:element name="Dbtag_db" type="Dbtag_db-a-type" />
+<xs:element name="Dbtag_tag" type="Dbtag_tag-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Dbtag_db" type = "xs:string" />
+<xs:simpleType name="Dbtag_db-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Dbtag_tag-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Object-id -->
+
+<xs:element name="Object-id" type="Object-id-a-type" />
+<xs:complexType name="Object-id-a-type">
+<xs:choice>
+<xs:element name="Object-id_id" type="Object-id_id-a-type" />
+<xs:element name="Object-id_str" type="Object-id_str-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Object-id_id" type = "xs:integer" />
+<xs:simpleType name="Object-id_id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Object-id_str" type = "xs:string" />
+<xs:simpleType name="Object-id_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Person-id -->
+
+<xs:element name="Person-id" type="Person-id-a-type" />
+<xs:complexType name="Person-id-a-type">
+<xs:choice>
+<xs:element name="Person-id_dbtag" type="Person-id_dbtag-a-type" />
+<xs:element name="Person-id_name" type="Person-id_name-a-type" />
+<xs:element name="Person-id_ml" type="Person-id_ml-a-type" />
+<xs:element name="Person-id_str" type="Person-id_str-a-type" />
+<xs:element name="Person-id_consortium" type="Person-id_consortium-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Person-id_dbtag-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Person-id_name-a-type">
+<xs:sequence>
+<xs:element name="Name-std" type="Name-std-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Person-id_ml" type = "xs:string" />
+<xs:simpleType name="Person-id_ml-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Person-id_str" type = "xs:string" />
+<xs:simpleType name="Person-id_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Person-id_consortium" type = "xs:string" />
+<xs:simpleType name="Person-id_consortium-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Name-std -->
+
+<xs:element name="Name-std" type="Name-std-a-type" />
+<xs:complexType name="Name-std-a-type">
+<xs:sequence>
+<xs:element name="Name-std_last" type="Name-std_last-a-type" />
+<xs:element name="Name-std_first" type="Name-std_first-a-type" minOccurs="0" />
+<xs:element name="Name-std_middle" type="Name-std_middle-a-type" minOccurs="0" />
+<xs:element name="Name-std_full" type="Name-std_full-a-type" minOccurs="0" />
+<xs:element name="Name-std_initials" type="Name-std_initials-a-type" minOccurs="0" />
+<xs:element name="Name-std_suffix" type="Name-std_suffix-a-type" minOccurs="0" />
+<xs:element name="Name-std_title" type="Name-std_title-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Name-std_last" type = "xs:string" />
+<xs:simpleType name="Name-std_last-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Name-std_first" type = "xs:string" />
+<xs:simpleType name="Name-std_first-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Name-std_middle" type = "xs:string" />
+<xs:simpleType name="Name-std_middle-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Name-std_full" type = "xs:string" />
+<xs:simpleType name="Name-std_full-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Name-std_initials" type = "xs:string" />
+<xs:simpleType name="Name-std_initials-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Name-std_suffix" type = "xs:string" />
+<xs:simpleType name="Name-std_suffix-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Name-std_title" type = "xs:string" />
+<xs:simpleType name="Name-std_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Int-fuzz -->
+
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+<xs:complexType name="Int-fuzz-a-type">
+<xs:choice>
+<xs:element name="Int-fuzz_p-m" type="Int-fuzz_p-m-a-type" />
+<xs:element name="Int-fuzz_range" type="Int-fuzz_range-a-type" />
+<xs:element name="Int-fuzz_pct" type="Int-fuzz_pct-a-type" />
+<xs:element name="Int-fuzz_lim" type="Int-fuzz_lim-a-type" />
+<xs:element name="Int-fuzz_alt" type="Int-fuzz_alt-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Int-fuzz_p-m" type = "xs:integer" />
+<xs:simpleType name="Int-fuzz_p-m-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Int-fuzz_range" type="Int-fuzz_range-a-type" />
+<xs:complexType name="Int-fuzz_range-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz_range_max" type="Int-fuzz_range_max-a-type" />
+<xs:element name="Int-fuzz_range_min" type="Int-fuzz_range_min-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Int-fuzz_range_max" type = "xs:integer" />
+<xs:simpleType name="Int-fuzz_range_max-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Int-fuzz_range_min" type = "xs:integer" />
+<xs:simpleType name="Int-fuzz_range_min-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Int-fuzz_pct" type = "xs:integer" />
+<xs:simpleType name="Int-fuzz_pct-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Int-fuzz_lim" type="Int-fuzz_lim-a-type" />
+<xs:complexType name="Int-fuzz_lim-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unk" />
+<xs:enumeration value="gt" />
+<xs:enumeration value="lt" />
+<xs:enumeration value="tr" />
+<xs:enumeration value="tl" />
+<xs:enumeration value="circle" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Int-fuzz_alt-a-type" >
+<xs:sequence>
+<xs:element name="Int-fuzz_alt_E" type="Int-fuzz_alt_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Int-fuzz_alt_E" type = "xs:integer" />
+<xs:simpleType name="Int-fuzz_alt_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of User-object -->
+
+<xs:element name="User-object" type="User-object-a-type" />
+<xs:complexType name="User-object-a-type">
+<xs:sequence>
+<xs:element name="User-object_class" type="User-object_class-a-type" minOccurs="0" />
+<xs:element name="User-object_type" type="User-object_type-a-type" />
+<xs:element name="User-object_data" type="User-object_data-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="User-object_class" type = "xs:string" />
+<xs:simpleType name="User-object_class-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="User-object_type-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="User-object_data-a-type" >
+<xs:sequence>
+<xs:element name="User-field" type="User-field-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of User-field -->
+
+<xs:element name="User-field" type="User-field-a-type" />
+<xs:complexType name="User-field-a-type">
+<xs:sequence>
+<xs:element name="User-field_label" type="User-field_label-a-type" />
+<xs:element name="User-field_num" type="User-field_num-a-type" minOccurs="0" />
+<xs:element name="User-field_data" type="User-field_data-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="User-field_label-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="User-field_num" type = "xs:integer" />
+<xs:simpleType name="User-field_num-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="User-field_data" type="User-field_data-a-type" />
+<xs:complexType name="User-field_data-a-type">
+<xs:choice>
+<xs:element name="User-field_data_str" type="User-field_data_str-a-type" />
+<xs:element name="User-field_data_int" type="User-field_data_int-a-type" />
+<xs:element name="User-field_data_real" type="User-field_data_real-a-type" />
+<xs:element name="User-field_data_bool" type="User-field_data_bool-a-type" />
+<xs:element name="User-field_data_os" type="User-field_data_os-a-type" />
+<xs:element name="User-field_data_object" type="User-field_data_object-a-type" />
+<xs:element name="User-field_data_strs" type="User-field_data_strs-a-type" />
+<xs:element name="User-field_data_ints" type="User-field_data_ints-a-type" />
+<xs:element name="User-field_data_reals" type="User-field_data_reals-a-type" />
+<xs:element name="User-field_data_oss" type="User-field_data_oss-a-type" />
+<xs:element name="User-field_data_fields" type="User-field_data_fields-a-type" />
+<xs:element name="User-field_data_objects" type="User-field_data_objects-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="User-field_data_str" type = "xs:string" />
+<xs:simpleType name="User-field_data_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="User-field_data_int" type = "xs:integer" />
+<xs:simpleType name="User-field_data_int-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="User-field_data_real" type = "xs:decimal" />
+<xs:simpleType name="User-field_data_real-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="User-field_data_bool" type="User-field_data_bool-a-type"/>
+<xs:complexType name="User-field_data_bool-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="User-field_data_os" type = "xs:hexBinary" />
+<xs:simpleType name="User-field_data_os-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+<xs:complexType name="User-field_data_object-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="User-field_data_strs-a-type" >
+<xs:sequence>
+<xs:element name="User-field_data_strs_E" type="User-field_data_strs_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="User-field_data_strs_E" type = "xs:string" />
+<xs:simpleType name="User-field_data_strs_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="User-field_data_ints-a-type" >
+<xs:sequence>
+<xs:element name="User-field_data_ints_E" type="User-field_data_ints_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="User-field_data_ints_E" type = "xs:integer" />
+<xs:simpleType name="User-field_data_ints_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="User-field_data_reals-a-type" >
+<xs:sequence>
+<xs:element name="User-field_data_reals_E" type="User-field_data_reals_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="User-field_data_reals_E" type = "xs:decimal" />
+<xs:simpleType name="User-field_data_reals_E-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+
+<xs:complexType name="User-field_data_oss-a-type" >
+<xs:sequence>
+<xs:element name="User-field_data_oss_E" type="User-field_data_oss_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="User-field_data_oss_E" type = "xs:hexBinary" />
+<xs:simpleType name="User-field_data_oss_E-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+<xs:complexType name="User-field_data_fields-a-type" >
+<xs:sequence>
+<xs:element name="User-field" type="User-field-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="User-field_data_objects-a-type" >
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

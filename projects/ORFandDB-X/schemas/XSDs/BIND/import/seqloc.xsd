@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Seqloc
+================================================= -->
+<!-- Definition of Seq-id -->
+
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+<xs:complexType name="Seq-id-a-type">
+<xs:choice>
+<xs:element name="Seq-id_local" type="Seq-id_local-a-type" />
+<xs:element name="Seq-id_gibbsq" type="Seq-id_gibbsq-a-type" />
+<xs:element name="Seq-id_gibbmt" type="Seq-id_gibbmt-a-type" />
+<xs:element name="Seq-id_giim" type="Seq-id_giim-a-type" />
+<xs:element name="Seq-id_genbank" type="Seq-id_genbank-a-type" />
+<xs:element name="Seq-id_embl" type="Seq-id_embl-a-type" />
+<xs:element name="Seq-id_pir" type="Seq-id_pir-a-type" />
+<xs:element name="Seq-id_swissprot" type="Seq-id_swissprot-a-type" />
+<xs:element name="Seq-id_patent" type="Seq-id_patent-a-type" />
+<xs:element name="Seq-id_other" type="Seq-id_other-a-type" />
+<xs:element name="Seq-id_general" type="Seq-id_general-a-type" />
+<xs:element name="Seq-id_gi" type="Seq-id_gi-a-type" />
+<xs:element name="Seq-id_ddbj" type="Seq-id_ddbj-a-type" />
+<xs:element name="Seq-id_prf" type="Seq-id_prf-a-type" />
+<xs:element name="Seq-id_pdb" type="Seq-id_pdb-a-type" />
+<xs:element name="Seq-id_tpg" type="Seq-id_tpg-a-type" />
+<xs:element name="Seq-id_tpe" type="Seq-id_tpe-a-type" />
+<xs:element name="Seq-id_tpd" type="Seq-id_tpd-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-id_local-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-id_gibbsq" type = "xs:integer" />
+<xs:simpleType name="Seq-id_gibbsq-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Seq-id_gibbmt" type = "xs:integer" />
+<xs:simpleType name="Seq-id_gibbmt-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-id_giim-a-type">
+<xs:sequence>
+<xs:element name="Giimport-id" type="Giimport-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_genbank-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_embl-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_pir-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_swissprot-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_patent-a-type">
+<xs:sequence>
+<xs:element name="Patent-seq-id" type="Patent-seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_other-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_general-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-id_gi" type = "xs:integer" />
+<xs:simpleType name="Seq-id_gi-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-id_ddbj-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_prf-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_pdb-a-type">
+<xs:sequence>
+<xs:element name="PDB-seq-id" type="PDB-seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_tpg-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_tpe-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-id_tpd-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Patent-seq-id -->
+
+<xs:element name="Patent-seq-id" type="Patent-seq-id-a-type" />
+<xs:complexType name="Patent-seq-id-a-type">
+<xs:sequence>
+<xs:element name="Patent-seq-id_seqid" type="Patent-seq-id_seqid-a-type" />
+<xs:element name="Patent-seq-id_cit" type="Patent-seq-id_cit-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Patent-seq-id_seqid" type = "xs:integer" />
+<xs:simpleType name="Patent-seq-id_seqid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Patent-seq-id_cit-a-type">
+<xs:sequence>
+<xs:element name="Id-pat" type="Id-pat-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Textseq-id -->
+
+<xs:element name="Textseq-id" type="Textseq-id-a-type" />
+<xs:complexType name="Textseq-id-a-type">
+<xs:sequence>
+<xs:element name="Textseq-id_name" type="Textseq-id_name-a-type" minOccurs="0" />
+<xs:element name="Textseq-id_accession" type="Textseq-id_accession-a-type" minOccurs="0" />
+<xs:element name="Textseq-id_release" type="Textseq-id_release-a-type" minOccurs="0" />
+<xs:element name="Textseq-id_version" type="Textseq-id_version-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Textseq-id_name" type = "xs:string" />
+<xs:simpleType name="Textseq-id_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Textseq-id_accession" type = "xs:string" />
+<xs:simpleType name="Textseq-id_accession-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Textseq-id_release" type = "xs:string" />
+<xs:simpleType name="Textseq-id_release-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Textseq-id_version" type = "xs:integer" />
+<xs:simpleType name="Textseq-id_version-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Giimport-id -->
+
+<xs:element name="Giimport-id" type="Giimport-id-a-type" />
+<xs:complexType name="Giimport-id-a-type">
+<xs:sequence>
+<xs:element name="Giimport-id_id" type="Giimport-id_id-a-type" />
+<xs:element name="Giimport-id_db" type="Giimport-id_db-a-type" minOccurs="0" />
+<xs:element name="Giimport-id_release" type="Giimport-id_release-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Giimport-id_id" type = "xs:integer" />
+<xs:simpleType name="Giimport-id_id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Giimport-id_db" type = "xs:string" />
+<xs:simpleType name="Giimport-id_db-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Giimport-id_release" type = "xs:string" />
+<xs:simpleType name="Giimport-id_release-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of PDB-seq-id -->
+
+<xs:element name="PDB-seq-id" type="PDB-seq-id-a-type" />
+<xs:complexType name="PDB-seq-id-a-type">
+<xs:sequence>
+<xs:element name="PDB-seq-id_mol" type="PDB-seq-id_mol-a-type" />
+<xs:element name="PDB-seq-id_chain" type="PDB-seq-id_chain-a-type" minOccurs="0" />
+<xs:element name="PDB-seq-id_rel" type="PDB-seq-id_rel-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="PDB-seq-id_mol-a-type">
+<xs:sequence>
+<xs:element name="PDB-mol-id" type="PDB-mol-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PDB-seq-id_chain" type = "xs:integer" />
+<xs:simpleType name="PDB-seq-id_chain-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="PDB-seq-id_rel-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of PDB-mol-id -->
+
+<xs:element name="PDB-mol-id" type = "xs:string" />
+<xs:simpleType name="PDB-mol-id-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Seq-loc -->
+
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+<xs:complexType name="Seq-loc-a-type">
+<xs:choice>
+<xs:element name="Seq-loc_null" type="Seq-loc_null-a-type" />
+<xs:element name="Seq-loc_empty" type="Seq-loc_empty-a-type" />
+<xs:element name="Seq-loc_whole" type="Seq-loc_whole-a-type" />
+<xs:element name="Seq-loc_int" type="Seq-loc_int-a-type" />
+<xs:element name="Seq-loc_packed-int" type="Seq-loc_packed-int-a-type" />
+<xs:element name="Seq-loc_pnt" type="Seq-loc_pnt-a-type" />
+<xs:element name="Seq-loc_packed-pnt" type="Seq-loc_packed-pnt-a-type" />
+<xs:element name="Seq-loc_mix" type="Seq-loc_mix-a-type" />
+<xs:element name="Seq-loc_equiv" type="Seq-loc_equiv-a-type" />
+<xs:element name="Seq-loc_bond" type="Seq-loc_bond-a-type" />
+<xs:element name="Seq-loc_feat" type="Seq-loc_feat-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Seq-loc_null">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="Seq-loc_null-a-type">
+</xs:complexType>
+<xs:complexType name="Seq-loc_empty-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_whole-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_int-a-type">
+<xs:sequence>
+<xs:element name="Seq-interval" type="Seq-interval-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_packed-int-a-type">
+<xs:sequence>
+<xs:element name="Packed-seqint" type="Packed-seqint-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_pnt-a-type">
+<xs:sequence>
+<xs:element name="Seq-point" type="Seq-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_packed-pnt-a-type">
+<xs:sequence>
+<xs:element name="Packed-seqpnt" type="Packed-seqpnt-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_mix-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc-mix" type="Seq-loc-mix-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_equiv-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc-equiv" type="Seq-loc-equiv-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_bond-a-type">
+<xs:sequence>
+<xs:element name="Seq-bond" type="Seq-bond-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-loc_feat-a-type">
+<xs:sequence>
+<xs:element name="Feat-id" type="Feat-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-interval -->
+
+<xs:element name="Seq-interval" type="Seq-interval-a-type" />
+<xs:complexType name="Seq-interval-a-type">
+<xs:sequence>
+<xs:element name="Seq-interval_from" type="Seq-interval_from-a-type" />
+<xs:element name="Seq-interval_to" type="Seq-interval_to-a-type" />
+<xs:element name="Seq-interval_strand" type="Seq-interval_strand-a-type" minOccurs="0" />
+<xs:element name="Seq-interval_id" type="Seq-interval_id-a-type" />
+<xs:element name="Seq-interval_fuzz-from" type="Seq-interval_fuzz-from-a-type" minOccurs="0" />
+<xs:element name="Seq-interval_fuzz-to" type="Seq-interval_fuzz-to-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Seq-interval_from" type = "xs:integer" />
+<xs:simpleType name="Seq-interval_from-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Seq-interval_to" type = "xs:integer" />
+<xs:simpleType name="Seq-interval_to-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-interval_strand-a-type">
+<xs:sequence>
+<xs:element name="Na-strand" type="Na-strand-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-interval_id-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-interval_fuzz-from-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-interval_fuzz-to-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Packed-seqint -->
+
+<xs:complexType name="Packed-seqint-a-type" >
+<xs:sequence>
+<xs:element name="Seq-interval" type="Seq-interval-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Seq-point -->
+
+<xs:element name="Seq-point" type="Seq-point-a-type" />
+<xs:complexType name="Seq-point-a-type">
+<xs:sequence>
+<xs:element name="Seq-point_point" type="Seq-point_point-a-type" />
+<xs:element name="Seq-point_strand" type="Seq-point_strand-a-type" minOccurs="0" />
+<xs:element name="Seq-point_id" type="Seq-point_id-a-type" />
+<xs:element name="Seq-point_fuzz" type="Seq-point_fuzz-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Seq-point_point" type = "xs:integer" />
+<xs:simpleType name="Seq-point_point-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-point_strand-a-type">
+<xs:sequence>
+<xs:element name="Na-strand" type="Na-strand-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-point_id-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-point_fuzz-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Packed-seqpnt -->
+
+<xs:element name="Packed-seqpnt" type="Packed-seqpnt-a-type" />
+<xs:complexType name="Packed-seqpnt-a-type">
+<xs:sequence>
+<xs:element name="Packed-seqpnt_strand" type="Packed-seqpnt_strand-a-type" minOccurs="0" />
+<xs:element name="Packed-seqpnt_id" type="Packed-seqpnt_id-a-type" />
+<xs:element name="Packed-seqpnt_fuzz" type="Packed-seqpnt_fuzz-a-type" minOccurs="0" />
+<xs:element name="Packed-seqpnt_points" type="Packed-seqpnt_points-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Packed-seqpnt_strand-a-type">
+<xs:sequence>
+<xs:element name="Na-strand" type="Na-strand-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Packed-seqpnt_id-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Packed-seqpnt_fuzz-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Packed-seqpnt_points-a-type" >
+<xs:sequence>
+<xs:element name="Packed-seqpnt_points_E" type="Packed-seqpnt_points_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Packed-seqpnt_points_E" type = "xs:integer" />
+<xs:simpleType name="Packed-seqpnt_points_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Na-strand -->
+
+<xs:element name="Na-strand" type="Na-strand-a-type" />
+<xs:complexType name="Na-strand-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="plus" />
+<xs:enumeration value="minus" />
+<xs:enumeration value="both" />
+<xs:enumeration value="both-rev" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Seq-bond -->
+
+<xs:element name="Seq-bond" type="Seq-bond-a-type" />
+<xs:complexType name="Seq-bond-a-type">
+<xs:sequence>
+<xs:element name="Seq-bond_a" type="Seq-bond_a-a-type" />
+<xs:element name="Seq-bond_b" type="Seq-bond_b-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-bond_a-a-type">
+<xs:sequence>
+<xs:element name="Seq-point" type="Seq-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-bond_b-a-type">
+<xs:sequence>
+<xs:element name="Seq-point" type="Seq-point-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-loc-mix -->
+
+<xs:complexType name="Seq-loc-mix-a-type" >
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Seq-loc-equiv -->
+
+<xs:complexType name="Seq-loc-equiv-a-type" >
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+</xs:schema>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-PubMed
+================================================= -->
+<!-- Definition of Pubmed-entry -->
+
+<xs:element name="Pubmed-entry" type="Pubmed-entry-a-type" />
+<xs:complexType name="Pubmed-entry-a-type">
+<xs:sequence>
+<xs:element name="Pubmed-entry_pmid" type="Pubmed-entry_pmid-a-type" />
+<xs:element name="Pubmed-entry_medent" type="Pubmed-entry_medent-a-type" minOccurs="0" />
+<xs:element name="Pubmed-entry_publisher" type="Pubmed-entry_publisher-a-type" minOccurs="0" />
+<xs:element name="Pubmed-entry_urls" type="Pubmed-entry_urls-a-type" minOccurs="0" />
+<xs:element name="Pubmed-entry_pubid" type="Pubmed-entry_pubid-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Pubmed-entry_pmid-a-type">
+<xs:sequence>
+<xs:element name="PubMedId" type="PubMedId-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pubmed-entry_medent-a-type">
+<xs:sequence>
+<xs:element name="Medline-entry" type="Medline-entry-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Pubmed-entry_publisher" type = "xs:string" />
+<xs:simpleType name="Pubmed-entry_publisher-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Pubmed-entry_urls-a-type" >
+<xs:sequence>
+<xs:element name="Pubmed-url" type="Pubmed-url-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Pubmed-entry_pubid" type = "xs:string" />
+<xs:simpleType name="Pubmed-entry_pubid-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Pubmed-url -->
+
+<xs:element name="Pubmed-url" type="Pubmed-url-a-type" />
+<xs:complexType name="Pubmed-url-a-type">
+<xs:sequence>
+<xs:element name="Pubmed-url_location" type="Pubmed-url_location-a-type" minOccurs="0" />
+<xs:element name="Pubmed-url_url" type="Pubmed-url_url-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Pubmed-url_location" type = "xs:string" />
+<xs:simpleType name="Pubmed-url_location-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Pubmed-url_url" type = "xs:string" />
+<xs:simpleType name="Pubmed-url_url-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+</xs:schema>

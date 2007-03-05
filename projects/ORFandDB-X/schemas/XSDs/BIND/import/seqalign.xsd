@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Seqalign
+================================================= -->
+<!-- Definition of Seq-align-set -->
+
+<xs:complexType name="Seq-align-set-a-type" >
+<xs:sequence>
+<xs:element name="Seq-align" type="Seq-align-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Seq-align -->
+
+<xs:element name="Seq-align" type="Seq-align-a-type" />
+<xs:complexType name="Seq-align-a-type">
+<xs:sequence>
+<xs:element name="Seq-align_type" type="Seq-align_type-a-type" />
+<xs:element name="Seq-align_dim" type="Seq-align_dim-a-type" minOccurs="0" />
+<xs:element name="Seq-align_score" type="Seq-align_score-a-type" minOccurs="0" />
+<xs:element name="Seq-align_segs" type="Seq-align_segs-a-type" />
+<xs:element name="Seq-align_bounds" type="Seq-align_bounds-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Seq-align_type" type="Seq-align_type-a-type" />
+<xs:complexType name="Seq-align_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="global" />
+<xs:enumeration value="diags" />
+<xs:enumeration value="partial" />
+<xs:enumeration value="disc" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-align_dim" type = "xs:integer" />
+<xs:simpleType name="Seq-align_dim-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-align_score-a-type" >
+<xs:sequence>
+<xs:element name="Score" type="Score-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-align_segs" type="Seq-align_segs-a-type" />
+<xs:complexType name="Seq-align_segs-a-type">
+<xs:choice>
+<xs:element name="Seq-align_segs_dendiag" type="Seq-align_segs_dendiag-a-type" />
+<xs:element name="Seq-align_segs_denseg" type="Seq-align_segs_denseg-a-type" />
+<xs:element name="Seq-align_segs_std" type="Seq-align_segs_std-a-type" />
+<xs:element name="Seq-align_segs_packed" type="Seq-align_segs_packed-a-type" />
+<xs:element name="Seq-align_segs_disc" type="Seq-align_segs_disc-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Seq-align_segs_dendiag-a-type" >
+<xs:sequence>
+<xs:element name="Dense-diag" type="Dense-diag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-align_segs_denseg-a-type">
+<xs:sequence>
+<xs:element name="Dense-seg" type="Dense-seg-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-align_segs_std-a-type" >
+<xs:sequence>
+<xs:element name="Std-seg" type="Std-seg-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-align_segs_packed-a-type">
+<xs:sequence>
+<xs:element name="Packed-seg" type="Packed-seg-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-align_segs_disc-a-type">
+<xs:sequence>
+<xs:element name="Seq-align-set" type="Seq-align-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-align_bounds-a-type" >
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Dense-diag -->
+
+<xs:element name="Dense-diag" type="Dense-diag-a-type" />
+<xs:complexType name="Dense-diag-a-type">
+<xs:sequence>
+<xs:element name="Dense-diag_dim" type="Dense-diag_dim-a-type" minOccurs="0" />
+<xs:element name="Dense-diag_ids" type="Dense-diag_ids-a-type" />
+<xs:element name="Dense-diag_starts" type="Dense-diag_starts-a-type" />
+<xs:element name="Dense-diag_len" type="Dense-diag_len-a-type" />
+<xs:element name="Dense-diag_strands" type="Dense-diag_strands-a-type" minOccurs="0" />
+<xs:element name="Dense-diag_scores" type="Dense-diag_scores-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Dense-diag_dim" type = "xs:integer" />
+<xs:simpleType name="Dense-diag_dim-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Dense-diag_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Dense-diag_starts-a-type" >
+<xs:sequence>
+<xs:element name="Dense-diag_starts_E" type="Dense-diag_starts_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Dense-diag_starts_E" type = "xs:integer" />
+<xs:simpleType name="Dense-diag_starts_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:element name="Dense-diag_len" type = "xs:integer" />
+<xs:simpleType name="Dense-diag_len-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Dense-diag_strands-a-type" >
+<xs:sequence>
+<xs:element name="Na-strand" type="Na-strand-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Dense-diag_scores-a-type" >
+<xs:sequence>
+<xs:element name="Score" type="Score-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Dense-seg -->
+
+<xs:element name="Dense-seg" type="Dense-seg-a-type" />
+<xs:complexType name="Dense-seg-a-type">
+<xs:sequence>
+<xs:element name="Dense-seg_dim" type="Dense-seg_dim-a-type" minOccurs="0" />
+<xs:element name="Dense-seg_numseg" type="Dense-seg_numseg-a-type" />
+<xs:element name="Dense-seg_ids" type="Dense-seg_ids-a-type" />
+<xs:element name="Dense-seg_starts" type="Dense-seg_starts-a-type" />
+<xs:element name="Dense-seg_lens" type="Dense-seg_lens-a-type" />
+<xs:element name="Dense-seg_strands" type="Dense-seg_strands-a-type" minOccurs="0" />
+<xs:element name="Dense-seg_scores" type="Dense-seg_scores-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Dense-seg_dim" type = "xs:integer" />
+<xs:simpleType name="Dense-seg_dim-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Dense-seg_numseg" type = "xs:integer" />
+<xs:simpleType name="Dense-seg_numseg-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Dense-seg_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Dense-seg_starts-a-type" >
+<xs:sequence>
+<xs:element name="Dense-seg_starts_E" type="Dense-seg_starts_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Dense-seg_starts_E" type = "xs:integer" />
+<xs:simpleType name="Dense-seg_starts_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Dense-seg_lens-a-type" >
+<xs:sequence>
+<xs:element name="Dense-seg_lens_E" type="Dense-seg_lens_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Dense-seg_lens_E" type = "xs:integer" />
+<xs:simpleType name="Dense-seg_lens_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Dense-seg_strands-a-type" >
+<xs:sequence>
+<xs:element name="Na-strand" type="Na-strand-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Dense-seg_scores-a-type" >
+<xs:sequence>
+<xs:element name="Score" type="Score-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Packed-seg -->
+
+<xs:element name="Packed-seg" type="Packed-seg-a-type" />
+<xs:complexType name="Packed-seg-a-type">
+<xs:sequence>
+<xs:element name="Packed-seg_dim" type="Packed-seg_dim-a-type" minOccurs="0" />
+<xs:element name="Packed-seg_numseg" type="Packed-seg_numseg-a-type" />
+<xs:element name="Packed-seg_ids" type="Packed-seg_ids-a-type" />
+<xs:element name="Packed-seg_starts" type="Packed-seg_starts-a-type" />
+<xs:element name="Packed-seg_present" type="Packed-seg_present-a-type" />
+<xs:element name="Packed-seg_lens" type="Packed-seg_lens-a-type" />
+<xs:element name="Packed-seg_strands" type="Packed-seg_strands-a-type" minOccurs="0" />
+<xs:element name="Packed-seg_scores" type="Packed-seg_scores-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Packed-seg_dim" type = "xs:integer" />
+<xs:simpleType name="Packed-seg_dim-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Packed-seg_numseg" type = "xs:integer" />
+<xs:simpleType name="Packed-seg_numseg-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Packed-seg_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Packed-seg_starts-a-type" >
+<xs:sequence>
+<xs:element name="Packed-seg_starts_E" type="Packed-seg_starts_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Packed-seg_starts_E" type = "xs:integer" />
+<xs:simpleType name="Packed-seg_starts_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:element name="Packed-seg_present" type = "xs:hexBinary" />
+<xs:simpleType name="Packed-seg_present-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+<xs:complexType name="Packed-seg_lens-a-type" >
+<xs:sequence>
+<xs:element name="Packed-seg_lens_E" type="Packed-seg_lens_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Packed-seg_lens_E" type = "xs:integer" />
+<xs:simpleType name="Packed-seg_lens_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Packed-seg_strands-a-type" >
+<xs:sequence>
+<xs:element name="Na-strand" type="Na-strand-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Packed-seg_scores-a-type" >
+<xs:sequence>
+<xs:element name="Score" type="Score-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Std-seg -->
+
+<xs:element name="Std-seg" type="Std-seg-a-type" />
+<xs:complexType name="Std-seg-a-type">
+<xs:sequence>
+<xs:element name="Std-seg_dim" type="Std-seg_dim-a-type" minOccurs="0" />
+<xs:element name="Std-seg_ids" type="Std-seg_ids-a-type" minOccurs="0" />
+<xs:element name="Std-seg_loc" type="Std-seg_loc-a-type" />
+<xs:element name="Std-seg_scores" type="Std-seg_scores-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Std-seg_dim" type = "xs:integer" />
+<xs:simpleType name="Std-seg_dim-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Std-seg_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Std-seg_loc-a-type" >
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Std-seg_scores-a-type" >
+<xs:sequence>
+<xs:element name="Score" type="Score-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Score -->
+
+<xs:element name="Score" type="Score-a-type" />
+<xs:complexType name="Score-a-type">
+<xs:sequence>
+<xs:element name="Score_id" type="Score_id-a-type" minOccurs="0" />
+<xs:element name="Score_value" type="Score_value-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Score_id-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Score_value" type="Score_value-a-type" />
+<xs:complexType name="Score_value-a-type">
+<xs:choice>
+<xs:element name="Score_value_real" type="Score_value_real-a-type" />
+<xs:element name="Score_value_int" type="Score_value_int-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="Score_value_real" type = "xs:decimal" />
+<xs:simpleType name="Score_value_real-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Score_value_int" type = "xs:integer" />
+<xs:simpleType name="Score_value_int-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Score-set -->
+
+<xs:complexType name="Score-set-a-type" >
+<xs:sequence>
+<xs:element name="Score" type="Score-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+</xs:schema>

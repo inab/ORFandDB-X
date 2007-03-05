@@ -1,0 +1,1580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Seqfeat
+================================================= -->
+<!-- Definition of Feat-id -->
+
+<xs:element name="Feat-id" type="Feat-id-a-type" />
+<xs:complexType name="Feat-id-a-type">
+<xs:choice>
+<xs:element name="Feat-id_gibb" type="Feat-id_gibb-a-type" />
+<xs:element name="Feat-id_giim" type="Feat-id_giim-a-type" />
+<xs:element name="Feat-id_local" type="Feat-id_local-a-type" />
+<xs:element name="Feat-id_general" type="Feat-id_general-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Feat-id_gibb" type = "xs:integer" />
+<xs:simpleType name="Feat-id_gibb-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Feat-id_giim-a-type">
+<xs:sequence>
+<xs:element name="Giimport-id" type="Giimport-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Feat-id_local-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Feat-id_general-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-feat -->
+
+<xs:element name="Seq-feat" type="Seq-feat-a-type" />
+<xs:complexType name="Seq-feat-a-type">
+<xs:sequence>
+<xs:element name="Seq-feat_id" type="Seq-feat_id-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_data" type="Seq-feat_data-a-type" />
+<xs:element name="Seq-feat_partial" type="Seq-feat_partial-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_except" type="Seq-feat_except-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_comment" type="Seq-feat_comment-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_product" type="Seq-feat_product-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_location" type="Seq-feat_location-a-type" />
+<xs:element name="Seq-feat_qual" type="Seq-feat_qual-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_title" type="Seq-feat_title-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_ext" type="Seq-feat_ext-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_cit" type="Seq-feat_cit-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_exp-ev" type="Seq-feat_exp-ev-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_xref" type="Seq-feat_xref-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_dbxref" type="Seq-feat_dbxref-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_pseudo" type="Seq-feat_pseudo-a-type" minOccurs="0" />
+<xs:element name="Seq-feat_except-text" type="Seq-feat_except-text-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-feat_id-a-type">
+<xs:sequence>
+<xs:element name="Feat-id" type="Feat-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-feat_data-a-type">
+<xs:sequence>
+<xs:element name="SeqFeatData" type="SeqFeatData-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-feat_partial" type="Seq-feat_partial-a-type"/>
+<xs:complexType name="Seq-feat_partial-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-feat_except" type="Seq-feat_except-a-type"/>
+<xs:complexType name="Seq-feat_except-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-feat_comment" type = "xs:string" />
+<xs:simpleType name="Seq-feat_comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seq-feat_product-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-feat_location-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-feat_qual-a-type" >
+<xs:sequence>
+<xs:element name="Gb-qual" type="Gb-qual-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-feat_title" type = "xs:string" />
+<xs:simpleType name="Seq-feat_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seq-feat_ext-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-feat_cit-a-type">
+<xs:sequence>
+<xs:element name="Pub-set" type="Pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-feat_exp-ev" type="Seq-feat_exp-ev-a-type" />
+<xs:complexType name="Seq-feat_exp-ev-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="experimental" />
+<xs:enumeration value="not-experimental" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Seq-feat_xref-a-type" >
+<xs:sequence>
+<xs:element name="SeqFeatXref" type="SeqFeatXref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-feat_dbxref-a-type" >
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-feat_pseudo" type="Seq-feat_pseudo-a-type"/>
+<xs:complexType name="Seq-feat_pseudo-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-feat_except-text" type = "xs:string" />
+<xs:simpleType name="Seq-feat_except-text-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of SeqFeatData -->
+
+<xs:element name="SeqFeatData" type="SeqFeatData-a-type" />
+<xs:complexType name="SeqFeatData-a-type">
+<xs:choice>
+<xs:element name="SeqFeatData_gene" type="SeqFeatData_gene-a-type" />
+<xs:element name="SeqFeatData_org" type="SeqFeatData_org-a-type" />
+<xs:element name="SeqFeatData_cdregion" type="SeqFeatData_cdregion-a-type" />
+<xs:element name="SeqFeatData_prot" type="SeqFeatData_prot-a-type" />
+<xs:element name="SeqFeatData_rna" type="SeqFeatData_rna-a-type" />
+<xs:element name="SeqFeatData_pub" type="SeqFeatData_pub-a-type" />
+<xs:element name="SeqFeatData_seq" type="SeqFeatData_seq-a-type" />
+<xs:element name="SeqFeatData_imp" type="SeqFeatData_imp-a-type" />
+<xs:element name="SeqFeatData_region" type="SeqFeatData_region-a-type" />
+<xs:element name="SeqFeatData_comment" type="SeqFeatData_comment-a-type" />
+<xs:element name="SeqFeatData_bond" type="SeqFeatData_bond-a-type" />
+<xs:element name="SeqFeatData_site" type="SeqFeatData_site-a-type" />
+<xs:element name="SeqFeatData_rsite" type="SeqFeatData_rsite-a-type" />
+<xs:element name="SeqFeatData_user" type="SeqFeatData_user-a-type" />
+<xs:element name="SeqFeatData_txinit" type="SeqFeatData_txinit-a-type" />
+<xs:element name="SeqFeatData_num" type="SeqFeatData_num-a-type" />
+<xs:element name="SeqFeatData_psec-str" type="SeqFeatData_psec-str-a-type" />
+<xs:element name="SeqFeatData_non-std-residue" type="SeqFeatData_non-std-residue-a-type" />
+<xs:element name="SeqFeatData_het" type="SeqFeatData_het-a-type" />
+<xs:element name="SeqFeatData_biosrc" type="SeqFeatData_biosrc-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="SeqFeatData_gene-a-type">
+<xs:sequence>
+<xs:element name="Gene-ref" type="Gene-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_org-a-type">
+<xs:sequence>
+<xs:element name="Org-ref" type="Org-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_cdregion-a-type">
+<xs:sequence>
+<xs:element name="Cdregion" type="Cdregion-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_prot-a-type">
+<xs:sequence>
+<xs:element name="Prot-ref" type="Prot-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_rna-a-type">
+<xs:sequence>
+<xs:element name="RNA-ref" type="RNA-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_pub-a-type">
+<xs:sequence>
+<xs:element name="Pubdesc" type="Pubdesc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_seq-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_imp-a-type">
+<xs:sequence>
+<xs:element name="Imp-feat" type="Imp-feat-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="SeqFeatData_region" type = "xs:string" />
+<xs:simpleType name="SeqFeatData_region-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="SeqFeatData_comment">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="SeqFeatData_comment-a-type">
+</xs:complexType>
+<xs:element name="SeqFeatData_bond" type="SeqFeatData_bond-a-type" />
+<xs:complexType name="SeqFeatData_bond-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="disulfide" />
+<xs:enumeration value="thiolester" />
+<xs:enumeration value="xlink" />
+<xs:enumeration value="thioether" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="SeqFeatData_site" type="SeqFeatData_site-a-type" />
+<xs:complexType name="SeqFeatData_site-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="active" />
+<xs:enumeration value="binding" />
+<xs:enumeration value="cleavage" />
+<xs:enumeration value="inhibit" />
+<xs:enumeration value="modified" />
+<xs:enumeration value="glycosylation" />
+<xs:enumeration value="myristoylation" />
+<xs:enumeration value="mutagenized" />
+<xs:enumeration value="metal-binding" />
+<xs:enumeration value="phosphorylation" />
+<xs:enumeration value="acetylation" />
+<xs:enumeration value="amidation" />
+<xs:enumeration value="methylation" />
+<xs:enumeration value="hydroxylation" />
+<xs:enumeration value="sulfatation" />
+<xs:enumeration value="oxidative-deamination" />
+<xs:enumeration value="pyrrolidone-carboxylic-acid" />
+<xs:enumeration value="gamma-carboxyglutamic-acid" />
+<xs:enumeration value="blocked" />
+<xs:enumeration value="lipid-binding" />
+<xs:enumeration value="np-binding" />
+<xs:enumeration value="dna-binding" />
+<xs:enumeration value="signal-peptide" />
+<xs:enumeration value="transit-peptide" />
+<xs:enumeration value="transmembrane-region" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_rsite-a-type">
+<xs:sequence>
+<xs:element name="Rsite-ref" type="Rsite-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_user-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_txinit-a-type">
+<xs:sequence>
+<xs:element name="Txinit" type="Txinit-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_num-a-type">
+<xs:sequence>
+<xs:element name="Numbering" type="Numbering-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="SeqFeatData_psec-str" type="SeqFeatData_psec-str-a-type" />
+<xs:complexType name="SeqFeatData_psec-str-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="helix" />
+<xs:enumeration value="sheet" />
+<xs:enumeration value="turn" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="SeqFeatData_non-std-residue" type = "xs:string" />
+<xs:simpleType name="SeqFeatData_non-std-residue-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="SeqFeatData_het-a-type">
+<xs:sequence>
+<xs:element name="Heterogen" type="Heterogen-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatData_biosrc-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of SeqFeatXref -->
+
+<xs:element name="SeqFeatXref" type="SeqFeatXref-a-type" />
+<xs:complexType name="SeqFeatXref-a-type">
+<xs:sequence>
+<xs:element name="SeqFeatXref_id" type="SeqFeatXref_id-a-type" minOccurs="0" />
+<xs:element name="SeqFeatXref_data" type="SeqFeatXref_data-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="SeqFeatXref_id-a-type">
+<xs:sequence>
+<xs:element name="Feat-id" type="Feat-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SeqFeatXref_data-a-type">
+<xs:sequence>
+<xs:element name="SeqFeatData" type="SeqFeatData-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cdregion -->
+
+<xs:element name="Cdregion" type="Cdregion-a-type" />
+<xs:complexType name="Cdregion-a-type">
+<xs:sequence>
+<xs:element name="Cdregion_orf" type="Cdregion_orf-a-type" minOccurs="0" />
+<xs:element name="Cdregion_frame" type="Cdregion_frame-a-type" minOccurs="0" />
+<xs:element name="Cdregion_conflict" type="Cdregion_conflict-a-type" minOccurs="0" />
+<xs:element name="Cdregion_gaps" type="Cdregion_gaps-a-type" minOccurs="0" />
+<xs:element name="Cdregion_mismatch" type="Cdregion_mismatch-a-type" minOccurs="0" />
+<xs:element name="Cdregion_code" type="Cdregion_code-a-type" minOccurs="0" />
+<xs:element name="Cdregion_code-break" type="Cdregion_code-break-a-type" minOccurs="0" />
+<xs:element name="Cdregion_stops" type="Cdregion_stops-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Cdregion_orf" type="Cdregion_orf-a-type"/>
+<xs:complexType name="Cdregion_orf-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Cdregion_frame" type="Cdregion_frame-a-type" />
+<xs:complexType name="Cdregion_frame-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="one" />
+<xs:enumeration value="two" />
+<xs:enumeration value="three" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Cdregion_conflict" type="Cdregion_conflict-a-type"/>
+<xs:complexType name="Cdregion_conflict-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Cdregion_gaps" type = "xs:integer" />
+<xs:simpleType name="Cdregion_gaps-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Cdregion_mismatch" type = "xs:integer" />
+<xs:simpleType name="Cdregion_mismatch-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Cdregion_code-a-type">
+<xs:sequence>
+<xs:element name="Genetic-code" type="Genetic-code-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cdregion_code-break-a-type" >
+<xs:sequence>
+<xs:element name="Code-break" type="Code-break-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cdregion_stops" type = "xs:integer" />
+<xs:simpleType name="Cdregion_stops-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Genetic-code -->
+
+<xs:complexType name="Genetic-code-a-type" >
+<xs:sequence>
+<xs:element name="Genetic-code_E" type="Genetic-code_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Genetic-code_E" type="Genetic-code_E-a-type" />
+<xs:complexType name="Genetic-code_E-a-type">
+<xs:choice>
+<xs:element name="Genetic-code_E_name" type="Genetic-code_E_name-a-type" />
+<xs:element name="Genetic-code_E_id" type="Genetic-code_E_id-a-type" />
+<xs:element name="Genetic-code_E_ncbieaa" type="Genetic-code_E_ncbieaa-a-type" />
+<xs:element name="Genetic-code_E_ncbi8aa" type="Genetic-code_E_ncbi8aa-a-type" />
+<xs:element name="Genetic-code_E_ncbistdaa" type="Genetic-code_E_ncbistdaa-a-type" />
+<xs:element name="Genetic-code_E_sncbieaa" type="Genetic-code_E_sncbieaa-a-type" />
+<xs:element name="Genetic-code_E_sncbi8aa" type="Genetic-code_E_sncbi8aa-a-type" />
+<xs:element name="Genetic-code_E_sncbistdaa" type="Genetic-code_E_sncbistdaa-a-type" />
+</xs:choice>
+</xs:complexType>
+
+<xs:element name="Genetic-code_E_name" type = "xs:string" />
+<xs:simpleType name="Genetic-code_E_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_id" type = "xs:integer" />
+<xs:simpleType name="Genetic-code_E_id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_ncbieaa" type = "xs:string" />
+<xs:simpleType name="Genetic-code_E_ncbieaa-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_ncbi8aa" type = "xs:hexBinary" />
+<xs:simpleType name="Genetic-code_E_ncbi8aa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_ncbistdaa" type = "xs:hexBinary" />
+<xs:simpleType name="Genetic-code_E_ncbistdaa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_sncbieaa" type = "xs:string" />
+<xs:simpleType name="Genetic-code_E_sncbieaa-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_sncbi8aa" type = "xs:hexBinary" />
+<xs:simpleType name="Genetic-code_E_sncbi8aa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+<xs:element name="Genetic-code_E_sncbistdaa" type = "xs:hexBinary" />
+<xs:simpleType name="Genetic-code_E_sncbistdaa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Code-break -->
+
+<xs:element name="Code-break" type="Code-break-a-type" />
+<xs:complexType name="Code-break-a-type">
+<xs:sequence>
+<xs:element name="Code-break_loc" type="Code-break_loc-a-type" />
+<xs:element name="Code-break_aa" type="Code-break_aa-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Code-break_loc-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Code-break_aa" type="Code-break_aa-a-type" />
+<xs:complexType name="Code-break_aa-a-type">
+<xs:choice>
+<xs:element name="Code-break_aa_ncbieaa" type="Code-break_aa_ncbieaa-a-type" />
+<xs:element name="Code-break_aa_ncbi8aa" type="Code-break_aa_ncbi8aa-a-type" />
+<xs:element name="Code-break_aa_ncbistdaa" type="Code-break_aa_ncbistdaa-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="Code-break_aa_ncbieaa" type = "xs:integer" />
+<xs:simpleType name="Code-break_aa_ncbieaa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Code-break_aa_ncbi8aa" type = "xs:integer" />
+<xs:simpleType name="Code-break_aa_ncbi8aa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Code-break_aa_ncbistdaa" type = "xs:integer" />
+<xs:simpleType name="Code-break_aa_ncbistdaa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Genetic-code-table -->
+<!--
+<xs:complexType name="Genetic-code-table-a-type" >
+<xs:sequence>
+<xs:element name="Genetic-code" type="Genetic-code-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+-->
+
+
+
+<!-- Definition of Imp-feat -->
+
+<xs:element name="Imp-feat" type="Imp-feat-a-type" />
+<xs:complexType name="Imp-feat-a-type">
+<xs:sequence>
+<xs:element name="Imp-feat_key" type="Imp-feat_key-a-type" />
+<xs:element name="Imp-feat_loc" type="Imp-feat_loc-a-type" minOccurs="0" />
+<xs:element name="Imp-feat_descr" type="Imp-feat_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Imp-feat_key" type = "xs:string" />
+<xs:simpleType name="Imp-feat_key-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imp-feat_loc" type = "xs:string" />
+<xs:simpleType name="Imp-feat_loc-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imp-feat_descr" type = "xs:string" />
+<xs:simpleType name="Imp-feat_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Gb-qual -->
+
+<xs:element name="Gb-qual" type="Gb-qual-a-type" />
+<xs:complexType name="Gb-qual-a-type">
+<xs:sequence>
+<xs:element name="Gb-qual_qual" type="Gb-qual_qual-a-type" />
+<xs:element name="Gb-qual_val" type="Gb-qual_val-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Gb-qual_qual" type = "xs:string" />
+<xs:simpleType name="Gb-qual_qual-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Gb-qual_val" type = "xs:string" />
+<xs:simpleType name="Gb-qual_val-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Rsite
+================================================= -->
+<!-- Definition of Rsite-ref -->
+
+<xs:element name="Rsite-ref" type="Rsite-ref-a-type" />
+<xs:complexType name="Rsite-ref-a-type">
+<xs:choice>
+<xs:element name="Rsite-ref_str" type="Rsite-ref_str-a-type" />
+<xs:element name="Rsite-ref_db" type="Rsite-ref_db-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Rsite-ref_str" type = "xs:string" />
+<xs:simpleType name="Rsite-ref_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Rsite-ref_db-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-RNA
+================================================= -->
+<!-- Definition of RNA-ref -->
+
+<xs:element name="RNA-ref" type="RNA-ref-a-type" />
+<xs:complexType name="RNA-ref-a-type">
+<xs:sequence>
+<xs:element name="RNA-ref_type" type="RNA-ref_type-a-type" />
+<xs:element name="RNA-ref_pseudo" type="RNA-ref_pseudo-a-type" minOccurs="0" />
+<xs:element name="RNA-ref_ext" type="RNA-ref_ext-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="RNA-ref_type" type="RNA-ref_type-a-type" />
+<xs:complexType name="RNA-ref_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="premsg" />
+<xs:enumeration value="mRNA" />
+<xs:enumeration value="tRNA" />
+<xs:enumeration value="rRNA" />
+<xs:enumeration value="snRNA" />
+<xs:enumeration value="scRNA" />
+<xs:enumeration value="snoRNA" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="RNA-ref_pseudo" type="RNA-ref_pseudo-a-type"/>
+<xs:complexType name="RNA-ref_pseudo-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="RNA-ref_ext" type="RNA-ref_ext-a-type" />
+<xs:complexType name="RNA-ref_ext-a-type">
+<xs:choice>
+<xs:element name="RNA-ref_ext_name" type="RNA-ref_ext_name-a-type" />
+<xs:element name="RNA-ref_ext_tRNA" type="RNA-ref_ext_tRNA-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="RNA-ref_ext_name" type = "xs:string" />
+<xs:simpleType name="RNA-ref_ext_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="RNA-ref_ext_tRNA-a-type">
+<xs:sequence>
+<xs:element name="Trna-ext" type="Trna-ext-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Trna-ext -->
+
+<xs:element name="Trna-ext" type="Trna-ext-a-type" />
+<xs:complexType name="Trna-ext-a-type">
+<xs:sequence>
+<xs:element name="Trna-ext_aa" type="Trna-ext_aa-a-type" minOccurs="0" />
+<xs:element name="Trna-ext_codon" type="Trna-ext_codon-a-type" minOccurs="0" />
+<xs:element name="Trna-ext_anticodon" type="Trna-ext_anticodon-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Trna-ext_aa" type="Trna-ext_aa-a-type" />
+<xs:complexType name="Trna-ext_aa-a-type">
+<xs:choice>
+<xs:element name="Trna-ext_aa_iupacaa" type="Trna-ext_aa_iupacaa-a-type" />
+<xs:element name="Trna-ext_aa_ncbieaa" type="Trna-ext_aa_ncbieaa-a-type" />
+<xs:element name="Trna-ext_aa_ncbi8aa" type="Trna-ext_aa_ncbi8aa-a-type" />
+<xs:element name="Trna-ext_aa_ncbistdaa" type="Trna-ext_aa_ncbistdaa-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="Trna-ext_aa_iupacaa" type = "xs:integer" />
+<xs:simpleType name="Trna-ext_aa_iupacaa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Trna-ext_aa_ncbieaa" type = "xs:integer" />
+<xs:simpleType name="Trna-ext_aa_ncbieaa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Trna-ext_aa_ncbi8aa" type = "xs:integer" />
+<xs:simpleType name="Trna-ext_aa_ncbi8aa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Trna-ext_aa_ncbistdaa" type = "xs:integer" />
+<xs:simpleType name="Trna-ext_aa_ncbistdaa-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Trna-ext_codon-a-type" >
+<xs:sequence>
+<xs:element name="Trna-ext_codon_E" type="Trna-ext_codon_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Trna-ext_codon_E" type = "xs:integer" />
+<xs:simpleType name="Trna-ext_codon_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Trna-ext_anticodon-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Gene
+================================================= -->
+<!-- Definition of Gene-ref -->
+
+<xs:element name="Gene-ref" type="Gene-ref-a-type" />
+<xs:complexType name="Gene-ref-a-type">
+<xs:sequence>
+<xs:element name="Gene-ref_locus" type="Gene-ref_locus-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_allele" type="Gene-ref_allele-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_desc" type="Gene-ref_desc-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_maploc" type="Gene-ref_maploc-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_pseudo" type="Gene-ref_pseudo-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_db" type="Gene-ref_db-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_syn" type="Gene-ref_syn-a-type" minOccurs="0" />
+<xs:element name="Gene-ref_locus-tag" type="Gene-ref_locus-tag-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Gene-ref_locus" type = "xs:string" />
+<xs:simpleType name="Gene-ref_locus-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Gene-ref_allele" type = "xs:string" />
+<xs:simpleType name="Gene-ref_allele-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Gene-ref_desc" type = "xs:string" />
+<xs:simpleType name="Gene-ref_desc-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Gene-ref_maploc" type = "xs:string" />
+<xs:simpleType name="Gene-ref_maploc-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Gene-ref_pseudo" type="Gene-ref_pseudo-a-type"/>
+<xs:complexType name="Gene-ref_pseudo-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Gene-ref_db-a-type" >
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Gene-ref_syn-a-type" >
+<xs:sequence>
+<xs:element name="Gene-ref_syn_E" type="Gene-ref_syn_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Gene-ref_syn_E" type = "xs:string" />
+<xs:simpleType name="Gene-ref_syn_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="Gene-ref_locus-tag" type = "xs:string" />
+<xs:simpleType name="Gene-ref_locus-tag-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Organism
+================================================= -->
+<!-- Definition of Org-ref -->
+
+<xs:element name="Org-ref" type="Org-ref-a-type" />
+<xs:complexType name="Org-ref-a-type">
+<xs:sequence>
+<xs:element name="Org-ref_taxname" type="Org-ref_taxname-a-type" minOccurs="0" />
+<xs:element name="Org-ref_common" type="Org-ref_common-a-type" minOccurs="0" />
+<xs:element name="Org-ref_mod" type="Org-ref_mod-a-type" minOccurs="0" />
+<xs:element name="Org-ref_db" type="Org-ref_db-a-type" minOccurs="0" />
+<xs:element name="Org-ref_syn" type="Org-ref_syn-a-type" minOccurs="0" />
+<xs:element name="Org-ref_orgname" type="Org-ref_orgname-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Org-ref_taxname" type = "xs:string" />
+<xs:simpleType name="Org-ref_taxname-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Org-ref_common" type = "xs:string" />
+<xs:simpleType name="Org-ref_common-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Org-ref_mod-a-type" >
+<xs:sequence>
+<xs:element name="Org-ref_mod_E" type="Org-ref_mod_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Org-ref_mod_E" type = "xs:string" />
+<xs:simpleType name="Org-ref_mod_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Org-ref_db-a-type" >
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Org-ref_syn-a-type" >
+<xs:sequence>
+<xs:element name="Org-ref_syn_E" type="Org-ref_syn_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Org-ref_syn_E" type = "xs:string" />
+<xs:simpleType name="Org-ref_syn_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Org-ref_orgname-a-type">
+<xs:sequence>
+<xs:element name="OrgName" type="OrgName-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of OrgName -->
+
+<xs:element name="OrgName" type="OrgName-a-type" />
+<xs:complexType name="OrgName-a-type">
+<xs:sequence>
+<xs:element name="OrgName_name" type="OrgName_name-a-type" minOccurs="0" />
+<xs:element name="OrgName_attrib" type="OrgName_attrib-a-type" minOccurs="0" />
+<xs:element name="OrgName_mod" type="OrgName_mod-a-type" minOccurs="0" />
+<xs:element name="OrgName_lineage" type="OrgName_lineage-a-type" minOccurs="0" />
+<xs:element name="OrgName_gcode" type="OrgName_gcode-a-type" minOccurs="0" />
+<xs:element name="OrgName_mgcode" type="OrgName_mgcode-a-type" minOccurs="0" />
+<xs:element name="OrgName_div" type="OrgName_div-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="OrgName_name" type="OrgName_name-a-type" />
+<xs:complexType name="OrgName_name-a-type">
+<xs:choice>
+<xs:element name="OrgName_name_binomial" type="OrgName_name_binomial-a-type" />
+<xs:element name="OrgName_name_virus" type="OrgName_name_virus-a-type" />
+<xs:element name="OrgName_name_hybrid" type="OrgName_name_hybrid-a-type" />
+<xs:element name="OrgName_name_namedhybrid" type="OrgName_name_namedhybrid-a-type" />
+<xs:element name="OrgName_name_partial" type="OrgName_name_partial-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="OrgName_name_binomial-a-type">
+<xs:sequence>
+<xs:element name="BinomialOrgName" type="BinomialOrgName-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="OrgName_name_virus" type = "xs:string" />
+<xs:simpleType name="OrgName_name_virus-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="OrgName_name_hybrid-a-type">
+<xs:sequence>
+<xs:element name="MultiOrgName" type="MultiOrgName-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="OrgName_name_namedhybrid-a-type">
+<xs:sequence>
+<xs:element name="BinomialOrgName" type="BinomialOrgName-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="OrgName_name_partial-a-type">
+<xs:sequence>
+<xs:element name="PartialOrgName" type="PartialOrgName-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="OrgName_attrib" type = "xs:string" />
+<xs:simpleType name="OrgName_attrib-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="OrgName_mod-a-type" >
+<xs:sequence>
+<xs:element name="OrgMod" type="OrgMod-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="OrgName_lineage" type = "xs:string" />
+<xs:simpleType name="OrgName_lineage-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="OrgName_gcode" type = "xs:integer" />
+<xs:simpleType name="OrgName_gcode-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="OrgName_mgcode" type = "xs:integer" />
+<xs:simpleType name="OrgName_mgcode-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="OrgName_div" type = "xs:string" />
+<xs:simpleType name="OrgName_div-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of OrgMod -->
+
+<xs:element name="OrgMod" type="OrgMod-a-type" />
+<xs:complexType name="OrgMod-a-type">
+<xs:sequence>
+<xs:element name="OrgMod_subtype" type="OrgMod_subtype-a-type" />
+<xs:element name="OrgMod_subname" type="OrgMod_subname-a-type" />
+<xs:element name="OrgMod_attrib" type="OrgMod_attrib-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="OrgMod_subtype" type="OrgMod_subtype-a-type" />
+<xs:complexType name="OrgMod_subtype-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="strain" />
+<xs:enumeration value="substrain" />
+<xs:enumeration value="type" />
+<xs:enumeration value="subtype" />
+<xs:enumeration value="variety" />
+<xs:enumeration value="serotype" />
+<xs:enumeration value="serogroup" />
+<xs:enumeration value="serovar" />
+<xs:enumeration value="cultivar" />
+<xs:enumeration value="pathovar" />
+<xs:enumeration value="chemovar" />
+<xs:enumeration value="biovar" />
+<xs:enumeration value="biotype" />
+<xs:enumeration value="group" />
+<xs:enumeration value="subgroup" />
+<xs:enumeration value="isolate" />
+<xs:enumeration value="common" />
+<xs:enumeration value="acronym" />
+<xs:enumeration value="dosage" />
+<xs:enumeration value="nat-host" />
+<xs:enumeration value="sub-species" />
+<xs:enumeration value="specimen-voucher" />
+<xs:enumeration value="authority" />
+<xs:enumeration value="forma" />
+<xs:enumeration value="forma-specialis" />
+<xs:enumeration value="ecotype" />
+<xs:enumeration value="synonym" />
+<xs:enumeration value="anamorph" />
+<xs:enumeration value="teleomorph" />
+<xs:enumeration value="breed" />
+<xs:enumeration value="gb-acronym" />
+<xs:enumeration value="gb-anamorph" />
+<xs:enumeration value="gb-synonym" />
+<xs:enumeration value="old-lineage" />
+<xs:enumeration value="old-name" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="OrgMod_subname" type = "xs:string" />
+<xs:simpleType name="OrgMod_subname-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="OrgMod_attrib" type = "xs:string" />
+<xs:simpleType name="OrgMod_attrib-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BinomialOrgName -->
+
+<xs:element name="BinomialOrgName" type="BinomialOrgName-a-type" />
+<xs:complexType name="BinomialOrgName-a-type">
+<xs:sequence>
+<xs:element name="BinomialOrgName_genus" type="BinomialOrgName_genus-a-type" />
+<xs:element name="BinomialOrgName_species" type="BinomialOrgName_species-a-type" minOccurs="0" />
+<xs:element name="BinomialOrgName_subspecies" type="BinomialOrgName_subspecies-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BinomialOrgName_genus" type = "xs:string" />
+<xs:simpleType name="BinomialOrgName_genus-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BinomialOrgName_species" type = "xs:string" />
+<xs:simpleType name="BinomialOrgName_species-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BinomialOrgName_subspecies" type = "xs:string" />
+<xs:simpleType name="BinomialOrgName_subspecies-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of MultiOrgName -->
+
+<xs:complexType name="MultiOrgName-a-type" >
+<xs:sequence>
+<xs:element name="OrgName" type="OrgName-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of PartialOrgName -->
+
+<xs:complexType name="PartialOrgName-a-type" >
+<xs:sequence>
+<xs:element name="TaxElement" type="TaxElement-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of TaxElement -->
+
+<xs:element name="TaxElement" type="TaxElement-a-type" />
+<xs:complexType name="TaxElement-a-type">
+<xs:sequence>
+<xs:element name="TaxElement_fixed-level" type="TaxElement_fixed-level-a-type" />
+<xs:element name="TaxElement_level" type="TaxElement_level-a-type" minOccurs="0" />
+<xs:element name="TaxElement_name" type="TaxElement_name-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="TaxElement_fixed-level" type="TaxElement_fixed-level-a-type" />
+<xs:complexType name="TaxElement_fixed-level-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="other" />
+<xs:enumeration value="family" />
+<xs:enumeration value="order" />
+<xs:enumeration value="class" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="TaxElement_level" type = "xs:string" />
+<xs:simpleType name="TaxElement_level-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="TaxElement_name" type = "xs:string" />
+<xs:simpleType name="TaxElement_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-BioSource
+================================================= -->
+<!-- Definition of BioSource -->
+
+<xs:element name="BioSource" type="BioSource-a-type" />
+<xs:complexType name="BioSource-a-type">
+<xs:sequence>
+<xs:element name="BioSource_genome" type="BioSource_genome-a-type" minOccurs="0" />
+<xs:element name="BioSource_origin" type="BioSource_origin-a-type" minOccurs="0" />
+<xs:element name="BioSource_org" type="BioSource_org-a-type" />
+<xs:element name="BioSource_subtype" type="BioSource_subtype-a-type" minOccurs="0" />
+<xs:element name="BioSource_is-focus" type="BioSource_is-focus-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BioSource_genome" type="BioSource_genome-a-type" />
+<xs:complexType name="BioSource_genome-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="genomic" />
+<xs:enumeration value="chloroplast" />
+<xs:enumeration value="chromoplast" />
+<xs:enumeration value="kinetoplast" />
+<xs:enumeration value="mitochondrion" />
+<xs:enumeration value="plastid" />
+<xs:enumeration value="macronuclear" />
+<xs:enumeration value="extrachrom" />
+<xs:enumeration value="plasmid" />
+<xs:enumeration value="transposon" />
+<xs:enumeration value="insertion-seq" />
+<xs:enumeration value="cyanelle" />
+<xs:enumeration value="proviral" />
+<xs:enumeration value="virion" />
+<xs:enumeration value="nucleomorph" />
+<xs:enumeration value="apicoplast" />
+<xs:enumeration value="leucoplast" />
+<xs:enumeration value="proplastid" />
+<xs:enumeration value="endogenous-virus" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="BioSource_origin" type="BioSource_origin-a-type" />
+<xs:complexType name="BioSource_origin-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="natural" />
+<xs:enumeration value="natmut" />
+<xs:enumeration value="mut" />
+<xs:enumeration value="artificial" />
+<xs:enumeration value="synthetic" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:complexType name="BioSource_org-a-type">
+<xs:sequence>
+<xs:element name="Org-ref" type="Org-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BioSource_subtype-a-type" >
+<xs:sequence>
+<xs:element name="SubSource" type="SubSource-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BioSource_is-focus">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BioSource_is-focus-a-type">
+</xs:complexType>
+
+
+
+<!-- Definition of SubSource -->
+
+<xs:element name="SubSource" type="SubSource-a-type" />
+<xs:complexType name="SubSource-a-type">
+<xs:sequence>
+<xs:element name="SubSource_subtype" type="SubSource_subtype-a-type" />
+<xs:element name="SubSource_name" type="SubSource_name-a-type" />
+<xs:element name="SubSource_attrib" type="SubSource_attrib-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="SubSource_subtype" type="SubSource_subtype-a-type" />
+<xs:complexType name="SubSource_subtype-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="chromosome" />
+<xs:enumeration value="map" />
+<xs:enumeration value="clone" />
+<xs:enumeration value="subclone" />
+<xs:enumeration value="haplotype" />
+<xs:enumeration value="genotype" />
+<xs:enumeration value="sex" />
+<xs:enumeration value="cell-line" />
+<xs:enumeration value="cell-type" />
+<xs:enumeration value="tissue-type" />
+<xs:enumeration value="clone-lib" />
+<xs:enumeration value="dev-stage" />
+<xs:enumeration value="frequency" />
+<xs:enumeration value="germline" />
+<xs:enumeration value="rearranged" />
+<xs:enumeration value="lab-host" />
+<xs:enumeration value="pop-variant" />
+<xs:enumeration value="tissue-lib" />
+<xs:enumeration value="plasmid-name" />
+<xs:enumeration value="transposon-name" />
+<xs:enumeration value="insertion-seq-name" />
+<xs:enumeration value="plastid-name" />
+<xs:enumeration value="country" />
+<xs:enumeration value="segment" />
+<xs:enumeration value="endogenous-virus-name" />
+<xs:enumeration value="transgenic" />
+<xs:enumeration value="environmental-sample" />
+<xs:enumeration value="isolation-source" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="SubSource_name" type = "xs:string" />
+<xs:simpleType name="SubSource_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="SubSource_attrib" type = "xs:string" />
+<xs:simpleType name="SubSource_attrib-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Protein
+================================================= -->
+<!-- Definition of Prot-ref -->
+
+<xs:element name="Prot-ref" type="Prot-ref-a-type" />
+<xs:complexType name="Prot-ref-a-type">
+<xs:sequence>
+<xs:element name="Prot-ref_name" type="Prot-ref_name-a-type" minOccurs="0" />
+<xs:element name="Prot-ref_desc" type="Prot-ref_desc-a-type" minOccurs="0" />
+<xs:element name="Prot-ref_ec" type="Prot-ref_ec-a-type" minOccurs="0" />
+<xs:element name="Prot-ref_activity" type="Prot-ref_activity-a-type" minOccurs="0" />
+<xs:element name="Prot-ref_db" type="Prot-ref_db-a-type" minOccurs="0" />
+<xs:element name="Prot-ref_processed" type="Prot-ref_processed-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Prot-ref_name-a-type" >
+<xs:sequence>
+<xs:element name="Prot-ref_name_E" type="Prot-ref_name_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Prot-ref_name_E" type = "xs:string" />
+<xs:simpleType name="Prot-ref_name_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="Prot-ref_desc" type = "xs:string" />
+<xs:simpleType name="Prot-ref_desc-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Prot-ref_ec-a-type" >
+<xs:sequence>
+<xs:element name="Prot-ref_ec_E" type="Prot-ref_ec_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Prot-ref_ec_E" type = "xs:string" />
+<xs:simpleType name="Prot-ref_ec_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Prot-ref_activity-a-type" >
+<xs:sequence>
+<xs:element name="Prot-ref_activity_E" type="Prot-ref_activity_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Prot-ref_activity_E" type = "xs:string" />
+<xs:simpleType name="Prot-ref_activity_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Prot-ref_db-a-type" >
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Prot-ref_processed" type="Prot-ref_processed-a-type" />
+<xs:complexType name="Prot-ref_processed-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="preprotein" />
+<xs:enumeration value="mature" />
+<xs:enumeration value="signal-peptide" />
+<xs:enumeration value="transit-peptide" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-TxInit
+================================================= -->
+<!-- Definition of Txinit -->
+
+<xs:element name="Txinit" type="Txinit-a-type" />
+<xs:complexType name="Txinit-a-type">
+<xs:sequence>
+<xs:element name="Txinit_name" type="Txinit_name-a-type" />
+<xs:element name="Txinit_syn" type="Txinit_syn-a-type" minOccurs="0" />
+<xs:element name="Txinit_gene" type="Txinit_gene-a-type" minOccurs="0" />
+<xs:element name="Txinit_protein" type="Txinit_protein-a-type" minOccurs="0" />
+<xs:element name="Txinit_rna" type="Txinit_rna-a-type" minOccurs="0" />
+<xs:element name="Txinit_expression" type="Txinit_expression-a-type" minOccurs="0" />
+<xs:element name="Txinit_txsystem" type="Txinit_txsystem-a-type" />
+<xs:element name="Txinit_txdescr" type="Txinit_txdescr-a-type" minOccurs="0" />
+<xs:element name="Txinit_txorg" type="Txinit_txorg-a-type" minOccurs="0" />
+<xs:element name="Txinit_mapping-precise" type="Txinit_mapping-precise-a-type" minOccurs="0" />
+<xs:element name="Txinit_location-accurate" type="Txinit_location-accurate-a-type" minOccurs="0" />
+<xs:element name="Txinit_inittype" type="Txinit_inittype-a-type" minOccurs="0" />
+<xs:element name="Txinit_evidence" type="Txinit_evidence-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Txinit_name" type = "xs:string" />
+<xs:simpleType name="Txinit_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Txinit_syn-a-type" >
+<xs:sequence>
+<xs:element name="Txinit_syn_E" type="Txinit_syn_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Txinit_syn_E" type = "xs:string" />
+<xs:simpleType name="Txinit_syn_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Txinit_gene-a-type" >
+<xs:sequence>
+<xs:element name="Gene-ref" type="Gene-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Txinit_protein-a-type" >
+<xs:sequence>
+<xs:element name="Prot-ref" type="Prot-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Txinit_rna-a-type" >
+<xs:sequence>
+<xs:element name="Txinit_rna_E" type="Txinit_rna_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Txinit_rna_E" type = "xs:string" />
+<xs:simpleType name="Txinit_rna_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="Txinit_expression" type = "xs:string" />
+<xs:simpleType name="Txinit_expression-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Txinit_txsystem" type="Txinit_txsystem-a-type" />
+<xs:complexType name="Txinit_txsystem-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="pol1" />
+<xs:enumeration value="pol2" />
+<xs:enumeration value="pol3" />
+<xs:enumeration value="bacterial" />
+<xs:enumeration value="viral" />
+<xs:enumeration value="rna" />
+<xs:enumeration value="organelle" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Txinit_txdescr" type = "xs:string" />
+<xs:simpleType name="Txinit_txdescr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Txinit_txorg-a-type">
+<xs:sequence>
+<xs:element name="Org-ref" type="Org-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Txinit_mapping-precise" type="Txinit_mapping-precise-a-type"/>
+<xs:complexType name="Txinit_mapping-precise-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Txinit_location-accurate" type="Txinit_location-accurate-a-type"/>
+<xs:complexType name="Txinit_location-accurate-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Txinit_inittype" type="Txinit_inittype-a-type" />
+<xs:complexType name="Txinit_inittype-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="single" />
+<xs:enumeration value="multiple" />
+<xs:enumeration value="region" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Txinit_evidence-a-type" >
+<xs:sequence>
+<xs:element name="Tx-evidence" type="Tx-evidence-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Tx-evidence -->
+
+<xs:element name="Tx-evidence" type="Tx-evidence-a-type" />
+<xs:complexType name="Tx-evidence-a-type">
+<xs:sequence>
+<xs:element name="Tx-evidence_exp-code" type="Tx-evidence_exp-code-a-type" />
+<xs:element name="Tx-evidence_expression-system" type="Tx-evidence_expression-system-a-type" minOccurs="0" />
+<xs:element name="Tx-evidence_low-prec-data" type="Tx-evidence_low-prec-data-a-type" minOccurs="0" />
+<xs:element name="Tx-evidence_from-homolog" type="Tx-evidence_from-homolog-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Tx-evidence_exp-code" type="Tx-evidence_exp-code-a-type" />
+<xs:complexType name="Tx-evidence_exp-code-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="rna-seq" />
+<xs:enumeration value="rna-size" />
+<xs:enumeration value="np-map" />
+<xs:enumeration value="np-size" />
+<xs:enumeration value="pe-seq" />
+<xs:enumeration value="cDNA-seq" />
+<xs:enumeration value="pe-map" />
+<xs:enumeration value="pe-size" />
+<xs:enumeration value="pseudo-seq" />
+<xs:enumeration value="rev-pe-map" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Tx-evidence_expression-system" type="Tx-evidence_expression-system-a-type" />
+<xs:complexType name="Tx-evidence_expression-system-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="physiological" />
+<xs:enumeration value="in-vitro" />
+<xs:enumeration value="oocyte" />
+<xs:enumeration value="transfection" />
+<xs:enumeration value="transgenic" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Tx-evidence_low-prec-data" type="Tx-evidence_low-prec-data-a-type"/>
+<xs:complexType name="Tx-evidence_low-prec-data-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Tx-evidence_from-homolog" type="Tx-evidence_from-homolog-a-type"/>
+<xs:complexType name="Tx-evidence_from-homolog-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+</xs:schema>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Seqset
+================================================= -->
+<!-- Definition of Bioseq-set -->
+
+<xs:element name="Bioseq-set" type="Bioseq-set-a-type" />
+<xs:complexType name="Bioseq-set-a-type">
+<xs:sequence>
+<xs:element name="Bioseq-set_id" type="Bioseq-set_id-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_coll" type="Bioseq-set_coll-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_level" type="Bioseq-set_level-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_class" type="Bioseq-set_class-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_release" type="Bioseq-set_release-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_date" type="Bioseq-set_date-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_descr" type="Bioseq-set_descr-a-type" minOccurs="0" />
+<xs:element name="Bioseq-set_seq-set" type="Bioseq-set_seq-set-a-type" />
+<xs:element name="Bioseq-set_annot" type="Bioseq-set_annot-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Bioseq-set_id-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq-set_coll-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Bioseq-set_level" type = "xs:integer" />
+<xs:simpleType name="Bioseq-set_level-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Bioseq-set_class" type="Bioseq-set_class-a-type" />
+<xs:complexType name="Bioseq-set_class-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="nuc-prot" />
+<xs:enumeration value="segset" />
+<xs:enumeration value="conset" />
+<xs:enumeration value="parts" />
+<xs:enumeration value="gibb" />
+<xs:enumeration value="gi" />
+<xs:enumeration value="genbank" />
+<xs:enumeration value="pir" />
+<xs:enumeration value="pub-set" />
+<xs:enumeration value="equiv" />
+<xs:enumeration value="swissprot" />
+<xs:enumeration value="pdb-entry" />
+<xs:enumeration value="mut-set" />
+<xs:enumeration value="pop-set" />
+<xs:enumeration value="phy-set" />
+<xs:enumeration value="eco-set" />
+<xs:enumeration value="gen-prod-set" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Bioseq-set_release" type = "xs:string" />
+<xs:simpleType name="Bioseq-set_release-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Bioseq-set_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq-set_descr-a-type">
+<xs:sequence>
+<xs:element name="Seq-descr" type="Seq-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq-set_seq-set-a-type" >
+<xs:sequence>
+<xs:element name="Seq-entry" type="Seq-entry-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq-set_annot-a-type" >
+<xs:sequence>
+<xs:element name="Seq-annot" type="Seq-annot-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-entry -->
+
+<xs:element name="Seq-entry" type="Seq-entry-a-type" />
+<xs:complexType name="Seq-entry-a-type">
+<xs:choice>
+<xs:element name="Seq-entry_seq" type="Seq-entry_seq-a-type" />
+<xs:element name="Seq-entry_set" type="Seq-entry_set-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-entry_seq-a-type">
+<xs:sequence>
+<xs:element name="Bioseq" type="Bioseq-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-entry_set-a-type">
+<xs:sequence>
+<xs:element name="Bioseq-set" type="Bioseq-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

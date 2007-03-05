@@ -1,0 +1,1428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Sequence
+================================================= -->
+<!-- Definition of Bioseq -->
+
+<xs:element name="Bioseq" type="Bioseq-a-type" />
+<xs:complexType name="Bioseq-a-type">
+<xs:sequence>
+<xs:element name="Bioseq_id" type="Bioseq_id-a-type" />
+<xs:element name="Bioseq_descr" type="Bioseq_descr-a-type" minOccurs="0" />
+<xs:element name="Bioseq_inst" type="Bioseq_inst-a-type" />
+<xs:element name="Bioseq_annot" type="Bioseq_annot-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Bioseq_id-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq_descr-a-type">
+<xs:sequence>
+<xs:element name="Seq-descr" type="Seq-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq_inst-a-type">
+<xs:sequence>
+<xs:element name="Seq-inst" type="Seq-inst-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Bioseq_annot-a-type" >
+<xs:sequence>
+<xs:element name="Seq-annot" type="Seq-annot-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-descr -->
+
+<xs:complexType name="Seq-descr-a-type" >
+<xs:sequence>
+<xs:element name="Seqdesc" type="Seqdesc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Seqdesc -->
+
+<xs:element name="Seqdesc" type="Seqdesc-a-type" />
+<xs:complexType name="Seqdesc-a-type">
+<xs:choice>
+<xs:element name="Seqdesc_mol-type" type="Seqdesc_mol-type-a-type" />
+<xs:element name="Seqdesc_modif" type="Seqdesc_modif-a-type" />
+<xs:element name="Seqdesc_method" type="Seqdesc_method-a-type" />
+<xs:element name="Seqdesc_name" type="Seqdesc_name-a-type" />
+<xs:element name="Seqdesc_title" type="Seqdesc_title-a-type" />
+<xs:element name="Seqdesc_org" type="Seqdesc_org-a-type" />
+<xs:element name="Seqdesc_comment" type="Seqdesc_comment-a-type" />
+<xs:element name="Seqdesc_num" type="Seqdesc_num-a-type" />
+<xs:element name="Seqdesc_maploc" type="Seqdesc_maploc-a-type" />
+<xs:element name="Seqdesc_pir" type="Seqdesc_pir-a-type" />
+<xs:element name="Seqdesc_genbank" type="Seqdesc_genbank-a-type" />
+<xs:element name="Seqdesc_pub" type="Seqdesc_pub-a-type" />
+<xs:element name="Seqdesc_region" type="Seqdesc_region-a-type" />
+<xs:element name="Seqdesc_user" type="Seqdesc_user-a-type" />
+<xs:element name="Seqdesc_sp" type="Seqdesc_sp-a-type" />
+<xs:element name="Seqdesc_dbxref" type="Seqdesc_dbxref-a-type" />
+<xs:element name="Seqdesc_embl" type="Seqdesc_embl-a-type" />
+<xs:element name="Seqdesc_create-date" type="Seqdesc_create-date-a-type" />
+<xs:element name="Seqdesc_update-date" type="Seqdesc_update-date-a-type" />
+<xs:element name="Seqdesc_prf" type="Seqdesc_prf-a-type" />
+<xs:element name="Seqdesc_pdb" type="Seqdesc_pdb-a-type" />
+<xs:element name="Seqdesc_het" type="Seqdesc_het-a-type" />
+<xs:element name="Seqdesc_source" type="Seqdesc_source-a-type" />
+<xs:element name="Seqdesc_molinfo" type="Seqdesc_molinfo-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Seqdesc_mol-type-a-type">
+<xs:sequence>
+<xs:element name="GIBB-mol" type="GIBB-mol-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_modif-a-type" >
+<xs:sequence>
+<xs:element name="GIBB-mod" type="GIBB-mod-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_method-a-type">
+<xs:sequence>
+<xs:element name="GIBB-method" type="GIBB-method-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seqdesc_name" type = "xs:string" />
+<xs:simpleType name="Seqdesc_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Seqdesc_title" type = "xs:string" />
+<xs:simpleType name="Seqdesc_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seqdesc_org-a-type">
+<xs:sequence>
+<xs:element name="Org-ref" type="Org-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seqdesc_comment" type = "xs:string" />
+<xs:simpleType name="Seqdesc_comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seqdesc_num-a-type">
+<xs:sequence>
+<xs:element name="Numbering" type="Numbering-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_maploc-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_pir-a-type">
+<xs:sequence>
+<xs:element name="PIR-block" type="PIR-block-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_genbank-a-type">
+<xs:sequence>
+<xs:element name="GB-block" type="GB-block-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_pub-a-type">
+<xs:sequence>
+<xs:element name="Pubdesc" type="Pubdesc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seqdesc_region" type = "xs:string" />
+<xs:simpleType name="Seqdesc_region-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seqdesc_user-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_sp-a-type">
+<xs:sequence>
+<xs:element name="SP-block" type="SP-block-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_dbxref-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_embl-a-type">
+<xs:sequence>
+<xs:element name="EMBL-block" type="EMBL-block-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_create-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_update-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_prf-a-type">
+<xs:sequence>
+<xs:element name="PRF-block" type="PRF-block-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_pdb-a-type">
+<xs:sequence>
+<xs:element name="PDB-block" type="PDB-block-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_het-a-type">
+<xs:sequence>
+<xs:element name="Heterogen" type="Heterogen-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_source-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seqdesc_molinfo-a-type">
+<xs:sequence>
+<xs:element name="MolInfo" type="MolInfo-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of MolInfo -->
+
+<xs:element name="MolInfo" type="MolInfo-a-type" />
+<xs:complexType name="MolInfo-a-type">
+<xs:sequence>
+<xs:element name="MolInfo_biomol" type="MolInfo_biomol-a-type" minOccurs="0" />
+<xs:element name="MolInfo_tech" type="MolInfo_tech-a-type" minOccurs="0" />
+<xs:element name="MolInfo_techexp" type="MolInfo_techexp-a-type" minOccurs="0" />
+<xs:element name="MolInfo_completeness" type="MolInfo_completeness-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="MolInfo_biomol" type="MolInfo_biomol-a-type" />
+<xs:complexType name="MolInfo_biomol-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="genomic" />
+<xs:enumeration value="pre-RNA" />
+<xs:enumeration value="mRNA" />
+<xs:enumeration value="rRNA" />
+<xs:enumeration value="tRNA" />
+<xs:enumeration value="snRNA" />
+<xs:enumeration value="scRNA" />
+<xs:enumeration value="peptide" />
+<xs:enumeration value="other-genetic" />
+<xs:enumeration value="genomic-mRNA" />
+<xs:enumeration value="cRNA" />
+<xs:enumeration value="snoRNA" />
+<xs:enumeration value="transcribed-RNA" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="MolInfo_tech" type="MolInfo_tech-a-type" />
+<xs:complexType name="MolInfo_tech-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="standard" />
+<xs:enumeration value="est" />
+<xs:enumeration value="sts" />
+<xs:enumeration value="survey" />
+<xs:enumeration value="genemap" />
+<xs:enumeration value="physmap" />
+<xs:enumeration value="derived" />
+<xs:enumeration value="concept-trans" />
+<xs:enumeration value="seq-pept" />
+<xs:enumeration value="both" />
+<xs:enumeration value="seq-pept-overlap" />
+<xs:enumeration value="seq-pept-homol" />
+<xs:enumeration value="concept-trans-a" />
+<xs:enumeration value="htgs-1" />
+<xs:enumeration value="htgs-2" />
+<xs:enumeration value="htgs-3" />
+<xs:enumeration value="fli-cdna" />
+<xs:enumeration value="htgs-0" />
+<xs:enumeration value="htc" />
+<xs:enumeration value="wgs" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="MolInfo_techexp" type = "xs:string" />
+<xs:simpleType name="MolInfo_techexp-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="MolInfo_completeness" type="MolInfo_completeness-a-type" />
+<xs:complexType name="MolInfo_completeness-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="complete" />
+<xs:enumeration value="partial" />
+<xs:enumeration value="no-left" />
+<xs:enumeration value="no-right" />
+<xs:enumeration value="no-ends" />
+<xs:enumeration value="has-left" />
+<xs:enumeration value="has-right" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+<!-- Definition of GIBB-mol -->
+
+<xs:element name="GIBB-mol" type="GIBB-mol-a-type" />
+<xs:complexType name="GIBB-mol-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown" />
+<xs:enumeration value="genomic" />
+<xs:enumeration value="pre-mRNA" />
+<xs:enumeration value="mRNA" />
+<xs:enumeration value="rRNA" />
+<xs:enumeration value="tRNA" />
+<xs:enumeration value="snRNA" />
+<xs:enumeration value="scRNA" />
+<xs:enumeration value="peptide" />
+<xs:enumeration value="other-genetic" />
+<xs:enumeration value="genomic-mRNA" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of GIBB-mod -->
+
+<xs:element name="GIBB-mod" type="GIBB-mod-a-type" />
+<xs:complexType name="GIBB-mod-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="dna" />
+<xs:enumeration value="rna" />
+<xs:enumeration value="extrachrom" />
+<xs:enumeration value="plasmid" />
+<xs:enumeration value="mitochondrial" />
+<xs:enumeration value="chloroplast" />
+<xs:enumeration value="kinetoplast" />
+<xs:enumeration value="cyanelle" />
+<xs:enumeration value="synthetic" />
+<xs:enumeration value="recombinant" />
+<xs:enumeration value="partial" />
+<xs:enumeration value="complete" />
+<xs:enumeration value="mutagen" />
+<xs:enumeration value="natmut" />
+<xs:enumeration value="transposon" />
+<xs:enumeration value="insertion-seq" />
+<xs:enumeration value="no-left" />
+<xs:enumeration value="no-right" />
+<xs:enumeration value="macronuclear" />
+<xs:enumeration value="proviral" />
+<xs:enumeration value="est" />
+<xs:enumeration value="sts" />
+<xs:enumeration value="survey" />
+<xs:enumeration value="chromoplast" />
+<xs:enumeration value="genemap" />
+<xs:enumeration value="restmap" />
+<xs:enumeration value="physmap" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of GIBB-method -->
+
+<xs:element name="GIBB-method" type="GIBB-method-a-type" />
+<xs:complexType name="GIBB-method-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="concept-trans" />
+<xs:enumeration value="seq-pept" />
+<xs:enumeration value="both" />
+<xs:enumeration value="seq-pept-overlap" />
+<xs:enumeration value="seq-pept-homol" />
+<xs:enumeration value="concept-trans-a" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Numbering -->
+
+<xs:element name="Numbering" type="Numbering-a-type" />
+<xs:complexType name="Numbering-a-type">
+<xs:choice>
+<xs:element name="Numbering_cont" type="Numbering_cont-a-type" />
+<xs:element name="Numbering_enum" type="Numbering_enum-a-type" />
+<xs:element name="Numbering_ref" type="Numbering_ref-a-type" />
+<xs:element name="Numbering_real" type="Numbering_real-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Numbering_cont-a-type">
+<xs:sequence>
+<xs:element name="Num-cont" type="Num-cont-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Numbering_enum-a-type">
+<xs:sequence>
+<xs:element name="Num-enum" type="Num-enum-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Numbering_ref-a-type">
+<xs:sequence>
+<xs:element name="Num-ref" type="Num-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Numbering_real-a-type">
+<xs:sequence>
+<xs:element name="Num-real" type="Num-real-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Num-cont -->
+
+<xs:element name="Num-cont" type="Num-cont-a-type" />
+<xs:complexType name="Num-cont-a-type">
+<xs:sequence>
+<xs:element name="Num-cont_refnum" type="Num-cont_refnum-a-type" minOccurs="0" />
+<xs:element name="Num-cont_has-zero" type="Num-cont_has-zero-a-type" minOccurs="0" />
+<xs:element name="Num-cont_ascending" type="Num-cont_ascending-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Num-cont_refnum" type = "xs:integer" />
+<xs:simpleType name="Num-cont_refnum-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Num-cont_has-zero" type="Num-cont_has-zero-a-type"/>
+<xs:complexType name="Num-cont_has-zero-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Num-cont_ascending" type="Num-cont_ascending-a-type"/>
+<xs:complexType name="Num-cont_ascending-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of Num-enum -->
+
+<xs:element name="Num-enum" type="Num-enum-a-type" />
+<xs:complexType name="Num-enum-a-type">
+<xs:sequence>
+<xs:element name="Num-enum_num" type="Num-enum_num-a-type" />
+<xs:element name="Num-enum_names" type="Num-enum_names-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Num-enum_num" type = "xs:integer" />
+<xs:simpleType name="Num-enum_num-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Num-enum_names-a-type" >
+<xs:sequence>
+<xs:element name="Num-enum_names_E" type="Num-enum_names_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Num-enum_names_E" type = "xs:string" />
+<xs:simpleType name="Num-enum_names_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Num-ref -->
+
+<xs:element name="Num-ref" type="Num-ref-a-type" />
+<xs:complexType name="Num-ref-a-type">
+<xs:sequence>
+<xs:element name="Num-ref_type" type="Num-ref_type-a-type" />
+<xs:element name="Num-ref_aligns" type="Num-ref_aligns-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Num-ref_type" type="Num-ref_type-a-type" />
+<xs:complexType name="Num-ref_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="sources" />
+<xs:enumeration value="aligns" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Num-ref_aligns-a-type">
+<xs:sequence>
+<xs:element name="Seq-align" type="Seq-align-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Num-real -->
+
+<xs:element name="Num-real" type="Num-real-a-type" />
+<xs:complexType name="Num-real-a-type">
+<xs:sequence>
+<xs:element name="Num-real_a" type="Num-real_a-a-type" />
+<xs:element name="Num-real_b" type="Num-real_b-a-type" />
+<xs:element name="Num-real_units" type="Num-real_units-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Num-real_a" type = "xs:decimal" />
+<xs:simpleType name="Num-real_a-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Num-real_b" type = "xs:decimal" />
+<xs:simpleType name="Num-real_b-a-type" final="restriction">
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+<xs:element name="Num-real_units" type = "xs:string" />
+<xs:simpleType name="Num-real_units-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Pubdesc -->
+
+<xs:element name="Pubdesc" type="Pubdesc-a-type" />
+<xs:complexType name="Pubdesc-a-type">
+<xs:sequence>
+<xs:element name="Pubdesc_pub" type="Pubdesc_pub-a-type" />
+<xs:element name="Pubdesc_name" type="Pubdesc_name-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_fig" type="Pubdesc_fig-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_num" type="Pubdesc_num-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_numexc" type="Pubdesc_numexc-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_poly-a" type="Pubdesc_poly-a-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_maploc" type="Pubdesc_maploc-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_seq-raw" type="Pubdesc_seq-raw-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_align-group" type="Pubdesc_align-group-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_comment" type="Pubdesc_comment-a-type" minOccurs="0" />
+<xs:element name="Pubdesc_reftype" type="Pubdesc_reftype-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Pubdesc_pub-a-type">
+<xs:sequence>
+<xs:element name="Pub-equiv" type="Pub-equiv-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Pubdesc_name" type = "xs:string" />
+<xs:simpleType name="Pubdesc_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Pubdesc_fig" type = "xs:string" />
+<xs:simpleType name="Pubdesc_fig-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Pubdesc_num-a-type">
+<xs:sequence>
+<xs:element name="Numbering" type="Numbering-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Pubdesc_numexc" type="Pubdesc_numexc-a-type"/>
+<xs:complexType name="Pubdesc_numexc-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Pubdesc_poly-a" type="Pubdesc_poly-a-a-type"/>
+<xs:complexType name="Pubdesc_poly-a-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Pubdesc_maploc" type = "xs:string" />
+<xs:simpleType name="Pubdesc_maploc-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Pubdesc_seq-raw" type = "xs:string" />
+<xs:simpleType name="Pubdesc_seq-raw-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Pubdesc_align-group" type = "xs:integer" />
+<xs:simpleType name="Pubdesc_align-group-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Pubdesc_comment" type = "xs:string" />
+<xs:simpleType name="Pubdesc_comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Pubdesc_reftype" type="Pubdesc_reftype-a-type" />
+<xs:complexType name="Pubdesc_reftype-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="seq" />
+<xs:enumeration value="sites" />
+<xs:enumeration value="feats" />
+<xs:enumeration value="no-target" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+<!-- Definition of Heterogen -->
+
+<xs:element name="Heterogen" type = "xs:string" />
+<xs:simpleType name="Heterogen-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Seq-inst -->
+
+<xs:element name="Seq-inst" type="Seq-inst-a-type" />
+<xs:complexType name="Seq-inst-a-type">
+<xs:sequence>
+<xs:element name="Seq-inst_repr" type="Seq-inst_repr-a-type" />
+<xs:element name="Seq-inst_mol" type="Seq-inst_mol-a-type" />
+<xs:element name="Seq-inst_length" type="Seq-inst_length-a-type" minOccurs="0" />
+<xs:element name="Seq-inst_fuzz" type="Seq-inst_fuzz-a-type" minOccurs="0" />
+<xs:element name="Seq-inst_topology" type="Seq-inst_topology-a-type" minOccurs="0" />
+<xs:element name="Seq-inst_strand" type="Seq-inst_strand-a-type" minOccurs="0" />
+<xs:element name="Seq-inst_seq-data" type="Seq-inst_seq-data-a-type" minOccurs="0" />
+<xs:element name="Seq-inst_ext" type="Seq-inst_ext-a-type" minOccurs="0" />
+<xs:element name="Seq-inst_hist" type="Seq-inst_hist-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Seq-inst_repr" type="Seq-inst_repr-a-type" />
+<xs:complexType name="Seq-inst_repr-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="virtual" />
+<xs:enumeration value="raw" />
+<xs:enumeration value="seg" />
+<xs:enumeration value="const" />
+<xs:enumeration value="ref" />
+<xs:enumeration value="consen" />
+<xs:enumeration value="map" />
+<xs:enumeration value="delta" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-inst_mol" type="Seq-inst_mol-a-type" />
+<xs:complexType name="Seq-inst_mol-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="dna" />
+<xs:enumeration value="rna" />
+<xs:enumeration value="aa" />
+<xs:enumeration value="na" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-inst_length" type = "xs:integer" />
+<xs:simpleType name="Seq-inst_length-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-inst_fuzz-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-inst_topology" type="Seq-inst_topology-a-type" />
+<xs:complexType name="Seq-inst_topology-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="linear" />
+<xs:enumeration value="circular" />
+<xs:enumeration value="tandem" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-inst_strand" type="Seq-inst_strand-a-type" />
+<xs:complexType name="Seq-inst_strand-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="ss" />
+<xs:enumeration value="ds" />
+<xs:enumeration value="mixed" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Seq-inst_seq-data-a-type">
+<xs:sequence>
+<xs:element name="Seq-data" type="Seq-data-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-inst_ext-a-type">
+<xs:sequence>
+<xs:element name="Seq-ext" type="Seq-ext-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-inst_hist-a-type">
+<xs:sequence>
+<xs:element name="Seq-hist" type="Seq-hist-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-ext -->
+
+<xs:element name="Seq-ext" type="Seq-ext-a-type" />
+<xs:complexType name="Seq-ext-a-type">
+<xs:choice>
+<xs:element name="Seq-ext_seg" type="Seq-ext_seg-a-type" />
+<xs:element name="Seq-ext_ref" type="Seq-ext_ref-a-type" />
+<xs:element name="Seq-ext_map" type="Seq-ext_map-a-type" />
+<xs:element name="Seq-ext_delta" type="Seq-ext_delta-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-ext_seg-a-type">
+<xs:sequence>
+<xs:element name="Seg-ext" type="Seg-ext-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-ext_ref-a-type">
+<xs:sequence>
+<xs:element name="Ref-ext" type="Ref-ext-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-ext_map-a-type">
+<xs:sequence>
+<xs:element name="Map-ext" type="Map-ext-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-ext_delta-a-type">
+<xs:sequence>
+<xs:element name="Delta-ext" type="Delta-ext-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seg-ext -->
+
+<xs:complexType name="Seg-ext-a-type" >
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Ref-ext -->
+
+<xs:complexType name="Ref-ext-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Map-ext -->
+
+<xs:complexType name="Map-ext-a-type" >
+<xs:sequence>
+<xs:element name="Seq-feat" type="Seq-feat-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Delta-ext -->
+
+<xs:complexType name="Delta-ext-a-type" >
+<xs:sequence>
+<xs:element name="Delta-seq" type="Delta-seq-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Delta-seq -->
+
+<xs:element name="Delta-seq" type="Delta-seq-a-type" />
+<xs:complexType name="Delta-seq-a-type">
+<xs:choice>
+<xs:element name="Delta-seq_loc" type="Delta-seq_loc-a-type" />
+<xs:element name="Delta-seq_literal" type="Delta-seq_literal-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Delta-seq_loc-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Delta-seq_literal-a-type">
+<xs:sequence>
+<xs:element name="Seq-literal" type="Seq-literal-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-literal -->
+
+<xs:element name="Seq-literal" type="Seq-literal-a-type" />
+<xs:complexType name="Seq-literal-a-type">
+<xs:sequence>
+<xs:element name="Seq-literal_length" type="Seq-literal_length-a-type" />
+<xs:element name="Seq-literal_fuzz" type="Seq-literal_fuzz-a-type" minOccurs="0" />
+<xs:element name="Seq-literal_seq-data" type="Seq-literal_seq-data-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Seq-literal_length" type = "xs:integer" />
+<xs:simpleType name="Seq-literal_length-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-literal_fuzz-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-literal_seq-data-a-type">
+<xs:sequence>
+<xs:element name="Seq-data" type="Seq-data-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-hist -->
+
+<xs:element name="Seq-hist" type="Seq-hist-a-type" />
+<xs:complexType name="Seq-hist-a-type">
+<xs:sequence>
+<xs:element name="Seq-hist_assembly" type="Seq-hist_assembly-a-type" minOccurs="0" />
+<xs:element name="Seq-hist_replaces" type="Seq-hist_replaces-a-type" minOccurs="0" />
+<xs:element name="Seq-hist_replaced-by" type="Seq-hist_replaced-by-a-type" minOccurs="0" />
+<xs:element name="Seq-hist_deleted" type="Seq-hist_deleted-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-hist_assembly-a-type" >
+<xs:sequence>
+<xs:element name="Seq-align" type="Seq-align-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-hist_replaces-a-type">
+<xs:sequence>
+<xs:element name="Seq-hist-rec" type="Seq-hist-rec-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-hist_replaced-by-a-type">
+<xs:sequence>
+<xs:element name="Seq-hist-rec" type="Seq-hist-rec-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-hist_deleted" type="Seq-hist_deleted-a-type" />
+<xs:complexType name="Seq-hist_deleted-a-type">
+<xs:choice>
+<xs:element name="Seq-hist_deleted_bool" type="Seq-hist_deleted_bool-a-type" />
+<xs:element name="Seq-hist_deleted_date" type="Seq-hist_deleted_date-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="Seq-hist_deleted_bool" type="Seq-hist_deleted_bool-a-type"/>
+<xs:complexType name="Seq-hist_deleted_bool-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Seq-hist_deleted_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-hist-rec -->
+
+<xs:element name="Seq-hist-rec" type="Seq-hist-rec-a-type" />
+<xs:complexType name="Seq-hist-rec-a-type">
+<xs:sequence>
+<xs:element name="Seq-hist-rec_date" type="Seq-hist-rec_date-a-type" minOccurs="0" />
+<xs:element name="Seq-hist-rec_ids" type="Seq-hist-rec_ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-hist-rec_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-hist-rec_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-data -->
+
+<xs:element name="Seq-data" type="Seq-data-a-type" />
+<xs:complexType name="Seq-data-a-type">
+<xs:choice>
+<xs:element name="Seq-data_iupacna" type="Seq-data_iupacna-a-type" />
+<xs:element name="Seq-data_iupacaa" type="Seq-data_iupacaa-a-type" />
+<xs:element name="Seq-data_ncbi2na" type="Seq-data_ncbi2na-a-type" />
+<xs:element name="Seq-data_ncbi4na" type="Seq-data_ncbi4na-a-type" />
+<xs:element name="Seq-data_ncbi8na" type="Seq-data_ncbi8na-a-type" />
+<xs:element name="Seq-data_ncbipna" type="Seq-data_ncbipna-a-type" />
+<xs:element name="Seq-data_ncbi8aa" type="Seq-data_ncbi8aa-a-type" />
+<xs:element name="Seq-data_ncbieaa" type="Seq-data_ncbieaa-a-type" />
+<xs:element name="Seq-data_ncbipaa" type="Seq-data_ncbipaa-a-type" />
+<xs:element name="Seq-data_ncbistdaa" type="Seq-data_ncbistdaa-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-data_iupacna-a-type">
+<xs:sequence>
+<xs:element name="IUPACna" type="IUPACna-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_iupacaa-a-type">
+<xs:sequence>
+<xs:element name="IUPACaa" type="IUPACaa-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbi2na-a-type">
+<xs:sequence>
+<xs:element name="NCBI2na" type="NCBI2na-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbi4na-a-type">
+<xs:sequence>
+<xs:element name="NCBI4na" type="NCBI4na-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbi8na-a-type">
+<xs:sequence>
+<xs:element name="NCBI8na" type="NCBI8na-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbipna-a-type">
+<xs:sequence>
+<xs:element name="NCBIpna" type="NCBIpna-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbi8aa-a-type">
+<xs:sequence>
+<xs:element name="NCBI8aa" type="NCBI8aa-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbieaa-a-type">
+<xs:sequence>
+<xs:element name="NCBIeaa" type="NCBIeaa-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbipaa-a-type">
+<xs:sequence>
+<xs:element name="NCBIpaa" type="NCBIpaa-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-data_ncbistdaa-a-type">
+<xs:sequence>
+<xs:element name="NCBIstdaa" type="NCBIstdaa-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of IUPACna -->
+
+<xs:element name="IUPACna" type = "xs:string" />
+<xs:simpleType name="IUPACna-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of IUPACaa -->
+
+<xs:element name="IUPACaa" type = "xs:string" />
+<xs:simpleType name="IUPACaa-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBI2na -->
+
+<xs:element name="NCBI2na" type = "xs:hexBinary" />
+<xs:simpleType name="NCBI2na-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBI4na -->
+
+<xs:element name="NCBI4na" type = "xs:hexBinary" />
+<xs:simpleType name="NCBI4na-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBI8na -->
+
+<xs:element name="NCBI8na" type = "xs:hexBinary" />
+<xs:simpleType name="NCBI8na-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBIpna -->
+
+<xs:element name="NCBIpna" type = "xs:hexBinary" />
+<xs:simpleType name="NCBIpna-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBI8aa -->
+
+<xs:element name="NCBI8aa" type = "xs:hexBinary" />
+<xs:simpleType name="NCBI8aa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBIeaa -->
+
+<xs:element name="NCBIeaa" type = "xs:string" />
+<xs:simpleType name="NCBIeaa-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBIpaa -->
+
+<xs:element name="NCBIpaa" type = "xs:hexBinary" />
+<xs:simpleType name="NCBIpaa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of NCBIstdaa -->
+
+<xs:element name="NCBIstdaa" type = "xs:hexBinary" />
+<xs:simpleType name="NCBIstdaa-a-type" final="restriction">
+<xs:restriction base="xs:hexBinary"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Annot-id -->
+
+<xs:element name="Annot-id" type="Annot-id-a-type" />
+<xs:complexType name="Annot-id-a-type">
+<xs:choice>
+<xs:element name="Annot-id_local" type="Annot-id_local-a-type" />
+<xs:element name="Annot-id_ncbi" type="Annot-id_ncbi-a-type" />
+<xs:element name="Annot-id_general" type="Annot-id_general-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Annot-id_local-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Annot-id_ncbi" type = "xs:integer" />
+<xs:simpleType name="Annot-id_ncbi-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Annot-id_general-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Annot-descr -->
+
+<xs:complexType name="Annot-descr-a-type" >
+<xs:sequence>
+<xs:element name="Annotdesc" type="Annotdesc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Annotdesc -->
+
+<xs:element name="Annotdesc" type="Annotdesc-a-type" />
+<xs:complexType name="Annotdesc-a-type">
+<xs:choice>
+<xs:element name="Annotdesc_name" type="Annotdesc_name-a-type" />
+<xs:element name="Annotdesc_title" type="Annotdesc_title-a-type" />
+<xs:element name="Annotdesc_comment" type="Annotdesc_comment-a-type" />
+<xs:element name="Annotdesc_pub" type="Annotdesc_pub-a-type" />
+<xs:element name="Annotdesc_user" type="Annotdesc_user-a-type" />
+<xs:element name="Annotdesc_create-date" type="Annotdesc_create-date-a-type" />
+<xs:element name="Annotdesc_update-date" type="Annotdesc_update-date-a-type" />
+<xs:element name="Annotdesc_src" type="Annotdesc_src-a-type" />
+<xs:element name="Annotdesc_align" type="Annotdesc_align-a-type" />
+<xs:element name="Annotdesc_region" type="Annotdesc_region-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Annotdesc_name" type = "xs:string" />
+<xs:simpleType name="Annotdesc_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Annotdesc_title" type = "xs:string" />
+<xs:simpleType name="Annotdesc_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Annotdesc_comment" type = "xs:string" />
+<xs:simpleType name="Annotdesc_comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Annotdesc_pub-a-type">
+<xs:sequence>
+<xs:element name="Pubdesc" type="Pubdesc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Annotdesc_user-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Annotdesc_create-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Annotdesc_update-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Annotdesc_src-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Annotdesc_align-a-type">
+<xs:sequence>
+<xs:element name="Align-def" type="Align-def-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Annotdesc_region-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Align-def -->
+
+<xs:element name="Align-def" type="Align-def-a-type" />
+<xs:complexType name="Align-def-a-type">
+<xs:sequence>
+<xs:element name="Align-def_align-type" type="Align-def_align-type-a-type" />
+<xs:element name="Align-def_ids" type="Align-def_ids-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Align-def_align-type" type="Align-def_align-type-a-type" />
+<xs:complexType name="Align-def_align-type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="ref" />
+<xs:enumeration value="alt" />
+<xs:enumeration value="blocks" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:complexType name="Align-def_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Seq-annot -->
+
+<xs:element name="Seq-annot" type="Seq-annot-a-type" />
+<xs:complexType name="Seq-annot-a-type">
+<xs:sequence>
+<xs:element name="Seq-annot_id" type="Seq-annot_id-a-type" minOccurs="0" />
+<xs:element name="Seq-annot_db" type="Seq-annot_db-a-type" minOccurs="0" />
+<xs:element name="Seq-annot_name" type="Seq-annot_name-a-type" minOccurs="0" />
+<xs:element name="Seq-annot_desc" type="Seq-annot_desc-a-type" minOccurs="0" />
+<xs:element name="Seq-annot_data" type="Seq-annot_data-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-annot_id-a-type" >
+<xs:sequence>
+<xs:element name="Annot-id" type="Annot-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-annot_db" type="Seq-annot_db-a-type" />
+<xs:complexType name="Seq-annot_db-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="genbank" />
+<xs:enumeration value="embl" />
+<xs:enumeration value="ddbj" />
+<xs:enumeration value="pir" />
+<xs:enumeration value="sp" />
+<xs:enumeration value="bbone" />
+<xs:enumeration value="pdb" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="Seq-annot_name" type = "xs:string" />
+<xs:simpleType name="Seq-annot_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seq-annot_desc-a-type">
+<xs:sequence>
+<xs:element name="Annot-descr" type="Annot-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-annot_data" type="Seq-annot_data-a-type" />
+<xs:complexType name="Seq-annot_data-a-type">
+<xs:choice>
+<xs:element name="Seq-annot_data_ftable" type="Seq-annot_data_ftable-a-type" />
+<xs:element name="Seq-annot_data_align" type="Seq-annot_data_align-a-type" />
+<xs:element name="Seq-annot_data_graph" type="Seq-annot_data_graph-a-type" />
+<xs:element name="Seq-annot_data_ids" type="Seq-annot_data_ids-a-type" />
+<xs:element name="Seq-annot_data_locs" type="Seq-annot_data_locs-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Seq-annot_data_ftable-a-type" >
+<xs:sequence>
+<xs:element name="Seq-feat" type="Seq-feat-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-annot_data_align-a-type" >
+<xs:sequence>
+<xs:element name="Seq-align" type="Seq-align-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-annot_data_graph-a-type" >
+<xs:sequence>
+<xs:element name="Seq-graph" type="Seq-graph-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-annot_data_ids-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-annot_data_locs-a-type" >
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module EMBL-General
+================================================= -->
+<!-- Definition of EMBL-dbname -->
+
+<xs:element name="EMBL-dbname" type="EMBL-dbname-a-type" />
+<xs:complexType name="EMBL-dbname-a-type">
+<xs:choice>
+<xs:element name="EMBL-dbname_code" type="EMBL-dbname_code-a-type" />
+<xs:element name="EMBL-dbname_name" type="EMBL-dbname_name-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="EMBL-dbname_code" type="EMBL-dbname_code-a-type" />
+<xs:complexType name="EMBL-dbname_code-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="embl" />
+<xs:enumeration value="genbank" />
+<xs:enumeration value="ddbj" />
+<xs:enumeration value="geninfo" />
+<xs:enumeration value="medline" />
+<xs:enumeration value="swissprot" />
+<xs:enumeration value="pir" />
+<xs:enumeration value="pdb" />
+<xs:enumeration value="epd" />
+<xs:enumeration value="ecd" />
+<xs:enumeration value="tfd" />
+<xs:enumeration value="flybase" />
+<xs:enumeration value="prosite" />
+<xs:enumeration value="enzyme" />
+<xs:enumeration value="mim" />
+<xs:enumeration value="ecoseq" />
+<xs:enumeration value="hiv" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="EMBL-dbname_name" type = "xs:string" />
+<xs:simpleType name="EMBL-dbname_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of EMBL-xref -->
+
+<xs:element name="EMBL-xref" type="EMBL-xref-a-type" />
+<xs:complexType name="EMBL-xref-a-type">
+<xs:sequence>
+<xs:element name="EMBL-xref_dbname" type="EMBL-xref_dbname-a-type" />
+<xs:element name="EMBL-xref_id" type="EMBL-xref_id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="EMBL-xref_dbname-a-type">
+<xs:sequence>
+<xs:element name="EMBL-dbname" type="EMBL-dbname-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="EMBL-xref_id-a-type" >
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of EMBL-block -->
+
+<xs:element name="EMBL-block" type="EMBL-block-a-type" />
+<xs:complexType name="EMBL-block-a-type">
+<xs:sequence>
+<xs:element name="EMBL-block_class" type="EMBL-block_class-a-type" minOccurs="0" />
+<xs:element name="EMBL-block_div" type="EMBL-block_div-a-type" minOccurs="0" />
+<xs:element name="EMBL-block_creation-date" type="EMBL-block_creation-date-a-type" />
+<xs:element name="EMBL-block_update-date" type="EMBL-block_update-date-a-type" />
+<xs:element name="EMBL-block_extra-acc" type="EMBL-block_extra-acc-a-type" minOccurs="0" />
+<xs:element name="EMBL-block_keywords" type="EMBL-block_keywords-a-type" minOccurs="0" />
+<xs:element name="EMBL-block_xref" type="EMBL-block_xref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="EMBL-block_class" type="EMBL-block_class-a-type" />
+<xs:complexType name="EMBL-block_class-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="standard" />
+<xs:enumeration value="unannotated" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="EMBL-block_div" type="EMBL-block_div-a-type" />
+<xs:complexType name="EMBL-block_div-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="fun" />
+<xs:enumeration value="inv" />
+<xs:enumeration value="mam" />
+<xs:enumeration value="org" />
+<xs:enumeration value="phg" />
+<xs:enumeration value="pln" />
+<xs:enumeration value="pri" />
+<xs:enumeration value="pro" />
+<xs:enumeration value="rod" />
+<xs:enumeration value="syn" />
+<xs:enumeration value="una" />
+<xs:enumeration value="vrl" />
+<xs:enumeration value="vrt" />
+<xs:enumeration value="pat" />
+<xs:enumeration value="est" />
+<xs:enumeration value="sts" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="EMBL-block_creation-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="EMBL-block_update-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="EMBL-block_extra-acc-a-type" >
+<xs:sequence>
+<xs:element name="EMBL-block_extra-acc_E" type="EMBL-block_extra-acc_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="EMBL-block_extra-acc_E" type = "xs:string" />
+<xs:simpleType name="EMBL-block_extra-acc_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="EMBL-block_keywords-a-type" >
+<xs:sequence>
+<xs:element name="EMBL-block_keywords_E" type="EMBL-block_keywords_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="EMBL-block_keywords_E" type = "xs:string" />
+<xs:simpleType name="EMBL-block_keywords_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="EMBL-block_xref-a-type" >
+<xs:sequence>
+<xs:element name="EMBL-xref" type="EMBL-xref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module SP-General
+================================================= -->
+<!-- Definition of SP-block -->
+
+<xs:element name="SP-block" type="SP-block-a-type" />
+<xs:complexType name="SP-block-a-type">
+<xs:sequence>
+<xs:element name="SP-block_class" type="SP-block_class-a-type" />
+<xs:element name="SP-block_extra-acc" type="SP-block_extra-acc-a-type" minOccurs="0" />
+<xs:element name="SP-block_imeth" type="SP-block_imeth-a-type" minOccurs="0" />
+<xs:element name="SP-block_plasnm" type="SP-block_plasnm-a-type" minOccurs="0" />
+<xs:element name="SP-block_seqref" type="SP-block_seqref-a-type" minOccurs="0" />
+<xs:element name="SP-block_dbref" type="SP-block_dbref-a-type" minOccurs="0" />
+<xs:element name="SP-block_keywords" type="SP-block_keywords-a-type" minOccurs="0" />
+<xs:element name="SP-block_created" type="SP-block_created-a-type" minOccurs="0" />
+<xs:element name="SP-block_sequpd" type="SP-block_sequpd-a-type" minOccurs="0" />
+<xs:element name="SP-block_annotupd" type="SP-block_annotupd-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="SP-block_class" type="SP-block_class-a-type" />
+<xs:complexType name="SP-block_class-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-set" />
+<xs:enumeration value="standard" />
+<xs:enumeration value="prelim" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="SP-block_extra-acc-a-type" >
+<xs:sequence>
+<xs:element name="SP-block_extra-acc_E" type="SP-block_extra-acc_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="SP-block_extra-acc_E" type = "xs:string" />
+<xs:simpleType name="SP-block_extra-acc_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="SP-block_imeth" type="SP-block_imeth-a-type"/>
+<xs:complexType name="SP-block_imeth-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="SP-block_plasnm-a-type" >
+<xs:sequence>
+<xs:element name="SP-block_plasnm_E" type="SP-block_plasnm_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="SP-block_plasnm_E" type = "xs:string" />
+<xs:simpleType name="SP-block_plasnm_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="SP-block_seqref-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SP-block_dbref-a-type" >
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SP-block_keywords-a-type" >
+<xs:sequence>
+<xs:element name="SP-block_keywords_E" type="SP-block_keywords_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="SP-block_keywords_E" type = "xs:string" />
+<xs:simpleType name="SP-block_keywords_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="SP-block_created-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SP-block_sequpd-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SP-block_annotupd-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module PIR-General
+================================================= -->
+<!-- Definition of PIR-block -->
+
+<xs:element name="PIR-block" type="PIR-block-a-type" />
+<xs:complexType name="PIR-block-a-type">
+<xs:sequence>
+<xs:element name="PIR-block_had-punct" type="PIR-block_had-punct-a-type" minOccurs="0" />
+<xs:element name="PIR-block_host" type="PIR-block_host-a-type" minOccurs="0" />
+<xs:element name="PIR-block_source" type="PIR-block_source-a-type" minOccurs="0" />
+<xs:element name="PIR-block_summary" type="PIR-block_summary-a-type" minOccurs="0" />
+<xs:element name="PIR-block_genetic" type="PIR-block_genetic-a-type" minOccurs="0" />
+<xs:element name="PIR-block_includes" type="PIR-block_includes-a-type" minOccurs="0" />
+<xs:element name="PIR-block_placement" type="PIR-block_placement-a-type" minOccurs="0" />
+<xs:element name="PIR-block_superfamily" type="PIR-block_superfamily-a-type" minOccurs="0" />
+<xs:element name="PIR-block_keywords" type="PIR-block_keywords-a-type" minOccurs="0" />
+<xs:element name="PIR-block_cross-reference" type="PIR-block_cross-reference-a-type" minOccurs="0" />
+<xs:element name="PIR-block_date" type="PIR-block_date-a-type" minOccurs="0" />
+<xs:element name="PIR-block_seq-raw" type="PIR-block_seq-raw-a-type" minOccurs="0" />
+<xs:element name="PIR-block_seqref" type="PIR-block_seqref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="PIR-block_had-punct" type="PIR-block_had-punct-a-type"/>
+<xs:complexType name="PIR-block_had-punct-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="PIR-block_host" type = "xs:string" />
+<xs:simpleType name="PIR-block_host-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_source" type = "xs:string" />
+<xs:simpleType name="PIR-block_source-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_summary" type = "xs:string" />
+<xs:simpleType name="PIR-block_summary-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_genetic" type = "xs:string" />
+<xs:simpleType name="PIR-block_genetic-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_includes" type = "xs:string" />
+<xs:simpleType name="PIR-block_includes-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_placement" type = "xs:string" />
+<xs:simpleType name="PIR-block_placement-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_superfamily" type = "xs:string" />
+<xs:simpleType name="PIR-block_superfamily-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="PIR-block_keywords-a-type" >
+<xs:sequence>
+<xs:element name="PIR-block_keywords_E" type="PIR-block_keywords_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PIR-block_keywords_E" type = "xs:string" />
+<xs:simpleType name="PIR-block_keywords_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="PIR-block_cross-reference" type = "xs:string" />
+<xs:simpleType name="PIR-block_cross-reference-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_date" type = "xs:string" />
+<xs:simpleType name="PIR-block_date-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PIR-block_seq-raw" type = "xs:string" />
+<xs:simpleType name="PIR-block_seq-raw-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="PIR-block_seqref-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module GenBank-General
+================================================= -->
+<!-- Definition of GB-block -->
+
+<xs:element name="GB-block" type="GB-block-a-type" />
+<xs:complexType name="GB-block-a-type">
+<xs:sequence>
+<xs:element name="GB-block_extra-accessions" type="GB-block_extra-accessions-a-type" minOccurs="0" />
+<xs:element name="GB-block_source" type="GB-block_source-a-type" minOccurs="0" />
+<xs:element name="GB-block_keywords" type="GB-block_keywords-a-type" minOccurs="0" />
+<xs:element name="GB-block_origin" type="GB-block_origin-a-type" minOccurs="0" />
+<xs:element name="GB-block_date" type="GB-block_date-a-type" minOccurs="0" />
+<xs:element name="GB-block_entry-date" type="GB-block_entry-date-a-type" minOccurs="0" />
+<xs:element name="GB-block_div" type="GB-block_div-a-type" minOccurs="0" />
+<xs:element name="GB-block_taxonomy" type="GB-block_taxonomy-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="GB-block_extra-accessions-a-type" >
+<xs:sequence>
+<xs:element name="GB-block_extra-accessions_E" type="GB-block_extra-accessions_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GB-block_extra-accessions_E" type = "xs:string" />
+<xs:simpleType name="GB-block_extra-accessions_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="GB-block_source" type = "xs:string" />
+<xs:simpleType name="GB-block_source-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="GB-block_keywords-a-type" >
+<xs:sequence>
+<xs:element name="GB-block_keywords_E" type="GB-block_keywords_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GB-block_keywords_E" type = "xs:string" />
+<xs:simpleType name="GB-block_keywords_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="GB-block_origin" type = "xs:string" />
+<xs:simpleType name="GB-block_origin-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="GB-block_date" type = "xs:string" />
+<xs:simpleType name="GB-block_date-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="GB-block_entry-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="GB-block_div" type = "xs:string" />
+<xs:simpleType name="GB-block_div-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="GB-block_taxonomy" type = "xs:string" />
+<xs:simpleType name="GB-block_taxonomy-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module PRF-General
+================================================= -->
+<!-- Definition of PRF-block -->
+
+<xs:element name="PRF-block" type="PRF-block-a-type" />
+<xs:complexType name="PRF-block-a-type">
+<xs:sequence>
+<xs:element name="PRF-block_extra-src" type="PRF-block_extra-src-a-type" minOccurs="0" />
+<xs:element name="PRF-block_keywords" type="PRF-block_keywords-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="PRF-block_extra-src-a-type">
+<xs:sequence>
+<xs:element name="PRF-ExtraSrc" type="PRF-ExtraSrc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PRF-block_keywords-a-type" >
+<xs:sequence>
+<xs:element name="PRF-block_keywords_E" type="PRF-block_keywords_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PRF-block_keywords_E" type = "xs:string" />
+<xs:simpleType name="PRF-block_keywords_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of PRF-ExtraSrc -->
+
+<xs:element name="PRF-ExtraSrc" type="PRF-ExtraSrc-a-type" />
+<xs:complexType name="PRF-ExtraSrc-a-type">
+<xs:sequence>
+<xs:element name="PRF-ExtraSrc_host" type="PRF-ExtraSrc_host-a-type" minOccurs="0" />
+<xs:element name="PRF-ExtraSrc_part" type="PRF-ExtraSrc_part-a-type" minOccurs="0" />
+<xs:element name="PRF-ExtraSrc_state" type="PRF-ExtraSrc_state-a-type" minOccurs="0" />
+<xs:element name="PRF-ExtraSrc_strain" type="PRF-ExtraSrc_strain-a-type" minOccurs="0" />
+<xs:element name="PRF-ExtraSrc_taxon" type="PRF-ExtraSrc_taxon-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="PRF-ExtraSrc_host" type = "xs:string" />
+<xs:simpleType name="PRF-ExtraSrc_host-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PRF-ExtraSrc_part" type = "xs:string" />
+<xs:simpleType name="PRF-ExtraSrc_part-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PRF-ExtraSrc_state" type = "xs:string" />
+<xs:simpleType name="PRF-ExtraSrc_state-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PRF-ExtraSrc_strain" type = "xs:string" />
+<xs:simpleType name="PRF-ExtraSrc_strain-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="PRF-ExtraSrc_taxon" type = "xs:string" />
+<xs:simpleType name="PRF-ExtraSrc_taxon-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module PDB-General
+================================================= -->
+<!-- Definition of PDB-block -->
+
+<xs:element name="PDB-block" type="PDB-block-a-type" />
+<xs:complexType name="PDB-block-a-type">
+<xs:sequence>
+<xs:element name="PDB-block_deposition" type="PDB-block_deposition-a-type" />
+<xs:element name="PDB-block_class" type="PDB-block_class-a-type" />
+<xs:element name="PDB-block_compound" type="PDB-block_compound-a-type" />
+<xs:element name="PDB-block_source" type="PDB-block_source-a-type" />
+<xs:element name="PDB-block_exp-method" type="PDB-block_exp-method-a-type" minOccurs="0" />
+<xs:element name="PDB-block_replace" type="PDB-block_replace-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="PDB-block_deposition-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PDB-block_class" type = "xs:string" />
+<xs:simpleType name="PDB-block_class-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="PDB-block_compound-a-type" >
+<xs:sequence>
+<xs:element name="PDB-block_compound_E" type="PDB-block_compound_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PDB-block_compound_E" type = "xs:string" />
+<xs:simpleType name="PDB-block_compound_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="PDB-block_source-a-type" >
+<xs:sequence>
+<xs:element name="PDB-block_source_E" type="PDB-block_source_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PDB-block_source_E" type = "xs:string" />
+<xs:simpleType name="PDB-block_source_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="PDB-block_exp-method" type = "xs:string" />
+<xs:simpleType name="PDB-block_exp-method-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="PDB-block_replace-a-type">
+<xs:sequence>
+<xs:element name="PDB-replace" type="PDB-replace-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of PDB-replace -->
+
+<xs:element name="PDB-replace" type="PDB-replace-a-type" />
+<xs:complexType name="PDB-replace-a-type">
+<xs:sequence>
+<xs:element name="PDB-replace_date" type="PDB-replace_date-a-type" />
+<xs:element name="PDB-replace_ids" type="PDB-replace_ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="PDB-replace_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PDB-replace_ids-a-type" >
+<xs:sequence>
+<xs:element name="PDB-replace_ids_E" type="PDB-replace_ids_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="PDB-replace_ids_E" type = "xs:string" />
+<xs:simpleType name="PDB-replace_ids_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+</xs:schema>

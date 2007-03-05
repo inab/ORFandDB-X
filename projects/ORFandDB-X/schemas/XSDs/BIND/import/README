@@ -1,0 +1,66 @@
+The Blueprint Initiative
+Samuel Lunenfeld Research Institute
+
+
+(c)2005 The Blueprint Initiative of Mount Sinai Hospital.
+All Rights Reserved.
+
+
+README: BLUEPRINT FTP AREA
+ftp://ftp.mshri.on.ca/pub/BIND/spec/w3schema/import/
+
+
+LAST UPDATE OF THIS README: February 2, 2005
+
+
+This directory contains information of interest organized as follows.  
+Files/Directories are released as indicated on their data/timestamp.
+
+
+Please read the README files in each directory for more details, including 
+licence and data policies.
+
+
+DIRECTORY-----------------------------------------------------------------------
+
+biblio.xsd
+general.xsd
+medlars.xsd
+medline.xsd
+mmdb1.xsd
+mmdb2.xsd
+mmds3.xsd
+predeftextset.xsd
+pub.xsd
+pubmed.xsd
+seq.xsd
+seqalign.xsd
+seqblock.xsd
+seqcode.xsd
+seqfeat.xsd
+seqloc.xsd
+seqres.xsd
+seqset.xsd
+import (dir)
+
+--------------------------------------------------------------------------------
+
+If you use BIND, please cite:
+
+Bader GD, Betel D, Hogue CW. (2003) BIND: the Biomolecular 
+Interaction Network Database. Nucleic Acids Res. 31(1):248-50 PMID: 12519993
+
+The Blueprint Initiative
+Samuel Lunenfeld Research Institute
+Mt. Sinai Hospital
+522 University Avenue, 9th Floor, Suite 900
+Toronto, Ontario, Canada M5G 1W7
+Phone: 416-596-8505
+Fax:   416-596-8077
+
+BIND Inquires:     info@bind.ca
+SeqHound Inquires: seqhound@blueprint.org
+TraDES Inquiries:  trades@blueprint.org
+Other:             info@blueprint.org
+
+--------------------------------------------------------------------------------

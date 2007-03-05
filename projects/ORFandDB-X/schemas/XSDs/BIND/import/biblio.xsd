@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Biblio
+================================================= -->
+<!-- Definition of ArticleId -->
+
+<xs:element name="ArticleId" type="ArticleId-a-type" />
+<xs:complexType name="ArticleId-a-type">
+<xs:choice>
+<xs:element name="ArticleId_pubmed" type="ArticleId_pubmed-a-type" />
+<xs:element name="ArticleId_medline" type="ArticleId_medline-a-type" />
+<xs:element name="ArticleId_doi" type="ArticleId_doi-a-type" />
+<xs:element name="ArticleId_pii" type="ArticleId_pii-a-type" />
+<xs:element name="ArticleId_pmcid" type="ArticleId_pmcid-a-type" />
+<xs:element name="ArticleId_pmcpid" type="ArticleId_pmcpid-a-type" />
+<xs:element name="ArticleId_pmpid" type="ArticleId_pmpid-a-type" />
+<xs:element name="ArticleId_other" type="ArticleId_other-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="ArticleId_pubmed-a-type">
+<xs:sequence>
+<xs:element name="PubMedId" type="PubMedId-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_medline-a-type">
+<xs:sequence>
+<xs:element name="MedlineUID" type="MedlineUID-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_doi-a-type">
+<xs:sequence>
+<xs:element name="DOI" type="DOI-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_pii-a-type">
+<xs:sequence>
+<xs:element name="PII" type="PII-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_pmcid-a-type">
+<xs:sequence>
+<xs:element name="PmcID" type="PmcID-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_pmcpid-a-type">
+<xs:sequence>
+<xs:element name="PmcPid" type="PmcPid-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_pmpid-a-type">
+<xs:sequence>
+<xs:element name="PmPid" type="PmPid-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ArticleId_other-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of PubMedId -->
+
+<xs:element name="PubMedId" type = "xs:integer" />
+<xs:simpleType name="PubMedId-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of MedlineUID -->
+
+<xs:element name="MedlineUID" type = "xs:integer" />
+<xs:simpleType name="MedlineUID-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of DOI -->
+
+<xs:element name="DOI" type = "xs:string" />
+<xs:simpleType name="DOI-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of PII -->
+
+<xs:element name="PII" type = "xs:string" />
+<xs:simpleType name="PII-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of PmcID -->
+
+<xs:element name="PmcID" type = "xs:integer" />
+<xs:simpleType name="PmcID-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of PmcPid -->
+
+<xs:element name="PmcPid" type = "xs:string" />
+<xs:simpleType name="PmcPid-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of PmPid -->
+
+<xs:element name="PmPid" type = "xs:string" />
+<xs:simpleType name="PmPid-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of ArticleIdSet -->
+
+<xs:complexType name="ArticleIdSet-a-type" >
+<xs:sequence>
+<xs:element name="ArticleId" type="ArticleId-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of PubStatus -->
+
+<xs:element name="PubStatus" type="PubStatus-a-type" />
+<xs:complexType name="PubStatus-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="received" />
+<xs:enumeration value="accepted" />
+<xs:enumeration value="epublish" />
+<xs:enumeration value="ppublish" />
+<xs:enumeration value="revised" />
+<xs:enumeration value="pmc" />
+<xs:enumeration value="pmcr" />
+<xs:enumeration value="pubmed" />
+<xs:enumeration value="pubmedr" />
+<xs:enumeration value="aheadofprint" />
+<xs:enumeration value="premedline" />
+<xs:enumeration value="medline" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+
+<!-- Definition of PubStatusDate -->
+
+<xs:element name="PubStatusDate" type="PubStatusDate-a-type" />
+<xs:complexType name="PubStatusDate-a-type">
+<xs:sequence>
+<xs:element name="PubStatusDate_pubstatus" type="PubStatusDate_pubstatus-a-type" />
+<xs:element name="PubStatusDate_date" type="PubStatusDate_date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="PubStatusDate_pubstatus-a-type">
+<xs:sequence>
+<xs:element name="PubStatus" type="PubStatus-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PubStatusDate_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of PubStatusDateSet -->
+
+<xs:complexType name="PubStatusDateSet-a-type" >
+<xs:sequence>
+<xs:element name="PubStatusDate" type="PubStatusDate-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Cit-art -->
+
+<xs:element name="Cit-art" type="Cit-art-a-type" />
+<xs:complexType name="Cit-art-a-type">
+<xs:sequence>
+<xs:element name="Cit-art_title" type="Cit-art_title-a-type" minOccurs="0" />
+<xs:element name="Cit-art_authors" type="Cit-art_authors-a-type" minOccurs="0" />
+<xs:element name="Cit-art_from" type="Cit-art_from-a-type" />
+<xs:element name="Cit-art_ids" type="Cit-art_ids-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cit-art_title-a-type">
+<xs:sequence>
+<xs:element name="Title" type="Title-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-art_authors-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-art_from" type="Cit-art_from-a-type" />
+<xs:complexType name="Cit-art_from-a-type">
+<xs:choice>
+<xs:element name="Cit-art_from_journal" type="Cit-art_from_journal-a-type" />
+<xs:element name="Cit-art_from_book" type="Cit-art_from_book-a-type" />
+<xs:element name="Cit-art_from_proc" type="Cit-art_from_proc-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Cit-art_from_journal-a-type">
+<xs:sequence>
+<xs:element name="Cit-jour" type="Cit-jour-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-art_from_book-a-type">
+<xs:sequence>
+<xs:element name="Cit-book" type="Cit-book-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-art_from_proc-a-type">
+<xs:sequence>
+<xs:element name="Cit-proc" type="Cit-proc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-art_ids-a-type">
+<xs:sequence>
+<xs:element name="ArticleIdSet" type="ArticleIdSet-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cit-jour -->
+
+<xs:element name="Cit-jour" type="Cit-jour-a-type" />
+<xs:complexType name="Cit-jour-a-type">
+<xs:sequence>
+<xs:element name="Cit-jour_title" type="Cit-jour_title-a-type" />
+<xs:element name="Cit-jour_imp" type="Cit-jour_imp-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cit-jour_title-a-type">
+<xs:sequence>
+<xs:element name="Title" type="Title-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-jour_imp-a-type">
+<xs:sequence>
+<xs:element name="Imprint" type="Imprint-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cit-book -->
+
+<xs:element name="Cit-book" type="Cit-book-a-type" />
+<xs:complexType name="Cit-book-a-type">
+<xs:sequence>
+<xs:element name="Cit-book_title" type="Cit-book_title-a-type" />
+<xs:element name="Cit-book_coll" type="Cit-book_coll-a-type" minOccurs="0" />
+<xs:element name="Cit-book_authors" type="Cit-book_authors-a-type" />
+<xs:element name="Cit-book_imp" type="Cit-book_imp-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cit-book_title-a-type">
+<xs:sequence>
+<xs:element name="Title" type="Title-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-book_coll-a-type">
+<xs:sequence>
+<xs:element name="Title" type="Title-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-book_authors-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-book_imp-a-type">
+<xs:sequence>
+<xs:element name="Imprint" type="Imprint-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cit-proc -->
+
+<xs:element name="Cit-proc" type="Cit-proc-a-type" />
+<xs:complexType name="Cit-proc-a-type">
+<xs:sequence>
+<xs:element name="Cit-proc_book" type="Cit-proc_book-a-type" />
+<xs:element name="Cit-proc_meet" type="Cit-proc_meet-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cit-proc_book-a-type">
+<xs:sequence>
+<xs:element name="Cit-book" type="Cit-book-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-proc_meet-a-type">
+<xs:sequence>
+<xs:element name="Meeting" type="Meeting-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Cit-pat -->
+
+<xs:element name="Cit-pat" type="Cit-pat-a-type" />
+<xs:complexType name="Cit-pat-a-type">
+<xs:sequence>
+<xs:element name="Cit-pat_title" type="Cit-pat_title-a-type" />
+<xs:element name="Cit-pat_authors" type="Cit-pat_authors-a-type" />
+<xs:element name="Cit-pat_country" type="Cit-pat_country-a-type" />
+<xs:element name="Cit-pat_doc-type" type="Cit-pat_doc-type-a-type" />
+<xs:element name="Cit-pat_number" type="Cit-pat_number-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_date-issue" type="Cit-pat_date-issue-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_class" type="Cit-pat_class-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_app-number" type="Cit-pat_app-number-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_app-date" type="Cit-pat_app-date-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_applicants" type="Cit-pat_applicants-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_assignees" type="Cit-pat_assignees-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_priority" type="Cit-pat_priority-a-type" minOccurs="0" />
+<xs:element name="Cit-pat_abstract" type="Cit-pat_abstract-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Cit-pat_title" type = "xs:string" />
+<xs:simpleType name="Cit-pat_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Cit-pat_authors-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-pat_country" type = "xs:string" />
+<xs:simpleType name="Cit-pat_country-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Cit-pat_doc-type" type = "xs:string" />
+<xs:simpleType name="Cit-pat_doc-type-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Cit-pat_number" type = "xs:string" />
+<xs:simpleType name="Cit-pat_number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Cit-pat_date-issue-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-pat_class-a-type" >
+<xs:sequence>
+<xs:element name="Cit-pat_class_E" type="Cit-pat_class_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-pat_class_E" type = "xs:string" />
+<xs:simpleType name="Cit-pat_class_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="Cit-pat_app-number" type = "xs:string" />
+<xs:simpleType name="Cit-pat_app-number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Cit-pat_app-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-pat_applicants-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-pat_assignees-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-pat_priority-a-type" >
+<xs:sequence>
+<xs:element name="Patent-priority" type="Patent-priority-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-pat_abstract" type = "xs:string" />
+<xs:simpleType name="Cit-pat_abstract-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Patent-priority -->
+
+<xs:element name="Patent-priority" type="Patent-priority-a-type" />
+<xs:complexType name="Patent-priority-a-type">
+<xs:sequence>
+<xs:element name="Patent-priority_country" type="Patent-priority_country-a-type" />
+<xs:element name="Patent-priority_number" type="Patent-priority_number-a-type" />
+<xs:element name="Patent-priority_date" type="Patent-priority_date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Patent-priority_country" type = "xs:string" />
+<xs:simpleType name="Patent-priority_country-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Patent-priority_number" type = "xs:string" />
+<xs:simpleType name="Patent-priority_number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Patent-priority_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Id-pat -->
+
+<xs:element name="Id-pat" type="Id-pat-a-type" />
+<xs:complexType name="Id-pat-a-type">
+<xs:sequence>
+<xs:element name="Id-pat_country" type="Id-pat_country-a-type" />
+<xs:element name="Id-pat_id" type="Id-pat_id-a-type" />
+<xs:element name="Id-pat_doc-type" type="Id-pat_doc-type-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Id-pat_country" type = "xs:string" />
+<xs:simpleType name="Id-pat_country-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Id-pat_id" type="Id-pat_id-a-type" />
+<xs:complexType name="Id-pat_id-a-type">
+<xs:choice>
+<xs:element name="Id-pat_id_number" type="Id-pat_id_number-a-type" />
+<xs:element name="Id-pat_id_app-number" type="Id-pat_id_app-number-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:element name="Id-pat_id_number" type = "xs:string" />
+<xs:simpleType name="Id-pat_id_number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Id-pat_id_app-number" type = "xs:string" />
+<xs:simpleType name="Id-pat_id_app-number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Id-pat_doc-type" type = "xs:string" />
+<xs:simpleType name="Id-pat_doc-type-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Cit-let -->
+
+<xs:element name="Cit-let" type="Cit-let-a-type" />
+<xs:complexType name="Cit-let-a-type">
+<xs:sequence>
+<xs:element name="Cit-let_cit" type="Cit-let_cit-a-type" />
+<xs:element name="Cit-let_man-id" type="Cit-let_man-id-a-type" minOccurs="0" />
+<xs:element name="Cit-let_type" type="Cit-let_type-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cit-let_cit-a-type">
+<xs:sequence>
+<xs:element name="Cit-book" type="Cit-book-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-let_man-id" type = "xs:string" />
+<xs:simpleType name="Cit-let_man-id-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Cit-let_type" type="Cit-let_type-a-type" />
+<xs:complexType name="Cit-let_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="manuscript" />
+<xs:enumeration value="letter" />
+<xs:enumeration value="thesis" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of Cit-sub -->
+
+<xs:element name="Cit-sub" type="Cit-sub-a-type" />
+<xs:complexType name="Cit-sub-a-type">
+<xs:sequence>
+<xs:element name="Cit-sub_authors" type="Cit-sub_authors-a-type" />
+<xs:element name="Cit-sub_imp" type="Cit-sub_imp-a-type" minOccurs="0" />
+<xs:element name="Cit-sub_medium" type="Cit-sub_medium-a-type" minOccurs="0" />
+<xs:element name="Cit-sub_date" type="Cit-sub_date-a-type" minOccurs="0" />
+<xs:element name="Cit-sub_descr" type="Cit-sub_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Cit-sub_authors-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Cit-sub_imp-a-type">
+<xs:sequence>
+<xs:element name="Imprint" type="Imprint-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-sub_medium" type="Cit-sub_medium-a-type" />
+<xs:complexType name="Cit-sub_medium-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="paper" />
+<xs:enumeration value="tape" />
+<xs:enumeration value="floppy" />
+<xs:enumeration value="email" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Cit-sub_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-sub_descr" type = "xs:string" />
+<xs:simpleType name="Cit-sub_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Cit-gen -->
+
+<xs:element name="Cit-gen" type="Cit-gen-a-type" />
+<xs:complexType name="Cit-gen-a-type">
+<xs:sequence>
+<xs:element name="Cit-gen_cit" type="Cit-gen_cit-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_authors" type="Cit-gen_authors-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_muid" type="Cit-gen_muid-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_journal" type="Cit-gen_journal-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_volume" type="Cit-gen_volume-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_issue" type="Cit-gen_issue-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_pages" type="Cit-gen_pages-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_date" type="Cit-gen_date-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_serial-number" type="Cit-gen_serial-number-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_title" type="Cit-gen_title-a-type" minOccurs="0" />
+<xs:element name="Cit-gen_pmid" type="Cit-gen_pmid-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Cit-gen_cit" type = "xs:string" />
+<xs:simpleType name="Cit-gen_cit-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Cit-gen_authors-a-type">
+<xs:sequence>
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-gen_muid" type = "xs:integer" />
+<xs:simpleType name="Cit-gen_muid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Cit-gen_journal-a-type">
+<xs:sequence>
+<xs:element name="Title" type="Title-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-gen_volume" type = "xs:string" />
+<xs:simpleType name="Cit-gen_volume-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Cit-gen_issue" type = "xs:string" />
+<xs:simpleType name="Cit-gen_issue-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Cit-gen_pages" type = "xs:string" />
+<xs:simpleType name="Cit-gen_pages-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Cit-gen_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Cit-gen_serial-number" type = "xs:integer" />
+<xs:simpleType name="Cit-gen_serial-number-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Cit-gen_title" type = "xs:string" />
+<xs:simpleType name="Cit-gen_title-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Cit-gen_pmid-a-type">
+<xs:sequence>
+<xs:element name="PubMedId" type="PubMedId-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Auth-list -->
+
+<xs:element name="Auth-list" type="Auth-list-a-type" />
+<xs:complexType name="Auth-list-a-type">
+<xs:sequence>
+<xs:element name="Auth-list_names" type="Auth-list_names-a-type" />
+<xs:element name="Auth-list_affil" type="Auth-list_affil-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Auth-list_names" type="Auth-list_names-a-type" />
+<xs:complexType name="Auth-list_names-a-type">
+<xs:choice>
+<xs:element name="Auth-list_names_std" type="Auth-list_names_std-a-type" />
+<xs:element name="Auth-list_names_ml" type="Auth-list_names_ml-a-type" />
+<xs:element name="Auth-list_names_str" type="Auth-list_names_str-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Auth-list_names_std-a-type" >
+<xs:sequence>
+<xs:element name="Author" type="Author-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Auth-list_names_ml-a-type" >
+<xs:sequence>
+<xs:element name="Auth-list_names_ml_E" type="Auth-list_names_ml_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Auth-list_names_ml_E" type = "xs:string" />
+<xs:simpleType name="Auth-list_names_ml_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Auth-list_names_str-a-type" >
+<xs:sequence>
+<xs:element name="Auth-list_names_str_E" type="Auth-list_names_str_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Auth-list_names_str_E" type = "xs:string" />
+<xs:simpleType name="Auth-list_names_str_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Auth-list_affil-a-type">
+<xs:sequence>
+<xs:element name="Affil" type="Affil-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Author -->
+
+<xs:element name="Author" type="Author-a-type" />
+<xs:complexType name="Author-a-type">
+<xs:sequence>
+<xs:element name="Author_name" type="Author_name-a-type" />
+<xs:element name="Author_level" type="Author_level-a-type" minOccurs="0" />
+<xs:element name="Author_role" type="Author_role-a-type" minOccurs="0" />
+<xs:element name="Author_affil" type="Author_affil-a-type" minOccurs="0" />
+<xs:element name="Author_is-corr" type="Author_is-corr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Author_name-a-type">
+<xs:sequence>
+<xs:element name="Person-id" type="Person-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Author_level" type="Author_level-a-type" />
+<xs:complexType name="Author_level-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="primary" />
+<xs:enumeration value="secondary" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Author_role" type="Author_role-a-type" />
+<xs:complexType name="Author_role-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="compiler" />
+<xs:enumeration value="editor" />
+<xs:enumeration value="patent-assignee" />
+<xs:enumeration value="translator" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Author_affil-a-type">
+<xs:sequence>
+<xs:element name="Affil" type="Affil-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Author_is-corr" type="Author_is-corr-a-type"/>
+<xs:complexType name="Author_is-corr-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of Affil -->
+
+<xs:element name="Affil" type="Affil-a-type" />
+<xs:complexType name="Affil-a-type">
+<xs:choice>
+<xs:element name="Affil_str" type="Affil_str-a-type" />
+<xs:element name="Affil_std" type="Affil_std-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Affil_str" type = "xs:string" />
+<xs:simpleType name="Affil_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std" type="Affil_std-a-type" />
+<xs:complexType name="Affil_std-a-type">
+<xs:sequence>
+<xs:element name="Affil_std_affil" type="Affil_std_affil-a-type" minOccurs="0" />
+<xs:element name="Affil_std_div" type="Affil_std_div-a-type" minOccurs="0" />
+<xs:element name="Affil_std_city" type="Affil_std_city-a-type" minOccurs="0" />
+<xs:element name="Affil_std_sub" type="Affil_std_sub-a-type" minOccurs="0" />
+<xs:element name="Affil_std_country" type="Affil_std_country-a-type" minOccurs="0" />
+<xs:element name="Affil_std_street" type="Affil_std_street-a-type" minOccurs="0" />
+<xs:element name="Affil_std_email" type="Affil_std_email-a-type" minOccurs="0" />
+<xs:element name="Affil_std_fax" type="Affil_std_fax-a-type" minOccurs="0" />
+<xs:element name="Affil_std_phone" type="Affil_std_phone-a-type" minOccurs="0" />
+<xs:element name="Affil_std_postal-code" type="Affil_std_postal-code-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Affil_std_affil" type = "xs:string" />
+<xs:simpleType name="Affil_std_affil-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_div" type = "xs:string" />
+<xs:simpleType name="Affil_std_div-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_city" type = "xs:string" />
+<xs:simpleType name="Affil_std_city-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_sub" type = "xs:string" />
+<xs:simpleType name="Affil_std_sub-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_country" type = "xs:string" />
+<xs:simpleType name="Affil_std_country-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_street" type = "xs:string" />
+<xs:simpleType name="Affil_std_street-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_email" type = "xs:string" />
+<xs:simpleType name="Affil_std_email-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_fax" type = "xs:string" />
+<xs:simpleType name="Affil_std_fax-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_phone" type = "xs:string" />
+<xs:simpleType name="Affil_std_phone-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Affil_std_postal-code" type = "xs:string" />
+<xs:simpleType name="Affil_std_postal-code-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Title -->
+
+<xs:complexType name="Title-a-type" >
+<xs:sequence>
+<xs:element name="Title_E" type="Title_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Title_E" type="Title_E-a-type" />
+<xs:complexType name="Title_E-a-type">
+<xs:choice>
+<xs:element name="Title_E_name" type="Title_E_name-a-type" />
+<xs:element name="Title_E_tsub" type="Title_E_tsub-a-type" />
+<xs:element name="Title_E_trans" type="Title_E_trans-a-type" />
+<xs:element name="Title_E_jta" type="Title_E_jta-a-type" />
+<xs:element name="Title_E_iso-jta" type="Title_E_iso-jta-a-type" />
+<xs:element name="Title_E_ml-jta" type="Title_E_ml-jta-a-type" />
+<xs:element name="Title_E_coden" type="Title_E_coden-a-type" />
+<xs:element name="Title_E_issn" type="Title_E_issn-a-type" />
+<xs:element name="Title_E_abr" type="Title_E_abr-a-type" />
+<xs:element name="Title_E_isbn" type="Title_E_isbn-a-type" />
+</xs:choice>
+</xs:complexType>
+
+<xs:element name="Title_E_name" type = "xs:string" />
+<xs:simpleType name="Title_E_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_tsub" type = "xs:string" />
+<xs:simpleType name="Title_E_tsub-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_trans" type = "xs:string" />
+<xs:simpleType name="Title_E_trans-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_jta" type = "xs:string" />
+<xs:simpleType name="Title_E_jta-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_iso-jta" type = "xs:string" />
+<xs:simpleType name="Title_E_iso-jta-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_ml-jta" type = "xs:string" />
+<xs:simpleType name="Title_E_ml-jta-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_coden" type = "xs:string" />
+<xs:simpleType name="Title_E_coden-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_issn" type = "xs:string" />
+<xs:simpleType name="Title_E_issn-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_abr" type = "xs:string" />
+<xs:simpleType name="Title_E_abr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Title_E_isbn" type = "xs:string" />
+<xs:simpleType name="Title_E_isbn-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Imprint -->
+
+<xs:element name="Imprint" type="Imprint-a-type" />
+<xs:complexType name="Imprint-a-type">
+<xs:sequence>
+<xs:element name="Imprint_date" type="Imprint_date-a-type" />
+<xs:element name="Imprint_volume" type="Imprint_volume-a-type" minOccurs="0" />
+<xs:element name="Imprint_issue" type="Imprint_issue-a-type" minOccurs="0" />
+<xs:element name="Imprint_pages" type="Imprint_pages-a-type" minOccurs="0" />
+<xs:element name="Imprint_section" type="Imprint_section-a-type" minOccurs="0" />
+<xs:element name="Imprint_pub" type="Imprint_pub-a-type" minOccurs="0" />
+<xs:element name="Imprint_cprt" type="Imprint_cprt-a-type" minOccurs="0" />
+<xs:element name="Imprint_part-sup" type="Imprint_part-sup-a-type" minOccurs="0" />
+<xs:element name="Imprint_language" type="Imprint_language-a-type" minOccurs="0" />
+<xs:element name="Imprint_prepub" type="Imprint_prepub-a-type" minOccurs="0" />
+<xs:element name="Imprint_part-supi" type="Imprint_part-supi-a-type" minOccurs="0" />
+<xs:element name="Imprint_retract" type="Imprint_retract-a-type" minOccurs="0" />
+<xs:element name="Imprint_pubstatus" type="Imprint_pubstatus-a-type" minOccurs="0" />
+<xs:element name="Imprint_history" type="Imprint_history-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Imprint_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Imprint_volume" type = "xs:string" />
+<xs:simpleType name="Imprint_volume-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imprint_issue" type = "xs:string" />
+<xs:simpleType name="Imprint_issue-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imprint_pages" type = "xs:string" />
+<xs:simpleType name="Imprint_pages-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imprint_section" type = "xs:string" />
+<xs:simpleType name="Imprint_section-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Imprint_pub-a-type">
+<xs:sequence>
+<xs:element name="Affil" type="Affil-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Imprint_cprt-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Imprint_part-sup" type = "xs:string" />
+<xs:simpleType name="Imprint_part-sup-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imprint_language" type = "xs:string" />
+<xs:simpleType name="Imprint_language-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Imprint_prepub" type="Imprint_prepub-a-type" />
+<xs:complexType name="Imprint_prepub-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="submitted" />
+<xs:enumeration value="in-press" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Imprint_part-supi" type = "xs:string" />
+<xs:simpleType name="Imprint_part-supi-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Imprint_retract-a-type">
+<xs:sequence>
+<xs:element name="CitRetract" type="CitRetract-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Imprint_pubstatus-a-type">
+<xs:sequence>
+<xs:element name="PubStatus" type="PubStatus-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Imprint_history-a-type">
+<xs:sequence>
+<xs:element name="PubStatusDateSet" type="PubStatusDateSet-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of CitRetract -->
+
+<xs:element name="CitRetract" type="CitRetract-a-type" />
+<xs:complexType name="CitRetract-a-type">
+<xs:sequence>
+<xs:element name="CitRetract_type" type="CitRetract_type-a-type" />
+<xs:element name="CitRetract_exp" type="CitRetract_exp-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="CitRetract_type" type="CitRetract_type-a-type" />
+<xs:complexType name="CitRetract_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="retracted" />
+<xs:enumeration value="notice" />
+<xs:enumeration value="in-error" />
+<xs:enumeration value="erratum" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="CitRetract_exp" type = "xs:string" />
+<xs:simpleType name="CitRetract_exp-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Meeting -->
+
+<xs:element name="Meeting" type="Meeting-a-type" />
+<xs:complexType name="Meeting-a-type">
+<xs:sequence>
+<xs:element name="Meeting_number" type="Meeting_number-a-type" />
+<xs:element name="Meeting_date" type="Meeting_date-a-type" />
+<xs:element name="Meeting_place" type="Meeting_place-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Meeting_number" type = "xs:string" />
+<xs:simpleType name="Meeting_number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Meeting_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Meeting_place-a-type">
+<xs:sequence>
+<xs:element name="Affil" type="Affil-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

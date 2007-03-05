@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module MMDB
+================================================= -->
+<!-- Definition of Biostruc -->
+
+<xs:element name="Biostruc" type="Biostruc-a-type" />
+<xs:complexType name="Biostruc-a-type">
+<xs:sequence>
+<xs:element name="Biostruc_id" type="Biostruc_id-a-type" />
+<xs:element name="Biostruc_descr" type="Biostruc_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc_chemical-graph" type="Biostruc_chemical-graph-a-type" />
+<xs:element name="Biostruc_features" type="Biostruc_features-a-type" minOccurs="0" />
+<xs:element name="Biostruc_model" type="Biostruc_model-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc_id-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-descr" type="Biostruc-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc_chemical-graph-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-graph" type="Biostruc-graph-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc_features-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-feature-set" type="Biostruc-feature-set-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc_model-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-model" type="Biostruc-model-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-id -->
+
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+<xs:complexType name="Biostruc-id-a-type">
+<xs:choice>
+<xs:element name="Biostruc-id_mmdb-id" type="Biostruc-id_mmdb-id-a-type" />
+<xs:element name="Biostruc-id_other-database" type="Biostruc-id_other-database-a-type" />
+<xs:element name="Biostruc-id_local-id" type="Biostruc-id_local-id-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-id_mmdb-id-a-type">
+<xs:sequence>
+<xs:element name="Mmdb-id" type="Mmdb-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-id_other-database-a-type">
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-id_local-id-a-type">
+<xs:sequence>
+<xs:element name="Object-id" type="Object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Mmdb-id -->
+
+<xs:element name="Mmdb-id" type = "xs:integer" />
+<xs:simpleType name="Mmdb-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Biostruc-descr -->
+
+<xs:element name="Biostruc-descr" type="Biostruc-descr-a-type" />
+<xs:complexType name="Biostruc-descr-a-type">
+<xs:choice>
+<xs:element name="Biostruc-descr_name" type="Biostruc-descr_name-a-type" />
+<xs:element name="Biostruc-descr_pdb-comment" type="Biostruc-descr_pdb-comment-a-type" />
+<xs:element name="Biostruc-descr_other-comment" type="Biostruc-descr_other-comment-a-type" />
+<xs:element name="Biostruc-descr_history" type="Biostruc-descr_history-a-type" />
+<xs:element name="Biostruc-descr_attribution" type="Biostruc-descr_attribution-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Biostruc-descr_name" type = "xs:string" />
+<xs:simpleType name="Biostruc-descr_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biostruc-descr_pdb-comment" type = "xs:string" />
+<xs:simpleType name="Biostruc-descr_pdb-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biostruc-descr_other-comment" type = "xs:string" />
+<xs:simpleType name="Biostruc-descr_other-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Biostruc-descr_history-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-history" type="Biostruc-history-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-descr_attribution-a-type">
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-history -->
+
+<xs:element name="Biostruc-history" type="Biostruc-history-a-type" />
+<xs:complexType name="Biostruc-history-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-history_replaces" type="Biostruc-history_replaces-a-type" minOccurs="0" />
+<xs:element name="Biostruc-history_replaced-by" type="Biostruc-history_replaced-by-a-type" minOccurs="0" />
+<xs:element name="Biostruc-history_data-source" type="Biostruc-history_data-source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-history_replaces-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-replace" type="Biostruc-replace-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-history_replaced-by-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-replace" type="Biostruc-replace-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-history_data-source-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-source" type="Biostruc-source-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-replace -->
+
+<xs:element name="Biostruc-replace" type="Biostruc-replace-a-type" />
+<xs:complexType name="Biostruc-replace-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-replace_id" type="Biostruc-replace_id-a-type" />
+<xs:element name="Biostruc-replace_date" type="Biostruc-replace_date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-replace_id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-replace_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-source -->
+
+<xs:element name="Biostruc-source" type="Biostruc-source-a-type" />
+<xs:complexType name="Biostruc-source-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-source_name-of-database" type="Biostruc-source_name-of-database-a-type" />
+<xs:element name="Biostruc-source_version-of-database" type="Biostruc-source_version-of-database-a-type" minOccurs="0" />
+<xs:element name="Biostruc-source_database-entry-id" type="Biostruc-source_database-entry-id-a-type" />
+<xs:element name="Biostruc-source_database-entry-date" type="Biostruc-source_database-entry-date-a-type" />
+<xs:element name="Biostruc-source_database-entry-history" type="Biostruc-source_database-entry-history-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Biostruc-source_name-of-database" type = "xs:string" />
+<xs:simpleType name="Biostruc-source_name-of-database-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biostruc-source_version-of-database" type="Biostruc-source_version-of-database-a-type" />
+<xs:complexType name="Biostruc-source_version-of-database-a-type">
+<xs:choice>
+<xs:element name="Biostruc-source_version-of-database_release-date" type="Biostruc-source_version-of-database_release-date-a-type" />
+<xs:element name="Biostruc-source_version-of-database_release-code" type="Biostruc-source_version-of-database_release-code-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Biostruc-source_version-of-database_release-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biostruc-source_version-of-database_release-code" type = "xs:string" />
+<xs:simpleType name="Biostruc-source_version-of-database_release-code-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Biostruc-source_database-entry-id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-source_database-entry-date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-source_database-entry-history-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-source_database-entry-history_E" type="Biostruc-source_database-entry-history_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biostruc-source_database-entry-history_E" type = "xs:string" />
+<xs:simpleType name="Biostruc-source_database-entry-history_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Biostruc-set -->
+
+<xs:element name="Biostruc-set" type="Biostruc-set-a-type" />
+<xs:complexType name="Biostruc-set-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-set_id" type="Biostruc-set_id-a-type" minOccurs="0" />
+<xs:element name="Biostruc-set_descr" type="Biostruc-set_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc-set_biostrucs" type="Biostruc-set_biostrucs-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-set_id-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-set_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-descr" type="Biostruc-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-set_biostrucs-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc" type="Biostruc-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-annot-set -->
+
+<xs:element name="Biostruc-annot-set" type="Biostruc-annot-set-a-type" />
+<xs:complexType name="Biostruc-annot-set-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-annot-set_id" type="Biostruc-annot-set_id-a-type" minOccurs="0" />
+<xs:element name="Biostruc-annot-set_descr" type="Biostruc-annot-set_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc-annot-set_features" type="Biostruc-annot-set_features-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-annot-set_id-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-annot-set_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-descr" type="Biostruc-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-annot-set_features-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-feature-set" type="Biostruc-feature-set-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-residue-graph-set -->
+
+<xs:element name="Biostruc-residue-graph-set" type="Biostruc-residue-graph-set-a-type" />
+<xs:complexType name="Biostruc-residue-graph-set-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-residue-graph-set_id" type="Biostruc-residue-graph-set_id-a-type" minOccurs="0" />
+<xs:element name="Biostruc-residue-graph-set_descr" type="Biostruc-residue-graph-set_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc-residue-graph-set_residue-graphs" type="Biostruc-residue-graph-set_residue-graphs-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-residue-graph-set_id-a-type" >
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-residue-graph-set_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biomol-descr" type="Biomol-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-residue-graph-set_residue-graphs-a-type" >
+<xs:sequence>
+<xs:element name="Residue-graph" type="Residue-graph-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module MMDB-Chemical-graph
+================================================= -->
+<!-- Definition of Biostruc-graph -->
+
+<xs:element name="Biostruc-graph" type="Biostruc-graph-a-type" />
+<xs:complexType name="Biostruc-graph-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-graph_descr" type="Biostruc-graph_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc-graph_molecule-graphs" type="Biostruc-graph_molecule-graphs-a-type" />
+<xs:element name="Biostruc-graph_inter-molecule-bonds" type="Biostruc-graph_inter-molecule-bonds-a-type" minOccurs="0" />
+<xs:element name="Biostruc-graph_residue-graphs" type="Biostruc-graph_residue-graphs-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-graph_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biomol-descr" type="Biomol-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-graph_molecule-graphs-a-type" >
+<xs:sequence>
+<xs:element name="Molecule-graph" type="Molecule-graph-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-graph_inter-molecule-bonds-a-type" >
+<xs:sequence>
+<xs:element name="Inter-residue-bond" type="Inter-residue-bond-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-graph_residue-graphs-a-type" >
+<xs:sequence>
+<xs:element name="Residue-graph" type="Residue-graph-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biomol-descr -->
+
+<xs:element name="Biomol-descr" type="Biomol-descr-a-type" />
+<xs:complexType name="Biomol-descr-a-type">
+<xs:choice>
+<xs:element name="Biomol-descr_name" type="Biomol-descr_name-a-type" />
+<xs:element name="Biomol-descr_pdb-class" type="Biomol-descr_pdb-class-a-type" />
+<xs:element name="Biomol-descr_pdb-source" type="Biomol-descr_pdb-source-a-type" />
+<xs:element name="Biomol-descr_pdb-comment" type="Biomol-descr_pdb-comment-a-type" />
+<xs:element name="Biomol-descr_other-comment" type="Biomol-descr_other-comment-a-type" />
+<xs:element name="Biomol-descr_organism" type="Biomol-descr_organism-a-type" />
+<xs:element name="Biomol-descr_attribution" type="Biomol-descr_attribution-a-type" />
+<xs:element name="Biomol-descr_assembly-type" type="Biomol-descr_assembly-type-a-type" />
+<xs:element name="Biomol-descr_molecule-type" type="Biomol-descr_molecule-type-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Biomol-descr_name" type = "xs:string" />
+<xs:simpleType name="Biomol-descr_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biomol-descr_pdb-class" type = "xs:string" />
+<xs:simpleType name="Biomol-descr_pdb-class-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biomol-descr_pdb-source" type = "xs:string" />
+<xs:simpleType name="Biomol-descr_pdb-source-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biomol-descr_pdb-comment" type = "xs:string" />
+<xs:simpleType name="Biomol-descr_pdb-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Biomol-descr_other-comment" type = "xs:string" />
+<xs:simpleType name="Biomol-descr_other-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Biomol-descr_organism-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biomol-descr_attribution-a-type">
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Biomol-descr_assembly-type" type="Biomol-descr_assembly-type-a-type" />
+<xs:complexType name="Biomol-descr_assembly-type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="physiological-form" />
+<xs:enumeration value="crystallographic-cell" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="Biomol-descr_molecule-type" type="Biomol-descr_molecule-type-a-type" />
+<xs:complexType name="Biomol-descr_molecule-type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="dna" />
+<xs:enumeration value="rna" />
+<xs:enumeration value="protein" />
+<xs:enumeration value="other-biopolymer" />
+<xs:enumeration value="solvent" />
+<xs:enumeration value="other-nonpolymer" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+<!-- Definition of Molecule-graph -->
+
+<xs:element name="Molecule-graph" type="Molecule-graph-a-type" />
+<xs:complexType name="Molecule-graph-a-type">
+<xs:sequence>
+<xs:element name="Molecule-graph_id" type="Molecule-graph_id-a-type" />
+<xs:element name="Molecule-graph_descr" type="Molecule-graph_descr-a-type" minOccurs="0" />
+<xs:element name="Molecule-graph_seq-id" type="Molecule-graph_seq-id-a-type" minOccurs="0" />
+<xs:element name="Molecule-graph_residue-sequence" type="Molecule-graph_residue-sequence-a-type" />
+<xs:element name="Molecule-graph_inter-residue-bonds" type="Molecule-graph_inter-residue-bonds-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Molecule-graph_id-a-type">
+<xs:sequence>
+<xs:element name="Molecule-id" type="Molecule-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Molecule-graph_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biomol-descr" type="Biomol-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Molecule-graph_seq-id-a-type">
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Molecule-graph_residue-sequence-a-type" >
+<xs:sequence>
+<xs:element name="Residue" type="Residue-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Molecule-graph_inter-residue-bonds-a-type" >
+<xs:sequence>
+<xs:element name="Inter-residue-bond" type="Inter-residue-bond-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Molecule-id -->
+
+<xs:element name="Molecule-id" type = "xs:integer" />
+<xs:simpleType name="Molecule-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Residue -->
+
+<xs:element name="Residue" type="Residue-a-type" />
+<xs:complexType name="Residue-a-type">
+<xs:sequence>
+<xs:element name="Residue_id" type="Residue_id-a-type" />
+<xs:element name="Residue_name" type="Residue_name-a-type" minOccurs="0" />
+<xs:element name="Residue_residue-graph" type="Residue_residue-graph-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Residue_id-a-type">
+<xs:sequence>
+<xs:element name="Residue-id" type="Residue-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Residue_name" type = "xs:string" />
+<xs:simpleType name="Residue_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Residue_residue-graph-a-type">
+<xs:sequence>
+<xs:element name="Residue-graph-pntr" type="Residue-graph-pntr-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Residue-id -->
+
+<xs:element name="Residue-id" type = "xs:integer" />
+<xs:simpleType name="Residue-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Residue-graph-pntr -->
+
+<xs:element name="Residue-graph-pntr" type="Residue-graph-pntr-a-type" />
+<xs:complexType name="Residue-graph-pntr-a-type">
+<xs:choice>
+<xs:element name="Residue-graph-pntr_local" type="Residue-graph-pntr_local-a-type" />
+<xs:element name="Residue-graph-pntr_biostruc" type="Residue-graph-pntr_biostruc-a-type" />
+<xs:element name="Residue-graph-pntr_standard" type="Residue-graph-pntr_standard-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Residue-graph-pntr_local-a-type">
+<xs:sequence>
+<xs:element name="Residue-graph-id" type="Residue-graph-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-graph-pntr_biostruc-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-graph-pntr" type="Biostruc-graph-pntr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-graph-pntr_standard-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-residue-graph-set-pntr" type="Biostruc-residue-graph-set-pntr-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-graph-pntr -->
+
+<xs:element name="Biostruc-graph-pntr" type="Biostruc-graph-pntr-a-type" />
+<xs:complexType name="Biostruc-graph-pntr-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-graph-pntr_biostruc-id" type="Biostruc-graph-pntr_biostruc-id-a-type" />
+<xs:element name="Biostruc-graph-pntr_residue-graph-id" type="Biostruc-graph-pntr_residue-graph-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-graph-pntr_biostruc-id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-graph-pntr_residue-graph-id-a-type">
+<xs:sequence>
+<xs:element name="Residue-graph-id" type="Residue-graph-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Biostruc-residue-graph-set-pntr -->
+
+<xs:element name="Biostruc-residue-graph-set-pntr" type="Biostruc-residue-graph-set-pntr-a-type" />
+<xs:complexType name="Biostruc-residue-graph-set-pntr-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-residue-graph-set-pntr_biostruc-residue-graph-set-id" type="Biostruc-residue-graph-set-pntr_biostruc-residue-graph-set-id-a-type" />
+<xs:element name="Biostruc-residue-graph-set-pntr_residue-graph-id" type="Biostruc-residue-graph-set-pntr_residue-graph-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-residue-graph-set-pntr_biostruc-residue-graph-set-id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-residue-graph-set-pntr_residue-graph-id-a-type">
+<xs:sequence>
+<xs:element name="Residue-graph-id" type="Residue-graph-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Residue-graph -->
+
+<xs:element name="Residue-graph" type="Residue-graph-a-type" />
+<xs:complexType name="Residue-graph-a-type">
+<xs:sequence>
+<xs:element name="Residue-graph_id" type="Residue-graph_id-a-type" />
+<xs:element name="Residue-graph_descr" type="Residue-graph_descr-a-type" minOccurs="0" />
+<xs:element name="Residue-graph_residue-type" type="Residue-graph_residue-type-a-type" minOccurs="0" />
+<xs:element name="Residue-graph_iupac-code" type="Residue-graph_iupac-code-a-type" minOccurs="0" />
+<xs:element name="Residue-graph_atoms" type="Residue-graph_atoms-a-type" />
+<xs:element name="Residue-graph_bonds" type="Residue-graph_bonds-a-type" />
+<xs:element name="Residue-graph_chiral-centers" type="Residue-graph_chiral-centers-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Residue-graph_id-a-type">
+<xs:sequence>
+<xs:element name="Residue-graph-id" type="Residue-graph-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-graph_descr-a-type" >
+<xs:sequence>
+<xs:element name="Biomol-descr" type="Biomol-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Residue-graph_residue-type" type="Residue-graph_residue-type-a-type" />
+<xs:complexType name="Residue-graph_residue-type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="deoxyribonucleotide" />
+<xs:enumeration value="ribonucleotide" />
+<xs:enumeration value="amino-acid" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:complexType name="Residue-graph_iupac-code-a-type" >
+<xs:sequence>
+<xs:element name="Residue-graph_iupac-code_E" type="Residue-graph_iupac-code_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Residue-graph_iupac-code_E" type = "xs:string" />
+<xs:simpleType name="Residue-graph_iupac-code_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Residue-graph_atoms-a-type" >
+<xs:sequence>
+<xs:element name="Atom" type="Atom-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-graph_bonds-a-type" >
+<xs:sequence>
+<xs:element name="Intra-residue-bond" type="Intra-residue-bond-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Residue-graph_chiral-centers-a-type" >
+<xs:sequence>
+<xs:element name="Chiral-center" type="Chiral-center-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Residue-graph-id -->
+
+<xs:element name="Residue-graph-id" type = "xs:integer" />
+<xs:simpleType name="Residue-graph-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Atom -->
+
+<xs:element name="Atom" type="Atom-a-type" />
+<xs:complexType name="Atom-a-type">
+<xs:sequence>
+<xs:element name="Atom_id" type="Atom_id-a-type" />
+<xs:element name="Atom_name" type="Atom_name-a-type" minOccurs="0" />
+<xs:element name="Atom_iupac-code" type="Atom_iupac-code-a-type" minOccurs="0" />
+<xs:element name="Atom_element" type="Atom_element-a-type" />
+<xs:element name="Atom_ionizable-proton" type="Atom_ionizable-proton-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Atom_id-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Atom_name" type = "xs:string" />
+<xs:simpleType name="Atom_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Atom_iupac-code-a-type" >
+<xs:sequence>
+<xs:element name="Atom_iupac-code_E" type="Atom_iupac-code_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Atom_iupac-code_E" type = "xs:string" />
+<xs:simpleType name="Atom_iupac-code_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="Atom_element" type="Atom_element-a-type" />
+<xs:complexType name="Atom_element-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="h" />
+<xs:enumeration value="he" />
+<xs:enumeration value="li" />
+<xs:enumeration value="be" />
+<xs:enumeration value="b" />
+<xs:enumeration value="c" />
+<xs:enumeration value="n" />
+<xs:enumeration value="o" />
+<xs:enumeration value="f" />
+<xs:enumeration value="ne" />
+<xs:enumeration value="na" />
+<xs:enumeration value="mg" />
+<xs:enumeration value="al" />
+<xs:enumeration value="si" />
+<xs:enumeration value="p" />
+<xs:enumeration value="s" />
+<xs:enumeration value="cl" />
+<xs:enumeration value="ar" />
+<xs:enumeration value="k" />
+<xs:enumeration value="ca" />
+<xs:enumeration value="sc" />
+<xs:enumeration value="ti" />
+<xs:enumeration value="v" />
+<xs:enumeration value="cr" />
+<xs:enumeration value="mn" />
+<xs:enumeration value="fe" />
+<xs:enumeration value="co" />
+<xs:enumeration value="ni" />
+<xs:enumeration value="cu" />
+<xs:enumeration value="zn" />
+<xs:enumeration value="ga" />
+<xs:enumeration value="ge" />
+<xs:enumeration value="as" />
+<xs:enumeration value="se" />
+<xs:enumeration value="br" />
+<xs:enumeration value="kr" />
+<xs:enumeration value="rb" />
+<xs:enumeration value="sr" />
+<xs:enumeration value="y" />
+<xs:enumeration value="zr" />
+<xs:enumeration value="nb" />
+<xs:enumeration value="mo" />
+<xs:enumeration value="tc" />
+<xs:enumeration value="ru" />
+<xs:enumeration value="rh" />
+<xs:enumeration value="pd" />
+<xs:enumeration value="ag" />
+<xs:enumeration value="cd" />
+<xs:enumeration value="in" />
+<xs:enumeration value="sn" />
+<xs:enumeration value="sb" />
+<xs:enumeration value="te" />
+<xs:enumeration value="i" />
+<xs:enumeration value="xe" />
+<xs:enumeration value="cs" />
+<xs:enumeration value="ba" />
+<xs:enumeration value="la" />
+<xs:enumeration value="ce" />
+<xs:enumeration value="pr" />
+<xs:enumeration value="nd" />
+<xs:enumeration value="pm" />
+<xs:enumeration value="sm" />
+<xs:enumeration value="eu" />
+<xs:enumeration value="gd" />
+<xs:enumeration value="tb" />
+<xs:enumeration value="dy" />
+<xs:enumeration value="ho" />
+<xs:enumeration value="er" />
+<xs:enumeration value="tm" />
+<xs:enumeration value="yb" />
+<xs:enumeration value="lu" />
+<xs:enumeration value="hf" />
+<xs:enumeration value="ta" />
+<xs:enumeration value="w" />
+<xs:enumeration value="re" />
+<xs:enumeration value="os" />
+<xs:enumeration value="ir" />
+<xs:enumeration value="pt" />
+<xs:enumeration value="au" />
+<xs:enumeration value="hg" />
+<xs:enumeration value="tl" />
+<xs:enumeration value="pb" />
+<xs:enumeration value="bi" />
+<xs:enumeration value="po" />
+<xs:enumeration value="at" />
+<xs:enumeration value="rn" />
+<xs:enumeration value="fr" />
+<xs:enumeration value="ra" />
+<xs:enumeration value="ac" />
+<xs:enumeration value="th" />
+<xs:enumeration value="pa" />
+<xs:enumeration value="u" />
+<xs:enumeration value="np" />
+<xs:enumeration value="pu" />
+<xs:enumeration value="am" />
+<xs:enumeration value="cm" />
+<xs:enumeration value="bk" />
+<xs:enumeration value="cf" />
+<xs:enumeration value="es" />
+<xs:enumeration value="fm" />
+<xs:enumeration value="md" />
+<xs:enumeration value="no" />
+<xs:enumeration value="lr" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Atom_ionizable-proton" type="Atom_ionizable-proton-a-type" />
+<xs:complexType name="Atom_ionizable-proton-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of Atom-id -->
+
+<xs:element name="Atom-id" type = "xs:integer" />
+<xs:simpleType name="Atom-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Intra-residue-bond -->
+
+<xs:element name="Intra-residue-bond" type="Intra-residue-bond-a-type" />
+<xs:complexType name="Intra-residue-bond-a-type">
+<xs:sequence>
+<xs:element name="Intra-residue-bond_atom-id-1" type="Intra-residue-bond_atom-id-1-a-type" />
+<xs:element name="Intra-residue-bond_atom-id-2" type="Intra-residue-bond_atom-id-2-a-type" />
+<xs:element name="Intra-residue-bond_bond-order" type="Intra-residue-bond_bond-order-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Intra-residue-bond_atom-id-1-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Intra-residue-bond_atom-id-2-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Intra-residue-bond_bond-order" type="Intra-residue-bond_bond-order-a-type" />
+<xs:complexType name="Intra-residue-bond_bond-order-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="single" />
+<xs:enumeration value="partial-double" />
+<xs:enumeration value="aromatic" />
+<xs:enumeration value="double" />
+<xs:enumeration value="triple" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+<!-- Definition of Chiral-center -->
+
+<xs:element name="Chiral-center" type="Chiral-center-a-type" />
+<xs:complexType name="Chiral-center-a-type">
+<xs:sequence>
+<xs:element name="Chiral-center_c" type="Chiral-center_c-a-type" />
+<xs:element name="Chiral-center_n1" type="Chiral-center_n1-a-type" />
+<xs:element name="Chiral-center_n2" type="Chiral-center_n2-a-type" />
+<xs:element name="Chiral-center_n3" type="Chiral-center_n3-a-type" />
+<xs:element name="Chiral-center_sign" type="Chiral-center_sign-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Chiral-center_c-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chiral-center_n1-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chiral-center_n2-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Chiral-center_n3-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Chiral-center_sign" type="Chiral-center_sign-a-type" />
+<xs:complexType name="Chiral-center_sign-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="positive" />
+<xs:enumeration value="negative" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of Inter-residue-bond -->
+
+<xs:element name="Inter-residue-bond" type="Inter-residue-bond-a-type" />
+<xs:complexType name="Inter-residue-bond-a-type">
+<xs:sequence>
+<xs:element name="Inter-residue-bond_atom-id-1" type="Inter-residue-bond_atom-id-1-a-type" />
+<xs:element name="Inter-residue-bond_atom-id-2" type="Inter-residue-bond_atom-id-2-a-type" />
+<xs:element name="Inter-residue-bond_bond-order" type="Inter-residue-bond_bond-order-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Inter-residue-bond_atom-id-1-a-type">
+<xs:sequence>
+<xs:element name="Atom-pntr" type="Atom-pntr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Inter-residue-bond_atom-id-2-a-type">
+<xs:sequence>
+<xs:element name="Atom-pntr" type="Atom-pntr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Inter-residue-bond_bond-order" type="Inter-residue-bond_bond-order-a-type" />
+<xs:complexType name="Inter-residue-bond_bond-order-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="single" />
+<xs:enumeration value="partial-double" />
+<xs:enumeration value="aromatic" />
+<xs:enumeration value="double" />
+<xs:enumeration value="triple" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+<!-- Definition of Atom-pntr -->
+
+<xs:element name="Atom-pntr" type="Atom-pntr-a-type" />
+<xs:complexType name="Atom-pntr-a-type">
+<xs:sequence>
+<xs:element name="Atom-pntr_molecule-id" type="Atom-pntr_molecule-id-a-type" />
+<xs:element name="Atom-pntr_residue-id" type="Atom-pntr_residue-id-a-type" />
+<xs:element name="Atom-pntr_atom-id" type="Atom-pntr_atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Atom-pntr_molecule-id-a-type">
+<xs:sequence>
+<xs:element name="Molecule-id" type="Molecule-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atom-pntr_residue-id-a-type">
+<xs:sequence>
+<xs:element name="Residue-id" type="Residue-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atom-pntr_atom-id-a-type">
+<xs:sequence>
+<xs:element name="Atom-id" type="Atom-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Atom-pntr-set -->
+
+<xs:complexType name="Atom-pntr-set-a-type" >
+<xs:sequence>
+<xs:element name="Atom-pntr" type="Atom-pntr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+</xs:schema>

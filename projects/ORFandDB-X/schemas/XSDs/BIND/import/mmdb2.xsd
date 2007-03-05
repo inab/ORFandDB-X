@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module MMDB-Structural-model
+================================================= -->
+<!-- Definition of Biostruc-model -->
+
+<xs:element name="Biostruc-model" type="Biostruc-model-a-type" />
+<xs:complexType name="Biostruc-model-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-model_id" type="Biostruc-model_id-a-type" />
+<xs:element name="Biostruc-model_type" type="Biostruc-model_type-a-type" />
+<xs:element name="Biostruc-model_descr" type="Biostruc-model_descr-a-type" minOccurs="0" />
+<xs:element name="Biostruc-model_model-space" type="Biostruc-model_model-space-a-type" minOccurs="0" />
+<xs:element name="Biostruc-model_model-coordinates" type="Biostruc-model_model-coordinates-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Biostruc-model_id-a-type">
+<xs:sequence>
+<xs:element name="Model-id" type="Model-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-model_type-a-type">
+<xs:sequence>
+<xs:element name="Model-type" type="Model-type-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-model_descr-a-type" >
+<xs:sequence>
+<xs:element name="Model-descr" type="Model-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-model_model-space-a-type">
+<xs:sequence>
+<xs:element name="Model-space" type="Model-space-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Biostruc-model_model-coordinates-a-type" >
+<xs:sequence>
+<xs:element name="Model-coordinate-set" type="Model-coordinate-set-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Model-id -->
+
+<xs:element name="Model-id" type = "xs:integer" />
+<xs:simpleType name="Model-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Model-type -->
+
+<xs:element name="Model-type" type="Model-type-a-type" />
+<xs:complexType name="Model-type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="ncbi-vector" />
+<xs:enumeration value="ncbi-backbone" />
+<xs:enumeration value="ncbi-all-atom" />
+<xs:enumeration value="pdb-model" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Model-descr -->
+
+<xs:element name="Model-descr" type="Model-descr-a-type" />
+<xs:complexType name="Model-descr-a-type">
+<xs:choice>
+<xs:element name="Model-descr_name" type="Model-descr_name-a-type" />
+<xs:element name="Model-descr_pdb-reso" type="Model-descr_pdb-reso-a-type" />
+<xs:element name="Model-descr_pdb-method" type="Model-descr_pdb-method-a-type" />
+<xs:element name="Model-descr_pdb-comment" type="Model-descr_pdb-comment-a-type" />
+<xs:element name="Model-descr_other-comment" type="Model-descr_other-comment-a-type" />
+<xs:element name="Model-descr_attribution" type="Model-descr_attribution-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="Model-descr_name" type = "xs:string" />
+<xs:simpleType name="Model-descr_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Model-descr_pdb-reso" type = "xs:string" />
+<xs:simpleType name="Model-descr_pdb-reso-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Model-descr_pdb-method" type = "xs:string" />
+<xs:simpleType name="Model-descr_pdb-method-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Model-descr_pdb-comment" type = "xs:string" />
+<xs:simpleType name="Model-descr_pdb-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Model-descr_other-comment" type = "xs:string" />
+<xs:simpleType name="Model-descr_other-comment-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Model-descr_attribution-a-type">
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Model-space -->
+
+<xs:element name="Model-space" type="Model-space-a-type" />
+<xs:complexType name="Model-space-a-type">
+<xs:sequence>
+<xs:element name="Model-space_coordinate-units" type="Model-space_coordinate-units-a-type" />
+<xs:element name="Model-space_thermal-factor-units" type="Model-space_thermal-factor-units-a-type" minOccurs="0" />
+<xs:element name="Model-space_occupancy-factor-units" type="Model-space_occupancy-factor-units-a-type" minOccurs="0" />
+<xs:element name="Model-space_density-units" type="Model-space_density-units-a-type" minOccurs="0" />
+<xs:element name="Model-space_reference-frame" type="Model-space_reference-frame-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Model-space_coordinate-units" type="Model-space_coordinate-units-a-type" />
+<xs:complexType name="Model-space_coordinate-units-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="angstroms" />
+<xs:enumeration value="nanometers" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Model-space_thermal-factor-units" type="Model-space_thermal-factor-units-a-type" />
+<xs:complexType name="Model-space_thermal-factor-units-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="b" />
+<xs:enumeration value="u" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Model-space_occupancy-factor-units" type="Model-space_occupancy-factor-units-a-type" />
+<xs:complexType name="Model-space_occupancy-factor-units-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="fractional" />
+<xs:enumeration value="electrons" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Model-space_density-units" type="Model-space_density-units-a-type" />
+<xs:complexType name="Model-space_density-units-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="electrons-per-unit-volume" />
+<xs:enumeration value="arbitrary-scale" />
+<xs:enumeration value="other" />
+<xs:enumeration value="unknown" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="Model-space_reference-frame-a-type">
+<xs:sequence>
+<xs:element name="Reference-frame" type="Reference-frame-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Reference-frame -->
+
+<xs:element name="Reference-frame" type="Reference-frame-a-type" />
+<xs:complexType name="Reference-frame-a-type">
+<xs:sequence>
+<xs:element name="Reference-frame_biostruc-id" type="Reference-frame_biostruc-id-a-type" />
+<xs:element name="Reference-frame_rotation-translation" type="Reference-frame_rotation-translation-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Reference-frame_biostruc-id-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-id" type="Biostruc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Reference-frame_rotation-translation-a-type">
+<xs:sequence>
+<xs:element name="Transform" type="Transform-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Model-coordinate-set -->
+
+<xs:element name="Model-coordinate-set" type="Model-coordinate-set-a-type" />
+<xs:complexType name="Model-coordinate-set-a-type">
+<xs:sequence>
+<xs:element name="Model-coordinate-set_id" type="Model-coordinate-set_id-a-type" minOccurs="0" />
+<xs:element name="Model-coordinate-set_descr" type="Model-coordinate-set_descr-a-type" minOccurs="0" />
+<xs:element name="Model-coordinate-set_coordinates" type="Model-coordinate-set_coordinates-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Model-coordinate-set_id-a-type">
+<xs:sequence>
+<xs:element name="Model-coordinate-set-id" type="Model-coordinate-set-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Model-coordinate-set_descr-a-type" >
+<xs:sequence>
+<xs:element name="Model-descr" type="Model-descr-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Model-coordinate-set_coordinates" type="Model-coordinate-set_coordinates-a-type" />
+<xs:complexType name="Model-coordinate-set_coordinates-a-type">
+<xs:choice>
+<xs:element name="Model-coordinate-set_coordinates_literal" type="Model-coordinate-set_coordinates_literal-a-type" />
+<xs:element name="Model-coordinate-set_coordinates_reference" type="Model-coordinate-set_coordinates_reference-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Model-coordinate-set_coordinates_literal-a-type">
+<xs:sequence>
+<xs:element name="Coordinates" type="Coordinates-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Model-coordinate-set_coordinates_reference-a-type">
+<xs:sequence>
+<xs:element name="Chem-graph-alignment" type="Chem-graph-alignment-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Model-coordinate-set-id -->
+
+<xs:element name="Model-coordinate-set-id" type = "xs:integer" />
+<xs:simpleType name="Model-coordinate-set-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Coordinates -->
+
+<xs:element name="Coordinates" type="Coordinates-a-type" />
+<xs:complexType name="Coordinates-a-type">
+<xs:choice>
+<xs:element name="Coordinates_atomic" type="Coordinates_atomic-a-type" />
+<xs:element name="Coordinates_surface" type="Coordinates_surface-a-type" />
+<xs:element name="Coordinates_density" type="Coordinates_density-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Coordinates_atomic-a-type">
+<xs:sequence>
+<xs:element name="Atomic-coordinates" type="Atomic-coordinates-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Coordinates_surface-a-type">
+<xs:sequence>
+<xs:element name="Surface-coordinates" type="Surface-coordinates-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Coordinates_density-a-type">
+<xs:sequence>
+<xs:element name="Density-coordinates" type="Density-coordinates-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Atomic-coordinates -->
+
+<xs:element name="Atomic-coordinates" type="Atomic-coordinates-a-type" />
+<xs:complexType name="Atomic-coordinates-a-type">
+<xs:sequence>
+<xs:element name="Atomic-coordinates_number-of-points" type="Atomic-coordinates_number-of-points-a-type" />
+<xs:element name="Atomic-coordinates_atoms" type="Atomic-coordinates_atoms-a-type" />
+<xs:element name="Atomic-coordinates_sites" type="Atomic-coordinates_sites-a-type" />
+<xs:element name="Atomic-coordinates_temperature-factors" type="Atomic-coordinates_temperature-factors-a-type" minOccurs="0" />
+<xs:element name="Atomic-coordinates_occupancies" type="Atomic-coordinates_occupancies-a-type" minOccurs="0" />
+<xs:element name="Atomic-coordinates_alternate-conf-ids" type="Atomic-coordinates_alternate-conf-ids-a-type" minOccurs="0" />
+<xs:element name="Atomic-coordinates_conf-ensembles" type="Atomic-coordinates_conf-ensembles-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Atomic-coordinates_number-of-points" type = "xs:integer" />
+<xs:simpleType name="Atomic-coordinates_number-of-points-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Atomic-coordinates_atoms-a-type">
+<xs:sequence>
+<xs:element name="Atom-pntrs" type="Atom-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atomic-coordinates_sites-a-type">
+<xs:sequence>
+<xs:element name="Model-space-points" type="Model-space-points-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atomic-coordinates_temperature-factors-a-type">
+<xs:sequence>
+<xs:element name="Atomic-temperature-factors" type="Atomic-temperature-factors-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atomic-coordinates_occupancies-a-type">
+<xs:sequence>
+<xs:element name="Atomic-occupancies" type="Atomic-occupancies-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atomic-coordinates_alternate-conf-ids-a-type">
+<xs:sequence>
+<xs:element name="Alternate-conformation-ids" type="Alternate-conformation-ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atomic-coordinates_conf-ensembles-a-type" >
+<xs:sequence>
+<xs:element name="Conformation-ensemble" type="Conformation-ensemble-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Model-space-points -->
+
+<xs:element name="Model-space-points" type="Model-space-points-a-type" />
+<xs:complexType name="Model-space-points-a-type">
+<xs:sequence>
+<xs:element name="Model-space-points_scale-factor" type="Model-space-points_scale-factor-a-type" />
+<xs:element name="Model-space-points_x" type="Model-space-points_x-a-type" />
+<xs:element name="Model-space-points_y" type="Model-space-points_y-a-type" />
+<xs:element name="Model-space-points_z" type="Model-space-points_z-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Model-space-points_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Model-space-points_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Model-space-points_x-a-type" >
+<xs:sequence>
+<xs:element name="Model-space-points_x_E" type="Model-space-points_x_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Model-space-points_x_E" type = "xs:integer" />
+<xs:simpleType name="Model-space-points_x_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Model-space-points_y-a-type" >
+<xs:sequence>
+<xs:element name="Model-space-points_y_E" type="Model-space-points_y_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Model-space-points_y_E" type = "xs:integer" />
+<xs:simpleType name="Model-space-points_y_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Model-space-points_z-a-type" >
+<xs:sequence>
+<xs:element name="Model-space-points_z_E" type="Model-space-points_z_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Model-space-points_z_E" type = "xs:integer" />
+<xs:simpleType name="Model-space-points_z_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Atomic-temperature-factors -->
+
+<xs:element name="Atomic-temperature-factors" type="Atomic-temperature-factors-a-type" />
+<xs:complexType name="Atomic-temperature-factors-a-type">
+<xs:choice>
+<xs:element name="Atomic-temperature-factors_isotropic" type="Atomic-temperature-factors_isotropic-a-type" />
+<xs:element name="Atomic-temperature-factors_anisotropic" type="Atomic-temperature-factors_anisotropic-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="Atomic-temperature-factors_isotropic-a-type">
+<xs:sequence>
+<xs:element name="Isotropic-temperature-factors" type="Isotropic-temperature-factors-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Atomic-temperature-factors_anisotropic-a-type">
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors" type="Anisotropic-temperature-factors-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Isotropic-temperature-factors -->
+
+<xs:element name="Isotropic-temperature-factors" type="Isotropic-temperature-factors-a-type" />
+<xs:complexType name="Isotropic-temperature-factors-a-type">
+<xs:sequence>
+<xs:element name="Isotropic-temperature-factors_scale-factor" type="Isotropic-temperature-factors_scale-factor-a-type" />
+<xs:element name="Isotropic-temperature-factors_b" type="Isotropic-temperature-factors_b-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Isotropic-temperature-factors_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Isotropic-temperature-factors_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Isotropic-temperature-factors_b-a-type" >
+<xs:sequence>
+<xs:element name="Isotropic-temperature-factors_b_E" type="Isotropic-temperature-factors_b_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Isotropic-temperature-factors_b_E" type = "xs:integer" />
+<xs:simpleType name="Isotropic-temperature-factors_b_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Anisotropic-temperature-factors -->
+
+<xs:element name="Anisotropic-temperature-factors" type="Anisotropic-temperature-factors-a-type" />
+<xs:complexType name="Anisotropic-temperature-factors-a-type">
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_scale-factor" type="Anisotropic-temperature-factors_scale-factor-a-type" />
+<xs:element name="Anisotropic-temperature-factors_b-11" type="Anisotropic-temperature-factors_b-11-a-type" />
+<xs:element name="Anisotropic-temperature-factors_b-12" type="Anisotropic-temperature-factors_b-12-a-type" />
+<xs:element name="Anisotropic-temperature-factors_b-13" type="Anisotropic-temperature-factors_b-13-a-type" />
+<xs:element name="Anisotropic-temperature-factors_b-22" type="Anisotropic-temperature-factors_b-22-a-type" />
+<xs:element name="Anisotropic-temperature-factors_b-23" type="Anisotropic-temperature-factors_b-23-a-type" />
+<xs:element name="Anisotropic-temperature-factors_b-33" type="Anisotropic-temperature-factors_b-33-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Anisotropic-temperature-factors_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Anisotropic-temperature-factors_b-11-a-type" >
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_b-11_E" type="Anisotropic-temperature-factors_b-11_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Anisotropic-temperature-factors_b-11_E" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_b-11_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Anisotropic-temperature-factors_b-12-a-type" >
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_b-12_E" type="Anisotropic-temperature-factors_b-12_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Anisotropic-temperature-factors_b-12_E" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_b-12_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Anisotropic-temperature-factors_b-13-a-type" >
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_b-13_E" type="Anisotropic-temperature-factors_b-13_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Anisotropic-temperature-factors_b-13_E" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_b-13_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Anisotropic-temperature-factors_b-22-a-type" >
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_b-22_E" type="Anisotropic-temperature-factors_b-22_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Anisotropic-temperature-factors_b-22_E" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_b-22_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Anisotropic-temperature-factors_b-23-a-type" >
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_b-23_E" type="Anisotropic-temperature-factors_b-23_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Anisotropic-temperature-factors_b-23_E" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_b-23_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Anisotropic-temperature-factors_b-33-a-type" >
+<xs:sequence>
+<xs:element name="Anisotropic-temperature-factors_b-33_E" type="Anisotropic-temperature-factors_b-33_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Anisotropic-temperature-factors_b-33_E" type = "xs:integer" />
+<xs:simpleType name="Anisotropic-temperature-factors_b-33_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Atomic-occupancies -->
+
+<xs:element name="Atomic-occupancies" type="Atomic-occupancies-a-type" />
+<xs:complexType name="Atomic-occupancies-a-type">
+<xs:sequence>
+<xs:element name="Atomic-occupancies_scale-factor" type="Atomic-occupancies_scale-factor-a-type" />
+<xs:element name="Atomic-occupancies_o" type="Atomic-occupancies_o-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Atomic-occupancies_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Atomic-occupancies_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Atomic-occupancies_o-a-type" >
+<xs:sequence>
+<xs:element name="Atomic-occupancies_o_E" type="Atomic-occupancies_o_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Atomic-occupancies_o_E" type = "xs:integer" />
+<xs:simpleType name="Atomic-occupancies_o_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Alternate-conformation-ids -->
+
+<xs:complexType name="Alternate-conformation-ids-a-type" >
+<xs:sequence>
+<xs:element name="Alternate-conformation-id" type="Alternate-conformation-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Alternate-conformation-id -->
+
+<xs:element name="Alternate-conformation-id" type = "xs:string" />
+<xs:simpleType name="Alternate-conformation-id-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Conformation-ensemble -->
+
+<xs:element name="Conformation-ensemble" type="Conformation-ensemble-a-type" />
+<xs:complexType name="Conformation-ensemble-a-type">
+<xs:sequence>
+<xs:element name="Conformation-ensemble_name" type="Conformation-ensemble_name-a-type" />
+<xs:element name="Conformation-ensemble_alt-conf-ids" type="Conformation-ensemble_alt-conf-ids-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Conformation-ensemble_name" type = "xs:string" />
+<xs:simpleType name="Conformation-ensemble_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Conformation-ensemble_alt-conf-ids-a-type" >
+<xs:sequence>
+<xs:element name="Alternate-conformation-id" type="Alternate-conformation-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Surface-coordinates -->
+
+<xs:element name="Surface-coordinates" type="Surface-coordinates-a-type" />
+<xs:complexType name="Surface-coordinates-a-type">
+<xs:sequence>
+<xs:element name="Surface-coordinates_contents" type="Surface-coordinates_contents-a-type" />
+<xs:element name="Surface-coordinates_surface" type="Surface-coordinates_surface-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Surface-coordinates_contents-a-type">
+<xs:sequence>
+<xs:element name="Chem-graph-pntrs" type="Chem-graph-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Surface-coordinates_surface" type="Surface-coordinates_surface-a-type" />
+<xs:complexType name="Surface-coordinates_surface-a-type">
+<xs:choice>
+<xs:element name="Surface-coordinates_surface_sphere" type="Surface-coordinates_surface_sphere-a-type" />
+<xs:element name="Surface-coordinates_surface_cone" type="Surface-coordinates_surface_cone-a-type" />
+<xs:element name="Surface-coordinates_surface_cylinder" type="Surface-coordinates_surface_cylinder-a-type" />
+<xs:element name="Surface-coordinates_surface_brick" type="Surface-coordinates_surface_brick-a-type" />
+<xs:element name="Surface-coordinates_surface_tmesh" type="Surface-coordinates_surface_tmesh-a-type" />
+<xs:element name="Surface-coordinates_surface_triangles" type="Surface-coordinates_surface_triangles-a-type" />
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="Surface-coordinates_surface_sphere-a-type">
+<xs:sequence>
+<xs:element name="Sphere" type="Sphere-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Surface-coordinates_surface_cone-a-type">
+<xs:sequence>
+<xs:element name="Cone" type="Cone-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Surface-coordinates_surface_cylinder-a-type">
+<xs:sequence>
+<xs:element name="Cylinder" type="Cylinder-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Surface-coordinates_surface_brick-a-type">
+<xs:sequence>
+<xs:element name="Brick" type="Brick-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Surface-coordinates_surface_tmesh-a-type">
+<xs:sequence>
+<xs:element name="T-mesh" type="T-mesh-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Surface-coordinates_surface_triangles-a-type">
+<xs:sequence>
+<xs:element name="Triangles" type="Triangles-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of T-mesh -->
+
+<xs:element name="T-mesh" type="T-mesh-a-type" />
+<xs:complexType name="T-mesh-a-type">
+<xs:sequence>
+<xs:element name="T-mesh_number-of-points" type="T-mesh_number-of-points-a-type" />
+<xs:element name="T-mesh_scale-factor" type="T-mesh_scale-factor-a-type" />
+<xs:element name="T-mesh_swap" type="T-mesh_swap-a-type" />
+<xs:element name="T-mesh_x" type="T-mesh_x-a-type" />
+<xs:element name="T-mesh_y" type="T-mesh_y-a-type" />
+<xs:element name="T-mesh_z" type="T-mesh_z-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="T-mesh_number-of-points" type = "xs:integer" />
+<xs:simpleType name="T-mesh_number-of-points-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="T-mesh_scale-factor" type = "xs:integer" />
+<xs:simpleType name="T-mesh_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="T-mesh_swap-a-type" >
+<xs:sequence>
+<xs:element name="T-mesh_swap_E" type="T-mesh_swap_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="T-mesh_swap_E" type="T-mesh_swap_E-a-type"/>
+<xs:complexType name="T-mesh_swap_E-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+<xs:complexType name="T-mesh_x-a-type" >
+<xs:sequence>
+<xs:element name="T-mesh_x_E" type="T-mesh_x_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="T-mesh_x_E" type = "xs:integer" />
+<xs:simpleType name="T-mesh_x_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="T-mesh_y-a-type" >
+<xs:sequence>
+<xs:element name="T-mesh_y_E" type="T-mesh_y_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="T-mesh_y_E" type = "xs:integer" />
+<xs:simpleType name="T-mesh_y_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="T-mesh_z-a-type" >
+<xs:sequence>
+<xs:element name="T-mesh_z_E" type="T-mesh_z_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="T-mesh_z_E" type = "xs:integer" />
+<xs:simpleType name="T-mesh_z_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Triangles -->
+
+<xs:element name="Triangles" type="Triangles-a-type" />
+<xs:complexType name="Triangles-a-type">
+<xs:sequence>
+<xs:element name="Triangles_number-of-points" type="Triangles_number-of-points-a-type" />
+<xs:element name="Triangles_scale-factor" type="Triangles_scale-factor-a-type" />
+<xs:element name="Triangles_x" type="Triangles_x-a-type" />
+<xs:element name="Triangles_y" type="Triangles_y-a-type" />
+<xs:element name="Triangles_z" type="Triangles_z-a-type" />
+<xs:element name="Triangles_number-of-triangles" type="Triangles_number-of-triangles-a-type" />
+<xs:element name="Triangles_v1" type="Triangles_v1-a-type" />
+<xs:element name="Triangles_v2" type="Triangles_v2-a-type" />
+<xs:element name="Triangles_v3" type="Triangles_v3-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Triangles_number-of-points" type = "xs:integer" />
+<xs:simpleType name="Triangles_number-of-points-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Triangles_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Triangles_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Triangles_x-a-type" >
+<xs:sequence>
+<xs:element name="Triangles_x_E" type="Triangles_x_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Triangles_x_E" type = "xs:integer" />
+<xs:simpleType name="Triangles_x_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Triangles_y-a-type" >
+<xs:sequence>
+<xs:element name="Triangles_y_E" type="Triangles_y_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Triangles_y_E" type = "xs:integer" />
+<xs:simpleType name="Triangles_y_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Triangles_z-a-type" >
+<xs:sequence>
+<xs:element name="Triangles_z_E" type="Triangles_z_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Triangles_z_E" type = "xs:integer" />
+<xs:simpleType name="Triangles_z_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:element name="Triangles_number-of-triangles" type = "xs:integer" />
+<xs:simpleType name="Triangles_number-of-triangles-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Triangles_v1-a-type" >
+<xs:sequence>
+<xs:element name="Triangles_v1_E" type="Triangles_v1_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Triangles_v1_E" type = "xs:integer" />
+<xs:simpleType name="Triangles_v1_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Triangles_v2-a-type" >
+<xs:sequence>
+<xs:element name="Triangles_v2_E" type="Triangles_v2_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Triangles_v2_E" type = "xs:integer" />
+<xs:simpleType name="Triangles_v2_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+<xs:complexType name="Triangles_v3-a-type" >
+<xs:sequence>
+<xs:element name="Triangles_v3_E" type="Triangles_v3_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Triangles_v3_E" type = "xs:integer" />
+<xs:simpleType name="Triangles_v3_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Density-coordinates -->
+
+<xs:element name="Density-coordinates" type="Density-coordinates-a-type" />
+<xs:complexType name="Density-coordinates-a-type">
+<xs:sequence>
+<xs:element name="Density-coordinates_contents" type="Density-coordinates_contents-a-type" />
+<xs:element name="Density-coordinates_grid-corners" type="Density-coordinates_grid-corners-a-type" />
+<xs:element name="Density-coordinates_grid-steps-x" type="Density-coordinates_grid-steps-x-a-type" />
+<xs:element name="Density-coordinates_grid-steps-y" type="Density-coordinates_grid-steps-y-a-type" />
+<xs:element name="Density-coordinates_grid-steps-z" type="Density-coordinates_grid-steps-z-a-type" />
+<xs:element name="Density-coordinates_fastest-varying" type="Density-coordinates_fastest-varying-a-type" />
+<xs:element name="Density-coordinates_slowest-varying" type="Density-coordinates_slowest-varying-a-type" />
+<xs:element name="Density-coordinates_scale-factor" type="Density-coordinates_scale-factor-a-type" />
+<xs:element name="Density-coordinates_density" type="Density-coordinates_density-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Density-coordinates_contents-a-type">
+<xs:sequence>
+<xs:element name="Chem-graph-pntrs" type="Chem-graph-pntrs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Density-coordinates_grid-corners-a-type">
+<xs:sequence>
+<xs:element name="Brick" type="Brick-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Density-coordinates_grid-steps-x" type = "xs:integer" />
+<xs:simpleType name="Density-coordinates_grid-steps-x-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Density-coordinates_grid-steps-y" type = "xs:integer" />
+<xs:simpleType name="Density-coordinates_grid-steps-y-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Density-coordinates_grid-steps-z" type = "xs:integer" />
+<xs:simpleType name="Density-coordinates_grid-steps-z-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Density-coordinates_fastest-varying" type="Density-coordinates_fastest-varying-a-type" />
+<xs:complexType name="Density-coordinates_fastest-varying-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="x" />
+<xs:enumeration value="y" />
+<xs:enumeration value="z" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Density-coordinates_slowest-varying" type="Density-coordinates_slowest-varying-a-type" />
+<xs:complexType name="Density-coordinates_slowest-varying-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="x" />
+<xs:enumeration value="y" />
+<xs:enumeration value="z" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Density-coordinates_scale-factor" type = "xs:integer" />
+<xs:simpleType name="Density-coordinates_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Density-coordinates_density-a-type" >
+<xs:sequence>
+<xs:element name="Density-coordinates_density_E" type="Density-coordinates_density_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Density-coordinates_density_E" type = "xs:integer" />
+<xs:simpleType name="Density-coordinates_density_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+</xs:schema>

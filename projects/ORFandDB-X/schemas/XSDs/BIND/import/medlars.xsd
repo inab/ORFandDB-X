@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Medlars
+================================================= -->
+<!-- Definition of Medlars-entry -->
+
+<xs:element name="Medlars-entry" type="Medlars-entry-a-type" />
+<xs:complexType name="Medlars-entry-a-type">
+<xs:sequence>
+<xs:element name="Medlars-entry_pmid" type="Medlars-entry_pmid-a-type" />
+<xs:element name="Medlars-entry_muid" type="Medlars-entry_muid-a-type" minOccurs="0" />
+<xs:element name="Medlars-entry_recs" type="Medlars-entry_recs-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Medlars-entry_pmid-a-type">
+<xs:sequence>
+<xs:element name="PubMedId" type="PubMedId-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Medlars-entry_muid" type = "xs:integer" />
+<xs:simpleType name="Medlars-entry_muid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Medlars-entry_recs-a-type" >
+<xs:sequence>
+<xs:element name="Medlars-record" type="Medlars-record-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Medlars-record -->
+
+<xs:element name="Medlars-record" type="Medlars-record-a-type" />
+<xs:complexType name="Medlars-record-a-type">
+<xs:sequence>
+<xs:element name="Medlars-record_code" type="Medlars-record_code-a-type" />
+<xs:element name="Medlars-record_abbr" type="Medlars-record_abbr-a-type" minOccurs="0" />
+<xs:element name="Medlars-record_data" type="Medlars-record_data-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medlars-record_code" type = "xs:integer" />
+<xs:simpleType name="Medlars-record_code-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Medlars-record_abbr" type = "xs:string" />
+<xs:simpleType name="Medlars-record_abbr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Medlars-record_data" type = "xs:string" />
+<xs:simpleType name="Medlars-record_data-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+</xs:schema>

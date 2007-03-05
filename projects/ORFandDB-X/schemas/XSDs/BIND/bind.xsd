@@ -1,0 +1,4474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+       <xs:include schemaLocation="./seqres.xsd"/>
+        <xs:include schemaLocation="./seqloc.xsd"/>
+        <xs:include schemaLocation="./seqfeat.xsd"/>
+        <xs:include schemaLocation="./seqcode.xsd"/>
+        <xs:include schemaLocation="./seqblock.xsd"/>
+        <xs:include schemaLocation="./seqalign.xsd"/>
+        <xs:include schemaLocation="./seq.xsd"/>
+        <xs:include schemaLocation="./pubmed.xsd"/>
+        <xs:include schemaLocation="./pub.xsd"/>
+        <xs:include schemaLocation="./mmdb3.xsd"/>
+        <xs:include schemaLocation="./mmdb2.xsd"/>
+        <xs:include schemaLocation="./mmdb1.xsd"/>
+        <xs:include schemaLocation="./medline.xsd"/>
+        <xs:include schemaLocation="./medlars.xsd"/>
+        <xs:include schemaLocation="./general.xsd"/>
+        <xs:include schemaLocation="./bindprof.xsd"/>
+        <xs:include schemaLocation="./biblio.xsd"/>
+        <xs:include schemaLocation="./seqset.xsd"/>
+
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module BIND
+================================================= -->
+<!-- Definition of BIND-bid -->
+
+<xs:element name="BIND-bid" type = "xs:integer" />
+<xs:simpleType name="BIND-bid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-Submit -->
+
+<xs:element name="BIND-Submit" type="BIND-Submit-a-type" />
+<xs:complexType name="BIND-Submit-a-type">
+<xs:sequence>
+<xs:element name="BIND-Submit_date" type="BIND-Submit_date-a-type" />
+<xs:element name="BIND-Submit_database" type="BIND-Submit_database-a-type" minOccurs="0" />
+<xs:element name="BIND-Submit_sub" type="BIND-Submit_sub-a-type" />
+<xs:element name="BIND-Submit_sub-id" type="BIND-Submit_sub-id-a-type" minOccurs="0" />
+<xs:element name="BIND-Submit_acc-nums" type="BIND-Submit_acc-nums-a-type" minOccurs="0" />
+<xs:element name="BIND-Submit_interactions" type="BIND-Submit_interactions-a-type" minOccurs="0" />
+<xs:element name="BIND-Submit_complexes" type="BIND-Submit_complexes-a-type" minOccurs="0" />
+<xs:element name="BIND-Submit_pathways" type="BIND-Submit_pathways-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Submit_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_database-a-type">
+<xs:sequence>
+<xs:element name="BIND-Database-site" type="BIND-Database-site-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_sub-a-type">
+<xs:sequence>
+<xs:element name="BIND-Submitter" type="BIND-Submitter-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_sub-id-a-type">
+<xs:sequence>
+<xs:element name="BIND-Submit-id" type="BIND-Submit-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_acc-nums-a-type" >
+<xs:sequence>
+<xs:element name="BIND-accession-number" type="BIND-accession-number-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_interactions-a-type">
+<xs:sequence>
+<xs:element name="BIND-Interaction-set" type="BIND-Interaction-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_complexes-a-type">
+<xs:sequence>
+<xs:element name="BIND-Complex-set" type="BIND-Complex-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Submit_pathways-a-type">
+<xs:sequence>
+<xs:element name="BIND-Pathway-set" type="BIND-Pathway-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Submit-id -->
+
+<xs:element name="BIND-Submit-id" type = "xs:integer" />
+<xs:simpleType name="BIND-Submit-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-accession-number -->
+
+<xs:element name="BIND-accession-number" type="BIND-accession-number-a-type" />
+<xs:complexType name="BIND-accession-number-a-type">
+<xs:choice>
+<xs:element name="BIND-accession-number_interaction" type="BIND-accession-number_interaction-a-type" />
+<xs:element name="BIND-accession-number_complex" type="BIND-accession-number_complex-a-type" />
+<xs:element name="BIND-accession-number_pathway" type="BIND-accession-number_pathway-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-accession-number_interaction-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-accession-number_complex-a-type">
+<xs:sequence>
+<xs:element name="Molecular-Complex-id" type="Molecular-Complex-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-accession-number_pathway-a-type">
+<xs:sequence>
+<xs:element name="Pathway-id" type="Pathway-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Database-site -->
+
+<xs:element name="BIND-Database-site" type="BIND-Database-site-a-type" />
+<xs:complexType name="BIND-Database-site-a-type">
+<xs:sequence>
+<xs:element name="BIND-Database-site_descr" type="BIND-Database-site_descr-a-type" />
+<xs:element name="BIND-Database-site_country" type="BIND-Database-site_country-a-type" />
+<xs:element name="BIND-Database-site_homepage-url" type="BIND-Database-site_homepage-url-a-type" minOccurs="0" />
+<xs:element name="BIND-Database-site_reference" type="BIND-Database-site_reference-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-Database-site_descr" type = "xs:string" />
+<xs:simpleType name="BIND-Database-site_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Database-site_country" type = "xs:string" />
+<xs:simpleType name="BIND-Database-site_country-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Database-site_homepage-url" type = "xs:string" />
+<xs:simpleType name="BIND-Database-site_homepage-url-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-Database-site_reference-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Rec-coll-descr -->
+
+<xs:element name="BIND-Rec-coll-descr" type="BIND-Rec-coll-descr-a-type" />
+<xs:complexType name="BIND-Rec-coll-descr-a-type">
+<xs:sequence>
+<xs:element name="BIND-Rec-coll-descr_descr" type="BIND-Rec-coll-descr_descr-a-type" />
+<xs:element name="BIND-Rec-coll-descr_db" type="BIND-Rec-coll-descr_db-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-Rec-coll-descr_descr" type = "xs:string" />
+<xs:simpleType name="BIND-Rec-coll-descr_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-Rec-coll-descr_db-a-type">
+<xs:sequence>
+<xs:element name="BIND-Database-site" type="BIND-Database-site-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Submitter -->
+
+<xs:element name="BIND-Submitter" type="BIND-Submitter-a-type" />
+<xs:complexType name="BIND-Submitter-a-type">
+<xs:sequence>
+<xs:element name="BIND-Submitter_contact" type="BIND-Submitter_contact-a-type" />
+<xs:element name="BIND-Submitter_hup" type="BIND-Submitter_hup-a-type" minOccurs="0" />
+<xs:element name="BIND-Submitter_subtype" type="BIND-Submitter_subtype-a-type" />
+<xs:element name="BIND-Submitter_tool" type="BIND-Submitter_tool-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Submitter_contact-a-type">
+<xs:sequence>
+<xs:element name="BIND-Contact-info" type="BIND-Contact-info-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Submitter_hup" type="BIND-Submitter_hup-a-type"/>
+<xs:complexType name="BIND-Submitter_hup-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-Submitter_subtype" type="BIND-Submitter_subtype-a-type" />
+<xs:complexType name="BIND-Submitter_subtype-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="new" />
+<xs:enumeration value="update" />
+<xs:enumeration value="revision" />
+<xs:enumeration value="import" />
+<xs:enumeration value="export" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-Submitter_tool-a-type">
+<xs:sequence>
+<xs:element name="BIND-Submission-tool" type="BIND-Submission-tool-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Submission-tool -->
+
+<xs:element name="BIND-Submission-tool" type="BIND-Submission-tool-a-type" />
+<xs:complexType name="BIND-Submission-tool-a-type">
+<xs:sequence>
+<xs:element name="BIND-Submission-tool_name" type="BIND-Submission-tool_name-a-type" />
+<xs:element name="BIND-Submission-tool_version" type="BIND-Submission-tool_version-a-type" />
+<xs:element name="BIND-Submission-tool_descr" type="BIND-Submission-tool_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-Submission-tool_name" type = "xs:string" />
+<xs:simpleType name="BIND-Submission-tool_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Submission-tool_version" type = "xs:string" />
+<xs:simpleType name="BIND-Submission-tool_version-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Submission-tool_descr" type = "xs:string" />
+<xs:simpleType name="BIND-Submission-tool_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-Contact-info -->
+
+<xs:element name="BIND-Contact-info" type="BIND-Contact-info-a-type" />
+<xs:complexType name="BIND-Contact-info-a-type">
+<xs:sequence>
+<xs:element name="BIND-Contact-info_first-name" type="BIND-Contact-info_first-name-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_middle-initial" type="BIND-Contact-info_middle-initial-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_last-name" type="BIND-Contact-info_last-name-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_address" type="BIND-Contact-info_address-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_room" type="BIND-Contact-info_room-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_dept" type="BIND-Contact-info_dept-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_institute" type="BIND-Contact-info_institute-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_organization" type="BIND-Contact-info_organization-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_city" type="BIND-Contact-info_city-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_pcode" type="BIND-Contact-info_pcode-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_country" type="BIND-Contact-info_country-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_phone" type="BIND-Contact-info_phone-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_fax" type="BIND-Contact-info_fax-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_email" type="BIND-Contact-info_email-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_userid" type="BIND-Contact-info_userid-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_other" type="BIND-Contact-info_other-a-type" minOccurs="0" />
+<xs:element name="BIND-Contact-info_password" type="BIND-Contact-info_password-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-Contact-info_first-name" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_first-name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_middle-initial" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_middle-initial-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_last-name" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_last-name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-Contact-info_address-a-type" >
+<xs:sequence>
+<xs:element name="BIND-Contact-info_address_E" type="BIND-Contact-info_address_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Contact-info_address_E" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_address_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="BIND-Contact-info_room" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_room-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_dept" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_dept-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_institute" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_institute-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_organization" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_organization-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_city" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_city-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_pcode" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_pcode-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_country" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_country-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_phone" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_phone-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_fax" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_fax-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_email" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_email-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-Contact-info_userid" type = "xs:integer" />
+<xs:simpleType name="BIND-Contact-info_userid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-Contact-info_other-a-type" >
+<xs:sequence>
+<xs:element name="Dbtag" type="Dbtag-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Contact-info_password" type = "xs:string" />
+<xs:simpleType name="BIND-Contact-info_password-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-pub-set -->
+
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+<xs:complexType name="BIND-pub-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set_disputed" type="BIND-pub-set_disputed-a-type" minOccurs="0" />
+<xs:element name="BIND-pub-set_pubs" type="BIND-pub-set_pubs-a-type" />
+<xs:element name="BIND-pub-set_evidence" type="BIND-pub-set_evidence-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-pub-set_disputed" type="BIND-pub-set_disputed-a-type"/>
+<xs:complexType name="BIND-pub-set_disputed-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-pub-set_pubs-a-type" >
+<xs:sequence>
+<xs:element name="BIND-pub-object" type="BIND-pub-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-pub-set_evidence-a-type" >
+<xs:sequence>
+<xs:element name="BIND-evidence-object" type="BIND-evidence-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-pub-object -->
+
+<xs:element name="BIND-pub-object" type="BIND-pub-object-a-type" />
+<xs:complexType name="BIND-pub-object-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-object_descr" type="BIND-pub-object_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-pub-object_opinion" type="BIND-pub-object_opinion-a-type" />
+<xs:element name="BIND-pub-object_pub" type="BIND-pub-object_pub-a-type" />
+<xs:element name="BIND-pub-object_quality" type="BIND-pub-object_quality-a-type" minOccurs="0" />
+<xs:element name="BIND-pub-object_extref" type="BIND-pub-object_extref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-pub-object_descr" type = "xs:string" />
+<xs:simpleType name="BIND-pub-object_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-pub-object_opinion" type="BIND-pub-object_opinion-a-type" />
+<xs:complexType name="BIND-pub-object_opinion-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="none" />
+<xs:enumeration value="support" />
+<xs:enumeration value="dispute" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-pub-object_pub-a-type">
+<xs:sequence>
+<xs:element name="Pub" type="Pub-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-pub-object_quality-a-type">
+<xs:sequence>
+<xs:element name="BIND-quality" type="BIND-quality-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-pub-object_extref-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-evidence-object -->
+
+<xs:element name="BIND-evidence-object" type="BIND-evidence-object-a-type" />
+<xs:complexType name="BIND-evidence-object-a-type">
+<xs:sequence>
+<xs:element name="BIND-evidence-object_descr" type="BIND-evidence-object_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-evidence-object_opinion" type="BIND-evidence-object_opinion-a-type" />
+<xs:element name="BIND-evidence-object_user-evidence" type="BIND-evidence-object_user-evidence-a-type" />
+<xs:element name="BIND-evidence-object_quality" type="BIND-evidence-object_quality-a-type" minOccurs="0" />
+<xs:element name="BIND-evidence-object_extref" type="BIND-evidence-object_extref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-evidence-object_descr" type = "xs:string" />
+<xs:simpleType name="BIND-evidence-object_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-evidence-object_opinion" type="BIND-evidence-object_opinion-a-type" />
+<xs:complexType name="BIND-evidence-object_opinion-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="none" />
+<xs:enumeration value="support" />
+<xs:enumeration value="dispute" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-evidence-object_user-evidence-a-type">
+<xs:sequence>
+<xs:element name="User-object" type="User-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-evidence-object_quality-a-type">
+<xs:sequence>
+<xs:element name="BIND-quality" type="BIND-quality-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-evidence-object_extref-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-quality -->
+
+<xs:element name="BIND-quality" type="BIND-quality-a-type" />
+<xs:complexType name="BIND-quality-a-type">
+<xs:sequence>
+<xs:element name="BIND-quality_quality-pct" type="BIND-quality_quality-pct-a-type" />
+<xs:element name="BIND-quality_descr" type="BIND-quality_descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-quality_quality-pct" type = "xs:integer" />
+<xs:simpleType name="BIND-quality_quality-pct-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-quality_descr" type = "xs:string" />
+<xs:simpleType name="BIND-quality_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-update-object -->
+
+<xs:element name="BIND-update-object" type="BIND-update-object-a-type" />
+<xs:complexType name="BIND-update-object-a-type">
+<xs:sequence>
+<xs:element name="BIND-update-object_date" type="BIND-update-object_date-a-type" />
+<xs:element name="BIND-update-object_descr" type="BIND-update-object_descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-update-object_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-update-object_descr" type = "xs:string" />
+<xs:simpleType name="BIND-update-object_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-update-list -->
+
+<xs:element name="BIND-update-list" type="BIND-update-list-a-type" />
+<xs:complexType name="BIND-update-list-a-type">
+<xs:sequence>
+<xs:element name="BIND-update-list_updates" type="BIND-update-list_updates-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-update-list_updates-a-type" >
+<xs:sequence>
+<xs:element name="BIND-update-object" type="BIND-update-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-author -->
+
+<xs:element name="BIND-author" type="BIND-author-a-type" />
+<xs:complexType name="BIND-author-a-type">
+<xs:sequence>
+<xs:element name="BIND-author_auth" type="BIND-author_auth-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-author_auth-a-type">
+<xs:sequence>
+<xs:element name="Author" type="Author-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-cellstage -->
+
+<xs:element name="BIND-cellstage" type="BIND-cellstage-a-type" />
+<xs:complexType name="BIND-cellstage-a-type">
+<xs:sequence>
+<xs:element name="BIND-cellstage_phase" type="BIND-cellstage_phase-a-type" />
+<xs:element name="BIND-cellstage_descr" type="BIND-cellstage_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-cellstage_phase" type="BIND-cellstage_phase-a-type" />
+<xs:complexType name="BIND-cellstage_phase-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="constitutive" />
+<xs:enumeration value="interphase" />
+<xs:enumeration value="division" />
+<xs:enumeration value="g1" />
+<xs:enumeration value="s" />
+<xs:enumeration value="g2" />
+<xs:enumeration value="mitosis" />
+<xs:enumeration value="prophase" />
+<xs:enumeration value="prometaphase" />
+<xs:enumeration value="metaphase" />
+<xs:enumeration value="anaphase" />
+<xs:enumeration value="telophase" />
+<xs:enumeration value="cytokinesis" />
+<xs:enumeration value="meiosis" />
+<xs:enumeration value="prophase1" />
+<xs:enumeration value="leptotene" />
+<xs:enumeration value="zygotene" />
+<xs:enumeration value="pachytene" />
+<xs:enumeration value="diplotene" />
+<xs:enumeration value="diakinesis" />
+<xs:enumeration value="metaphase1" />
+<xs:enumeration value="anaphase1" />
+<xs:enumeration value="telophase1" />
+<xs:enumeration value="meiotic-cytokinesis" />
+<xs:enumeration value="prophase2" />
+<xs:enumeration value="metaphase2" />
+<xs:enumeration value="anaphase2" />
+<xs:enumeration value="telophase2" />
+<xs:enumeration value="meiotic-cytokinesis2" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="BIND-cellstage_descr" type = "xs:string" />
+<xs:simpleType name="BIND-cellstage_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of RealVal-Units -->
+
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+<xs:complexType name="RealVal-Units-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units_scale-factor" type="RealVal-Units_scale-factor-a-type" />
+<xs:element name="RealVal-Units_scaled-integer-value" type="RealVal-Units_scaled-integer-value-a-type" />
+<xs:element name="RealVal-Units_units" type="RealVal-Units_units-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="RealVal-Units_scale-factor" type = "xs:integer" />
+<xs:simpleType name="RealVal-Units_scale-factor-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="RealVal-Units_scaled-integer-value" type = "xs:integer" />
+<xs:simpleType name="RealVal-Units_scaled-integer-value-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="RealVal-Units_units" type = "xs:string" />
+<xs:simpleType name="RealVal-Units_units-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of RealFuzzVal-Units -->
+
+<xs:element name="RealFuzzVal-Units" type="RealFuzzVal-Units-a-type" />
+<xs:complexType name="RealFuzzVal-Units-a-type">
+<xs:choice>
+<xs:element name="RealFuzzVal-Units_p-m" type="RealFuzzVal-Units_p-m-a-type" />
+<xs:element name="RealFuzzVal-Units_range" type="RealFuzzVal-Units_range-a-type" />
+<xs:element name="RealFuzzVal-Units_alt" type="RealFuzzVal-Units_alt-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="RealFuzzVal-Units_p-m-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="RealFuzzVal-Units_range-a-type">
+<xs:sequence>
+<xs:element name="RealFuzzVal-Range" type="RealFuzzVal-Range-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="RealFuzzVal-Units_alt-a-type" >
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of RealFuzzVal-Range -->
+
+<xs:element name="RealFuzzVal-Range" type="RealFuzzVal-Range-a-type" />
+<xs:complexType name="RealFuzzVal-Range-a-type">
+<xs:sequence>
+<xs:element name="RealFuzzVal-Range_max" type="RealFuzzVal-Range_max-a-type" />
+<xs:element name="RealFuzzVal-Range_min" type="RealFuzzVal-Range_min-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="RealFuzzVal-Range_max-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="RealFuzzVal-Range_min-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-int-fuzz -->
+
+<xs:element name="BIND-int-fuzz" type="BIND-int-fuzz-a-type" />
+<xs:complexType name="BIND-int-fuzz-a-type">
+<xs:choice>
+<xs:element name="BIND-int-fuzz_num" type="BIND-int-fuzz_num-a-type" />
+<xs:element name="BIND-int-fuzz_num-fuzz" type="BIND-int-fuzz_num-fuzz-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-int-fuzz_num" type = "xs:integer" />
+<xs:simpleType name="BIND-int-fuzz_num-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-int-fuzz_num-fuzz-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-param -->
+
+<xs:element name="BIND-param" type="BIND-param-a-type" />
+<xs:complexType name="BIND-param-a-type">
+<xs:sequence>
+<xs:element name="BIND-param_descr" type="BIND-param_descr-a-type" />
+<xs:element name="BIND-param_value" type="BIND-param_value-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-param_descr" type = "xs:string" />
+<xs:simpleType name="BIND-param_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-param_value-a-type">
+<xs:sequence>
+<xs:element name="BIND-param-val" type="BIND-param-val-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-param-val -->
+
+<xs:element name="BIND-param-val" type="BIND-param-val-a-type" />
+<xs:complexType name="BIND-param-val-a-type">
+<xs:choice>
+<xs:element name="BIND-param-val_string" type="BIND-param-val_string-a-type" />
+<xs:element name="BIND-param-val_real" type="BIND-param-val_real-a-type" />
+<xs:element name="BIND-param-val_realfuz" type="BIND-param-val_realfuz-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-param-val_string" type = "xs:string" />
+<xs:simpleType name="BIND-param-val_string-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-param-val_real-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-param-val_realfuz-a-type">
+<xs:sequence>
+<xs:element name="RealFuzzVal-Units" type="RealFuzzVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Interaction-set -->
+
+<xs:element name="BIND-Interaction-set" type="BIND-Interaction-set-a-type" />
+<xs:complexType name="BIND-Interaction-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-Interaction-set_date" type="BIND-Interaction-set_date-a-type" minOccurs="0" />
+<xs:element name="BIND-Interaction-set_database" type="BIND-Interaction-set_database-a-type" minOccurs="0" />
+<xs:element name="BIND-Interaction-set_interactions" type="BIND-Interaction-set_interactions-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Interaction-set_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction-set_database-a-type">
+<xs:sequence>
+<xs:element name="BIND-Database-site" type="BIND-Database-site-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction-set_interactions-a-type" >
+<xs:sequence>
+<xs:element name="BIND-Interaction" type="BIND-Interaction-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Interaction -->
+
+<xs:element name="BIND-Interaction" type="BIND-Interaction-a-type" />
+<xs:complexType name="BIND-Interaction-a-type">
+<xs:sequence>
+<xs:element name="BIND-Interaction_date" type="BIND-Interaction_date-a-type" />
+<xs:element name="BIND-Interaction_updates" type="BIND-Interaction_updates-a-type" minOccurs="0" />
+<xs:element name="BIND-Interaction_iid" type="BIND-Interaction_iid-a-type" />
+<xs:element name="BIND-Interaction_a" type="BIND-Interaction_a-a-type" />
+<xs:element name="BIND-Interaction_b" type="BIND-Interaction_b-a-type" />
+<xs:element name="BIND-Interaction_descr" type="BIND-Interaction_descr-a-type" />
+<xs:element name="BIND-Interaction_source" type="BIND-Interaction_source-a-type" />
+<xs:element name="BIND-Interaction_authors" type="BIND-Interaction_authors-a-type" minOccurs="0" />
+<xs:element name="BIND-Interaction_division" type="BIND-Interaction_division-a-type" minOccurs="0" />
+<xs:element name="BIND-Interaction_priv" type="BIND-Interaction_priv-a-type" minOccurs="0" />
+<xs:element name="BIND-Interaction_extref" type="BIND-Interaction_extref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Interaction_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_updates-a-type" >
+<xs:sequence>
+<xs:element name="BIND-update-object" type="BIND-update-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_a-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_b-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_descr-a-type">
+<xs:sequence>
+<xs:element name="BIND-descr" type="BIND-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_authors-a-type" >
+<xs:sequence>
+<xs:element name="BIND-author" type="BIND-author-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_division-a-type">
+<xs:sequence>
+<xs:element name="BIND-Rec-coll-descr" type="BIND-Rec-coll-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Interaction_priv" type="BIND-Interaction_priv-a-type"/>
+<xs:complexType name="BIND-Interaction_priv-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-Interaction_extref-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Interaction-id -->
+
+<xs:element name="Interaction-id" type = "xs:integer" />
+<xs:simpleType name="Interaction-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-object -->
+
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+<xs:complexType name="BIND-object-a-type">
+<xs:sequence>
+<xs:element name="BIND-object_short-label" type="BIND-object_short-label-a-type" />
+<xs:element name="BIND-object_other-names" type="BIND-object_other-names-a-type" minOccurs="0" />
+<xs:element name="BIND-object_id" type="BIND-object_id-a-type" />
+<xs:element name="BIND-object_origin" type="BIND-object_origin-a-type" />
+<xs:element name="BIND-object_cell-stage" type="BIND-object_cell-stage-a-type" minOccurs="0" />
+<xs:element name="BIND-object_place" type="BIND-object_place-a-type" minOccurs="0" />
+<xs:element name="BIND-object_seq" type="BIND-object_seq-a-type" minOccurs="0" />
+<xs:element name="BIND-object_struc" type="BIND-object_struc-a-type" minOccurs="0" />
+<xs:element name="BIND-object_descr" type="BIND-object_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-object_user-id" type="BIND-object_user-id-a-type" minOccurs="0" />
+<xs:element name="BIND-object_extref" type="BIND-object_extref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-object_short-label" type = "xs:string" />
+<xs:simpleType name="BIND-object_short-label-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-object_other-names-a-type" >
+<xs:sequence>
+<xs:element name="BIND-object_other-names_E" type="BIND-object_other-names_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-object_other-names_E" type = "xs:string" />
+<xs:simpleType name="BIND-object_other-names_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="BIND-object_id-a-type">
+<xs:sequence>
+<xs:element name="BIND-object-type-id" type="BIND-object-type-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object_origin-a-type">
+<xs:sequence>
+<xs:element name="BIND-object-origin" type="BIND-object-origin-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object_cell-stage-a-type" >
+<xs:sequence>
+<xs:element name="BIND-cellstage" type="BIND-cellstage-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object_place-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-set" type="BIND-place-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object_seq-a-type">
+<xs:sequence>
+<xs:element name="Bioseq" type="Bioseq-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object_struc-a-type">
+<xs:sequence>
+<xs:element name="Biostruc" type="Biostruc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-object_descr" type = "xs:string" />
+<xs:simpleType name="BIND-object_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-object_user-id" type = "xs:integer" />
+<xs:simpleType name="BIND-object_user-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-object_extref-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-object-type-id -->
+
+<xs:element name="BIND-object-type-id" type="BIND-object-type-id-a-type" />
+<xs:complexType name="BIND-object-type-id-a-type">
+<xs:choice>
+<xs:element name="BIND-object-type-id_not-specified" type="BIND-object-type-id_not-specified-a-type" />
+<xs:element name="BIND-object-type-id_protein" type="BIND-object-type-id_protein-a-type" />
+<xs:element name="BIND-object-type-id_dna" type="BIND-object-type-id_dna-a-type" />
+<xs:element name="BIND-object-type-id_rna" type="BIND-object-type-id_rna-a-type" />
+<xs:element name="BIND-object-type-id_small-molecule" type="BIND-object-type-id_small-molecule-a-type" />
+<xs:element name="BIND-object-type-id_complex" type="BIND-object-type-id_complex-a-type" />
+<xs:element name="BIND-object-type-id_gene" type="BIND-object-type-id_gene-a-type" />
+<xs:element name="BIND-object-type-id_photon" type="BIND-object-type-id_photon-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-object-type-id_not-specified">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-object-type-id_not-specified-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_protein-a-type">
+<xs:sequence>
+<xs:element name="BIND-id" type="BIND-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_dna-a-type">
+<xs:sequence>
+<xs:element name="BIND-id" type="BIND-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_rna-a-type">
+<xs:sequence>
+<xs:element name="BIND-id" type="BIND-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_small-molecule-a-type">
+<xs:sequence>
+<xs:element name="BIND-small-molecule-id" type="BIND-small-molecule-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_complex-a-type">
+<xs:sequence>
+<xs:element name="Molecular-Complex-id" type="Molecular-Complex-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_gene-a-type">
+<xs:sequence>
+<xs:element name="BIND-id" type="BIND-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-type-id_photon-a-type">
+<xs:sequence>
+<xs:element name="BIND-photon" type="BIND-photon-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-object-origin -->
+
+<xs:element name="BIND-object-origin" type="BIND-object-origin-a-type" />
+<xs:complexType name="BIND-object-origin-a-type">
+<xs:choice>
+<xs:element name="BIND-object-origin_not-specified" type="BIND-object-origin_not-specified-a-type" />
+<xs:element name="BIND-object-origin_org" type="BIND-object-origin_org-a-type" />
+<xs:element name="BIND-object-origin_chem" type="BIND-object-origin_chem-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-object-origin_not-specified">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-object-origin_not-specified-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-object-origin_org-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-object-origin_chem-a-type">
+<xs:sequence>
+<xs:element name="BIND-chemsource" type="BIND-chemsource-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-chemsource -->
+
+<xs:element name="BIND-chemsource" type="BIND-chemsource-a-type" />
+<xs:complexType name="BIND-chemsource-a-type">
+<xs:sequence>
+<xs:element name="BIND-chemsource_names" type="BIND-chemsource_names-a-type" />
+<xs:element name="BIND-chemsource_smiles-string" type="BIND-chemsource_smiles-string-a-type" minOccurs="0" />
+<xs:element name="BIND-chemsource_chemical-formula" type="BIND-chemsource_chemical-formula-a-type" minOccurs="0" />
+<xs:element name="BIND-chemsource_molecular-weight" type="BIND-chemsource_molecular-weight-a-type" minOccurs="0" />
+<xs:element name="BIND-chemsource_cas-number" type="BIND-chemsource_cas-number-a-type" minOccurs="0" />
+<xs:element name="BIND-chemsource_nat-prod" type="BIND-chemsource_nat-prod-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-chemsource_names-a-type" >
+<xs:sequence>
+<xs:element name="BIND-chemsource_names_E" type="BIND-chemsource_names_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-chemsource_names_E" type = "xs:string" />
+<xs:simpleType name="BIND-chemsource_names_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:element name="BIND-chemsource_smiles-string" type = "xs:string" />
+<xs:simpleType name="BIND-chemsource_smiles-string-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-chemsource_chemical-formula" type = "xs:string" />
+<xs:simpleType name="BIND-chemsource_chemical-formula-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-chemsource_molecular-weight-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-chemsource_cas-number" type = "xs:string" />
+<xs:simpleType name="BIND-chemsource_cas-number-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-chemsource_nat-prod-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-id -->
+
+<xs:element name="BIND-id" type="BIND-id-a-type" />
+<xs:complexType name="BIND-id-a-type">
+<xs:sequence>
+<xs:element name="BIND-id_gi" type="BIND-id_gi-a-type" minOccurs="0" />
+<xs:element name="BIND-id_di" type="BIND-id_di-a-type" minOccurs="0" />
+<xs:element name="BIND-id_other" type="BIND-id_other-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-id_gi-a-type">
+<xs:sequence>
+<xs:element name="Geninfo-id" type="Geninfo-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-id_di-a-type">
+<xs:sequence>
+<xs:element name="Domain-id" type="Domain-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-id_other-a-type" >
+<xs:sequence>
+<xs:element name="Seq-id" type="Seq-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Geninfo-id -->
+
+<xs:element name="Geninfo-id" type = "xs:integer" />
+<xs:simpleType name="Geninfo-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Domain-id -->
+
+<xs:element name="Domain-id" type = "xs:integer" />
+<xs:simpleType name="Domain-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-small-molecule-id -->
+
+<xs:element name="BIND-small-molecule-id" type="BIND-small-molecule-id-a-type" />
+<xs:complexType name="BIND-small-molecule-id-a-type">
+<xs:choice>
+<xs:element name="BIND-small-molecule-id_internal" type="BIND-small-molecule-id_internal-a-type" />
+<xs:element name="BIND-small-molecule-id_other-db" type="BIND-small-molecule-id_other-db-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-small-molecule-id_internal-a-type">
+<xs:sequence>
+<xs:element name="Internal-small-molecule-id" type="Internal-small-molecule-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-small-molecule-id_other-db-a-type">
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Internal-small-molecule-id -->
+
+<xs:element name="Internal-small-molecule-id" type = "xs:integer" />
+<xs:simpleType name="Internal-small-molecule-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-other-db -->
+
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" />
+<xs:complexType name="BIND-other-db-a-type">
+<xs:sequence>
+<xs:element name="BIND-other-db_dbname" type="BIND-other-db_dbname-a-type" />
+<xs:element name="BIND-other-db_intp" type="BIND-other-db_intp-a-type" minOccurs="0" />
+<xs:element name="BIND-other-db_strp" type="BIND-other-db_strp-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-other-db_dbname" type = "xs:string" />
+<xs:simpleType name="BIND-other-db_dbname-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-other-db_intp" type = "xs:integer" />
+<xs:simpleType name="BIND-other-db_intp-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-other-db_strp" type = "xs:string" />
+<xs:simpleType name="BIND-other-db_strp-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-photon -->
+
+<xs:element name="BIND-photon" type="BIND-photon-a-type" />
+<xs:complexType name="BIND-photon-a-type">
+<xs:sequence>
+<xs:element name="BIND-photon_wavelength" type="BIND-photon_wavelength-a-type" />
+<xs:element name="BIND-photon_intensity" type="BIND-photon_intensity-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-photon_wavelength-a-type">
+<xs:sequence>
+<xs:element name="RealFuzzVal-Units" type="RealFuzzVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-photon_intensity-a-type">
+<xs:sequence>
+<xs:element name="RealFuzzVal-Units" type="RealFuzzVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-descr -->
+
+<xs:element name="BIND-descr" type="BIND-descr-a-type" />
+<xs:complexType name="BIND-descr-a-type">
+<xs:sequence>
+<xs:element name="BIND-descr_simple-descr" type="BIND-descr_simple-descr-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_place" type="BIND-descr_place-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_cond" type="BIND-descr_cond-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_cons" type="BIND-descr_cons-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_binding-sites" type="BIND-descr_binding-sites-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_action" type="BIND-descr_action-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_state" type="BIND-descr_state-a-type" minOccurs="0" />
+<xs:element name="BIND-descr_intramolecular" type="BIND-descr_intramolecular-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-descr_simple-descr" type = "xs:string" />
+<xs:simpleType name="BIND-descr_simple-descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-descr_place-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-set" type="BIND-place-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-descr_cond-a-type">
+<xs:sequence>
+<xs:element name="BIND-condition-set" type="BIND-condition-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-descr_cons-a-type">
+<xs:sequence>
+<xs:element name="BIND-cons-seq-set" type="BIND-cons-seq-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-descr_binding-sites-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc" type="BIND-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-descr_action-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-set" type="BIND-action-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-descr_state-a-type">
+<xs:sequence>
+<xs:element name="BIND-state-descr" type="BIND-state-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-descr_intramolecular" type="BIND-descr_intramolecular-a-type"/>
+<xs:complexType name="BIND-descr_intramolecular-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-place-set -->
+
+<xs:element name="BIND-place-set" type="BIND-place-set-a-type" />
+<xs:complexType name="BIND-place-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-set_max-bpid" type="BIND-place-set_max-bpid-a-type" />
+<xs:element name="BIND-place-set_places" type="BIND-place-set_places-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-place-set_max-bpid-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-id" type="BIND-place-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-place-set_places-a-type" >
+<xs:sequence>
+<xs:element name="BIND-place" type="BIND-place-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-place -->
+
+<xs:element name="BIND-place" type="BIND-place-a-type" />
+<xs:complexType name="BIND-place-a-type">
+<xs:sequence>
+<xs:element name="BIND-place_bpid" type="BIND-place_bpid-a-type" />
+<xs:element name="BIND-place_gen-place" type="BIND-place_gen-place-a-type" />
+<xs:element name="BIND-place_spec-place" type="BIND-place_spec-place-a-type" minOccurs="0" />
+<xs:element name="BIND-place_source" type="BIND-place_source-a-type" minOccurs="0" />
+<xs:element name="BIND-place_descr" type="BIND-place_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-place_bpid-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-id" type="BIND-place-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-place_gen-place-a-type">
+<xs:sequence>
+<xs:element name="BIND-gen-place-set" type="BIND-gen-place-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-place_spec-place-a-type">
+<xs:sequence>
+<xs:element name="BIND-spec-place-set" type="BIND-spec-place-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-place_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-place_descr" type = "xs:string" />
+<xs:simpleType name="BIND-place_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-place-id -->
+
+<xs:element name="BIND-place-id" type = "xs:integer" />
+<xs:simpleType name="BIND-place-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-place-ref -->
+
+<xs:element name="BIND-place-ref" type="BIND-place-ref-a-type" />
+<xs:complexType name="BIND-place-ref-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-ref_from-iid" type="BIND-place-ref_from-iid-a-type" />
+<xs:element name="BIND-place-ref_place" type="BIND-place-ref_place-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-place-ref_from-iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-place-ref_place-a-type">
+<xs:sequence>
+<xs:element name="BIND-place-id" type="BIND-place-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-gen-place-set -->
+
+<xs:element name="BIND-gen-place-set" type="BIND-gen-place-set-a-type" />
+<xs:complexType name="BIND-gen-place-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-gen-place-set_start" type="BIND-gen-place-set_start-a-type" />
+<xs:element name="BIND-gen-place-set_end" type="BIND-gen-place-set_end-a-type" minOccurs="0" />
+<xs:element name="BIND-gen-place-set_descr" type="BIND-gen-place-set_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-gen-place-set_start-a-type">
+<xs:sequence>
+<xs:element name="BIND-gen-place" type="BIND-gen-place-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place-set_end-a-type">
+<xs:sequence>
+<xs:element name="BIND-gen-place" type="BIND-gen-place-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-gen-place-set_descr" type = "xs:string" />
+<xs:simpleType name="BIND-gen-place-set_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-gen-place -->
+
+<xs:element name="BIND-gen-place" type="BIND-gen-place-a-type" />
+<xs:complexType name="BIND-gen-place-a-type">
+<xs:choice>
+<xs:element name="BIND-gen-place_not-specified" type="BIND-gen-place_not-specified-a-type" />
+<xs:element name="BIND-gen-place_extracellular" type="BIND-gen-place_extracellular-a-type" />
+<xs:element name="BIND-gen-place_cytoplasm" type="BIND-gen-place_cytoplasm-a-type" />
+<xs:element name="BIND-gen-place_cell-wall" type="BIND-gen-place_cell-wall-a-type" />
+<xs:element name="BIND-gen-place_outer-membrane" type="BIND-gen-place_outer-membrane-a-type" />
+<xs:element name="BIND-gen-place_cytoplasmic-membrane" type="BIND-gen-place_cytoplasmic-membrane-a-type" />
+<xs:element name="BIND-gen-place_organelle-unknown" type="BIND-gen-place_organelle-unknown-a-type" />
+<xs:element name="BIND-gen-place_organelle-other" type="BIND-gen-place_organelle-other-a-type" />
+<xs:element name="BIND-gen-place_nucleus" type="BIND-gen-place_nucleus-a-type" />
+<xs:element name="BIND-gen-place_nuc-outer-membrane" type="BIND-gen-place_nuc-outer-membrane-a-type" />
+<xs:element name="BIND-gen-place_nuc-inner-membrane" type="BIND-gen-place_nuc-inner-membrane-a-type" />
+<xs:element name="BIND-gen-place_nuclear-pore" type="BIND-gen-place_nuclear-pore-a-type" />
+<xs:element name="BIND-gen-place_nucleolus" type="BIND-gen-place_nucleolus-a-type" />
+<xs:element name="BIND-gen-place_chromatin" type="BIND-gen-place_chromatin-a-type" />
+<xs:element name="BIND-gen-place_er-general" type="BIND-gen-place_er-general-a-type" />
+<xs:element name="BIND-gen-place_er-smooth" type="BIND-gen-place_er-smooth-a-type" />
+<xs:element name="BIND-gen-place_er-rough" type="BIND-gen-place_er-rough-a-type" />
+<xs:element name="BIND-gen-place_golgi" type="BIND-gen-place_golgi-a-type" />
+<xs:element name="BIND-gen-place_golgi-stack" type="BIND-gen-place_golgi-stack-a-type" />
+<xs:element name="BIND-gen-place_cis-golgi" type="BIND-gen-place_cis-golgi-a-type" />
+<xs:element name="BIND-gen-place_medial-golgi" type="BIND-gen-place_medial-golgi-a-type" />
+<xs:element name="BIND-gen-place_trans-golgi" type="BIND-gen-place_trans-golgi-a-type" />
+<xs:element name="BIND-gen-place_vacuole" type="BIND-gen-place_vacuole-a-type" />
+<xs:element name="BIND-gen-place_vesicle" type="BIND-gen-place_vesicle-a-type" />
+<xs:element name="BIND-gen-place_lysosome" type="BIND-gen-place_lysosome-a-type" />
+<xs:element name="BIND-gen-place_peroxisome" type="BIND-gen-place_peroxisome-a-type" />
+<xs:element name="BIND-gen-place_endosome" type="BIND-gen-place_endosome-a-type" />
+<xs:element name="BIND-gen-place_mitochondrion" type="BIND-gen-place_mitochondrion-a-type" />
+<xs:element name="BIND-gen-place_chloroplast" type="BIND-gen-place_chloroplast-a-type" />
+<xs:element name="BIND-gen-place_plastid" type="BIND-gen-place_plastid-a-type" />
+<xs:element name="BIND-gen-place_centrosome" type="BIND-gen-place_centrosome-a-type" />
+<xs:element name="BIND-gen-place_centriole" type="BIND-gen-place_centriole-a-type" />
+<xs:element name="BIND-gen-place_cytoskeleton" type="BIND-gen-place_cytoskeleton-a-type" />
+<xs:element name="BIND-gen-place_ribosome" type="BIND-gen-place_ribosome-a-type" />
+<xs:element name="BIND-gen-place_flagella" type="BIND-gen-place_flagella-a-type" />
+<xs:element name="BIND-gen-place_cilia" type="BIND-gen-place_cilia-a-type" />
+<xs:element name="BIND-gen-place_other" type="BIND-gen-place_other-a-type" />
+<xs:element name="BIND-gen-place_nucleus-dmo" type="BIND-gen-place_nucleus-dmo-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-gen-place_not-specified">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-gen-place_not-specified-a-type">
+</xs:complexType>
+<xs:element name="BIND-gen-place_extracellular">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-gen-place_extracellular-a-type">
+</xs:complexType>
+<xs:element name="BIND-gen-place_cytoplasm">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-gen-place_cytoplasm-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_cell-wall-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_outer-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_cytoplasmic-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_organelle-unknown-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_organelle-other-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_nucleus-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_nuc-outer-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_nuc-inner-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_nuclear-pore-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_nucleolus-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_chromatin-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_er-general-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_er-smooth-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_er-rough-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_golgi-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_golgi-stack-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_cis-golgi-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_medial-golgi-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_trans-golgi-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_vacuole-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_vesicle-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_lysosome-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_peroxisome-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_endosome-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_mitochondrion-a-type">
+<xs:sequence>
+<xs:element name="BIND-dmo" type="BIND-dmo-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_chloroplast-a-type">
+<xs:sequence>
+<xs:element name="BIND-chlor" type="BIND-chlor-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_plastid-a-type">
+<xs:sequence>
+<xs:element name="BIND-dmo" type="BIND-dmo-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_centrosome-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_centriole-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_cytoskeleton-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_ribosome-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_flagella-a-type">
+<xs:sequence>
+<xs:element name="BIND-cilflag" type="BIND-cilflag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_cilia-a-type">
+<xs:sequence>
+<xs:element name="BIND-cilflag" type="BIND-cilflag-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-gen-place_other">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-gen-place_other-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-gen-place_nucleus-dmo-a-type">
+<xs:sequence>
+<xs:element name="BIND-dmo" type="BIND-dmo-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-membrane -->
+
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+<xs:complexType name="BIND-membrane-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="outer-surface" />
+<xs:enumeration value="within" />
+<xs:enumeration value="inner-surface" />
+<xs:enumeration value="lumen" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of BIND-dmo -->
+
+<xs:element name="BIND-dmo" type="BIND-dmo-a-type" />
+<xs:complexType name="BIND-dmo-a-type">
+<xs:choice>
+<xs:element name="BIND-dmo_general" type="BIND-dmo_general-a-type" />
+<xs:element name="BIND-dmo_outer-membrane" type="BIND-dmo_outer-membrane-a-type" />
+<xs:element name="BIND-dmo_inner-membrane" type="BIND-dmo_inner-membrane-a-type" />
+<xs:element name="BIND-dmo_general-membrane" type="BIND-dmo_general-membrane-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-dmo_general">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-dmo_general-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-dmo_outer-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-dmo_inner-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-dmo_general-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-chlor -->
+
+<xs:element name="BIND-chlor" type="BIND-chlor-a-type" />
+<xs:complexType name="BIND-chlor-a-type">
+<xs:choice>
+<xs:element name="BIND-chlor_general" type="BIND-chlor_general-a-type" />
+<xs:element name="BIND-chlor_outer-membrane" type="BIND-chlor_outer-membrane-a-type" />
+<xs:element name="BIND-chlor_inner-membrane" type="BIND-chlor_inner-membrane-a-type" />
+<xs:element name="BIND-chlor_grana" type="BIND-chlor_grana-a-type" />
+<xs:element name="BIND-chlor_thylakoid" type="BIND-chlor_thylakoid-a-type" />
+<xs:element name="BIND-chlor_general-membrane" type="BIND-chlor_general-membrane-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-chlor_general">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-chlor_general-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-chlor_outer-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-chlor_inner-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-chlor_grana-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-chlor_thylakoid-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-chlor_general-membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-localize -->
+
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+<xs:complexType name="BIND-localize-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="component" />
+<xs:enumeration value="peripherally-associated" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of BIND-cilflag -->
+
+<xs:element name="BIND-cilflag" type="BIND-cilflag-a-type" />
+<xs:complexType name="BIND-cilflag-a-type">
+<xs:choice>
+<xs:element name="BIND-cilflag_general" type="BIND-cilflag_general-a-type" />
+<xs:element name="BIND-cilflag_membrane" type="BIND-cilflag_membrane-a-type" />
+<xs:element name="BIND-cilflag_inside" type="BIND-cilflag_inside-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-cilflag_general">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-cilflag_general-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-cilflag_membrane-a-type">
+<xs:sequence>
+<xs:element name="BIND-membrane" type="BIND-membrane-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-cilflag_inside-a-type">
+<xs:sequence>
+<xs:element name="BIND-localize" type="BIND-localize-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-spec-place-set -->
+
+<xs:element name="BIND-spec-place-set" type="BIND-spec-place-set-a-type" />
+<xs:complexType name="BIND-spec-place-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-spec-place-set_start" type="BIND-spec-place-set_start-a-type" />
+<xs:element name="BIND-spec-place-set_end" type="BIND-spec-place-set_end-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-spec-place-set_start-a-type">
+<xs:sequence>
+<xs:element name="BIND-spec-place" type="BIND-spec-place-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-spec-place-set_end-a-type">
+<xs:sequence>
+<xs:element name="BIND-spec-place" type="BIND-spec-place-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-spec-place -->
+
+<xs:element name="BIND-spec-place" type="BIND-spec-place-a-type" />
+<xs:complexType name="BIND-spec-place-a-type">
+<xs:sequence>
+<xs:element name="BIND-spec-place_descr" type="BIND-spec-place_descr-a-type" />
+<xs:element name="BIND-spec-place_other-db" type="BIND-spec-place_other-db-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-spec-place_descr" type = "xs:string" />
+<xs:simpleType name="BIND-spec-place_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-spec-place_other-db-a-type">
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-condition-set -->
+
+<xs:element name="BIND-condition-set" type="BIND-condition-set-a-type" />
+<xs:complexType name="BIND-condition-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-condition-set_max-icid" type="BIND-condition-set_max-icid-a-type" />
+<xs:element name="BIND-condition-set_conditions" type="BIND-condition-set_conditions-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-condition-set_max-icid-a-type">
+<xs:sequence>
+<xs:element name="Internal-conditions-id" type="Internal-conditions-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition-set_conditions-a-type" >
+<xs:sequence>
+<xs:element name="BIND-condition" type="BIND-condition-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-condition -->
+
+<xs:element name="BIND-condition" type="BIND-condition-a-type" />
+<xs:complexType name="BIND-condition-a-type">
+<xs:sequence>
+<xs:element name="BIND-condition_icid" type="BIND-condition_icid-a-type" />
+<xs:element name="BIND-condition_general" type="BIND-condition_general-a-type" />
+<xs:element name="BIND-condition_system" type="BIND-condition_system-a-type" />
+<xs:element name="BIND-condition_exp-form-a" type="BIND-condition_exp-form-a-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_exp-form-b" type="BIND-condition_exp-form-b-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_site" type="BIND-condition_site-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_descr" type="BIND-condition_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_other-db" type="BIND-condition_other-db-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_source" type="BIND-condition_source-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_genetic-exp" type="BIND-condition_genetic-exp-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_action" type="BIND-condition_action-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_state" type="BIND-condition_state-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_negative-result" type="BIND-condition_negative-result-a-type" minOccurs="0" />
+<xs:element name="BIND-condition_bait-condition" type="BIND-condition_bait-condition-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-condition_icid-a-type">
+<xs:sequence>
+<xs:element name="Internal-conditions-id" type="Internal-conditions-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-condition_general" type="BIND-condition_general-a-type" />
+<xs:complexType name="BIND-condition_general-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="in-vitro" />
+<xs:enumeration value="in-vivo" />
+<xs:enumeration value="in-situ" />
+<xs:enumeration value="in-silico" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-condition_system-a-type">
+<xs:sequence>
+<xs:element name="BIND-experimental-system" type="BIND-experimental-system-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_exp-form-a-a-type">
+<xs:sequence>
+<xs:element name="BIND-experimental-form" type="BIND-experimental-form-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_exp-form-b-a-type">
+<xs:sequence>
+<xs:element name="BIND-experimental-form" type="BIND-experimental-form-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_site-a-type" >
+<xs:sequence>
+<xs:element name="BIND-loc-site-ref" type="BIND-loc-site-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-condition_descr" type = "xs:string" />
+<xs:simpleType name="BIND-condition_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-condition_other-db-a-type">
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_genetic-exp-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-experiment" type="BIND-genetic-experiment-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_action-a-type" >
+<xs:sequence>
+<xs:element name="BIND-action-ref" type="BIND-action-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition_state-a-type" >
+<xs:sequence>
+<xs:element name="BIND-state-ref" type="BIND-state-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-condition_negative-result" type="BIND-condition_negative-result-a-type"/>
+<xs:complexType name="BIND-condition_negative-result-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-condition_bait-condition" type="BIND-condition_bait-condition-a-type" />
+<xs:complexType name="BIND-condition_bait-condition-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="a-is-bait" />
+<xs:enumeration value="b-is-bait" />
+<xs:enumeration value="not-applicable" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+<!-- Definition of Internal-conditions-id -->
+
+<xs:element name="Internal-conditions-id" type = "xs:integer" />
+<xs:simpleType name="Internal-conditions-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-condition-ref -->
+
+<xs:element name="BIND-condition-ref" type="BIND-condition-ref-a-type" />
+<xs:complexType name="BIND-condition-ref-a-type">
+<xs:sequence>
+<xs:element name="BIND-condition-ref_from-iid" type="BIND-condition-ref_from-iid-a-type" />
+<xs:element name="BIND-condition-ref_condition" type="BIND-condition-ref_condition-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-condition-ref_from-iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-condition-ref_condition-a-type">
+<xs:sequence>
+<xs:element name="Internal-conditions-id" type="Internal-conditions-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-experimental-system -->
+
+<xs:element name="BIND-experimental-system" type="BIND-experimental-system-a-type" />
+<xs:complexType name="BIND-experimental-system-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="alanine-scanning" />
+<xs:enumeration value="affinity-chromatography" />
+<xs:enumeration value="atomic-force-microscopy" />
+<xs:enumeration value="autoradiography" />
+<xs:enumeration value="competition-binding" />
+<xs:enumeration value="cross-linking" />
+<xs:enumeration value="deuterium-hydrogen-exchange" />
+<xs:enumeration value="electron-microscopy" />
+<xs:enumeration value="electron-spin-resonance" />
+<xs:enumeration value="elisa" />
+<xs:enumeration value="equilibrium-dialysis" />
+<xs:enumeration value="fluorescence-anisotropy" />
+<xs:enumeration value="footprinting" />
+<xs:enumeration value="gel-retardation-assays" />
+<xs:enumeration value="gel-filtration-chromatography" />
+<xs:enumeration value="hybridization" />
+<xs:enumeration value="immunoblotting" />
+<xs:enumeration value="immunoprecipitation" />
+<xs:enumeration value="immunostaining" />
+<xs:enumeration value="interaction-adhesion-assay" />
+<xs:enumeration value="light-scattering" />
+<xs:enumeration value="mass-spectrometry" />
+<xs:enumeration value="membrane-filtration" />
+<xs:enumeration value="monoclonal-antibody-blockade" />
+<xs:enumeration value="nuclear-translocation-assay" />
+<xs:enumeration value="phage-display" />
+<xs:enumeration value="reconstitution" />
+<xs:enumeration value="resonance-energy-transfer" />
+<xs:enumeration value="site-directed-mutagenesis" />
+<xs:enumeration value="sucrose-gradient-sedimentation" />
+<xs:enumeration value="surface-plasmon-resonance-chip" />
+<xs:enumeration value="transient-coexpression" />
+<xs:enumeration value="three-dimensional-structure" />
+<xs:enumeration value="two-hybrid-test" />
+<xs:enumeration value="allele-specific-complementation" />
+<xs:enumeration value="far-western" />
+<xs:enumeration value="colocalization" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+
+<!-- Definition of BIND-experimental-form -->
+
+<xs:element name="BIND-experimental-form" type="BIND-experimental-form-a-type" />
+<xs:complexType name="BIND-experimental-form-a-type">
+<xs:choice>
+<xs:element name="BIND-experimental-form_object" type="BIND-experimental-form_object-a-type" />
+<xs:element name="BIND-experimental-form_profile" type="BIND-experimental-form_profile-a-type" />
+<xs:element name="BIND-experimental-form_gene" type="BIND-experimental-form_gene-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-experimental-form_object-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-experimental-form_profile-a-type">
+<xs:sequence>
+<xs:element name="BIND-profile" type="BIND-profile-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-experimental-form_gene-a-type">
+<xs:sequence>
+<xs:element name="BIND-genotype" type="BIND-genotype-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-genotype -->
+
+<xs:element name="BIND-genotype" type="BIND-genotype-a-type" />
+<xs:complexType name="BIND-genotype-a-type">
+<xs:sequence>
+<xs:element name="BIND-genotype_tot-copy-num" type="BIND-genotype_tot-copy-num-a-type" minOccurs="0" />
+<xs:element name="BIND-genotype_alleles" type="BIND-genotype_alleles-a-type" />
+<xs:element name="BIND-genotype_expression" type="BIND-genotype_expression-a-type" minOccurs="0" />
+<xs:element name="BIND-genotype_background" type="BIND-genotype_background-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-genotype_tot-copy-num-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele-copy-num" type="BIND-allele-copy-num-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genotype_alleles-a-type" >
+<xs:sequence>
+<xs:element name="BIND-allele" type="BIND-allele-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genotype_expression-a-type" >
+<xs:sequence>
+<xs:element name="BIND-phenotype" type="BIND-phenotype-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genotype_background-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-background" type="BIND-genetic-background-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-allele-copy-num -->
+
+<xs:element name="BIND-allele-copy-num" type="BIND-allele-copy-num-a-type" />
+<xs:complexType name="BIND-allele-copy-num-a-type">
+<xs:choice>
+<xs:element name="BIND-allele-copy-num_high" type="BIND-allele-copy-num_high-a-type" />
+<xs:element name="BIND-allele-copy-num_high-ex" type="BIND-allele-copy-num_high-ex-a-type" />
+<xs:element name="BIND-allele-copy-num_single" type="BIND-allele-copy-num_single-a-type" />
+<xs:element name="BIND-allele-copy-num_wild-type" type="BIND-allele-copy-num_wild-type-a-type" />
+<xs:element name="BIND-allele-copy-num_wild-type-ex" type="BIND-allele-copy-num_wild-type-ex-a-type" />
+<xs:element name="BIND-allele-copy-num_reduced" type="BIND-allele-copy-num_reduced-a-type" />
+<xs:element name="BIND-allele-copy-num_reduced-ex" type="BIND-allele-copy-num_reduced-ex-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-allele-copy-num_high">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-copy-num_high-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-allele-copy-num_high-ex-a-type">
+<xs:sequence>
+<xs:element name="BIND-int-fuzz" type="BIND-int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-allele-copy-num_single">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-copy-num_single-a-type">
+</xs:complexType>
+<xs:element name="BIND-allele-copy-num_wild-type">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-copy-num_wild-type-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-allele-copy-num_wild-type-ex-a-type">
+<xs:sequence>
+<xs:element name="BIND-int-fuzz" type="BIND-int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-allele-copy-num_reduced">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-copy-num_reduced-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-allele-copy-num_reduced-ex-a-type">
+<xs:sequence>
+<xs:element name="BIND-int-fuzz" type="BIND-int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-allele -->
+
+<xs:element name="BIND-allele" type="BIND-allele-a-type" />
+<xs:complexType name="BIND-allele-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele_id" type="BIND-allele_id-a-type" />
+<xs:element name="BIND-allele_names" type="BIND-allele_names-a-type" minOccurs="0" />
+<xs:element name="BIND-allele_form" type="BIND-allele_form-a-type" />
+<xs:element name="BIND-allele_copy-num" type="BIND-allele_copy-num-a-type" />
+<xs:element name="BIND-allele_biosource" type="BIND-allele_biosource-a-type" />
+<xs:element name="BIND-allele_descr" type="BIND-allele_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-allele_source" type="BIND-allele_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-allele_id-a-type">
+<xs:sequence>
+<xs:element name="BIND-id" type="BIND-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-allele_names-a-type" >
+<xs:sequence>
+<xs:element name="BIND-allele_names_E" type="BIND-allele_names_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-allele_names_E" type = "xs:string" />
+<xs:simpleType name="BIND-allele_names_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="BIND-allele_form-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele-exp-obj-choice" type="BIND-allele-exp-obj-choice-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-allele_copy-num-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele-copy-num" type="BIND-allele-copy-num-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-allele_biosource-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-allele_descr" type = "xs:string" />
+<xs:simpleType name="BIND-allele_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-allele_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-allele-exp-obj-choice -->
+
+<xs:element name="BIND-allele-exp-obj-choice" type="BIND-allele-exp-obj-choice-a-type" />
+<xs:complexType name="BIND-allele-exp-obj-choice-a-type">
+<xs:choice>
+<xs:element name="BIND-allele-exp-obj-choice_not-specified" type="BIND-allele-exp-obj-choice_not-specified-a-type" />
+<xs:element name="BIND-allele-exp-obj-choice_genomic" type="BIND-allele-exp-obj-choice_genomic-a-type" />
+<xs:element name="BIND-allele-exp-obj-choice_knock-out" type="BIND-allele-exp-obj-choice_knock-out-a-type" />
+<xs:element name="BIND-allele-exp-obj-choice_mutation" type="BIND-allele-exp-obj-choice_mutation-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-allele-exp-obj-choice_not-specified">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-exp-obj-choice_not-specified-a-type">
+</xs:complexType>
+<xs:element name="BIND-allele-exp-obj-choice_genomic">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-exp-obj-choice_genomic-a-type">
+</xs:complexType>
+<xs:element name="BIND-allele-exp-obj-choice_knock-out">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-allele-exp-obj-choice_knock-out-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-allele-exp-obj-choice_mutation-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-genetic-experiment -->
+
+<xs:element name="BIND-genetic-experiment" type="BIND-genetic-experiment-a-type" />
+<xs:complexType name="BIND-genetic-experiment-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-experiment_result" type="BIND-genetic-experiment_result-a-type" />
+<xs:element name="BIND-genetic-experiment_type" type="BIND-genetic-experiment_type-a-type" />
+<xs:element name="BIND-genetic-experiment_dep-changes" type="BIND-genetic-experiment_dep-changes-a-type" minOccurs="0" />
+<xs:element name="BIND-genetic-experiment_descr" type="BIND-genetic-experiment_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-genetic-experiment_molecule-present" type="BIND-genetic-experiment_molecule-present-a-type" minOccurs="0" />
+<xs:element name="BIND-genetic-experiment_environment" type="BIND-genetic-experiment_environment-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-genetic-experiment_result-a-type" >
+<xs:sequence>
+<xs:element name="BIND-genetic-exp-result" type="BIND-genetic-exp-result-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-experiment_type-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-exp-system" type="BIND-genetic-exp-system-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-experiment_dep-changes-a-type" >
+<xs:sequence>
+<xs:element name="BIND-allele-change" type="BIND-allele-change-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-genetic-experiment_descr" type = "xs:string" />
+<xs:simpleType name="BIND-genetic-experiment_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-genetic-experiment_molecule-present-a-type" >
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-experiment_environment-a-type" >
+<xs:sequence>
+<xs:element name="BIND-param" type="BIND-param-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-genetic-exp-result -->
+
+<xs:element name="BIND-genetic-exp-result" type="BIND-genetic-exp-result-a-type" />
+<xs:complexType name="BIND-genetic-exp-result-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-exp-result_phenotype" type="BIND-genetic-exp-result_phenotype-a-type" />
+<xs:element name="BIND-genetic-exp-result_relation" type="BIND-genetic-exp-result_relation-a-type" minOccurs="0" />
+<xs:element name="BIND-genetic-exp-result_background" type="BIND-genetic-exp-result_background-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-genetic-exp-result_phenotype-a-type">
+<xs:sequence>
+<xs:element name="BIND-phenotype" type="BIND-phenotype-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-exp-result_relation-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-relation" type="BIND-genetic-relation-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-exp-result_background-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-background" type="BIND-genetic-background-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-genetic-relation -->
+
+<xs:element name="BIND-genetic-relation" type="BIND-genetic-relation-a-type" />
+<xs:complexType name="BIND-genetic-relation-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-relation_a-wild-type" type="BIND-genetic-relation_a-wild-type-a-type" />
+<xs:element name="BIND-genetic-relation_b-wild-type" type="BIND-genetic-relation_b-wild-type-a-type" />
+<xs:element name="BIND-genetic-relation_a-eq-b" type="BIND-genetic-relation_a-eq-b-a-type" />
+<xs:element name="BIND-genetic-relation_ab-phenotype" type="BIND-genetic-relation_ab-phenotype-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-genetic-relation_a-wild-type" type="BIND-genetic-relation_a-wild-type-a-type"/>
+<xs:complexType name="BIND-genetic-relation_a-wild-type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-genetic-relation_b-wild-type" type="BIND-genetic-relation_b-wild-type-a-type"/>
+<xs:complexType name="BIND-genetic-relation_b-wild-type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-genetic-relation_a-eq-b" type="BIND-genetic-relation_a-eq-b-a-type"/>
+<xs:complexType name="BIND-genetic-relation_a-eq-b-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-relation_ab-phenotype-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-ab-phenotype" type="BIND-genetic-ab-phenotype-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-genetic-ab-phenotype -->
+
+<xs:element name="BIND-genetic-ab-phenotype" type="BIND-genetic-ab-phenotype-a-type" />
+<xs:complexType name="BIND-genetic-ab-phenotype-a-type">
+<xs:choice>
+<xs:element name="BIND-genetic-ab-phenotype_wild-type" type="BIND-genetic-ab-phenotype_wild-type-a-type" />
+<xs:element name="BIND-genetic-ab-phenotype_a-type" type="BIND-genetic-ab-phenotype_a-type-a-type" />
+<xs:element name="BIND-genetic-ab-phenotype_b-type" type="BIND-genetic-ab-phenotype_b-type-a-type" />
+<xs:element name="BIND-genetic-ab-phenotype_novel" type="BIND-genetic-ab-phenotype_novel-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-genetic-ab-phenotype_wild-type">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-genetic-ab-phenotype_wild-type-a-type">
+</xs:complexType>
+<xs:element name="BIND-genetic-ab-phenotype_a-type">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-genetic-ab-phenotype_a-type-a-type">
+</xs:complexType>
+<xs:element name="BIND-genetic-ab-phenotype_b-type">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-genetic-ab-phenotype_b-type-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-genetic-ab-phenotype_novel-a-type">
+<xs:sequence>
+<xs:element name="BIND-synthetic-phenotype" type="BIND-synthetic-phenotype-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-synthetic-phenotype -->
+
+<xs:element name="BIND-synthetic-phenotype" type="BIND-synthetic-phenotype-a-type" />
+<xs:complexType name="BIND-synthetic-phenotype-a-type">
+<xs:choice>
+<xs:element name="BIND-synthetic-phenotype_modulation-pct-a" type="BIND-synthetic-phenotype_modulation-pct-a-a-type" />
+<xs:element name="BIND-synthetic-phenotype_modulation-pct-b" type="BIND-synthetic-phenotype_modulation-pct-b-a-type" />
+<xs:element name="BIND-synthetic-phenotype_mix" type="BIND-synthetic-phenotype_mix-a-type" />
+<xs:element name="BIND-synthetic-phenotype_novel" type="BIND-synthetic-phenotype_novel-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-synthetic-phenotype_modulation-pct-a" type = "xs:integer" />
+<xs:simpleType name="BIND-synthetic-phenotype_modulation-pct-a-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-synthetic-phenotype_modulation-pct-b" type = "xs:integer" />
+<xs:simpleType name="BIND-synthetic-phenotype_modulation-pct-b-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-synthetic-phenotype_mix-a-type">
+<xs:sequence>
+<xs:element name="BIND-mixed-phenotype" type="BIND-mixed-phenotype-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-synthetic-phenotype_novel">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-synthetic-phenotype_novel-a-type">
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mixed-phenotype -->
+
+<xs:element name="BIND-mixed-phenotype" type="BIND-mixed-phenotype-a-type" />
+<xs:complexType name="BIND-mixed-phenotype-a-type">
+<xs:sequence>
+<xs:element name="BIND-mixed-phenotype_a-pct" type="BIND-mixed-phenotype_a-pct-a-type" />
+<xs:element name="BIND-mixed-phenotype_b-pct" type="BIND-mixed-phenotype_b-pct-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-mixed-phenotype_a-pct" type = "xs:integer" />
+<xs:simpleType name="BIND-mixed-phenotype_a-pct-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-mixed-phenotype_b-pct" type = "xs:integer" />
+<xs:simpleType name="BIND-mixed-phenotype_b-pct-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-genetic-exp-system -->
+
+<xs:element name="BIND-genetic-exp-system" type="BIND-genetic-exp-system-a-type" />
+<xs:complexType name="BIND-genetic-exp-system-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="synthetic-lethal" />
+<xs:enumeration value="synthetic-growth-defect" />
+<xs:enumeration value="synthetic-enhancement" />
+<xs:enumeration value="suppression" />
+<xs:enumeration value="epistasis" />
+<xs:enumeration value="non-complementation" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+
+<!-- Definition of BIND-genetic-background -->
+
+<xs:element name="BIND-genetic-background" type="BIND-genetic-background-a-type" />
+<xs:complexType name="BIND-genetic-background-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-background_org" type="BIND-genetic-background_org-a-type" />
+<xs:element name="BIND-genetic-background_ploidy" type="BIND-genetic-background_ploidy-a-type" />
+<xs:element name="BIND-genetic-background_ploidy-diff" type="BIND-genetic-background_ploidy-diff-a-type" minOccurs="0" />
+<xs:element name="BIND-genetic-background_changes" type="BIND-genetic-background_changes-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-genetic-background_org-a-type">
+<xs:sequence>
+<xs:element name="BioSource" type="BioSource-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-background_ploidy-a-type">
+<xs:sequence>
+<xs:element name="BIND-int-fuzz" type="BIND-int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-background_ploidy-diff-a-type">
+<xs:sequence>
+<xs:element name="BIND-ploidy-diff" type="BIND-ploidy-diff-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-genetic-background_changes-a-type">
+<xs:sequence>
+<xs:element name="BIND-genetic-background-choice" type="BIND-genetic-background-choice-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-ploidy-diff -->
+
+<xs:element name="BIND-ploidy-diff" type="BIND-ploidy-diff-a-type" />
+<xs:complexType name="BIND-ploidy-diff-a-type">
+<xs:sequence>
+<xs:element name="BIND-ploidy-diff_chromosome" type="BIND-ploidy-diff_chromosome-a-type" />
+<xs:element name="BIND-ploidy-diff_copy-num" type="BIND-ploidy-diff_copy-num-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-ploidy-diff_chromosome" type = "xs:integer" />
+<xs:simpleType name="BIND-ploidy-diff_chromosome-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-ploidy-diff_copy-num-a-type">
+<xs:sequence>
+<xs:element name="BIND-int-fuzz" type="BIND-int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-genetic-background-choice -->
+
+<xs:element name="BIND-genetic-background-choice" type="BIND-genetic-background-choice-a-type" />
+<xs:complexType name="BIND-genetic-background-choice-a-type">
+<xs:choice>
+<xs:element name="BIND-genetic-background-choice_descr" type="BIND-genetic-background-choice_descr-a-type" />
+<xs:element name="BIND-genetic-background-choice_standard" type="BIND-genetic-background-choice_standard-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-genetic-background-choice_descr" type = "xs:string" />
+<xs:simpleType name="BIND-genetic-background-choice_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-genetic-background-choice_standard-a-type" >
+<xs:sequence>
+<xs:element name="BIND-allele-change" type="BIND-allele-change-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-allele-change -->
+
+<xs:element name="BIND-allele-change" type="BIND-allele-change-a-type" />
+<xs:complexType name="BIND-allele-change-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele-change_old-form" type="BIND-allele-change_old-form-a-type" />
+<xs:element name="BIND-allele-change_new-form" type="BIND-allele-change_new-form-a-type" />
+<xs:element name="BIND-allele-change_descr" type="BIND-allele-change_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-allele-change_old-form-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele" type="BIND-allele-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-allele-change_new-form-a-type">
+<xs:sequence>
+<xs:element name="BIND-allele" type="BIND-allele-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-allele-change_descr" type = "xs:string" />
+<xs:simpleType name="BIND-allele-change_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-cons-seq-set -->
+
+<xs:element name="BIND-cons-seq-set" type="BIND-cons-seq-set-a-type" />
+<xs:complexType name="BIND-cons-seq-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-cons-seq-set_a" type="BIND-cons-seq-set_a-a-type" minOccurs="0" />
+<xs:element name="BIND-cons-seq-set_b" type="BIND-cons-seq-set_b-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-cons-seq-set_a-a-type">
+<xs:sequence>
+<xs:element name="BIND-conserved-seq" type="BIND-conserved-seq-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-cons-seq-set_b-a-type">
+<xs:sequence>
+<xs:element name="BIND-conserved-seq" type="BIND-conserved-seq-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-conserved-seq -->
+
+<xs:element name="BIND-conserved-seq" type="BIND-conserved-seq-a-type" />
+<xs:complexType name="BIND-conserved-seq-a-type">
+<xs:sequence>
+<xs:element name="BIND-conserved-seq_seq-el" type="BIND-conserved-seq_seq-el-a-type" />
+<xs:element name="BIND-conserved-seq_descr" type="BIND-conserved-seq_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-conserved-seq_other-db" type="BIND-conserved-seq_other-db-a-type" minOccurs="0" />
+<xs:element name="BIND-conserved-seq_source" type="BIND-conserved-seq_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-conserved-seq_seq-el-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-conserved-seq_descr" type = "xs:string" />
+<xs:simpleType name="BIND-conserved-seq_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-conserved-seq_other-db-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-conserved-seq_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-loc -->
+
+<xs:element name="BIND-loc" type="BIND-loc-a-type" />
+<xs:complexType name="BIND-loc-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc_detailed" type="BIND-loc_detailed-a-type" minOccurs="0" />
+<xs:element name="BIND-loc_general" type="BIND-loc_general-a-type" minOccurs="0" />
+<xs:element name="BIND-loc_source" type="BIND-loc_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-loc_detailed-a-type">
+<xs:sequence>
+<xs:element name="Biostruc" type="Biostruc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc_general-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-gen" type="BIND-loc-gen-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-loc-gen -->
+
+<xs:element name="BIND-loc-gen" type="BIND-loc-gen-a-type" />
+<xs:complexType name="BIND-loc-gen-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-gen_a-sites" type="BIND-loc-gen_a-sites-a-type" minOccurs="0" />
+<xs:element name="BIND-loc-gen_b-sites" type="BIND-loc-gen_b-sites-a-type" minOccurs="0" />
+<xs:element name="BIND-loc-gen_bound" type="BIND-loc-gen_bound-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-loc-gen_a-sites-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-site-set" type="BIND-loc-site-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-gen_b-sites-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-site-set" type="BIND-loc-site-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-gen_bound-a-type" >
+<xs:sequence>
+<xs:element name="BIND-loc-pair" type="BIND-loc-pair-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-loc-site-set -->
+
+<xs:element name="BIND-loc-site-set" type="BIND-loc-site-set-a-type" />
+<xs:complexType name="BIND-loc-site-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-site-set_max-slid" type="BIND-loc-site-set_max-slid-a-type" />
+<xs:element name="BIND-loc-site-set_sites" type="BIND-loc-site-set_sites-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-loc-site-set_max-slid-a-type">
+<xs:sequence>
+<xs:element name="BIND-Seq-loc-id" type="BIND-Seq-loc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-site-set_sites-a-type" >
+<xs:sequence>
+<xs:element name="BIND-loc-site" type="BIND-loc-site-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-loc-site -->
+
+<xs:element name="BIND-loc-site" type="BIND-loc-site-a-type" />
+<xs:complexType name="BIND-loc-site-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-site_slid" type="BIND-loc-site_slid-a-type" />
+<xs:element name="BIND-loc-site_site" type="BIND-loc-site_site-a-type" />
+<xs:element name="BIND-loc-site_sub-unit" type="BIND-loc-site_sub-unit-a-type" minOccurs="0" />
+<xs:element name="BIND-loc-site_descr" type="BIND-loc-site_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-loc-site_source" type="BIND-loc-site_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-loc-site_slid-a-type">
+<xs:sequence>
+<xs:element name="BIND-Seq-loc-id" type="BIND-Seq-loc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-site_site-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-site_sub-unit-a-type">
+<xs:sequence>
+<xs:element name="BIND-complex-subunit" type="BIND-complex-subunit-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-loc-site_descr" type = "xs:string" />
+<xs:simpleType name="BIND-loc-site_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-loc-site_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-loc-pair -->
+
+<xs:element name="BIND-loc-pair" type="BIND-loc-pair-a-type" />
+<xs:complexType name="BIND-loc-pair-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-pair_a-slid" type="BIND-loc-pair_a-slid-a-type" />
+<xs:element name="BIND-loc-pair_b-slid" type="BIND-loc-pair_b-slid-a-type" />
+<xs:element name="BIND-loc-pair_source" type="BIND-loc-pair_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-loc-pair_a-slid-a-type">
+<xs:sequence>
+<xs:element name="BIND-Seq-loc-id" type="BIND-Seq-loc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-pair_b-slid-a-type">
+<xs:sequence>
+<xs:element name="BIND-Seq-loc-id" type="BIND-Seq-loc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-loc-pair_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Seq-loc-id -->
+
+<xs:element name="BIND-Seq-loc-id" type = "xs:integer" />
+<xs:simpleType name="BIND-Seq-loc-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-loc-site-ref -->
+
+<xs:element name="BIND-loc-site-ref" type="BIND-loc-site-ref-a-type" />
+<xs:complexType name="BIND-loc-site-ref-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-site-ref_from-iid" type="BIND-loc-site-ref_from-iid-a-type" />
+<xs:element name="BIND-loc-site-ref_molecule" type="BIND-loc-site-ref_molecule-a-type" />
+<xs:element name="BIND-loc-site-ref_site" type="BIND-loc-site-ref_site-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-loc-site-ref_from-iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-loc-site-ref_molecule" type="BIND-loc-site-ref_molecule-a-type" />
+<xs:complexType name="BIND-loc-site-ref_molecule-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="a" />
+<xs:enumeration value="b" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-loc-site-ref_site-a-type">
+<xs:sequence>
+<xs:element name="BIND-Seq-loc-id" type="BIND-Seq-loc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-action-set -->
+
+<xs:element name="BIND-action-set" type="BIND-action-set-a-type" />
+<xs:complexType name="BIND-action-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-set_max-iaid" type="BIND-action-set_max-iaid-a-type" />
+<xs:element name="BIND-action-set_actions" type="BIND-action-set_actions-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-action-set_max-iaid-a-type">
+<xs:sequence>
+<xs:element name="Internal-action-id" type="Internal-action-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-set_actions-a-type" >
+<xs:sequence>
+<xs:element name="BIND-action" type="BIND-action-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-action -->
+
+<xs:element name="BIND-action" type="BIND-action-a-type" />
+<xs:complexType name="BIND-action-a-type">
+<xs:sequence>
+<xs:element name="BIND-action_iaid" type="BIND-action_iaid-a-type" />
+<xs:element name="BIND-action_descr" type="BIND-action_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-action_direction" type="BIND-action_direction-a-type" />
+<xs:element name="BIND-action_type" type="BIND-action_type-a-type" />
+<xs:element name="BIND-action_result" type="BIND-action_result-a-type" minOccurs="0" />
+<xs:element name="BIND-action_diff" type="BIND-action_diff-a-type" minOccurs="0" />
+<xs:element name="BIND-action_signal" type="BIND-action_signal-a-type" minOccurs="0" />
+<xs:element name="BIND-action_kinetics" type="BIND-action_kinetics-a-type" minOccurs="0" />
+<xs:element name="BIND-action_conditions" type="BIND-action_conditions-a-type" minOccurs="0" />
+<xs:element name="BIND-action_sub-unit-a" type="BIND-action_sub-unit-a-a-type" minOccurs="0" />
+<xs:element name="BIND-action_sub-unit-b" type="BIND-action_sub-unit-b-a-type" minOccurs="0" />
+<xs:element name="BIND-action_action-sites" type="BIND-action_action-sites-a-type" minOccurs="0" />
+<xs:element name="BIND-action_other-db" type="BIND-action_other-db-a-type" minOccurs="0" />
+<xs:element name="BIND-action_source" type="BIND-action_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-action_iaid-a-type">
+<xs:sequence>
+<xs:element name="Internal-action-id" type="Internal-action-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-action_descr" type = "xs:string" />
+<xs:simpleType name="BIND-action_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-action_direction-a-type">
+<xs:sequence>
+<xs:element name="BIND-direction" type="BIND-direction-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_type-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-type" type="BIND-action-type-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_result-a-type" >
+<xs:sequence>
+<xs:element name="BIND-result-object" type="BIND-result-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_diff-a-type">
+<xs:sequence>
+<xs:element name="Biostruc-feature-set" type="Biostruc-feature-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_signal-a-type">
+<xs:sequence>
+<xs:element name="BIND-signal" type="BIND-signal-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_kinetics-a-type">
+<xs:sequence>
+<xs:element name="BIND-kinetics" type="BIND-kinetics-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_conditions-a-type" >
+<xs:sequence>
+<xs:element name="BIND-condition-ref" type="BIND-condition-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_sub-unit-a-a-type">
+<xs:sequence>
+<xs:element name="BIND-complex-subunit" type="BIND-complex-subunit-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_sub-unit-b-a-type">
+<xs:sequence>
+<xs:element name="BIND-complex-subunit" type="BIND-complex-subunit-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_action-sites-a-type" >
+<xs:sequence>
+<xs:element name="BIND-action-site" type="BIND-action-site-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_other-db-a-type">
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Internal-action-id -->
+
+<xs:element name="Internal-action-id" type = "xs:integer" />
+<xs:simpleType name="Internal-action-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-result-object -->
+
+<xs:element name="BIND-result-object" type="BIND-result-object-a-type" />
+<xs:complexType name="BIND-result-object-a-type">
+<xs:sequence>
+<xs:element name="BIND-result-object_irid" type="BIND-result-object_irid-a-type" />
+<xs:element name="BIND-result-object_object" type="BIND-result-object_object-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-result-object_irid-a-type">
+<xs:sequence>
+<xs:element name="Internal-result-id" type="Internal-result-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-result-object_object-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Internal-result-id -->
+
+<xs:element name="Internal-result-id" type = "xs:integer" />
+<xs:simpleType name="Internal-result-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-action-ref -->
+
+<xs:element name="BIND-action-ref" type="BIND-action-ref-a-type" />
+<xs:complexType name="BIND-action-ref-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-ref_from-iid" type="BIND-action-ref_from-iid-a-type" />
+<xs:element name="BIND-action-ref_action" type="BIND-action-ref_action-a-type" />
+<xs:element name="BIND-action-ref_irid" type="BIND-action-ref_irid-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-action-ref_from-iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-ref_action-a-type">
+<xs:sequence>
+<xs:element name="Internal-action-id" type="Internal-action-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-ref_irid-a-type">
+<xs:sequence>
+<xs:element name="Internal-result-id" type="Internal-result-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-direction -->
+
+<xs:element name="BIND-direction" type="BIND-direction-a-type" />
+<xs:complexType name="BIND-direction-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="none" />
+<xs:enumeration value="a-to-a" />
+<xs:enumeration value="a-to-b" />
+<xs:enumeration value="b-to-b" />
+<xs:enumeration value="b-to-a" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of BIND-action-type -->
+
+<xs:element name="BIND-action-type" type="BIND-action-type-a-type" />
+<xs:complexType name="BIND-action-type-a-type">
+<xs:choice>
+<xs:element name="BIND-action-type_not-specified" type="BIND-action-type_not-specified-a-type" />
+<xs:element name="BIND-action-type_none" type="BIND-action-type_none-a-type" />
+<xs:element name="BIND-action-type_add" type="BIND-action-type_add-a-type" />
+<xs:element name="BIND-action-type_remove" type="BIND-action-type_remove-a-type" />
+<xs:element name="BIND-action-type_bond-break" type="BIND-action-type_bond-break-a-type" />
+<xs:element name="BIND-action-type_cut-seq" type="BIND-action-type_cut-seq-a-type" />
+<xs:element name="BIND-action-type_change-conformation" type="BIND-action-type_change-conformation-a-type" />
+<xs:element name="BIND-action-type_change-configuration" type="BIND-action-type_change-configuration-a-type" />
+<xs:element name="BIND-action-type_change-other" type="BIND-action-type_change-other-a-type" />
+<xs:element name="BIND-action-type_other" type="BIND-action-type_other-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-action-type_not-specified">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_not-specified-a-type">
+</xs:complexType>
+<xs:element name="BIND-action-type_none">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_none-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-action-type_add-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-object" type="BIND-action-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-type_remove-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-object" type="BIND-action-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-action-type_bond-break">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_bond-break-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-action-type_cut-seq-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-object" type="BIND-action-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-action-type_change-conformation">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_change-conformation-a-type">
+</xs:complexType>
+<xs:element name="BIND-action-type_change-configuration">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_change-configuration-a-type">
+</xs:complexType>
+<xs:element name="BIND-action-type_change-other">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_change-other-a-type">
+</xs:complexType>
+<xs:element name="BIND-action-type_other">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-type_other-a-type">
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-action-object -->
+
+<xs:element name="BIND-action-object" type="BIND-action-object-a-type" />
+<xs:complexType name="BIND-action-object-a-type">
+<xs:choice>
+<xs:element name="BIND-action-object_none" type="BIND-action-object_none-a-type" />
+<xs:element name="BIND-action-object_object" type="BIND-action-object_object-a-type" />
+<xs:element name="BIND-action-object_location" type="BIND-action-object_location-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-action-object_none">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-action-object_none-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-action-object_object-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-object_location-a-type">
+<xs:sequence>
+<xs:element name="Seq-loc" type="Seq-loc-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-signal -->
+
+<xs:element name="BIND-signal" type="BIND-signal-a-type" />
+<xs:complexType name="BIND-signal-a-type">
+<xs:sequence>
+<xs:element name="BIND-signal_action" type="BIND-signal_action-a-type" />
+<xs:element name="BIND-signal_direction" type="BIND-signal_direction-a-type" />
+<xs:element name="BIND-signal_factor" type="BIND-signal_factor-a-type" minOccurs="0" />
+<xs:element name="BIND-signal_descr" type="BIND-signal_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-signal_source" type="BIND-signal_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-signal_action" type="BIND-signal_action-a-type" />
+<xs:complexType name="BIND-signal_action-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="none" />
+<xs:enumeration value="amplify" />
+<xs:enumeration value="repress" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-signal_direction-a-type">
+<xs:sequence>
+<xs:element name="BIND-direction" type="BIND-direction-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-signal_factor-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-signal_descr" type = "xs:string" />
+<xs:simpleType name="BIND-signal_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-signal_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-kinetics -->
+
+<xs:element name="BIND-kinetics" type="BIND-kinetics-a-type" />
+<xs:complexType name="BIND-kinetics-a-type">
+<xs:sequence>
+<xs:element name="BIND-kinetics_descr" type="BIND-kinetics_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_kf" type="BIND-kinetics_kf-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_kr" type="BIND-kinetics_kr-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_kd" type="BIND-kinetics_kd-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_ka" type="BIND-kinetics_ka-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_keq" type="BIND-kinetics_keq-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_km" type="BIND-kinetics_km-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_vmax" type="BIND-kinetics_vmax-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_rxn-order" type="BIND-kinetics_rxn-order-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_conc-a" type="BIND-kinetics_conc-a-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_conc-b" type="BIND-kinetics_conc-b-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_conc-a-bound" type="BIND-kinetics_conc-a-bound-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_conc-b-bound" type="BIND-kinetics_conc-b-bound-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_conc-a-unbound" type="BIND-kinetics_conc-a-unbound-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_conc-b-unbound" type="BIND-kinetics_conc-b-unbound-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_enz-activity-amp-factor" type="BIND-kinetics_enz-activity-amp-factor-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_temp" type="BIND-kinetics_temp-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_ph" type="BIND-kinetics_ph-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_half-life-a" type="BIND-kinetics_half-life-a-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_half-life-b" type="BIND-kinetics_half-life-b-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_buffer" type="BIND-kinetics_buffer-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_delta-g" type="BIND-kinetics_delta-g-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_delta-s" type="BIND-kinetics_delta-s-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_delta-h" type="BIND-kinetics_delta-h-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_heat-capacity-a" type="BIND-kinetics_heat-capacity-a-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_heat-capacity-b" type="BIND-kinetics_heat-capacity-b-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_other" type="BIND-kinetics_other-a-type" minOccurs="0" />
+<xs:element name="BIND-kinetics_source" type="BIND-kinetics_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-kinetics_descr" type = "xs:string" />
+<xs:simpleType name="BIND-kinetics_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-kinetics_kf-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_kr-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_kd-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_ka-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_keq-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_km-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_vmax-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_rxn-order-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_conc-a-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_conc-b-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_conc-a-bound-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_conc-b-bound-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_conc-a-unbound-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_conc-b-unbound-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_enz-activity-amp-factor-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_temp-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_ph-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_half-life-a-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_half-life-b-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-kinetics_buffer" type = "xs:string" />
+<xs:simpleType name="BIND-kinetics_buffer-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-kinetics_delta-g-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_delta-s-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_delta-h-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_heat-capacity-a-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_heat-capacity-b-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_other-a-type" >
+<xs:sequence>
+<xs:element name="BIND-kinetics-other" type="BIND-kinetics-other-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-kinetics_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-kinetics-other -->
+
+<xs:element name="BIND-kinetics-other" type="BIND-kinetics-other-a-type" />
+<xs:complexType name="BIND-kinetics-other-a-type">
+<xs:sequence>
+<xs:element name="BIND-kinetics-other_descr" type="BIND-kinetics-other_descr-a-type" />
+<xs:element name="BIND-kinetics-other_value" type="BIND-kinetics-other_value-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-kinetics-other_descr" type = "xs:string" />
+<xs:simpleType name="BIND-kinetics-other_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-kinetics-other_value-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-action-site -->
+
+<xs:element name="BIND-action-site" type="BIND-action-site-a-type" />
+<xs:complexType name="BIND-action-site-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-site_a" type="BIND-action-site_a-a-type" />
+<xs:element name="BIND-action-site_b" type="BIND-action-site_b-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-action-site_a-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-site-ref" type="BIND-action-site-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-site_b-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-site-ref" type="BIND-action-site-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-action-site-ref -->
+
+<xs:element name="BIND-action-site-ref" type="BIND-action-site-ref-a-type" />
+<xs:complexType name="BIND-action-site-ref-a-type">
+<xs:choice>
+<xs:element name="BIND-action-site-ref_slid" type="BIND-action-site-ref_slid-a-type" />
+<xs:element name="BIND-action-site-ref_site" type="BIND-action-site-ref_site-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-action-site-ref_slid-a-type">
+<xs:sequence>
+<xs:element name="BIND-Seq-loc-id" type="BIND-Seq-loc-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-action-site-ref_site-a-type">
+<xs:sequence>
+<xs:element name="BIND-loc-site-set" type="BIND-loc-site-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-state-descr -->
+
+<xs:element name="BIND-state-descr" type="BIND-state-descr-a-type" />
+<xs:complexType name="BIND-state-descr-a-type">
+<xs:sequence>
+<xs:element name="BIND-state-descr_a" type="BIND-state-descr_a-a-type" minOccurs="0" />
+<xs:element name="BIND-state-descr_a-required-state" type="BIND-state-descr_a-required-state-a-type" minOccurs="0" />
+<xs:element name="BIND-state-descr_b" type="BIND-state-descr_b-a-type" minOccurs="0" />
+<xs:element name="BIND-state-descr_b-required-state" type="BIND-state-descr_b-required-state-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-state-descr_a-a-type">
+<xs:sequence>
+<xs:element name="BIND-state-set" type="BIND-state-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-state-descr_a-required-state-a-type" >
+<xs:sequence>
+<xs:element name="BIND-required-state" type="BIND-required-state-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-state-descr_b-a-type">
+<xs:sequence>
+<xs:element name="BIND-state-set" type="BIND-state-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-state-descr_b-required-state-a-type" >
+<xs:sequence>
+<xs:element name="BIND-required-state" type="BIND-required-state-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-state-set -->
+
+<xs:element name="BIND-state-set" type="BIND-state-set-a-type" />
+<xs:complexType name="BIND-state-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-state-set_max-isid" type="BIND-state-set_max-isid-a-type" />
+<xs:element name="BIND-state-set_states" type="BIND-state-set_states-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-state-set_max-isid-a-type">
+<xs:sequence>
+<xs:element name="Internal-state-id" type="Internal-state-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-state-set_states-a-type" >
+<xs:sequence>
+<xs:element name="BIND-state" type="BIND-state-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Internal-state-id -->
+
+<xs:element name="Internal-state-id" type = "xs:integer" />
+<xs:simpleType name="Internal-state-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-state-ref -->
+
+<xs:element name="BIND-state-ref" type="BIND-state-ref-a-type" />
+<xs:complexType name="BIND-state-ref-a-type">
+<xs:sequence>
+<xs:element name="BIND-state-ref_from-iid" type="BIND-state-ref_from-iid-a-type" />
+<xs:element name="BIND-state-ref_molecule" type="BIND-state-ref_molecule-a-type" />
+<xs:element name="BIND-state-ref_state" type="BIND-state-ref_state-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-state-ref_from-iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-state-ref_molecule" type="BIND-state-ref_molecule-a-type" />
+<xs:complexType name="BIND-state-ref_molecule-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="a" />
+<xs:enumeration value="b" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-state-ref_state-a-type">
+<xs:sequence>
+<xs:element name="Internal-state-id" type="Internal-state-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-state -->
+
+<xs:element name="BIND-state" type="BIND-state-a-type" />
+<xs:complexType name="BIND-state-a-type">
+<xs:sequence>
+<xs:element name="BIND-state_isid" type="BIND-state_isid-a-type" />
+<xs:element name="BIND-state_activity-level" type="BIND-state_activity-level-a-type" />
+<xs:element name="BIND-state_cause" type="BIND-state_cause-a-type" minOccurs="0" />
+<xs:element name="BIND-state_descr" type="BIND-state_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-state_source" type="BIND-state_source-a-type" minOccurs="0" />
+<xs:element name="BIND-state_sub-unit" type="BIND-state_sub-unit-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-state_isid-a-type">
+<xs:sequence>
+<xs:element name="Internal-state-id" type="Internal-state-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-state_activity-level" type="BIND-state_activity-level-a-type" />
+<xs:complexType name="BIND-state_activity-level-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="inactive" />
+<xs:enumeration value="very-low" />
+<xs:enumeration value="low" />
+<xs:enumeration value="medium" />
+<xs:enumeration value="medium-high" />
+<xs:enumeration value="high" />
+<xs:enumeration value="very-high" />
+<xs:enumeration value="extreme" />
+<xs:enumeration value="active" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-state_cause-a-type" >
+<xs:sequence>
+<xs:element name="BIND-action-ref" type="BIND-action-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-state_descr" type = "xs:string" />
+<xs:simpleType name="BIND-state_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-state_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-state_sub-unit-a-type">
+<xs:sequence>
+<xs:element name="BIND-complex-subunit" type="BIND-complex-subunit-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-required-state -->
+
+<xs:element name="BIND-required-state" type="BIND-required-state-a-type" />
+<xs:complexType name="BIND-required-state-a-type">
+<xs:sequence>
+<xs:element name="BIND-required-state_isid" type="BIND-required-state_isid-a-type" />
+<xs:element name="BIND-required-state_descr" type="BIND-required-state_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-required-state_source" type="BIND-required-state_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-required-state_isid-a-type">
+<xs:sequence>
+<xs:element name="Internal-state-id" type="Internal-state-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-required-state_descr" type = "xs:string" />
+<xs:simpleType name="BIND-required-state_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-required-state_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Complex-set -->
+
+<xs:element name="BIND-Complex-set" type="BIND-Complex-set-a-type" />
+<xs:complexType name="BIND-Complex-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-Complex-set_date" type="BIND-Complex-set_date-a-type" minOccurs="0" />
+<xs:element name="BIND-Complex-set_database" type="BIND-Complex-set_database-a-type" minOccurs="0" />
+<xs:element name="BIND-Complex-set_complexes" type="BIND-Complex-set_complexes-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Complex-set_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Complex-set_database-a-type">
+<xs:sequence>
+<xs:element name="BIND-Database-site" type="BIND-Database-site-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Complex-set_complexes-a-type" >
+<xs:sequence>
+<xs:element name="BIND-Molecular-Complex" type="BIND-Molecular-Complex-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Molecular-Complex -->
+
+<xs:element name="BIND-Molecular-Complex" type="BIND-Molecular-Complex-a-type" />
+<xs:complexType name="BIND-Molecular-Complex-a-type">
+<xs:sequence>
+<xs:element name="BIND-Molecular-Complex_date" type="BIND-Molecular-Complex_date-a-type" />
+<xs:element name="BIND-Molecular-Complex_updates" type="BIND-Molecular-Complex_updates-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_mcid" type="BIND-Molecular-Complex_mcid-a-type" />
+<xs:element name="BIND-Molecular-Complex_descr" type="BIND-Molecular-Complex_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_sub-num" type="BIND-Molecular-Complex_sub-num-a-type" />
+<xs:element name="BIND-Molecular-Complex_sub-units" type="BIND-Molecular-Complex_sub-units-a-type" />
+<xs:element name="BIND-Molecular-Complex_interaction-list" type="BIND-Molecular-Complex_interaction-list-a-type" />
+<xs:element name="BIND-Molecular-Complex_ordered" type="BIND-Molecular-Complex_ordered-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_complex-topology" type="BIND-Molecular-Complex_complex-topology-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_source" type="BIND-Molecular-Complex_source-a-type" />
+<xs:element name="BIND-Molecular-Complex_authors" type="BIND-Molecular-Complex_authors-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_division" type="BIND-Molecular-Complex_division-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_priv" type="BIND-Molecular-Complex_priv-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_sub-unit-type" type="BIND-Molecular-Complex_sub-unit-type-a-type" minOccurs="0" />
+<xs:element name="BIND-Molecular-Complex_extref" type="BIND-Molecular-Complex_extref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Molecular-Complex_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_updates-a-type" >
+<xs:sequence>
+<xs:element name="BIND-update-object" type="BIND-update-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_mcid-a-type">
+<xs:sequence>
+<xs:element name="Molecular-Complex-id" type="Molecular-Complex-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Molecular-Complex_descr" type = "xs:string" />
+<xs:simpleType name="BIND-Molecular-Complex_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-Molecular-Complex_sub-num-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-sub-num" type="BIND-mol-sub-num-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_sub-units-a-type" >
+<xs:sequence>
+<xs:element name="BIND-mol-object" type="BIND-mol-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_interaction-list-a-type" >
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Molecular-Complex_ordered" type="BIND-Molecular-Complex_ordered-a-type"/>
+<xs:complexType name="BIND-Molecular-Complex_ordered-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_complex-topology-a-type" >
+<xs:sequence>
+<xs:element name="BIND-mol-object-pair" type="BIND-mol-object-pair-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_authors-a-type" >
+<xs:sequence>
+<xs:element name="BIND-author" type="BIND-author-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_division-a-type">
+<xs:sequence>
+<xs:element name="BIND-Rec-coll-descr" type="BIND-Rec-coll-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Molecular-Complex_priv" type="BIND-Molecular-Complex_priv-a-type"/>
+<xs:complexType name="BIND-Molecular-Complex_priv-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_sub-unit-type-a-type" >
+<xs:sequence>
+<xs:element name="BIND-mol-sub-unit-type" type="BIND-mol-sub-unit-type-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Molecular-Complex_extref-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Molecular-Complex-id -->
+
+<xs:element name="Molecular-Complex-id" type = "xs:integer" />
+<xs:simpleType name="Molecular-Complex-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-complex-subunit -->
+
+<xs:element name="BIND-complex-subunit" type="BIND-complex-subunit-a-type" />
+<xs:complexType name="BIND-complex-subunit-a-type">
+<xs:sequence>
+<xs:element name="BIND-complex-subunit_mcid" type="BIND-complex-subunit_mcid-a-type" />
+<xs:element name="BIND-complex-subunit_bmoid" type="BIND-complex-subunit_bmoid-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-complex-subunit_mcid-a-type">
+<xs:sequence>
+<xs:element name="Molecular-Complex-id" type="Molecular-Complex-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-complex-subunit_bmoid-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object-id" type="BIND-mol-object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-sub-num -->
+
+<xs:element name="BIND-mol-sub-num" type="BIND-mol-sub-num-a-type" />
+<xs:complexType name="BIND-mol-sub-num-a-type">
+<xs:choice>
+<xs:element name="BIND-mol-sub-num_num" type="BIND-mol-sub-num_num-a-type" />
+<xs:element name="BIND-mol-sub-num_num-fuzz" type="BIND-mol-sub-num_num-fuzz-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-mol-sub-num_num" type = "xs:integer" />
+<xs:simpleType name="BIND-mol-sub-num_num-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-mol-sub-num_num-fuzz-a-type">
+<xs:sequence>
+<xs:element name="Int-fuzz" type="Int-fuzz-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-object -->
+
+<xs:element name="BIND-mol-object" type="BIND-mol-object-a-type" />
+<xs:complexType name="BIND-mol-object-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object_bmoid" type="BIND-mol-object_bmoid-a-type" />
+<xs:element name="BIND-mol-object_sub-unit" type="BIND-mol-object_sub-unit-a-type" />
+<xs:element name="BIND-mol-object_num" type="BIND-mol-object_num-a-type" minOccurs="0" />
+<xs:element name="BIND-mol-object_state" type="BIND-mol-object_state-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-mol-object_bmoid-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object-id" type="BIND-mol-object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-object_sub-unit-a-type">
+<xs:sequence>
+<xs:element name="BIND-object" type="BIND-object-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-object_num-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-sub-num" type="BIND-mol-sub-num-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-object_state-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object-source" type="BIND-mol-object-source-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-object-source -->
+
+<xs:element name="BIND-mol-object-source" type="BIND-mol-object-source-a-type" />
+<xs:complexType name="BIND-mol-object-source-a-type">
+<xs:choice>
+<xs:element name="BIND-mol-object-source_a" type="BIND-mol-object-source_a-a-type" />
+<xs:element name="BIND-mol-object-source_b" type="BIND-mol-object-source_b-a-type" />
+<xs:element name="BIND-mol-object-source_result" type="BIND-mol-object-source_result-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-mol-object-source_a-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-object-source_b-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-object-source_result-a-type">
+<xs:sequence>
+<xs:element name="BIND-action-ref" type="BIND-action-ref-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-sub-unit-type -->
+
+<xs:element name="BIND-mol-sub-unit-type" type="BIND-mol-sub-unit-type-a-type" />
+<xs:complexType name="BIND-mol-sub-unit-type-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-sub-unit-type_descr" type="BIND-mol-sub-unit-type_descr-a-type" />
+<xs:element name="BIND-mol-sub-unit-type_stoichiometry" type="BIND-mol-sub-unit-type_stoichiometry-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-mol-sub-unit-type_descr" type = "xs:string" />
+<xs:simpleType name="BIND-mol-sub-unit-type_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-mol-sub-unit-type_stoichiometry-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-stoich" type="BIND-mol-stoich-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-stoich -->
+
+<xs:element name="BIND-mol-stoich" type="BIND-mol-stoich-a-type" />
+<xs:complexType name="BIND-mol-stoich-a-type">
+<xs:choice>
+<xs:element name="BIND-mol-stoich_num" type="BIND-mol-stoich_num-a-type" />
+<xs:element name="BIND-mol-stoich_bmoids" type="BIND-mol-stoich_bmoids-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-mol-stoich_num-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-sub-num" type="BIND-mol-sub-num-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-stoich_bmoids-a-type" >
+<xs:sequence>
+<xs:element name="BIND-mol-object-id" type="BIND-mol-object-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-object-pair -->
+
+<xs:element name="BIND-mol-object-pair" type="BIND-mol-object-pair-a-type" />
+<xs:complexType name="BIND-mol-object-pair-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object-pair_a-bmoid" type="BIND-mol-object-pair_a-bmoid-a-type" />
+<xs:element name="BIND-mol-object-pair_b-bmoid" type="BIND-mol-object-pair_b-bmoid-a-type" />
+<xs:element name="BIND-mol-object-pair_a-instance" type="BIND-mol-object-pair_a-instance-a-type" minOccurs="0" />
+<xs:element name="BIND-mol-object-pair_b-instance" type="BIND-mol-object-pair_b-instance-a-type" minOccurs="0" />
+<xs:element name="BIND-mol-object-pair_iid" type="BIND-mol-object-pair_iid-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-mol-object-pair_a-bmoid-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object-id" type="BIND-mol-object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-mol-object-pair_b-bmoid-a-type">
+<xs:sequence>
+<xs:element name="BIND-mol-object-id" type="BIND-mol-object-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-mol-object-pair_a-instance" type = "xs:integer" />
+<xs:simpleType name="BIND-mol-object-pair_a-instance-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-mol-object-pair_b-instance" type = "xs:integer" />
+<xs:simpleType name="BIND-mol-object-pair_b-instance-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-mol-object-pair_iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-mol-object-id -->
+
+<xs:element name="BIND-mol-object-id" type = "xs:integer" />
+<xs:simpleType name="BIND-mol-object-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-Pathway-set -->
+
+<xs:element name="BIND-Pathway-set" type="BIND-Pathway-set-a-type" />
+<xs:complexType name="BIND-Pathway-set-a-type">
+<xs:sequence>
+<xs:element name="BIND-Pathway-set_date" type="BIND-Pathway-set_date-a-type" minOccurs="0" />
+<xs:element name="BIND-Pathway-set_database" type="BIND-Pathway-set_database-a-type" minOccurs="0" />
+<xs:element name="BIND-Pathway-set_pathways" type="BIND-Pathway-set_pathways-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Pathway-set_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway-set_database-a-type">
+<xs:sequence>
+<xs:element name="BIND-Database-site" type="BIND-Database-site-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway-set_pathways-a-type" >
+<xs:sequence>
+<xs:element name="BIND-Pathway" type="BIND-Pathway-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-Pathway -->
+
+<xs:element name="BIND-Pathway" type="BIND-Pathway-a-type" />
+<xs:complexType name="BIND-Pathway-a-type">
+<xs:sequence>
+<xs:element name="BIND-Pathway_date" type="BIND-Pathway_date-a-type" />
+<xs:element name="BIND-Pathway_updates" type="BIND-Pathway_updates-a-type" minOccurs="0" />
+<xs:element name="BIND-Pathway_pid" type="BIND-Pathway_pid-a-type" />
+<xs:element name="BIND-Pathway_pathway" type="BIND-Pathway_pathway-a-type" />
+<xs:element name="BIND-Pathway_descr" type="BIND-Pathway_descr-a-type" />
+<xs:element name="BIND-Pathway_source" type="BIND-Pathway_source-a-type" />
+<xs:element name="BIND-Pathway_authors" type="BIND-Pathway_authors-a-type" minOccurs="0" />
+<xs:element name="BIND-Pathway_division" type="BIND-Pathway_division-a-type" minOccurs="0" />
+<xs:element name="BIND-Pathway_priv" type="BIND-Pathway_priv-a-type" minOccurs="0" />
+<xs:element name="BIND-Pathway_extref" type="BIND-Pathway_extref-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-Pathway_date-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_updates-a-type" >
+<xs:sequence>
+<xs:element name="BIND-update-object" type="BIND-update-object-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_pid-a-type">
+<xs:sequence>
+<xs:element name="Pathway-id" type="Pathway-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_pathway-a-type" >
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_descr-a-type">
+<xs:sequence>
+<xs:element name="BIND-path-descr" type="BIND-path-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_authors-a-type" >
+<xs:sequence>
+<xs:element name="BIND-author" type="BIND-author-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_division-a-type">
+<xs:sequence>
+<xs:element name="BIND-Rec-coll-descr" type="BIND-Rec-coll-descr-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-Pathway_priv" type="BIND-Pathway_priv-a-type"/>
+<xs:complexType name="BIND-Pathway_priv-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-Pathway_extref-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Pathway-id -->
+
+<xs:element name="Pathway-id" type = "xs:integer" />
+<xs:simpleType name="Pathway-id-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of BIND-path-descr -->
+
+<xs:element name="BIND-path-descr" type="BIND-path-descr-a-type" />
+<xs:complexType name="BIND-path-descr-a-type">
+<xs:sequence>
+<xs:element name="BIND-path-descr_descr" type="BIND-path-descr_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-path-descr_cell-cycle" type="BIND-path-descr_cell-cycle-a-type" minOccurs="0" />
+<xs:element name="BIND-path-descr_pathological-state" type="BIND-path-descr_pathological-state-a-type" minOccurs="0" />
+<xs:element name="BIND-path-descr_pathway-actions" type="BIND-path-descr_pathway-actions-a-type" minOccurs="0" />
+<xs:element name="BIND-path-descr_phenotype" type="BIND-path-descr_phenotype-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-path-descr_descr" type = "xs:string" />
+<xs:simpleType name="BIND-path-descr_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-path-descr_cell-cycle-a-type" >
+<xs:sequence>
+<xs:element name="BIND-cellstage" type="BIND-cellstage-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-path-descr_pathological-state-a-type" >
+<xs:sequence>
+<xs:element name="BIND-pathol-state" type="BIND-pathol-state-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-path-descr_pathway-actions-a-type" >
+<xs:sequence>
+<xs:element name="BIND-action-ref" type="BIND-action-ref-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-path-descr_phenotype-a-type" >
+<xs:sequence>
+<xs:element name="BIND-phenotype" type="BIND-phenotype-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-pathol-state -->
+
+<xs:element name="BIND-pathol-state" type="BIND-pathol-state-a-type" />
+<xs:complexType name="BIND-pathol-state-a-type">
+<xs:sequence>
+<xs:element name="BIND-pathol-state_pathway-iid" type="BIND-pathol-state_pathway-iid-a-type" />
+<xs:element name="BIND-pathol-state_cause" type="BIND-pathol-state_cause-a-type" />
+<xs:element name="BIND-pathol-state_pathol-state" type="BIND-pathol-state_pathol-state-a-type" />
+<xs:element name="BIND-pathol-state_database" type="BIND-pathol-state_database-a-type" minOccurs="0" />
+<xs:element name="BIND-pathol-state_phenotype" type="BIND-pathol-state_phenotype-a-type" minOccurs="0" />
+<xs:element name="BIND-pathol-state_descr" type="BIND-pathol-state_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-pathol-state_source" type="BIND-pathol-state_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-pathol-state_pathway-iid-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-pathol-state_cause-a-type">
+<xs:sequence>
+<xs:element name="BIND-pathol-state-cause" type="BIND-pathol-state-cause-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-pathol-state_pathol-state-a-type" >
+<xs:sequence>
+<xs:element name="BIND-pathol-state_pathol-state_E" type="BIND-pathol-state_pathol-state_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-pathol-state_pathol-state_E" type = "xs:string" />
+<xs:simpleType name="BIND-pathol-state_pathol-state_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="BIND-pathol-state_database-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-pathol-state_phenotype-a-type" >
+<xs:sequence>
+<xs:element name="BIND-phenotype" type="BIND-phenotype-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-pathol-state_descr" type = "xs:string" />
+<xs:simpleType name="BIND-pathol-state_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-pathol-state_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-pathol-state-cause -->
+
+<xs:element name="BIND-pathol-state-cause" type="BIND-pathol-state-cause-a-type" />
+<xs:complexType name="BIND-pathol-state-cause-a-type">
+<xs:choice>
+<xs:element name="BIND-pathol-state-cause_destroyed" type="BIND-pathol-state-cause_destroyed-a-type" />
+<xs:element name="BIND-pathol-state-cause_replaced-by" type="BIND-pathol-state-cause_replaced-by-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-pathol-state-cause_destroyed">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-pathol-state-cause_destroyed-a-type">
+</xs:complexType>
+<xs:complexType name="BIND-pathol-state-cause_replaced-by-a-type">
+<xs:sequence>
+<xs:element name="Interaction-id" type="Interaction-id-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-phenotype -->
+
+<xs:element name="BIND-phenotype" type="BIND-phenotype-a-type" />
+<xs:complexType name="BIND-phenotype-a-type">
+<xs:sequence>
+<xs:element name="BIND-phenotype_trait" type="BIND-phenotype_trait-a-type" minOccurs="0" />
+<xs:element name="BIND-phenotype_name" type="BIND-phenotype_name-a-type" />
+<xs:element name="BIND-phenotype_wild-type" type="BIND-phenotype_wild-type-a-type" />
+<xs:element name="BIND-phenotype_descr" type="BIND-phenotype_descr-a-type" minOccurs="0" />
+<xs:element name="BIND-phenotype_db-links" type="BIND-phenotype_db-links-a-type" minOccurs="0" />
+<xs:element name="BIND-phenotype_source" type="BIND-phenotype_source-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-phenotype_trait" type = "xs:string" />
+<xs:simpleType name="BIND-phenotype_trait-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-phenotype_name" type = "xs:string" />
+<xs:simpleType name="BIND-phenotype_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-phenotype_wild-type" type="BIND-phenotype_wild-type-a-type" />
+<xs:complexType name="BIND-phenotype_wild-type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="not-specified" />
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-phenotype_descr" type = "xs:string" />
+<xs:simpleType name="BIND-phenotype_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-phenotype_db-links-a-type" >
+<xs:sequence>
+<xs:element name="BIND-other-db" type="BIND-other-db-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-phenotype_source-a-type">
+<xs:sequence>
+<xs:element name="BIND-pub-set" type="BIND-pub-set-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

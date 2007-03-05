@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module BIND-Profile
+================================================= -->
+<!-- Definition of BIND-profile -->
+
+<xs:element name="BIND-profile" type="BIND-profile-a-type" />
+<xs:complexType name="BIND-profile-a-type">
+<xs:sequence>
+<xs:element name="BIND-profile_general-spec" type="BIND-profile_general-spec-a-type" />
+<xs:element name="BIND-profile_disjoint" type="BIND-profile_disjoint-a-type" />
+<xs:element name="BIND-profile_norm" type="BIND-profile_norm-a-type" minOccurs="0" />
+<xs:element name="BIND-profile_cut-off" type="BIND-profile_cut-off-a-type" minOccurs="0" />
+<xs:element name="BIND-profile_defaults" type="BIND-profile_defaults-a-type" minOccurs="0" />
+<xs:element name="BIND-profile_im" type="BIND-profile_im-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-profile_general-spec-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-gs" type="BIND-p-gs-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-profile_disjoint-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-disjoint" type="BIND-p-disjoint-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-profile_norm-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-norm" type="BIND-p-norm-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-profile_cut-off-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-cutoff" type="BIND-p-cutoff-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-profile_defaults-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-defaults" type="BIND-p-defaults-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-profile_im-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-im" type="BIND-p-im-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-gs -->
+
+<xs:element name="BIND-p-gs" type="BIND-p-gs-a-type" />
+<xs:complexType name="BIND-p-gs-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-gs_alphabet" type="BIND-p-gs_alphabet-a-type" />
+<xs:element name="BIND-p-gs_length" type="BIND-p-gs_length-a-type" minOccurs="0" />
+<xs:element name="BIND-p-gs_topology" type="BIND-p-gs_topology-a-type" minOccurs="0" />
+<xs:element name="BIND-p-gs_begin" type="BIND-p-gs_begin-a-type" minOccurs="0" />
+<xs:element name="BIND-p-gs_end" type="BIND-p-gs_end-a-type" minOccurs="0" />
+<xs:element name="BIND-p-gs_log-base" type="BIND-p-gs_log-base-a-type" minOccurs="0" />
+<xs:element name="BIND-p-gs_p0" type="BIND-p-gs_p0-a-type" minOccurs="0" />
+<xs:element name="BIND-p-gs_random-model" type="BIND-p-gs_random-model-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-gs_alphabet" type = "xs:string" />
+<xs:simpleType name="BIND-p-gs_alphabet-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-p-gs_length" type = "xs:integer" />
+<xs:simpleType name="BIND-p-gs_length-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-p-gs_topology" type="BIND-p-gs_topology-a-type" />
+<xs:complexType name="BIND-p-gs_topology-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="linear" />
+<xs:enumeration value="circular" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-p-gs_begin" type = "xs:integer" />
+<xs:simpleType name="BIND-p-gs_begin-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-p-gs_end" type = "xs:integer" />
+<xs:simpleType name="BIND-p-gs_end-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-p-gs_log-base-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-p-gs_p0-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-p-gs_random-model-a-type" >
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-disjoint -->
+
+<xs:element name="BIND-p-disjoint" type="BIND-p-disjoint-a-type" />
+<xs:complexType name="BIND-p-disjoint-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-disjoint_definition" type="BIND-p-disjoint_definition-a-type" />
+<xs:element name="BIND-p-disjoint_parameters" type="BIND-p-disjoint_parameters-a-type" minOccurs="0" />
+<xs:element name="BIND-p-disjoint_other-name" type="BIND-p-disjoint_other-name-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-disjoint_definition" type="BIND-p-disjoint_definition-a-type" />
+<xs:complexType name="BIND-p-disjoint_definition-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="unique" />
+<xs:enumeration value="protect" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-p-disjoint_parameters-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-param" type="BIND-p-param-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-p-disjoint_other-name" type = "xs:string" />
+<xs:simpleType name="BIND-p-disjoint_other-name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-p-param -->
+
+<xs:element name="BIND-p-param" type="BIND-p-param-a-type" />
+<xs:complexType name="BIND-p-param-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-param_param" type="BIND-p-param_param-a-type" />
+<xs:element name="BIND-p-param_descr" type="BIND-p-param_descr-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-p-param_param-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-param-val" type="BIND-p-param-val-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-p-param_descr" type = "xs:string" />
+<xs:simpleType name="BIND-p-param_descr-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-p-param-val -->
+
+<xs:element name="BIND-p-param-val" type="BIND-p-param-val-a-type" />
+<xs:complexType name="BIND-p-param-val-a-type">
+<xs:choice>
+<xs:element name="BIND-p-param-val_integer" type="BIND-p-param-val_integer-a-type" />
+<xs:element name="BIND-p-param-val_real" type="BIND-p-param-val_real-a-type" />
+<xs:element name="BIND-p-param-val_low-value" type="BIND-p-param-val_low-value-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-param-val_integer" type = "xs:integer" />
+<xs:simpleType name="BIND-p-param-val_integer-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="BIND-p-param-val_real-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-p-param-val_low-value">
+<xs:complexType/>
+</xs:element>
+<xs:complexType name="BIND-p-param-val_low-value-a-type">
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-norm -->
+
+<xs:element name="BIND-p-norm" type="BIND-p-norm-a-type" />
+<xs:complexType name="BIND-p-norm-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-norm_function" type="BIND-p-norm_function-a-type" />
+<xs:element name="BIND-p-norm_other-name" type="BIND-p-norm_other-name-a-type" minOccurs="0" />
+<xs:element name="BIND-p-norm_parameters" type="BIND-p-norm_parameters-a-type" minOccurs="0" />
+<xs:element name="BIND-p-norm_mode-nr" type="BIND-p-norm_mode-nr-a-type" minOccurs="0" />
+<xs:element name="BIND-p-norm_priority" type="BIND-p-norm_priority-a-type" minOccurs="0" />
+<xs:element name="BIND-p-norm_text" type="BIND-p-norm_text-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-norm_function" type="BIND-p-norm_function-a-type" />
+<xs:complexType name="BIND-p-norm_function-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="linear" />
+<xs:enumeration value="gle-zscore" />
+<xs:enumeration value="other" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="BIND-p-norm_other-name" type = "xs:string" />
+<xs:simpleType name="BIND-p-norm_other-name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-p-norm_parameters-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-param" type="BIND-p-param-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-p-norm_mode-nr" type = "xs:integer" />
+<xs:simpleType name="BIND-p-norm_mode-nr-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-p-norm_priority" type = "xs:integer" />
+<xs:simpleType name="BIND-p-norm_priority-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-p-norm_text" type = "xs:string" />
+<xs:simpleType name="BIND-p-norm_text-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-p-cutoff -->
+
+<xs:element name="BIND-p-cutoff" type="BIND-p-cutoff-a-type" />
+<xs:complexType name="BIND-p-cutoff-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-cutoff_rscore" type="BIND-p-cutoff_rscore-a-type" />
+<xs:element name="BIND-p-cutoff_level" type="BIND-p-cutoff_level-a-type" minOccurs="0" />
+<xs:element name="BIND-p-cutoff_text" type="BIND-p-cutoff_text-a-type" minOccurs="0" />
+<xs:element name="BIND-p-cutoff_norm" type="BIND-p-cutoff_norm-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-cutoff_rscore" type = "xs:integer" />
+<xs:simpleType name="BIND-p-cutoff_rscore-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-p-cutoff_level" type = "xs:integer" />
+<xs:simpleType name="BIND-p-cutoff_level-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="BIND-p-cutoff_text" type = "xs:string" />
+<xs:simpleType name="BIND-p-cutoff_text-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-p-cutoff_norm-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-co-norm" type="BIND-p-co-norm-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-co-norm -->
+
+<xs:element name="BIND-p-co-norm" type="BIND-p-co-norm-a-type" />
+<xs:complexType name="BIND-p-co-norm-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-co-norm_nscore" type="BIND-p-co-norm_nscore-a-type" />
+<xs:element name="BIND-p-co-norm_mode-nr" type="BIND-p-co-norm_mode-nr-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-p-co-norm_nscore-a-type">
+<xs:sequence>
+<xs:element name="RealVal-Units" type="RealVal-Units-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-p-co-norm_mode-nr" type = "xs:integer" />
+<xs:simpleType name="BIND-p-co-norm_mode-nr-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-p-defaults -->
+
+<xs:element name="BIND-p-defaults" type="BIND-p-defaults-a-type" />
+<xs:complexType name="BIND-p-defaults-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-defaults_sy-i" type="BIND-p-defaults_sy-i-a-type" minOccurs="0" />
+<xs:element name="BIND-p-defaults_sy-m" type="BIND-p-defaults_sy-m-a-type" minOccurs="0" />
+<xs:element name="BIND-p-defaults_params-i" type="BIND-p-defaults_params-i-a-type" />
+<xs:element name="BIND-p-defaults_params-m" type="BIND-p-defaults_params-m-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-defaults_sy-i" type = "xs:string" />
+<xs:simpleType name="BIND-p-defaults_sy-i-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="BIND-p-defaults_sy-m" type = "xs:string" />
+<xs:simpleType name="BIND-p-defaults_sy-m-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="BIND-p-defaults_params-i-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-score-i" type="BIND-p-score-i-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-p-defaults_params-m-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-score-m" type="BIND-p-score-m-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-score-i -->
+
+<xs:element name="BIND-p-score-i" type="BIND-p-score-i-a-type" />
+<xs:complexType name="BIND-p-score-i-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-score-i_name" type="BIND-p-score-i_name-a-type" />
+<xs:element name="BIND-p-score-i_value" type="BIND-p-score-i_value-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-score-i_name" type="BIND-p-score-i_name-a-type" />
+<xs:complexType name="BIND-p-score-i_name-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="b0" />
+<xs:enumeration value="b1" />
+<xs:enumeration value="e0" />
+<xs:enumeration value="e1" />
+<xs:enumeration value="bm" />
+<xs:enumeration value="bi" />
+<xs:enumeration value="bd" />
+<xs:enumeration value="be" />
+<xs:enumeration value="mm" />
+<xs:enumeration value="mi" />
+<xs:enumeration value="md" />
+<xs:enumeration value="me" />
+<xs:enumeration value="im" />
+<xs:enumeration value="ii" />
+<xs:enumeration value="id" />
+<xs:enumeration value="ie" />
+<xs:enumeration value="dm" />
+<xs:enumeration value="di" />
+<xs:enumeration value="dd" />
+<xs:enumeration value="de" />
+<xs:enumeration value="i" />
+<xs:enumeration value="i0" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-p-score-i_value-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-param-val" type="BIND-p-param-val-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-score-m -->
+
+<xs:element name="BIND-p-score-m" type="BIND-p-score-m-a-type" />
+<xs:complexType name="BIND-p-score-m-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-score-m_name" type="BIND-p-score-m_name-a-type" />
+<xs:element name="BIND-p-score-m_value" type="BIND-p-score-m_value-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="BIND-p-score-m_name" type="BIND-p-score-m_name-a-type" />
+<xs:complexType name="BIND-p-score-m_name-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="m" />
+<xs:enumeration value="m0" />
+<xs:enumeration value="d" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:complexType name="BIND-p-score-m_value-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-param-val" type="BIND-p-param-val-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of BIND-p-im -->
+
+<xs:element name="BIND-p-im" type="BIND-p-im-a-type" />
+<xs:complexType name="BIND-p-im-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-im_type-params" type="BIND-p-im_type-params-a-type" />
+<xs:element name="BIND-p-im_sy" type="BIND-p-im_sy-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-p-im_type-params-a-type">
+<xs:sequence>
+<xs:element name="BIND-p-im-type" type="BIND-p-im-type-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="BIND-p-im_sy" type = "xs:string" />
+<xs:simpleType name="BIND-p-im_sy-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of BIND-p-im-type -->
+
+<xs:element name="BIND-p-im-type" type="BIND-p-im-type-a-type" />
+<xs:complexType name="BIND-p-im-type-a-type">
+<xs:choice>
+<xs:element name="BIND-p-im-type_i" type="BIND-p-im-type_i-a-type" />
+<xs:element name="BIND-p-im-type_m" type="BIND-p-im-type_m-a-type" />
+</xs:choice>
+</xs:complexType>
+
+
+<xs:complexType name="BIND-p-im-type_i-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-score-i" type="BIND-p-score-i-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BIND-p-im-type_m-a-type" >
+<xs:sequence>
+<xs:element name="BIND-p-score-m" type="BIND-p-score-m-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

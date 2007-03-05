@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by John J. Salama (Mount Sinai Hospital) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="StandardizedTextSets">
+		<xs:annotation>
+			<xs:documentation>Standardized Text Descriptions for Various BIND Text Fields</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="BINDField">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FieldId" type="xs:integer"/>
+							<xs:element name="FieldDescr" type="xs:string"/>
+							<xs:element name="FieldDefines">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="DefineId" type="xs:integer"/>
+										<xs:element name="DefineDescr" type="xs:string"/>
+										<xs:element name="DefineTextSets">
+											<xs:complexType>
+												<xs:sequence maxOccurs="unbounded">
+													<xs:element name="TextId" type="xs:integer"/>
+													<xs:element name="TextName" type="xs:string"/>
+													<xs:element name="StandardizedText" type="xs:string"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

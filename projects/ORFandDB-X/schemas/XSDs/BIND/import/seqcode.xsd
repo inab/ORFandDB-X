@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-SeqCode
+================================================= -->
+<!-- Definition of Seq-code-type -->
+
+<xs:element name="Seq-code-type" type="Seq-code-type-a-type" />
+<xs:complexType name="Seq-code-type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="iupacna" />
+<xs:enumeration value="iupacaa" />
+<xs:enumeration value="ncbi2na" />
+<xs:enumeration value="ncbi4na" />
+<xs:enumeration value="ncbi8na" />
+<xs:enumeration value="ncbipna" />
+<xs:enumeration value="ncbi8aa" />
+<xs:enumeration value="ncbieaa" />
+<xs:enumeration value="ncbipaa" />
+<xs:enumeration value="iupacaa3" />
+<xs:enumeration value="ncbistdaa" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+
+
+
+
+<!-- Definition of Seq-map-table -->
+
+<xs:element name="Seq-map-table" type="Seq-map-table-a-type" />
+<xs:complexType name="Seq-map-table-a-type">
+<xs:sequence>
+<xs:element name="Seq-map-table_from" type="Seq-map-table_from-a-type" />
+<xs:element name="Seq-map-table_to" type="Seq-map-table_to-a-type" />
+<xs:element name="Seq-map-table_num" type="Seq-map-table_num-a-type" />
+<xs:element name="Seq-map-table_start-at" type="Seq-map-table_start-at-a-type" minOccurs="0" />
+<xs:element name="Seq-map-table_table" type="Seq-map-table_table-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-map-table_from-a-type">
+<xs:sequence>
+<xs:element name="Seq-code-type" type="Seq-code-type-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-map-table_to-a-type">
+<xs:sequence>
+<xs:element name="Seq-code-type" type="Seq-code-type-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-map-table_num" type = "xs:integer" />
+<xs:simpleType name="Seq-map-table_num-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Seq-map-table_start-at" type = "xs:integer" />
+<xs:simpleType name="Seq-map-table_start-at-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-map-table_table-a-type" >
+<xs:sequence>
+<xs:element name="Seq-map-table_table_E" type="Seq-map-table_table_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-map-table_table_E" type = "xs:integer" />
+<xs:simpleType name="Seq-map-table_table_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Seq-code-table -->
+
+<xs:element name="Seq-code-table" type="Seq-code-table-a-type" />
+<xs:complexType name="Seq-code-table-a-type">
+<xs:sequence>
+<xs:element name="Seq-code-table_code" type="Seq-code-table_code-a-type" />
+<xs:element name="Seq-code-table_num" type="Seq-code-table_num-a-type" />
+<xs:element name="Seq-code-table_one-letter" type="Seq-code-table_one-letter-a-type" />
+<xs:element name="Seq-code-table_start-at" type="Seq-code-table_start-at-a-type" minOccurs="0" />
+<xs:element name="Seq-code-table_table" type="Seq-code-table_table-a-type" />
+<xs:element name="Seq-code-table_comps" type="Seq-code-table_comps-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-code-table_code-a-type">
+<xs:sequence>
+<xs:element name="Seq-code-type" type="Seq-code-type-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-code-table_num" type = "xs:integer" />
+<xs:simpleType name="Seq-code-table_num-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:element name="Seq-code-table_one-letter" type="Seq-code-table_one-letter-a-type"/>
+<xs:complexType name="Seq-code-table_one-letter-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Seq-code-table_start-at" type = "xs:integer" />
+<xs:simpleType name="Seq-code-table_start-at-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Seq-code-table_table-a-type" >
+<xs:sequence>
+<xs:element name="Seq-code-table_table_E" type="Seq-code-table_table_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-code-table_table_E" type="Seq-code-table_table_E-a-type" />
+<xs:complexType name="Seq-code-table_table_E-a-type">
+<xs:sequence>
+<xs:element name="Seq-code-table_table_E_symbol" type="Seq-code-table_table_E_symbol-a-type" />
+<xs:element name="Seq-code-table_table_E_name" type="Seq-code-table_table_E_name-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:element name="Seq-code-table_table_E_symbol" type = "xs:string" />
+<xs:simpleType name="Seq-code-table_table_E_symbol-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Seq-code-table_table_E_name" type = "xs:string" />
+<xs:simpleType name="Seq-code-table_table_E_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Seq-code-table_comps-a-type" >
+<xs:sequence>
+<xs:element name="Seq-code-table_comps_E" type="Seq-code-table_comps_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Seq-code-table_comps_E" type = "xs:integer" />
+<xs:simpleType name="Seq-code-table_comps_E-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+
+<!-- Definition of Seq-code-set -->
+
+<xs:element name="Seq-code-set" type="Seq-code-set-a-type" />
+<xs:complexType name="Seq-code-set-a-type">
+<xs:sequence>
+<xs:element name="Seq-code-set_codes" type="Seq-code-set_codes-a-type" minOccurs="0" />
+<xs:element name="Seq-code-set_maps" type="Seq-code-set_maps-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:complexType name="Seq-code-set_codes-a-type" >
+<xs:sequence>
+<xs:element name="Seq-code-table" type="Seq-code-table-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Seq-code-set_maps-a-type" >
+<xs:sequence>
+<xs:element name="Seq-map-table" type="Seq-map-table-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>

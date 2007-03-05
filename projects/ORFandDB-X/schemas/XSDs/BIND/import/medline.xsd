@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" jxb:version="1.0">
+<xs:annotation>
+<xs:appinfo>
+<jxb:globalBindings underscoreBinding="asCharInWord"/>
+</xs:appinfo>
+</xs:annotation>
+<!-- ============================================ -->
+<!-- This section mapped from ASN.1 module NCBI-Medline
+================================================= -->
+<!-- Definition of Medline-entry -->
+
+<xs:element name="Medline-entry" type="Medline-entry-a-type" />
+<xs:complexType name="Medline-entry-a-type">
+<xs:sequence>
+<xs:element name="Medline-entry_uid" type="Medline-entry_uid-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_em" type="Medline-entry_em-a-type" />
+<xs:element name="Medline-entry_cit" type="Medline-entry_cit-a-type" />
+<xs:element name="Medline-entry_abstract" type="Medline-entry_abstract-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_mesh" type="Medline-entry_mesh-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_substance" type="Medline-entry_substance-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_xref" type="Medline-entry_xref-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_idnum" type="Medline-entry_idnum-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_gene" type="Medline-entry_gene-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_pmid" type="Medline-entry_pmid-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_pub-type" type="Medline-entry_pub-type-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_mlfield" type="Medline-entry_mlfield-a-type" minOccurs="0" />
+<xs:element name="Medline-entry_status" type="Medline-entry_status-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medline-entry_uid" type = "xs:integer" />
+<xs:simpleType name="Medline-entry_uid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+<xs:complexType name="Medline-entry_em-a-type">
+<xs:sequence>
+<xs:element name="Date" type="Date-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Medline-entry_cit-a-type">
+<xs:sequence>
+<xs:element name="Cit-art" type="Cit-art-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Medline-entry_abstract" type = "xs:string" />
+<xs:simpleType name="Medline-entry_abstract-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Medline-entry_mesh-a-type" >
+<xs:sequence>
+<xs:element name="Medline-mesh" type="Medline-mesh-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Medline-entry_substance-a-type" >
+<xs:sequence>
+<xs:element name="Medline-rn" type="Medline-rn-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Medline-entry_xref-a-type" >
+<xs:sequence>
+<xs:element name="Medline-si" type="Medline-si-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Medline-entry_idnum-a-type" >
+<xs:sequence>
+<xs:element name="Medline-entry_idnum_E" type="Medline-entry_idnum_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Medline-entry_idnum_E" type = "xs:string" />
+<xs:simpleType name="Medline-entry_idnum_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Medline-entry_gene-a-type" >
+<xs:sequence>
+<xs:element name="Medline-entry_gene_E" type="Medline-entry_gene_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Medline-entry_gene_E" type = "xs:string" />
+<xs:simpleType name="Medline-entry_gene_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Medline-entry_pmid-a-type">
+<xs:sequence>
+<xs:element name="PubMedId" type="PubMedId-a-type" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Medline-entry_pub-type-a-type" >
+<xs:sequence>
+<xs:element name="Medline-entry_pub-type_E" type="Medline-entry_pub-type_E-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Medline-entry_pub-type_E" type = "xs:string" />
+<xs:simpleType name="Medline-entry_pub-type_E-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+<xs:complexType name="Medline-entry_mlfield-a-type" >
+<xs:sequence>
+<xs:element name="Medline-field" type="Medline-field-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Medline-entry_status" type="Medline-entry_status-a-type" />
+<xs:complexType name="Medline-entry_status-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="publisher" />
+<xs:enumeration value="premedline" />
+<xs:enumeration value="medline" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+
+
+<!-- Definition of Medline-mesh -->
+
+<xs:element name="Medline-mesh" type="Medline-mesh-a-type" />
+<xs:complexType name="Medline-mesh-a-type">
+<xs:sequence>
+<xs:element name="Medline-mesh_mp" type="Medline-mesh_mp-a-type" minOccurs="0" />
+<xs:element name="Medline-mesh_term" type="Medline-mesh_term-a-type" />
+<xs:element name="Medline-mesh_qual" type="Medline-mesh_qual-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medline-mesh_mp" type="Medline-mesh_mp-a-type"/>
+<xs:complexType name="Medline-mesh_mp-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Medline-mesh_term" type = "xs:string" />
+<xs:simpleType name="Medline-mesh_term-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Medline-mesh_qual-a-type" >
+<xs:sequence>
+<xs:element name="Medline-qual" type="Medline-qual-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of Medline-qual -->
+
+<xs:element name="Medline-qual" type="Medline-qual-a-type" />
+<xs:complexType name="Medline-qual-a-type">
+<xs:sequence>
+<xs:element name="Medline-qual_mp" type="Medline-qual_mp-a-type" minOccurs="0" />
+<xs:element name="Medline-qual_subh" type="Medline-qual_subh-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medline-qual_mp" type="Medline-qual_mp-a-type"/>
+<xs:complexType name="Medline-qual_mp-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="true" />
+<xs:enumeration value="false" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Medline-qual_subh" type = "xs:string" />
+<xs:simpleType name="Medline-qual_subh-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Medline-rn -->
+
+<xs:element name="Medline-rn" type="Medline-rn-a-type" />
+<xs:complexType name="Medline-rn-a-type">
+<xs:sequence>
+<xs:element name="Medline-rn_type" type="Medline-rn_type-a-type" />
+<xs:element name="Medline-rn_cit" type="Medline-rn_cit-a-type" minOccurs="0" />
+<xs:element name="Medline-rn_name" type="Medline-rn_name-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medline-rn_type" type="Medline-rn_type-a-type" />
+<xs:complexType name="Medline-rn_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="nameonly" />
+<xs:enumeration value="cas" />
+<xs:enumeration value="ec" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Medline-rn_cit" type = "xs:string" />
+<xs:simpleType name="Medline-rn_cit-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:element name="Medline-rn_name" type = "xs:string" />
+<xs:simpleType name="Medline-rn_name-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Medline-si -->
+
+<xs:element name="Medline-si" type="Medline-si-a-type" />
+<xs:complexType name="Medline-si-a-type">
+<xs:sequence>
+<xs:element name="Medline-si_type" type="Medline-si_type-a-type" />
+<xs:element name="Medline-si_cit" type="Medline-si_cit-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medline-si_type" type="Medline-si_type-a-type" />
+<xs:complexType name="Medline-si_type-a-type">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="ddbj" />
+<xs:enumeration value="carbbank" />
+<xs:enumeration value="embl" />
+<xs:enumeration value="hdb" />
+<xs:enumeration value="genbank" />
+<xs:enumeration value="hgml" />
+<xs:enumeration value="mim" />
+<xs:enumeration value="msd" />
+<xs:enumeration value="pdb" />
+<xs:enumeration value="pir" />
+<xs:enumeration value="prfseqdb" />
+<xs:enumeration value="psd" />
+<xs:enumeration value="swissprot" />
+<xs:enumeration value="gdb" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:complexType>
+<xs:element name="Medline-si_cit" type = "xs:string" />
+<xs:simpleType name="Medline-si_cit-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+
+
+
+<!-- Definition of Medline-field -->
+
+<xs:element name="Medline-field" type="Medline-field-a-type" />
+<xs:complexType name="Medline-field-a-type">
+<xs:sequence>
+<xs:element name="Medline-field_type" type="Medline-field_type-a-type" />
+<xs:element name="Medline-field_str" type="Medline-field_str-a-type" />
+<xs:element name="Medline-field_ids" type="Medline-field_ids-a-type" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="Medline-field_type" type="Medline-field_type-a-type" />
+<xs:complexType name="Medline-field_type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="other" />
+<xs:enumeration value="comment" />
+<xs:enumeration value="erratum" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="Medline-field_str" type = "xs:string" />
+<xs:simpleType name="Medline-field_str-a-type" final="restriction">
+<xs:restriction base="xs:string"/>
+</xs:simpleType>
+<xs:complexType name="Medline-field_ids-a-type" >
+<xs:sequence>
+<xs:element name="DocRef" type="DocRef-a-type" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+
+
+<!-- Definition of DocRef -->
+
+<xs:element name="DocRef" type="DocRef-a-type" />
+<xs:complexType name="DocRef-a-type">
+<xs:sequence>
+<xs:element name="DocRef_type" type="DocRef_type-a-type" />
+<xs:element name="DocRef_uid" type="DocRef_uid-a-type" />
+</xs:sequence>
+</xs:complexType>
+
+
+<xs:element name="DocRef_type" type="DocRef_type-a-type" />
+<xs:complexType name="DocRef_type-a-type">
+<xs:annotation>
+<xs:appinfo>
+<jxb:property name="intValue"/>
+</xs:appinfo>
+</xs:annotation>
+<xs:simpleContent>
+<xs:extension base="xs:integer">
+<xs:attribute name="value" use="required">
+<xs:simpleType>
+<xs:restriction base="xs:string">
+<xs:enumeration value="medline" />
+<xs:enumeration value="pubmed" />
+<xs:enumeration value="ncbigi" />
+</xs:restriction>
+</xs:simpleType>
+</xs:attribute>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:element name="DocRef_uid" type = "xs:integer" />
+<xs:simpleType name="DocRef_uid-a-type" final="restriction">
+<xs:restriction base="xs:integer"/>
+</xs:simpleType>
+
+
+
+</xs:schema>
