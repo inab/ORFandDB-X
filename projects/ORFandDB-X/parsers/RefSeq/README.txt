@@ -10,4 +10,4 @@ ENZYME in ASN.1 format.
 
 So, this directory will only contain a thin wrapper description around this tool.
 
-asn2all -i {i} -o {o} -v {v} -a s -b t -f s
+asn2all -i {i} -o {genefile} -v {protfile} -a s -b t -f s
