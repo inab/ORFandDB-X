@@ -169,6 +169,88 @@ Also, it is used to store information in the OMIM AV field context (element alle
                   <xsd:choice maxOccurs="1" minOccurs="1">
                     <xsd:sequence maxOccurs="1" minOccurs="1">
                       <xsd:element maxOccurs="unbounded" minOccurs="0" ref="alias"/>
+                      <xsd:element maxOccurs="1" minOccurs="0" name="mutation">
+                        <xsd:annotation>
+                          <xsd:documentation><![CDATA[The contents of this element describe a mutation.
+This mutation is responsible of the allelic variant, so
+it is important to be able to describe it.]]></xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:complexType>
+                          <xsd:choice>
+                            <xsd:element name="fusion">
+                              <xsd:annotation>
+                                <xsd:documentation><![CDATA[A gene fusion]]></xsd:documentation>
+                              </xsd:annotation>
+                              <xsd:complexType>
+                                <xsd:sequence>
+                                  <xsd:element maxOccurs="unbounded" minOccurs="2" ref="geneSymbol"/>
+                                </xsd:sequence>
+                              </xsd:complexType>
+                            </xsd:element>
+                            <xsd:sequence>
+                              <xsd:element maxOccurs="unbounded" minOccurs="0" ref="geneSymbol" type="xsd:string"/>
+                              <xsd:choice maxOccurs="unbounded" minOccurs="1">
+                                <xsd:element name="TODO0" type="xsd:string"/>
+                                <xsd:element name="and"/>
+                                <xsd:element name="or"/>
+                                <xsd:element ref="alteration"/>
+                                <xsd:element name="unkMutation" type="xsd:string"/>
+                                <xsd:element name="alterations">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="alteration"/>
+                                      <xsd:element maxOccurs="unbounded" minOccurs="0" name="substitution">
+                                        <xsd:complexType>
+                                          <xsd:attribute name="resType" use="optional">
+                                            <xsd:annotation>
+                                              <xsd:documentation><![CDATA[Residue type.
+It is an enumerated value.]]></xsd:documentation>
+                                            </xsd:annotation>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="coords" use="optional">
+                                            <xsd:annotation>
+                                              <xsd:documentation><![CDATA[Coordinate system, which could not match with residue type.
+Another enumerated value.]]></xsd:documentation>
+                                            </xsd:annotation>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="start" type="xsd:integer" use="optional">
+                                            <xsd:annotation>
+                                              <xsd:documentation><![CDATA[Starting position of the substitution, using the coordinate system]]></xsd:documentation>
+                                            </xsd:annotation>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="stop" type="xsd:integer" use="optional">
+                                            <xsd:annotation>
+                                              <xsd:documentation><![CDATA[Stop position of the substitution, using the coordinate system]]></xsd:documentation>
+                                            </xsd:annotation>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="oldRes" type="xsd:string" use="optional">
+                                            <xsd:annotation>
+                                              <xsd:documentation><![CDATA[Old residues, which have been deleted, substituted duplicated etc...]]></xsd:documentation>
+                                            </xsd:annotation>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="newRes" type="xsd:string" use="optional">
+                                            <xsd:annotation>
+                                              <xsd:documentation><![CDATA[New residues, which have been inserted/added]]></xsd:documentation>
+                                            </xsd:annotation>
+                                          </xsd:attribute>
+                                          <xsd:attribute name="on" use="optional"/>
+                                          <xsd:attribute name="addedExt" use="optional"/>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element ref="odb:link"/>
+                              </xsd:choice>
+                            </xsd:sequence>
+                          </xsd:choice>
+                          <xsd:attribute name="raw" type="xsd:string" use="required">
+                            <xsd:annotation>
+                              <xsd:documentation><![CDATA[This attribute contains the raw mutation description, as it is found at OMIM.]]></xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:attribute>
+                        </xsd:complexType>
+                      </xsd:element>
                       <xsd:element maxOccurs="1" minOccurs="1" ref="text"/>
                     </xsd:sequence>
                     <xsd:element maxOccurs="1" minOccurs="0" ref="movedTo"/>
@@ -297,6 +379,28 @@ A caret symbol (^) before an entry number means the entry no longer exists becau
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="geneSymbol" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[A gene symbol.]]></xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="alteration">
+    <xsd:complexType>
+      <xsd:attribute name="type" use="required">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="INS"/>
+            <xsd:enumeration value="DEL"/>
+            <xsd:enumeration value="INS/DEL"/>
+            <xsd:enumeration value="DUP"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="subtype" use="optional"/>
+      <xsd:attribute name="length" use="optional"/>
+      <xsd:attribute name="unit" use="optional"/>
     </xsd:complexType>
   </xsd:element>
 </xsd:schema>

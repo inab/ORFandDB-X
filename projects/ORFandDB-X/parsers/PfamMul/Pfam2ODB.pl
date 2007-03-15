@@ -31,7 +31,7 @@ print OUTPUT <<EOF;
 	which was created by José María Fernández González
 	jmfernandez\@cnio.es CNIO (C) 2007
 -->
-<PfamSet xmlns:odb='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0' xmlns:msa='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA' xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam'>
+<PfamSet xmlns:odb='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0' xmlns:m='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA' xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam'>
 EOF
 
 foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
@@ -329,15 +329,15 @@ sub printGappedFragment($\@\@;$) {
 	} else {
 		print $OUTPUT "\t\t\t<consensus>\n";
 	}
-	print $OUTPUT "\t\t\t<msa:gappedFragment name='".$msa->[0]."'",
+	print $OUTPUT "\t\t\t<m:gappedFragment name='".$msa->[0]."'",
 		(defined($msa->[2])?" start='$msa->[2]'":''),
 		(defined($msa->[3])?" end='$msa->[3]'":''),
 		">";
 	my($key,$val);
 	while(($key,$val)=each(%{$msa->[1]})) {
-		print $OUTPUT "<msa:content type='$key'",((defined($id) && $key eq 'res')?" id='$id'":''),">$val</msa:content>";
+		print $OUTPUT "<m:content type='$key'",((defined($id) && $key eq 'res')?" id='$id'":''),">$val</m:content>";
 	}
-	print $OUTPUT "</msa:gappedFragment>\n";
+	print $OUTPUT "</m:gappedFragment>\n";
 	printAllLinks($OUTPUT,@{$msa->[4]},@{$RN});
 	
 	print $OUTPUT "\t\t\t</",(defined($msa->[5])?'gappedFragment':'consensus'),">\n";
@@ -346,7 +346,7 @@ sub printGappedFragment($\@\@;$) {
 sub printResidues($$\@) {
 	my($OUTPUT,$alignlength,$p_mulord)=@_;
 	
-	my($buffer)="\t\t<msa:residues>\n";
+	my($buffer)="\t\t<m:residues>\n";
 	foreach my $ap (0..($alignlength-1)) {
 		my($jp)=undef;
 		my($id)=1;
@@ -357,18 +357,24 @@ sub printResidues($$\@) {
 				# Skipping gaps
 				unless($v eq '-' || $v eq '.') {
 					unless(defined($jp)) {
-						$buffer .= "\t\t\t<msa:rs p='".($ap+1)."'>\n";
+						$buffer .= "\t\t\t<m:rs p='".($ap+1)."'>\n";
 						$jp='';
 					}
-					$buffer .= "\t\t\t\t<msa:r i='".$id."' p='".$msa->[6]."' v='".$v."' />\n";
+					$buffer .= "\t\t\t\t<m:r i='".$id."' p='".$msa->[6]."' v='".$v."' />\n";
 					$msa->[6]++;
 				}
 			}
 			$id++;
 		}
-		$buffer .= "\t\t\t</ms:rs>\n"  if(defined($jp));
+		$buffer .= "\t\t\t</m:rs>\n"  if(defined($jp));
+		
+		# Flushing every 10MB
+		if(length($buffer)>10485760) {
+			print $OUTPUT $buffer;
+			$buffer='';
+		}
 	}
-	$buffer .= "\t\t</msa:residues>\n";
+	$buffer .= "\t\t</m:residues>\n";
 	print $OUTPUT $buffer;
 }
 
