@@ -26,7 +26,6 @@ grouped by conserved positions.]]></xsd:documentation>
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element maxOccurs="unbounded" minOccurs="1" ref="gappedFragment"/>
-        <xsd:element maxOccurs="1" minOccurs="0" ref="residues"/>
       </xsd:sequence>
       <xsd:attribute name="length" type="xsd:positiveInteger" use="required"/>
     </xsd:complexType>
@@ -134,58 +133,49 @@ grouped by conserved positions.]]></xsd:documentation>
             </xsd:simpleContent>
           </xsd:complexType>
         </xsd:element>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string" use="required"/>
-      <xsd:attribute name="start" type="xsd:positiveInteger" use="optional"/>
-      <xsd:attribute name="end" type="xsd:positiveInteger" use="optional"/>
-    </xsd:complexType>
-  </xsd:element>
-  <xsd:element name="residues">
-    <xsd:annotation>
-      <xsd:documentation><![CDATA[This element contains almost the same information as the set of gappedFragment elements before it.
-The difference is the disposition, so conserved residues are together.]]></xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element maxOccurs="unbounded" minOccurs="1" name="rs">
+        <xsd:element maxOccurs="1" minOccurs="0" name="residues">
           <xsd:annotation>
-            <xsd:documentation><![CDATA[This is a residue set. Its attribute indicates the abstract place of the set.]]></xsd:documentation>
+            <xsd:documentation><![CDATA[This element contains almost the same information as the set of gappedFragment elements before it.
+The difference is the disposition, so conserved residues are together.]]></xsd:documentation>
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
               <xsd:element maxOccurs="unbounded" minOccurs="1" name="r">
                 <xsd:annotation>
-                  <xsd:documentation><![CDATA[This is a single residue, which points to its original gappedFragment with i attribute.
-p attribute is the position inside the gappedFragment (using original sequence coordinates).
-v attribute is the residue itself.]]></xsd:documentation>
+                  <xsd:documentation><![CDATA[This is a single residue, which has its original position relative to
+the gapped fragment (i attribute).
+p attribute is the position inside the original sequence (using original sequence coordinates).
+The content of the element is the residue itself.]]></xsd:documentation>
                 </xsd:annotation>
                 <xsd:complexType>
-                  <xsd:attribute name="i" type="xsd:positiveInteger" use="required">
-                    <xsd:annotation>
-                      <xsd:documentation><![CDATA[Identifier of the original content inside a gappedFragment.]]></xsd:documentation>
-                    </xsd:annotation>
-                  </xsd:attribute>
-                  <xsd:attribute name="p" type="xsd:integer" use="required">
-                    <xsd:annotation>
-                      <xsd:documentation><![CDATA[The position inside the gappedFragment sequence content.]]></xsd:documentation>
-                    </xsd:annotation>
-                  </xsd:attribute>
-                  <xsd:attribute name="v" use="required">
-                    <xsd:annotation>
-                      <xsd:documentation><![CDATA[The residue itself]]></xsd:documentation>
-                    </xsd:annotation>
-                    <xsd:simpleType>
-                      <xsd:restriction base="xsd:string">
-                        <xsd:length fixed="true" value="1"/>
-                      </xsd:restriction>
-                    </xsd:simpleType>
-                  </xsd:attribute>
+                  <xsd:simpleContent>
+                    <xsd:extension base="singleResidue">
+                      <xsd:attribute name="i" type="xsd:positiveInteger" use="required">
+                        <xsd:annotation>
+                          <xsd:documentation><![CDATA[Original position relative to the gapped fragment.]]></xsd:documentation>
+                        </xsd:annotation>
+                      </xsd:attribute>
+                      <xsd:attribute name="p" type="xsd:integer" use="required">
+                        <xsd:annotation>
+                          <xsd:documentation><![CDATA[The position inside the original sequence (using original sequence coordinates).]]></xsd:documentation>
+                        </xsd:annotation>
+                      </xsd:attribute>
+                    </xsd:extension>
+                  </xsd:simpleContent>
                 </xsd:complexType>
               </xsd:element>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="start" type="xsd:positiveInteger" use="optional"/>
+      <xsd:attribute name="end" type="xsd:positiveInteger" use="optional"/>
     </xsd:complexType>
   </xsd:element>
+  <xsd:simpleType name="singleResidue">
+    <xsd:restriction base="xsd:string">
+      <xsd:length fixed="true" value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
 </xsd:schema>

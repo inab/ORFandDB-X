@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -W
 
 use strict;
 
@@ -95,34 +95,26 @@ foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
 				# We have to write the MSA
 				print OUTPUT "\t<MSA length='$alignlength'>\n";
 				my($id)=1;
+				my($alength)='a' x $alignlength;
 				foreach my $msa (@mulord) {
 					print OUTPUT "\t\t<gappedFragment name='".$msa->[0]."'",
 						(defined($msa->[2])?" start='$msa->[2]'":''),
 						(defined($msa->[3])?" end='$msa->[3]'":''),
-						"><content type='res' id='$id'>$msa->[1]</content></gappedFragment>\n";
+						"><content type='res' id='$id'>$msa->[1]</content><residues>";
+					
+					my($buffer)='';	
+					my($pos)=$msa->[4];
+					my($i)=0;
+					foreach my $res (unpack($alength, $msa->[1])) {
+						$i++;
+						next  if($res eq '-' || $res eq '.');
+						$buffer .= '<r n="'.$i.'" p="'.$pos.'">'.$res.'</r>';
+						$pos++;
+					}
+					
+					print OUTPUT $buffer,"</residues></gappedFragment>\n";
 					$id++;
 				}
-
-				print OUTPUT "\t\t<residues>\n";
-				foreach my $ap (0..($alignlength-1)) {
-					my($jp)=undef;
-					$id=1;
-					foreach my $msa (@mulord) {
-						my($v)=substr($msa->[1],$ap,1);
-						# Skipping gaps
-						unless($v eq '-' || $v eq '.') {
-							unless(defined($jp)) {
-								print OUTPUT "\t\t\t<rs p='",($ap+1),"'>\n";
-								$jp='';
-							}
-							print OUTPUT "\t\t\t\t<r i='$id' p='$msa->[4]' v='$v' />\n";
-							$msa->[4]++;
-						}
-						$id++;
-					}
-					print OUTPUT "\t\t\t</rs>\n"  if(defined($jp));
-				}
-				print OUTPUT "\t\t</residues>\n";
 
 				print OUTPUT "\t</MSA>\n";
 			}

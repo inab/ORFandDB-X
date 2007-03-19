@@ -1,6 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -W
 
 use strict;
+use Time::HiRes qw(time);
 
 sub pushNew($\@\%);
 sub printGappedFragment($\@\@;$);
@@ -105,7 +106,7 @@ foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
 						push(@attr,['refNumber',$link->[0]]);
 						push(@attr,['title',$link->[3]])  if(defined($link->[3]));
 						push(@attr,['location',$link->[5]])  if(defined($link->[5]));
-							push(@attr,['author',$link->[4]])  if(defined($link->[4]));
+							#push(@attr,['author',$link->[4]])  if(defined($link->[4]));
 						foreach my $author (split(/, /,$link->[4])) {
 							$author =~ s/;? *$//;
 							push(@attr,['author',$author]);
@@ -148,7 +149,7 @@ foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
 						$id++;
 					}
 					printGappedFragment(\*OUTPUT,@{$gmsa},@{$RN})  if(defined($gmsa));
-					printResidues(\*OUTPUT,$alignlength,@mulord);
+					#printResidues(\*OUTPUT,$alignlength,@mulord);
 					print OUTPUT "\t\t</seed>\n";
 					print OUTPUT "\t</entry>\n";
 				}
@@ -329,15 +330,29 @@ sub printGappedFragment($\@\@;$) {
 	} else {
 		print $OUTPUT "\t\t\t<consensus>\n";
 	}
-	print $OUTPUT "\t\t\t<m:gappedFragment name='".$msa->[0]."'",
+	print $OUTPUT "\t\t\t<gappedFragment name='".$msa->[0]."'",
 		(defined($msa->[2])?" start='$msa->[2]'":''),
 		(defined($msa->[3])?" end='$msa->[3]'":''),
-		">";
+		" xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA'>";
+		
 	my($key,$val);
 	while(($key,$val)=each(%{$msa->[1]})) {
-		print $OUTPUT "<m:content type='$key'",((defined($id) && $key eq 'res')?" id='$id'":''),">$val</m:content>";
+		print $OUTPUT "<content type='$key'",((defined($id) && $key eq 'res')?" id='$id'":''),">$val</content>";
 	}
-	print $OUTPUT "</m:gappedFragment>\n";
+	if(defined($msa->[5]) && exists($msa->[1]{'res'})) {
+		my($buffer)='';
+		my($pos)=$msa->[6];
+		my($i)=0;
+
+		foreach my $res (unpack('a' x length($msa->[1]{'res'}), $msa->[1]{'res'})) {
+			$i++;
+			next  if($res eq '-' || $res eq '.');
+			$buffer .= '<r n="'.$i.'" p="'.$pos.'">'.$res.'</r>';
+			$pos++;
+		}
+		print $OUTPUT '<residues>',$buffer,'</residues>';
+	}
+	print $OUTPUT "</gappedFragment>\n";
 	printAllLinks($OUTPUT,@{$msa->[4]},@{$RN});
 	
 	print $OUTPUT "\t\t\t</",(defined($msa->[5])?'gappedFragment':'consensus'),">\n";
@@ -346,10 +361,132 @@ sub printGappedFragment($\@\@;$) {
 sub printResidues($$\@) {
 	my($OUTPUT,$alignlength,$p_mulord)=@_;
 	
+	print $OUTPUT "\t\t<residues xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA'>\n";
+	my($seqnum)=1;
+	my($alength)='a' x $alignlength;
+	foreach my $msa (@{$p_mulord}) {
+		next if($msa->[0] eq '__c__');
+		next unless(exists($msa->[1]{'res'}));
+		
+		my($pos)=$msa->[6];
+		print $OUTPUT "\t\t\t<s i='$seqnum'>";
+		my($i)=0;
+		
+		foreach my $res (unpack($alength, $msa->[1]{'res'})) {
+			$i++;
+			next  if($res eq '-' || $res eq '.');
+			print $OUTPUT "<r i='$i' p='$pos'>$res</r>";
+			$pos++;
+		}
+		print $OUTPUT "</s>\n";
+		$seqnum++;
+	}
+	print $OUTPUT "\t\t</residues>\n";
+}
+
+
+sub printResiduesNew2($$\@) {
+	my($OUTPUT,$alignlength,$p_mulord)=@_;
+	
+	print STDERR "Vini $alignlength ".scalar(@{$p_mulord})."\n";
+	my(@res)=();
+	my(@beg)=();
+	foreach my $msa (@{$p_mulord}) {
+		next if($msa->[0] eq '__c__');
+		next unless(exists($msa->[1]{'res'}));
+		
+		my($pos)=0;
+		foreach my $res (split('',$msa->[1]{'res'})) {
+			push(@{$res[$pos]},$res);
+		}
+		push(@beg,$msa->[6]);
+	}
+	print STDERR "\tVidi\n";
+	
+	my($buffer)="\t\t<m:residues>\n";
+	my($ap)=1;
+	foreach my $resi (@res) {
+		my($jp)=undef;
+		my($id)=0;
+		foreach my $v (@{$resi}) {
+			# Skipping gaps
+			unless($v eq '-' || $v eq '.') {
+				unless(defined($jp)) {
+					$buffer .= "\t\t\t<m:rs p='".$ap."'>\n";
+					$jp=1;
+				}
+				$buffer .= "\t\t\t\t<m:r i='".($id+1)."' p='".($beg[$id]++)."' v='".$v."' />\n";
+			}
+			$id++;
+		}
+		$buffer .= "\t\t\t</m:rs>\n"  if(defined($jp));
+		
+		# Flushing every 10MB
+		if(length($buffer)>10485760) {
+			#print $OUTPUT $buffer;
+			$buffer='';
+		}
+		$ap++;
+	}
+	$buffer .= "\t\t</m:residues>\n";
+	#print $OUTPUT $buffer;
+	print STDERR "\t\tVinci\n";
+}
+
+sub printResiduesNew($$\@) {
+	my($OUTPUT,$alignlength,$p_mulord)=@_;
+	
+	print STDERR "Vini $alignlength ".scalar(@{$p_mulord})."\n";
+	my(@seqs)=();
+	foreach my $msa (@{$p_mulord}) {
+		next if($msa->[0] eq '__c__');
+		next unless(exists($msa->[1]{'res'}));
+		
+		push(@seqs,[$msa->[1]{'res'},$msa->[6]]);
+	}
+	print STDERR "\tVidi\n";
+	
 	my($buffer)="\t\t<m:residues>\n";
 	foreach my $ap (0..($alignlength-1)) {
 		my($jp)=undef;
 		my($id)=1;
+		my($apo)=$ap+1;
+		foreach my $msa (@seqs) {
+			my($v)=substr($msa->[0],$ap,1);
+			# Skipping gaps
+			unless($v eq '-' || $v eq '.') {
+				unless(defined($jp)) {
+					$buffer .= "\t\t\t<m:rs p='".$apo."'>\n";
+					$jp='';
+				}
+				$buffer .= "\t\t\t\t<m:r i='".$id."' p='".($msa->[1]++)."' v='".$v."' />\n";
+			}
+			$id++;
+		}
+		$buffer .= "\t\t\t</m:rs>\n"  if(defined($jp));
+		
+		# Flushing every 10MB
+		if(length($buffer)>10485760) {
+			#print $OUTPUT $buffer;
+			$buffer='';
+		}
+	}
+	$buffer .= "\t\t</m:residues>\n";
+	#print $OUTPUT $buffer;
+	print STDERR "\t\tVinci\n";
+}
+
+sub printResiduesOld($$\@) {
+	my($OUTPUT,$alignlength,$p_mulord)=@_;
+	
+	print STDERR "Vini $alignlength ".scalar(@{$p_mulord})."\n";
+	print STDERR "\tVidi\n";
+	
+	my($buffer)="\t\t<m:residues>\n";
+	foreach my $ap (0..($alignlength-1)) {
+		my($jp)=undef;
+		my($id)=1;
+		my($apo)=$ap+1;
 		foreach my $msa (@{$p_mulord}) {
 			next if($msa->[0] eq '__c__');
 			if(exists($msa->[1]{'res'})) {
@@ -357,11 +494,10 @@ sub printResidues($$\@) {
 				# Skipping gaps
 				unless($v eq '-' || $v eq '.') {
 					unless(defined($jp)) {
-						$buffer .= "\t\t\t<m:rs p='".($ap+1)."'>\n";
+						$buffer .= "\t\t\t<m:rs p='".$apo."'>\n";
 						$jp='';
 					}
-					$buffer .= "\t\t\t\t<m:r i='".$id."' p='".$msa->[6]."' v='".$v."' />\n";
-					$msa->[6]++;
+					$buffer .= "\t\t\t\t<m:r i='".$id."' p='".($msa->[6]++)."' v='".$v."' />\n";
 				}
 			}
 			$id++;
@@ -370,12 +506,13 @@ sub printResidues($$\@) {
 		
 		# Flushing every 10MB
 		if(length($buffer)>10485760) {
-			print $OUTPUT $buffer;
+			#print $OUTPUT $buffer;
 			$buffer='';
 		}
 	}
 	$buffer .= "\t\t</m:residues>\n";
-	print $OUTPUT $buffer;
+	#print $OUTPUT $buffer;
+	print STDERR "\t\tVinci\n";
 }
 
 # This function substitutes offending XML
