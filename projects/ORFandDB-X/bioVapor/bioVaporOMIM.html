@@ -12,15 +12,20 @@
 <script type="text/javascript" src="ajaxslt/xslt2.js"></script>
 -->
 <script type="text/javascript" src="bioVaporPager.js"></script>
-<!-- Fucking Internet Explorer! -->
 <!--
-<script type="text/javascript" src="xslt/omim.js"></script>
+	// Internet Explorer has a weird behavior
+	// related to JavaScript and CSS on content dynamically
+	// loaded using XMLHTTPRequest (like CARGO widgets)
+	// and put as DIV children,
+	// probably due the severe security problems
+	// it had with JavaScript and CSS in the past.
+	// So, we have to dynamically load both of them.
 -->
 <link rel="stylesheet" href="/css/style.css" type="text/css" />
 </head>
 <body onload="Init()">
 <!--
-<h1>bioVapor pager alpha prototype for bioVapor messages v0.3</h1>
+<h1>bioVapor pager alpha prototype for bioVapor messages v0.4</h1>
 -->
 <div id="pager">Loading pager. Please wait...</div>
 <hr/>

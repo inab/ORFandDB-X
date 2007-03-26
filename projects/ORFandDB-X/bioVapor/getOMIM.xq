@@ -2,7 +2,7 @@ xquery version "1.0";
 
 declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 
-declare namespace vapor="http://www.cnio.es/scombio/bioVapor/0.3";
+declare namespace vapor="http://www.cnio.es/scombio/bioVapor/0.4";
 
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
@@ -12,7 +12,10 @@ let $query:=request:get-parameter("id",())
 let $nsquery:=request:get-parameter("namespace","EnsEMBL")
 return
 <vapor:message query='{$query}' namespace='{$nsquery}' timestamp='{current-dateTime()}'>
-<vapor:defaultView showMode='XSLT' mime='text/html' href='xslt/omim.xsl' />
+<vapor:defaultView showMode='XSLT' mime='text/html' href='xslt/omim.xsl'>
+	<vapor:include type='javascript' href='xslt/omim.js' />
+	<vapor:include type='CSS' href='xslt/omim.css' />
+</vapor:defaultView>
 <vapor:pagerView showMode='XSLT' mime='text/html' href='xslt/omimPager.xsl' />{
 for $id in $query
 let $results:= if($nsquery="OMIM") then (mim:getRecord($id)) else (mim:getRecordsFromEnsID($id))

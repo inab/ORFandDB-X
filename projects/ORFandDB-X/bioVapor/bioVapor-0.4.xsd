@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema targetNamespace="http://www.cnio.es/scombio/bioVapor/0.3" xmlns="http://www.cnio.es/scombio/bioVapor/0.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema targetNamespace="http://www.cnio.es/scombio/bioVapor/0.4" xmlns="http://www.cnio.es/scombio/bioVapor/0.4" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
-    <xsd:documentation xml:lang="en">bioVapor v0.3 message schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2006</xsd:documentation>
+    <xsd:documentation xml:lang="en">bioVapor v0.4 message schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
   </xsd:annotation>
   <xsd:element name="content">
     <xsd:annotation>
@@ -18,6 +18,32 @@
       <xsd:documentation><![CDATA[This complexType is re-used by view and defaultView]]></xsd:documentation>
     </xsd:annotation>
     <xsd:sequence maxOccurs="1" minOccurs="1">
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="include">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[When you have to include additional information (like JavaScript or CSS) on the
+dynamically loaded element, then you must use this element. This is needed
+to avoid a weird behavior or Internet Explorer. The side effect is that we can
+dynamically customize the representation.]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute name="type" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[Type of the content to dynamically load.]]></xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="CSS"/>
+                <xsd:enumeration value="javascript"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="href" type="xsd:anyURI" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The information is fetched from the provided URI.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="param">
         <xsd:annotation>
           <xsd:documentation><![CDATA[A processing parameter, with its name, content and flag about if it should containt the input.

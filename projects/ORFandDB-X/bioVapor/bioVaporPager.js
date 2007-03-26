@@ -11,7 +11,7 @@ var qsParm = new Object();
 qsParm['ensID'] = null;
 
 var NSprefix = new Object();
-NSprefix['vapor'] = 'http://www.cnio.es/scombio/bioVapor/0.3';
+NSprefix['vapor'] = 'http://www.cnio.es/scombio/bioVapor/0.4';
 
 var DEFAULTLOGO="<div align='center'><img src='images/vitruvio2.gif'/></div>";
 
@@ -68,10 +68,6 @@ function Init() {
 	
 	//netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
 	
-	// <!-- Fucking Internet Explorer! -->
-	dhtmlLoadScript('xslt/omim.js');
-	dhtmlLoadCSS('xslt/omim.css');
-
 	if(qsParm['ensID'] && qsParm['ensID'].length>0) {
 		var widURL=callWidgetURL(omimWidget,qsParm['ensID']);
 		var myXMLHTTPRequest = new XMLHttpRequest();
@@ -120,6 +116,11 @@ function getPager(responseXML,widURL)
 		
 		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
 			xslPagerURL=xslDefaultPagerURL;
+		} else {
+			// It is custom, so apply what it is needed by the pager
+			var nodeList=xpathEvaluate("//vapor:pagerView/vapor:include",xmlDoc,NSprefix);
+
+			processIncludeNodes(nodeList);
 		}
 	
 		var myXMLHTTPRequest=new XMLHttpRequest();
@@ -146,10 +147,10 @@ function showPager(responseXML,xslPagerURL)
 	try {
 		if(responseXML==null)
 			throw "Request "+xslPagerURL+" failed";
-			
+		
+		// Do the pager task
 		var xslPager = responseXML;
 
-		// Do the pager task
 		if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
 			var xsltPagerProc = new XSLTProcessor();
 			xsltPagerProc.importStylesheet(xslPager);
@@ -171,6 +172,11 @@ function showPager(responseXML,xslPagerURL)
 		var xslURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
 
 		if(xslURL!=null) {
+			// It is custom, so apply what it is needed by the pager
+			var nodeList=xpathEvaluate("//vapor:defaultView/vapor:include",xmlDoc,NSprefix);
+
+			processIncludeNodes(nodeList);
+			
 			// And now, get XSL itself
 			var myXMLHTTPRequest=new XMLHttpRequest();
 			myXMLHTTPRequest.onreadystatechange = function() {
@@ -290,6 +296,32 @@ function dhtmlLoadCSS(url)
    e.rel="stylesheet";
    e.href = url;
    document.getElementsByTagName("head")[0].appendChild(e);
+}
+
+function processIncludeNodes(nodeList)
+{
+	// Internet Explorer has a weird behavior
+	// related to JavaScript and CSS on content dynamically
+	// loaded using XMLHTTPRequest (like CARGO widgets)
+	// and put as DIV children,
+	// probably due the severe security problems
+	// it had with JavaScript and CSS in the past.
+	// So, we have to dynamically load both of them.
+	if(nodeList!=null) {
+		var iinc=0;
+		var minc=nodeList.length;
+		for(;iinc<minc;iinc++) {
+			var includeType=nodeList[iinc].getAttribute("type");
+			var includeURL=nodeList[iinc].getAttribute("href");
+
+			if(includeType=='CSS') {
+				dhtmlLoadCSS(includeURL);
+			}
+			if(includeType=='javascript') {
+				dhtmlLoadScript(includeURL);
+			}
+		}
+	}
 }
 
 function oldInit2(myXMLHTTPRequest,widURL)
