@@ -1,0 +1,1 @@
+../../ajaxslt-addon/xslt2.js
