@@ -11,7 +11,7 @@ var qsParm = new Object();
 qsParm['ensID'] = null;
 
 var NSprefix = new Object();
-NSprefix['vapor'] = 'http://www.cnio.es/scombio/bioVapor/0.4';
+NSprefix['msg'] = 'http://www.cnio.es/scombio/bioVapor/0.4';
 
 var DEFAULTLOGO="<div align='center'><img src='images/vitruvio2.gif'/></div>";
 
@@ -107,18 +107,18 @@ function getPager(responseXML,widURL)
 		var xslPagerURL='';
 		if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
 			// Get the pager
-			var nodeList=xpathEvaluate("//vapor:pagerView/@href",xmlDoc,NSprefix);
+			var nodeList=xpathEvaluate("//msg:pagerView/@href",xmlDoc,NSprefix);
 			xslPagerURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
 		} else {
 			// Get the pager
-			xslPagerURL=xpathEvaluate("//vapor:pagerView/@href",xmlDoc,NSprefix,xpathStringType,null);
+			xslPagerURL=xpathEvaluate("//msg:pagerView/@href",xmlDoc,NSprefix,xpathStringType,null);
 		}
 		
 		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
 			xslPagerURL=xslDefaultPagerURL;
 		} else {
 			// It is custom, so apply what it is needed by the pager
-			var nodeList=xpathEvaluate("//vapor:pagerView/vapor:include",xmlDoc,NSprefix);
+			var nodeList=xpathEvaluate("//msg:pagerView/msg:include",xmlDoc,NSprefix);
 
 			processIncludeNodes(nodeList);
 		}
@@ -168,12 +168,12 @@ function showPager(responseXML,xslPagerURL)
 		}
 		
 		// Get the XSL URL, if any
-		var nodeList=xpathEvaluate("//vapor:defaultView/@href",xmlDoc,NSprefix);
+		var nodeList=xpathEvaluate("//msg:defaultView/@href",xmlDoc,NSprefix);
 		var xslURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
 
 		if(xslURL!=null) {
 			// It is custom, so apply what it is needed by the pager
-			var nodeList=xpathEvaluate("//vapor:defaultView/vapor:include",xmlDoc,NSprefix);
+			var nodeList=xpathEvaluate("//msg:defaultView/msg:include",xmlDoc,NSprefix);
 
 			processIncludeNodes(nodeList);
 			
@@ -336,7 +336,7 @@ function oldInit2(myXMLHTTPRequest,widURL)
 		showPager(myXMLHTTPRequest,xmlDoc);
 
 		// Get the XSL URL, if any
-		var nodeList=xpathEvaluate("//vapor:defaultView/@href",xmlDoc,NSprefix);
+		var nodeList=xpathEvaluate("//msg:defaultView/@href",xmlDoc,NSprefix);
 		var xslURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
 
 		if(xslURL!=null) {
@@ -367,7 +367,7 @@ function oldShowPager(myXMLHTTPRequest,xmlDocu)
 {
 	if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
 		// Get the pager
-		var nodeList=xpathEvaluate("//vapor:pagerView/@href",xmlDocu,NSprefix);
+		var nodeList=xpathEvaluate("//msg:pagerView/@href",xmlDocu,NSprefix);
 		var xslPagerURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
 		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
 			xslPagerURL=xslDefaultPagerURL;
@@ -386,7 +386,7 @@ function oldShowPager(myXMLHTTPRequest,xmlDocu)
 		getElemById("pager").appendChild(fragment);
 	} else {
 		// Get the pager
-		var xslPagerURL=xpathEvaluate("//vapor:pagerView/@href",xmlDocu,NSprefix,xpathStringType,null);
+		var xslPagerURL=xpathEvaluate("//msg:pagerView/@href",xmlDocu,NSprefix,xpathStringType,null);
 		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
 			xslPagerURL=xslDefaultPagerURL;
 		}

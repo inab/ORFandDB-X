@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:vapor="http://www.cnio.es/scombio/bioVapor/0.4"
+	xmlns:msg="http://www.cnio.es/scombio/bioVapor/0.4"
 	xmlns:mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM"
 	xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0">
 	
@@ -13,12 +13,12 @@
 	<xsl:template match="/">
 <html>
 <head>
-<title>Results for <xsl:value-of select="/vapor:message/@query"/> on <xsl:value-of select="/vapor:message/@timestamp"/></title>
+<title>Results for <xsl:value-of select="/msg:message/@query"/> on <xsl:value-of select="/msg:message/@timestamp"/></title>
 <script type="text/javascript" src="xslt/omim.js" />
 <link rel="stylesheet" href="xslt/omim.css" type="text/css" />
 </head>
 <body>
-	<xsl:apply-templates select="//vapor:result[position() &gt;= $fromVal and position() &lt;= $toVal]/vapor:content/mim:record"/>
+	<xsl:apply-templates select="//msg:result[position() &gt;= $fromVal and position() &lt;= $toVal]/msg:content/mim:record"/>
 </body>
 </html>
 	</xsl:template>
