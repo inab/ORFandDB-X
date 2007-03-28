@@ -2,7 +2,7 @@ xquery version "1.0";
 
 declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 
-declare namespace msg="http://www.cnio.es/scombio/bioVapor/0.4";
+declare namespace msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4";
 
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 

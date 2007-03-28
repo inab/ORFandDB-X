@@ -1,6 +1,6 @@
 module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM";
 
-import module namespace ens="http://www.cnio.es/scombio/biovapor/ensembl" at "java:org.cnio.scombio.biovapor.exist.EnsemblModule";
+import module namespace ens="http://www.cnio.es/scombio/jmfernandez/widget/ensembl" at "java:org.cnio.scombio.jmfernandez.widget.exist.EnsemblModule";
 
 declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
 {

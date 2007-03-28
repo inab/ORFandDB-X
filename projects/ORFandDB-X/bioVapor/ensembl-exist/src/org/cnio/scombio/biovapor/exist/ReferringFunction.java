@@ -1,4 +1,4 @@
-package org.cnio.scombio.biovapor.exist;
+package org.cnio.scombio.jmfernandez.widget.exist;
 /*
  * José María Fernández González, (C) 2006
  * GNV2, CNIO
@@ -31,7 +31,7 @@ package org.cnio.scombio.biovapor.exist;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.cnio.scombio.biovapor.EnsemblRefs;
+import org.cnio.scombio.jmfernandez.widget.EnsemblRefs;
 import org.ensembl.driver.AdaptorException;
 
 import org.exist.dom.QName;

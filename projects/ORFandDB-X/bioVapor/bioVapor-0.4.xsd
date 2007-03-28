@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema targetNamespace="http://www.cnio.es/scombio/bioVapor/0.4" xmlns="http://www.cnio.es/scombio/bioVapor/0.4" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema targetNamespace="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4" xmlns="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
-    <xsd:documentation xml:lang="en">bioVapor v0.4 message schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
+    <xsd:documentation xml:lang="en">Widget message v0.4 schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
   </xsd:annotation>
   <xsd:element name="content">
     <xsd:annotation>

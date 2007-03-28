@@ -14,7 +14,7 @@
 		<include name="${rellibs}/ensj-39.2.jar"/>
 		<include name="${rellibs}/mysql-connector-java-3.1.8-bin.jar"/>
 	</fileset>
-	<path id="org.cnio.scombio.biovapor.javalibs">
+	<path id="org.cnio.scombio.jmfernandez.widget.javalibs">
 		<fileset refid="libfiles"/>
 	</path>
 
@@ -27,7 +27,7 @@
 
 	<target depends="init" description="compiles the source" name="compile">
 		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}">
-			<classpath refid="org.cnio.scombio.biovapor.javalibs" />
+			<classpath refid="org.cnio.scombio.jmfernandez.widget.javalibs" />
 		</javac>
 		<copy todir="${build}">
 			<fileset defaultexcludes="no" dir=".">

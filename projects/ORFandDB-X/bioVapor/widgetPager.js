@@ -12,7 +12,7 @@ qsParm['ensemblId'] = null;
 qsParm['ensID'] = null;
 
 var NSprefix = new Object();
-NSprefix['msg'] = 'http://www.cnio.es/scombio/bioVapor/0.4';
+NSprefix['msg'] = 'http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4';
 
 var DEFAULTLOGO="<div align='center'><img src='images/vitruvio2.gif'/></div>";
 

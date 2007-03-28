@@ -19,7 +19,7 @@
 		<include name="ensembl-mim-java.jar"/>
 	</fileset>
 	
-	<path id="org.cnio.scombio.biovapor.javalibs">
+	<path id="org.cnio.scombio.jmfernandez.widget.javalibs">
 		<fileset refid="libfiles"/>
 		<fileset dir="${libs}">
 			<include name="exist.jar"/>
@@ -36,7 +36,7 @@
 
 	<target depends="init,copyjars" description="compiles the source" name="compile">
 		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}">
-			<classpath refid="org.cnio.scombio.biovapor.javalibs" />
+			<classpath refid="org.cnio.scombio.jmfernandez.widget.javalibs" />
 		</javac>
 	</target>
 	

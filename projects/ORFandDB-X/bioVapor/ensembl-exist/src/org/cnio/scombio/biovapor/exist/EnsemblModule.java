@@ -1,4 +1,4 @@
-package org.cnio.scombio.biovapor.exist;
+package org.cnio.scombio.jmfernandez.widget.exist;
 /*
  * José María Fernández González, (C) 2006
  * GNV2, CNIO
@@ -37,7 +37,7 @@ import org.exist.xquery.FunctionDef;
 public class EnsemblModule
 	extends AbstractInternalModule
 {
-	public final static String NAMESPACE_URI = "http://www.cnio.es/scombio/biovapor/ensembl";
+	public final static String NAMESPACE_URI = "http://www.cnio.es/scombio/jmfernandez/widget/ensembl";
 	
 	public final static String PREFIX = "ensembl";
 	

@@ -21,7 +21,7 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 
-import org.cnio.scombio.biovapor.EnsemblRefs;
+import org.cnio.scombio.jmfernandez.widget.EnsemblRefs;
 
 import org.ensembl.datamodel.CoordinateSystem;
 import org.ensembl.datamodel.Exon;

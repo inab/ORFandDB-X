@@ -1,4 +1,4 @@
-package org.cnio.scombio.biovapor;
+package org.cnio.scombio.jmfernandez.widget;
 /*
  * José María Fernández González, (C) 2006
  * GNV2, CNIO
