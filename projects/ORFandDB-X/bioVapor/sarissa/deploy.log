@@ -1,0 +1,46 @@
+
+<html>
+<head>
+   <title>Operation Results</title>
+   <link rel="stylesheet" href="style_master.css" type="text/css">
+   <meta http-equiv="cache-control" content="no-cache">
+</head>
+<body>
+
+
+
+<table width="100%">
+   <table>
+      <tr>
+         <td><img src="images/logo.gif" align="left" border="0" alt="JBoss"></td>
+         <td valign="middle"><h1>JMX MBean Operation Result <code>undeploy()</code></h1></td>
+	  <tr/>
+   </table>
+
+<tr><td>
+
+
+<table cellpadding="5">
+   <tr>
+      <td><a href='HtmlAdaptor?action=displayMBeans'>Back to Agent View</a></td>
+      <td>
+      <td><a href='HtmlAdaptor?action=inspectMBean&name=jboss.system%3Aservice%3DMainDeployer'>Back to MBean View</a></td>
+      <td>
+      <td><a href=
+'HtmlAdaptor?action=invokeOpByName&name=jboss.system%3Aservice%3DMainDeployer&methodName=undeploy&argType=java.net.URL&arg0=file:'>Reinvoke MBean Operation
+
+	  </a></td>
+   </tr>
+</table>
+
+
+<hr>
+   <span class='OpResult'>
+
+   Operation completed successfully without a return value.
+
+   </span>
+</td></tr>
+</table>
+</body>
+</html>
