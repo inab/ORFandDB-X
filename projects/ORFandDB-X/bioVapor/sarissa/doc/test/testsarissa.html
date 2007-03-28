@@ -14,38 +14,38 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-    <title>Sarissa test page</title>
-    <link rel="stylesheet" type="text/css" href="../stylesheet.css" />
-    <style type="text/css" rel="stylesheet">
-    div.placeholder{border:1px solid #a7a7a7;}
-    </style>
-    <script type="text/javascript" src="../../build_tools/ecmaunit/ecmaunit.js"> </script>
-    <script type="text/javascript" src="../../sarissa.js"> </script>
-    <script type="text/javascript" src="../../sarissa_ieemu_load.js"> </script>
-    <script type="text/javascript" src="../../sarissa_dhtml.js"> </script>
-    <script type="text/javascript" src="../../sarissa_ieemu_xpath.js"> </script>
-    <script type="text/javascript" src="testsarissa.js"> </script>
-    <script type="text/javascript">
+	<title>Sarissa test page</title>
+	<link rel="stylesheet" type="text/css" href="../stylesheet.css" />
+	<style type="text/css" rel="stylesheet">
+	div.placeholder{border:1px solid #a7a7a7;}
+	</style>
+	<script type="text/javascript" src="../../build_tools/ecmaunit/ecmaunit.js"> </script>
+	<script type="text/javascript" src="../../sarissa.js"> </script>
+	<script type="text/javascript" src="../../sarissa_ieemu_load.js"> </script>
+	<script type="text/javascript" src="../../sarissa_dhtml.js"> </script>
+	<script type="text/javascript" src="../../sarissa_ieemu_xpath.js"> </script>
+	<script type="text/javascript" src="testsarissa.js"> </script>
+	<script type="text/javascript">
 //<![CDATA[
-    function getLink(link, desc, bName){
-        var a = document.createElement("a");
-        a.setAttribute((bName?"name":"href"), link);
-        if(desc) 
-            a.appendChild(document.createTextNode(desc));
-        return a;
-    };
-    
+	function getLink(link, desc, bName){
+		var a = document.createElement("a");
+    	a.setAttribute((bName?"name":"href"), link);
+    	if(desc) 
+    		a.appendChild(document.createTextNode(desc));
+    	return a;
+	};
+	
     function runTestCase(testCase) {
-            // append TOC entry
-            var name = testCase.name;
-            var toc = document.getElementById("toc");
-            toc.appendChild(document.createElement("br"));
-            toc.appendChild(getLink("#"+name, name+" Results", false));
-        
-            // append testcase section
-        var placeHolder = document.createElement("div");
-        placeHolder.className = "placeholder";
-        placeHolder.appendChild(getLink("#"+name, null, true));
+	    	// append TOC entry
+	    	var name = testCase.name;
+	    	var toc = document.getElementById("toc");
+	    	toc.appendChild(document.createElement("br"));
+	    	toc.appendChild(getLink("#"+name, name+" Results", false));
+	    
+	    	// append testcase section
+	    var placeHolder = document.createElement("div");
+	    placeHolder.className = "placeholder";
+		placeHolder.appendChild(getLink("#"+name, null, true));
         var header = document.createElement("h3");
         header.appendChild(document.createTextNode(name+" Results"));
         placeHolder.appendChild(header);
@@ -56,7 +56,7 @@
     };
     
     function runTestCases(){
-            runTestCase(new SarissaTestCase());
+    	    runTestCase(new SarissaTestCase());
         runTestCase(new XMLHttpRequestTestCase());
         runTestCase(new XMLSerializerTestCase());
         runTestCase(new DOMParserTestCase());
@@ -69,8 +69,8 @@
 //]]>
 </script>
 </head>
-    <body>
-        <h1>Sarissa Unit Tests</h1>
+	<body>
+		<h1>Sarissa Unit Tests</h1>
         <button onclick="runTestCases()">Run Testcases</button>
         <br />
         <a id="reportLink" href="javascript:alert('Run the tests first!')">Send Report via Email</a>
@@ -84,7 +84,7 @@
             <legend>XMLized ECMAScript object:</legend>
             <textarea id="xmlization" cols="80" rows="10"></textarea>
         </fieldset>
-        <div id="toc"> </div>
+		<div id="toc"> </div>
         <hr />
-    </body>
+	</body>
 </html>

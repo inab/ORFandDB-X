@@ -3,7 +3,7 @@
  * About
  * ====================================================================
  * Sarissa cross browser XML library - IE XPath Emulation 
- * @version 0.9.7.3
+ * @version @sarissa.version@
  * @author: Manos Batsis, mailto: mbatsis at users full stop sourceforge full stop net
  *
  * This script emulates Internet Explorer's selectNodes and selectSingleNode
@@ -127,7 +127,7 @@ if(_SARISSA_HAS_DOM_FEATURE && document.implementation.hasFeature("XPath", "3.0"
     * @returns the result of the XPath search as a SarissaNodeList
     * @throws An error if no namespace URI is found for the given prefix.
     */
-    XMLDocument.prototype.selectNodes = function(sExpr, contextNode){
+    XMLDocument.prototype.selectNodes = function(sExpr, contextNode, returnSingle){
         var nsDoc = this;
         var nsresolver = this._sarissa_useCustomResolver
         ? function(prefix){
@@ -136,15 +136,25 @@ if(_SARISSA_HAS_DOM_FEATURE && document.implementation.hasFeature("XPath", "3.0"
             else throw "No namespace URI found for prefix: '" + prefix+"'";
             }
         : this.createNSResolver(this.documentElement);
+        var result = null;
+        if(!returnSingle){
             var oResult = this.evaluate(sExpr,
-                    (contextNode?contextNode:this),
-                    nsresolver,
-                    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-        var nodeList = new SarissaNodeList(oResult.snapshotLength);
-        nodeList.expr = sExpr;
-        for(var i=0;i<nodeList.length;i++)
-            nodeList[i] = oResult.snapshotItem(i);
-        return nodeList;
+                (contextNode?contextNode:this),
+                nsresolver,
+                XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+            var nodeList = new SarissaNodeList(oResult.snapshotLength);
+            nodeList.expr = sExpr;
+            for(var i=0;i<nodeList.length;i++)
+                nodeList[i] = oResult.snapshotItem(i);
+            result = nodeList;
+        }
+        else {
+            result = oResult = this.evaluate(sExpr,
+                (contextNode?contextNode:this),
+                nsresolver,
+                XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        };
+        return result;      
     };
     /**
     * <p>Extends the Element to emulate IE's selectNodes</p>
@@ -170,12 +180,7 @@ if(_SARISSA_HAS_DOM_FEATURE && document.implementation.hasFeature("XPath", "3.0"
     */
     XMLDocument.prototype.selectSingleNode = function(sExpr, contextNode){
         var ctx = contextNode?contextNode:null;
-        sExpr = "("+sExpr+")[1]";
-        var nodeList = this.selectNodes(sExpr, ctx);
-        if(nodeList.length > 0)
-            return nodeList.item(0);
-        else
-            return null;
+        return this.selectNodes(sExpr, ctx, true);
     };
     /**
     * <p>Extends the Element to emulate IE's selectSingleNode.</p>

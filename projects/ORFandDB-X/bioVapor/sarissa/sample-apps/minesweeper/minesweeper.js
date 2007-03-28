@@ -3,7 +3,7 @@
  * About
  * ====================================================================
  * All XSLT Minesweeper
- * @version 0.9.7.3
+ * @version @sarissa.version@
  * @author: Copyright Sean Whalen
  * ====================================================================
  * Licence
@@ -30,13 +30,13 @@
           elem = document.all.gameArea;
 
      } else if (document.getElementById) {
-          elem = document.getElementById("gameArea");    
-      window.captureEvents(Event.MOUSEUP); 
+          elem = document.getElementById("gameArea");	 
+	  window.captureEvents(Event.MOUSEUP); 
      };
      if (elem) {
         elem.onmouseup = listenUp;
-    elem.onmouseover = enterButton;
-    elem.onmouseout = exitButton;
+	elem.onmouseover = enterButton;
+	elem.onmouseout = exitButton;
      };
 };
 
@@ -91,7 +91,7 @@ function revealSquares(clicker){
         squareAttrs = elSquare[i].attributes;
         eleID = squareAttrs.getNamedItem("h").nodeValue + "/" + squareAttrs.getNamedItem("v").nodeValue;
         nbc = squareAttrs.getNamedItem("nbc").nodeValue;
-        SqBtn = jDictionary[eleID].btn; 
+        SqBtn = jDictionary[eleID].btn;	
         sqBtnStyle = SqBtn.style;
         sqBtnStyle.border="inset";
         if (nbc !=0) {
@@ -120,7 +120,7 @@ function listenUp (e ) {
         return;
     };
     if (clicker.type == "button") {
-        if  (iButton  == 1  ) { 
+        if  (iButton  == 1  ) {	
             Outer_onMouseUp(clicker );
         }
         else {
@@ -141,7 +141,7 @@ function Outer_onMouseUp(clicker ) {
     if (clicked.isRevealed  !=0 ) {
         return; 
     };
-    if  (clicked.isBomb != -1 ) {       
+    if  (clicked.isBomb != -1 ) {		
         btnStyle.backgroundColor="#11CC22";
         btnStyle.border="inset";
         revealSquares(clicker);
@@ -249,7 +249,7 @@ function cacheRevealer()  {
 };
 
 
-function jDictionary (sweeperSquare) {   
+function jDictionary (sweeperSquare) {	 
  this.sweeperSquare = sweeperSquare;
 };
 

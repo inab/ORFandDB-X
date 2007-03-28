@@ -5,7 +5,7 @@
  * About
  * ====================================================================
  * All XSLT Minesweeper
- * @version 0.9.7.3
+ * @version @sarissa.version@
  * @author: Copyright Sean Whalen
  * 
  *     This stylesheet is an implementation of a method for constructing a complete XML tree 

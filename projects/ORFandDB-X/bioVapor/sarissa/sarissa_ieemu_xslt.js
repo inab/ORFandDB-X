@@ -3,7 +3,7 @@
  * About
  * ====================================================================
  * Sarissa cross browser XML library - IE XSLT Emulation (deprecated)
- * @version 0.9.7.3
+ * @version @sarissa.version@
  * @author: Manos Batsis, mailto: mbatsis at users full stop sourceforge full stop net
  *
  * This script emulates Internet Explorer's transformNode and transformNodeToObject

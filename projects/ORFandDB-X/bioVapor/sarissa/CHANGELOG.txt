@@ -15,6 +15,39 @@ Wrapper [http://www.webreference.com/programming/javascript/domwrapper/].
  
 ################################################################################################
 
+
+0.9.7.8 
+    * TODO: fix deprecated IE XSLt emu checks
+    * Fixed spelling errors and had drinks thanks to Greg Higgins (TODO: burn paypal to the ground)
+    * Added support for Text Nodes in document.importNode implementation for IE
+    * Fixed clearParameters bug in MSXML 3.0 thanks to Hartmut Wynen
+    * Enchanced setParameter to allow clearing parameters when null is passed as a param value 
+      thanks to Hartmut Wynen
+     
+0.9.7.7
+    * Fixed Sarissa.updateContentFromURI bug (1614011) thanks to Arjen Duursma 
+
+0.9.7.6 
+    * Fixed MXXMLWriter warning and XHTML transformToFragment testcase thanks to Waleed K. Abdulla
+    * Fixed some typos/errors that broke Safari
+    
+0.9.7.5 
+    * Fixed document.importNode check for IE 7 thanks to Waleed K. Abdulla
+
+0.9.7.4 
+    * Emulated XMLDocument via Document for Opera and fixed XPath thanks to Joao Eiras and Michael(tm) Smith
+    * Removed MSXML 4/5 progIds (warnings/bugs) thanks to Duncan Booth and Rick Oosterholt
+    * Fixed transformToDocument for MSXML 3 (probably the SP2 pooped version) thanks to bug 
+      submitter Waleed K. Abdulla and the anonymous poster with the fix [1549749]
+    * Fixed transformToFragment bug thanks to Robert Sanders
+    * Fixed Sarissa.copyChildNodes thanks to Waleed K. Abdulla
+    * Fixed selectSingleNode bug thanks to Joao Eiras 
+    * Made document.importNode a bit smarter to stop IE from getting too clever for it's own good
+      thanks to Duncan Booth
+    * Fixed IE's document.importNode to use document.importNode thanks to Duncan Booth
+    * Fixed XSLT document() function for MSXML 6 thanks to Ron MacCracken
+    * Added XSLTProcessor.clearParameters for IE
+
 0.9.7.3
     * Fixed transformToFragment bug in IE thanks to Simon Biickert
 

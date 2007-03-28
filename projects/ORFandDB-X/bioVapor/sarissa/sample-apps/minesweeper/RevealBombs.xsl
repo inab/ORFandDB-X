@@ -5,7 +5,7 @@
  * About
  * ====================================================================
  * All XSLT Minesweeper
- * @version 0.9.7.3
+ * @version @sarissa.version@
  * @author: Copyright Sean Whalen
  *
  *	This is the template that determines which squares to reveal after a square has been clicked.
