@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project basedir="." default="build" name="ensembl-exist">
+<project basedir="." default="build" name="ensembl-exist-module">
 	<description>EnsEMBL-MIM-eXist glue classes by jmfernandez Ant script $Id$</description>
 
 	<property location="src" name="src" />
