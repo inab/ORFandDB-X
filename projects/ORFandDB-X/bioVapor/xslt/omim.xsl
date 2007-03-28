@@ -169,7 +169,7 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 					http://www.expasy.ch/enzyme/
 				</xsl:when>
 				<xsl:when test="@namespace = 'dbSNP'">
-					http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=snp&cmd=search&term=
+					http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=snp&amp;cmd=search&amp;term=
 				</xsl:when>
 			</xsl:choose></xsl:variable>
 			
