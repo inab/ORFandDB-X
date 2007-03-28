@@ -8,6 +8,7 @@ var xslDefaultPagerURL = "xslt/simplePager.xsl";
 var xsltProcessor;
 
 var qsParm = new Object();
+qsParm['ensemblId'] = null;
 qsParm['ensID'] = null;
 
 var NSprefix = new Object();
@@ -68,8 +69,18 @@ function Init() {
 	
 	//netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
 	
-	if(qsParm['ensID'] && qsParm['ensID'].length>0) {
-		var widURL=callWidgetURL(omimWidget,qsParm['ensID']);
+	var ensemblId=null;
+	
+	if(qsParm['ensemblId'] && qsParm['ensemblId'].length>0) {
+		ensemblId=qsParm['ensemblId'];
+	} else {
+		if(qsParm['ensID'] && qsParm['ensID'].length>0) {
+			ensemblId=qsParm['enslID'];
+		}
+	}
+
+	if(ensemblId) {
+		var widURL=callWidgetURL(omimWidget,ensemblId);
 		var myXMLHTTPRequest = new XMLHttpRequest();
 		try {
 			myXMLHTTPRequest.open("GET", widURL, true);
@@ -91,7 +102,7 @@ function Init() {
 		}
 	} else {
 		getElemById("pager").innerHTML = DEFAULTLOGO;
-		getElemById("pageContent").innerHTML = "<h2><i>No EnsEMBL ID has been specified using ensID parameter</i></h2>";
+		getElemById("pageContent").innerHTML = "<h2><i>No EnsEMBL ID has been specified using ensemblId parameter</i></h2>";
 	}
 }
 
