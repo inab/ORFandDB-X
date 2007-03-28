@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project basedir="." default="listing" name="omim-widget" xmlns:xdb="http://exist-db.org/ant">
+	<description>OMIM widget by jmfernandez Ant script $Id$</description>
+	
+	<property location="src" name="src" />
+	<property location="build" name="build" />
+	<property location="libs" name="libs" />
+	<property location="dist" name="dist" />
+	
+	<dirname property="antfile.dir" file="${ant.file}"/>
+	<dirname property="antfile.dir.parent" file="${antfile.dir}"/>
+	
+	<property name="ensembl-exist-module.dir" location="${antfile.dir}/ensembl-exist-module" />
+	
+	<path id="exist-ant.classpath.core">
+		<fileset dir="${ensembl-exist-module.dir}/libs">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+		<classpath refid="exist-ant.classpath.core"/>
+	</typedef>
+
+	
+	<fileset dir="${ensembl-mim-java.dir}/dist" id="libfiles">
+		<include name="ensj-39.2.jar"/>
+		<include name="mysql-connector-java-3.1.8-bin.jar"/>
+		<include name="ensembl-mim-java.jar"/>
+	</fileset>
+	
+	<path id="org.cnio.scombio.jmfernandez.widget.javalibs">
+		<fileset refid="libfiles"/>
+		<fileset dir="${libs}">
+			<include name="exist.jar"/>
+			<include name="xmldb.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<!-- Creating the timestamp -->
+		<tstamp/>
+	</target>
+	
+	<target depends="init" description="Listing" name="listing">
+		<xdb:list uri="xmldb:exist://jabba:8089/xmlrpc/db" user="admin" password="" failonerror="true" resources="true" outputproperty="resources"/>
+		<xdb:list uri="xmldb:exist://jabba:8089/xmlrpc/db" user="admin" password="" failonerror="true" collections="true" outputproperty="collections" />
+		<echo>Resources:${line.separator}${resources}${line.separator}and Collections:${line.separator}${collections}</echo>
+	</target>
+
+	<target depends="init" description="Upload" name="upload">
+		<!-- First, XML content -->
+		<xdb:store uri="xmldb:exist://jabba:8089/xmlrpc/db" user="admin" password="" failonerror="true" createsubcollections="true" type="xml">
+			<fileset dir="skel">
+				<include name="**/*.xsd" />
+				<include name="**/*.xsl" />
+				<include name="**/*.xconf" />
+				<include name="**/*.xml" />
+				<include name="**/*.css" />
+			</fileset>
+		</xsd:store>
+		<!-- Then, binary content -->
+		<xdb:store uri="xmldb:exist://jabba:8089/xmlrpc/db" user="admin" password="" failonerror="true" createsubcollections="true" type="binary">
+			<fileset dir="skel" defaultexcludes="no">
+				<exclude name="**/*.xsd" />
+				<exclude name="**/*.xsl" />
+				<exclude name="**/*.xconf" />
+				<exclude name="**/*.xml" />
+				<exclude name="**/*.css" />
+			</fileset>
+		</xsd:store>
+	</target>
+
+	<target depends="init,copyjars" description="compiles the source" name="compile">
+		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}">
+			<classpath refid="org.cnio.scombio.jmfernandez.widget.javalibs" />
+		</javac>
+	</target>
+	
+	<target depends="compile.ensembl-exist-module" name="copyjars">
+		<copy todir="${dist}" flatten="true" verbose="true">
+			<fileset refid="libfiles"/>
+		</copy>
+	</target>
+	
+	<target depends="compile.ensembl-exist-module,copyjars" description="generates the internal distribution" name="build">
+		<jar basedir="${build}" jarfile="${dist}/${ant.project.name}.jar"/>
+	</target>
+	
+	<target depends="build" description="It copies the files to the destination" name="install">
+		<scp sftp="true" todir="jmfernandez:nR8Bg3zL@jabba:/databases/eXist/eXist-vapor/lib/user">
+			<fileset dir="${dist}">
+				<include name="*.jar"/>
+			</fileset>
+		</scp>
+	</target>
+	
+	<target depends="clean.ensembl-exist-module" description="clean up ${ant.project.name}" name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+	
+	<target depends="init" description="compiles ensembl-exist-module" name="compile.ensembl-exist-module">
+		<ant inheritAll="false" inheritRefs="false" dir="${ensembl-exist-module.dir}" />
+	</target>
+	
+	<target description="clean up ensembl-mim-java" name="clean.ensembl-exist-module">
+		<ant inheritAll="false" inheritRefs="false" dir="${ensembl-exist-module.dir}" target="clean" />
+	</target>
+	
+</project>
