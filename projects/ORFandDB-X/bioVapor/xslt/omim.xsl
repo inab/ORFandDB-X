@@ -86,9 +86,12 @@
 </div>
 </xsl:if>
 
+<!--
+	Commented out to remove superfluous information
 <xsl:apply-templates select="mim:entryHistory"/>
+-->
 
-<br/><br />Content Copyright (C) 1996-2006 Johns Hopkins University
+<br/><br />Content Copyright (C) 1996-2007 Johns Hopkins University
 <hr />
 	</xsl:template>
 	
@@ -148,7 +151,37 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 	</xsl:template>
 	
 	<xsl:template match="odb:link">
-		<u><xsl:value-of select="odb:text/text()"/></u>
+		<xsl:variable name="texto"><xsl:choose>
+			<xsl:when test="odb:text and odb:text/string-length() &gt; 0">
+				<xsl:value-of select="odb:text/text()"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="@id"/>
+			</xsl:otherwise>
+		</xsl:choose></xsl:variable>
+		
+		<xsl:if test="$texto">
+			<xsl:variable name="exthref"><xsl:choose>
+				<xsl:when test="@namespace = 'MIM'">
+					http://cargo.bioinfo.cnio.es/cgi-bin/widgets/eXist/widgetOMIM.html?ensemblId=
+				</xsl:when>
+				<xsl:when test="@namespace = 'ENZYME'">
+					http://www.expasy.ch/enzyme/
+				</xsl:when>
+				<xsl:when test="@namespace = 'dbSNP'">
+					http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=snp&cmd=search&term=
+				</xsl:when>
+			</xsl:choose></xsl:variable>
+			
+			<xsl:choose>
+				<xsl:when test="$exthref">
+					<a href="{$exthref}{@id}"><xsl:value-of select="$texto"/></a>
+				</xsl:when>
+				<xsl:otherwise>
+					<u><xsl:value-of select="$texto"/></u>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="mim:section">
