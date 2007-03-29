@@ -12,7 +12,7 @@ let $query:=request:get-parameter("id",())
 let $nsquery:=request:get-parameter("namespace","EnsEMBL")
 return
 <msg:message query='{$query}' namespace='{$nsquery}' timestamp='{current-dateTime()}'>
-<mesg:defaultView showMode='XSLT' mime='text/html' href='xslt/omim.xsl'>
+<msg:defaultView showMode='XSLT' mime='text/html' href='xslt/omim.xsl'>
 	<msg:include type='javascript' href='xslt/omim.js' />
 	<msg:include type='CSS' href='xslt/omim.css' />
 </msg:defaultView>

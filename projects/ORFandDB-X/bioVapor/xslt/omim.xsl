@@ -152,7 +152,7 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 	
 	<xsl:template match="odb:link">
 		<xsl:variable name="texto"><xsl:choose>
-			<xsl:when test="odb:text and odb:text/string-length() &gt; 0">
+			<xsl:when test="odb:text and string-length(odb:text/text()) &gt; 0">
 				<xsl:value-of select="odb:text/text()"/>
 			</xsl:when>
 			<xsl:otherwise>
@@ -163,7 +163,7 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 		<xsl:if test="$texto">
 			<xsl:variable name="exthref"><xsl:choose>
 				<xsl:when test="@namespace = 'MIM'">
-					http://cargo.bioinfo.cnio.es/cgi-bin/widgets/eXist/widgetOMIM.html?ensemblId=
+					widgetOMIM.html?namespace=OMIM&amp;ensemblId=
 				</xsl:when>
 				<xsl:when test="@namespace = 'ENZYME'">
 					http://www.expasy.ch/enzyme/

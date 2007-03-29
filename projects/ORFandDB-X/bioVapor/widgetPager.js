@@ -10,6 +10,7 @@ var xsltProcessor;
 var qsParm = new Object();
 qsParm['ensemblId'] = null;
 qsParm['ensID'] = null;
+qsParm['namespace'] = null;
 
 var NSprefix = new Object();
 NSprefix['msg'] = 'http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4';
@@ -70,6 +71,7 @@ function Init() {
 	//netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
 	
 	var ensemblId=null;
+	var namespace=null;
 	
 	if(qsParm['ensemblId'] && qsParm['ensemblId'].length>0) {
 		ensemblId=qsParm['ensemblId'];
@@ -79,8 +81,14 @@ function Init() {
 		}
 	}
 
+	if(qsParm['namespace'] && qsParm['namespace'].length>0) {
+		namespace=qsParm['namespace'];
+	} else {
+		namespace='EnsEMBL';
+	}
+
 	if(ensemblId) {
-		var widURL=callWidgetURL(omimWidget,ensemblId);
+		var widURL=callWidgetURL(omimWidget,ensemblId,namespace);
 		var myXMLHTTPRequest = new XMLHttpRequest();
 		try {
 			myXMLHTTPRequest.open("GET", widURL, true);
@@ -284,11 +292,11 @@ function generateQS(url,qsParm)
 	return url+'?'+query.substring(1);
 }
 
-function callWidgetURL(url,ensID)
+function callWidgetURL(url,ensID,namespace)
 {
 	var qsParm=new Array();
 	qsParm['id']=ensID;
-	//qsParm['namespace']='OMIM';
+	qsParm['namespace']=namespace;
 	
 	return generateQS(url,qsParm);
 }
