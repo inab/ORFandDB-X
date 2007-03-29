@@ -56,7 +56,7 @@
 
 	<target depends="init" description="Upload" name="upload">
 		<!-- First, XML content -->
-		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true" type="xml">
+		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel">
 				<include name="**/*.xsd" />
 				<include name="**/*.xsl" />
@@ -64,8 +64,8 @@
 				<include name="**/*.xml" />
 			</fileset>
 		</xdb:store>
-		<!-- Then, binary content -->
-		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true" type="binary">
+		<!-- Then, non XML content -->
+		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel" defaultexcludes="no">
 				<exclude name="**/*.xsd" />
 				<exclude name="**/*.xsl" />
@@ -77,30 +77,6 @@
 		</xdb:store>
 	</target>
 
-	<target depends="init" description="Upload OMIM database" name="omim-upload-test">
-		<property name="omim.temp.filename" value="null1078729692.xml" />
-		
-		<!--
-		<xdb:move uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db/OMIM"
-			user="${deploy.eXist.user}"
-			password="${deploy.eXist.pass}"
-			failonerror="true"
-			resource="${omim.temp.filename}"
-			destination="/db/OMIM"
-			name="omim.xml"
-		/>
-		-->
-		<xdb:list uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db/OMIM" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" resources="true" outputproperty="resources"/>
-		<echo>Resources:${line.separator}${resources}${line.separator}</echo>
-		<xdb:xpath uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db"
-			user="${deploy.eXist.user}"
-			password="${deploy.eXist.pass}"
-			failonerror="true"
-			query="xmldb:rename('OMIM','${omim.temp.filename}','omim.xml')"
-		/>
-		
-	</target>
-	
 	<target depends="init" description="Upload OMIM database" name="omim-upload">
 		<tempfile property="omim.temp.file" suffix=".xml" destdir="${java.io.tmpdir}"/>
 		<exec executable="perl">
