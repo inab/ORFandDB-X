@@ -18,7 +18,7 @@
 <xsl:choose>
 <xsl:when test="//msg:result">
 <form name="pagerForm"><select name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)">
-<xsl:for-each select="//msg:result"><option value="{position()}"><xsl:value-of select="msg:content/mim:record/@title"/></option></xsl:for-each>
+<xsl:for-each select="//msg:result"><option value="{position()}"><xsl:value-of select="substring(msg:content/mim:record/@title,1,30)"/><xsl:if test="string-length(msg:content/mim:record/@title) &gt; 30">...</xsl:if></option></xsl:for-each>
 </select></form>
 </xsl:when>
 <xsl:otherwise>

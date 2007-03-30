@@ -10,6 +10,7 @@ var xsltProcessor;
 var qsParm = new Object();
 qsParm['ensemblId'] = null;
 qsParm['ensID'] = null;
+qsParm['search'] = null;
 qsParm['namespace'] = null;
 
 var NSprefix = new Object();
@@ -77,7 +78,11 @@ function Init() {
 		ensemblId=qsParm['ensemblId'];
 	} else {
 		if(qsParm['ensID'] && qsParm['ensID'].length>0) {
-			ensemblId=qsParm['enslID'];
+			ensemblId=qsParm['ensID'];
+		} else {
+			if(qsParm['search'] && qsParm['search'].length>0) {
+				ensemblId=qsParm['search'];
+			}
 		}
 	}
 
