@@ -18,7 +18,7 @@ return
 </msg:defaultView>
 <msg:pagerView showMode='XSLT' mime='text/html' href='xslt/omimPager.xsl' />{
 for $id in $query
-let $results:= if($nsquery="OMIM") then (mim:getRecord($id)) else (mim:getRecordsFromEnsID($id))
+let $results:= if($nsquery="OMIM") then (mim:getRecord($id)) else (if($nsquery="FTS") then (mim:getRecordsWithFTS($id)) else (mim:getRecordsFromEnsID($id)))
 	for $res in $results
 	return <msg:result namespace='OMIM' id='{$res/@mimNumber}'><msg:content>{$res}</msg:content></msg:result>
 }</msg:message>

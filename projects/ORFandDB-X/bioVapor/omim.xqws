@@ -17,3 +17,8 @@ declare function mim:getEnsIDWithFTS($term as xs:string) as xs:string*
 {
 	distinct-values(for $entry in collection('OMIM')//mim:record[. &= $term] return ens:fetchbymimrefs($entry/@mimNumber))
 };
+
+declare function mim:getRecordsWithFTS($term as xs:string) as element(mim:record)*
+{
+	for $entry in collection('OMIM')//mim:record[. &= $term] return $entry)
+};

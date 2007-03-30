@@ -175,7 +175,7 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 			
 			<xsl:choose>
 				<xsl:when test="$exthref">
-					<a href="{$exthref}{@id}"><xsl:value-of select="$texto"/></a>
+					<a href="{$exthref}{@id}" target="_blank"><xsl:value-of select="$texto"/></a>
 				</xsl:when>
 				<xsl:otherwise>
 					<u><xsl:value-of select="$texto"/></u>
