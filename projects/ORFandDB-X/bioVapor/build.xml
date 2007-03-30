@@ -79,12 +79,15 @@
 
 	<target depends="init" description="Upload OMIM database" name="omim-upload">
 		<tempfile property="omim.temp.file" suffix=".xml" destdir="${java.io.tmpdir}"/>
+		<basename property="omim.temp.filename" file="${omim.temp.file}" />
+		<echo>Generating OMIM document ${omim.temp.filename} from the contents at ${omim.dir}</echo>
 		<exec executable="perl">
 			<arg value="${antfile.dir.parent}/parsers/OMIM/OMIM2ODB.pl" />
 			<arg value="${omim.dir}" />
 			<arg value="${omim.temp.file}" />
 		</exec>
 		<!-- Then, XML content storage -->
+		<echo>Storing OMIM document ${omim.temp.filename} at ${deploy.machine}:${deploy.eXist.port}</echo>
 		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db/OMIM"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
@@ -96,7 +99,7 @@
 		<!-- Let's erase the generated local file -->
 		<delete file="${omim.temp.file}" />
 		<!-- Last, renaming -->
-		<basename property="omim.temp.filename" file="${omim.temp.file}" />
+		<echo>Renaming OMIM document ${omim.temp.filename} at ${deploy.machine}:${deploy.eXist.port}</echo>
 		<xdb:xpath uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
