@@ -20,5 +20,5 @@ declare function mim:getEnsIDWithFTS($term as xs:string) as xs:string*
 
 declare function mim:getRecordsWithFTS($term as xs:string) as element(mim:record)*
 {
-	for $entry in collection('OMIM')//mim:record[. &= $term] return $entry)
+	collection('OMIM')//mim:record[. &= $term]
 };
