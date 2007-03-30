@@ -14,7 +14,7 @@
 <body>
 <div align="left">
 <table>
-<tr valign="top"><td align="center"><img src="images/omim.gif"/>
+<tr valign="top"><td align="center">Found <xsl:value-of select="count(//msg:result)" /> result<xsl:if test="count(//msg:result)!=1">s</xsl:if> on <img src="images/omim.gif"/>
 <xsl:choose>
 <xsl:when test="//msg:result">
 <form name="pagerForm"><select name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)">
