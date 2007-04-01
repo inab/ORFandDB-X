@@ -163,6 +163,12 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
                 <xsd:documentation><![CDATA[If this attribute exists, then content element is ignored, and the information is fetched from the provided URI.]]></xsd:documentation>
               </xsd:annotation>
             </xsd:attribute>
+            <xsd:attribute name="title" type="xsd:string" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[If this attribute is set, this is the title for this element.
+It is useful when the information is going to be dynamically fetched.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
