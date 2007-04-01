@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema targetNamespace="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4" xmlns="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema targetNamespace="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5" xmlns="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
-    <xsd:documentation xml:lang="en">Widget message v0.4 schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
+    <xsd:documentation xml:lang="en">Widget message v0.5 schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
   </xsd:annotation>
   <xsd:element name="content">
     <xsd:annotation>
@@ -120,6 +120,28 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
           <xsd:annotation>
             <xsd:documentation><![CDATA[If this element exists, it defines the default way to show the pager for the contained information inside result/content tags.]]></xsd:documentation>
           </xsd:annotation>
+        </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="0" name="defaultFetchURI">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[If this element exists, it defines the URI to be used to dynamically fetch the information.]]></xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:attribute name="href" type="xsd:anyURI" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The information is fetched from the provided URI.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="nsAttr" type="xsd:string" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The parameter name to set the namespace.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="idAttr" type="xsd:string" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The parameter name to set the id.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:complexType>
         </xsd:element>
         <xsd:element maxOccurs="unbounded" minOccurs="0" name="result">
           <xsd:annotation>
