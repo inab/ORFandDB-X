@@ -1,5 +1,6 @@
 xquery version "1.0";
 
+declare option exist:optimize "enable=yes";
 declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 
 declare namespace msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5";
@@ -44,7 +45,7 @@ return
 			if($onefetch = 'true') then
 				<msg:content>{
 					if($gethtml = 'true') then
-						transform:transform($res,'xslt/omim.xsl',())
+						transform:transform($res,'xmldb:exist:///xslt/omim.xsl',())
 					else
 						$res
 				}</msg:content>
