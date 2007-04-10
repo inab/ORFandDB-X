@@ -1,6 +1,9 @@
 function swe(el)
 {
 	var cel=el.firstChild;
+	if(!('innerHTML' in cel)) {
+		cel=cel.nextSibling;
+	}
 	var pel=el.parentNode;
 	//var nel=el.nextSibling;
 	if(pel.className=='') {

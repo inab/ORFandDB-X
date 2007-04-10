@@ -74,7 +74,7 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
       </xsd:annotation>
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
-          <xsd:enumeration value="nothing"/>
+          <xsd:enumeration value="none"/>
           <xsd:enumeration value="CSS"/>
           <xsd:enumeration value="XSLT"/>
           <xsd:enumeration value="javascript"/>
@@ -131,7 +131,7 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
                 <xsd:documentation><![CDATA[The information is fetched from the provided URI.]]></xsd:documentation>
               </xsd:annotation>
             </xsd:attribute>
-            <xsd:attribute name="nsAttr" type="xsd:string" use="required">
+            <xsd:attribute name="nsAttr" type="xsd:string" use="optional">
               <xsd:annotation>
                 <xsd:documentation><![CDATA[The parameter name to set the namespace.]]></xsd:documentation>
               </xsd:annotation>
@@ -139,6 +139,11 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
             <xsd:attribute name="idAttr" type="xsd:string" use="required">
               <xsd:annotation>
                 <xsd:documentation><![CDATA[The parameter name to set the id.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="htmlAttr" type="xsd:string" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The parameter name to set that we require HTML content (server side rendering).]]></xsd:documentation>
               </xsd:annotation>
             </xsd:attribute>
           </xsd:complexType>

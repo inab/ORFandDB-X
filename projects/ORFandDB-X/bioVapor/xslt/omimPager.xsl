@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4"
+	xmlns:msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5"
 	xmlns:mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM">
 
 	<xsl:output method="html" />
@@ -18,7 +18,16 @@
 <xsl:choose>
 <xsl:when test="//msg:result">
 <form name="pagerForm"><select name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)">
-<xsl:for-each select="//msg:result"><option value="{position()}"><xsl:value-of select="substring(msg:content/mim:record/@title,1,30)"/><xsl:if test="string-length(msg:content/mim:record/@title) &gt; 30">...</xsl:if></option></xsl:for-each>
+<xsl:for-each select="//msg:result">
+<xsl:variable name="title">
+<xsl:choose>
+<xsl:when test="@title"><xsl:value-of select="@title"/></xsl:when>
+<xsl:when test="msg:content/mim:record/@title"><xsl:value-of select="msg:content/mim:record/@title"/></xsl:when>
+<xsl:otherwise><xsl:value-of select="@id"/></xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
+<option value="{position()}"><xsl:value-of select="substring($title,1,30)"/><xsl:if test="string-length($title) &gt; 30">...</xsl:if></option>
+</xsl:for-each>
 </select></form>
 </xsl:when>
 <xsl:otherwise>

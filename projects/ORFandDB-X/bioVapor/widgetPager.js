@@ -1,22 +1,66 @@
-var omimWidget='getOMIM.xq';
+var widgetURI=null;
+var widgetParamId=null;
+var widgetParamNS=null;
+var widgetParamHTML=null;
 
+var pagerPane=null;
+var pageContentPane=null;
+
+var widgetFetchURI=null;
+var widgetFetchParamId=null;
+var widgetFetchParamNS=null;
+var widgetFetchParamHTML=null;
+
+var ishtmlfetch=null;
+var pagerMode='none';
+var viewMode='none';
+
+// Result list
 var xmlDoc;
-var xslStylesheet;
 
+// Default XSLT pager stylesheet
 var xslDefaultPagerURL = "xslt/simplePager.xsl";
 
-var xsltProcessor;
+// Content stylesheet
+var xslStylesheet;
 
-var qsParm = new Object();
+// The search
+var ensemblId=null;
+var namespace=null;
+
+
+// This array will host the shreded nodes
+var content=new Array();
+var maxcontent=0;
+var state=new Array();
+
+// Possible widget GET parameters
+var qsParm = new Array();
 qsParm['ensemblId'] = null;
 qsParm['ensID'] = null;
 qsParm['search'] = null;
 qsParm['namespace'] = null;
 
-var NSprefix = new Object();
-NSprefix['msg'] = 'http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.4';
+// widget message namespace
+var NSprefix = new Array();
+NSprefix['msg'] = 'http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5';
 
-var DEFAULTLOGO="<div align='center'><img src='images/vitruvio2.gif'/></div>";
+var DEFAULTLOGO="<div align='center'><h3><i>NO LOGO WAS SET FOR THE WIDGET</i></h3></div>";
+
+function setPanes(thePager,thePageContent)
+{
+	pagerPane=thePager;
+	pageContentPane=thePageContent;
+}
+
+function setWidgetParams(theuri,thedefaultlogo,theparamid,theparamns,theparamhtml)
+{
+	widgetURI=theuri;
+	DEFAULTLOGO=thedefaultlogo;
+	widgetParamId=theparamid;
+	widgetParamNS=theparamns;
+	widgetParamHTML=theparamhtml;
+}
 
 function NSResolver(prefix)
 {
@@ -38,32 +82,70 @@ function getElemById(id)
 
 function xpathEvaluate(thexpath,thecontext,theObjResolver)
 {
-	if(BrowserDetect.browser=='Opera') {
-		var firstVal=thecontext.evaluate(thexpath,thecontext,function(prefix) {return theObjResolver[prefix];},XPathResult.FIRST_ORDERED_NODE_TYPE,null);
-		return firstVal;
-	} else if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
+	if(BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
+		var expcon=new ExprContext(thecontext);
+		var tagname=thecontext.documentElement.tagName;
+		// Getting main prefix (if any)
+		var pretag=tagname.substring(0,tagname.indexOf(':',0));
+		if(!pretag) {
+			pretag='';
+		} else {
+			pretag+=':';
+		}
+		var prematch=new String(thexpath.match(/[^a-zA-Z0-9][a-zA-Z0-9]+:/));
+		if(!prematch) {
+			prematch='';
+		} else {
+			prematch=prematch.substr(1);
+		}
+		// Replacing prefixes
+		var re=new RegExp("/"+prematch+"([^/])","g");
+		var repxpath=thexpath.replace(re,"/"+pretag+"$1");
+		var xp=xpathParse(repxpath);
+		if(xp!=null) {
+			var res=xp.evaluate(expcon);
+			return (res!=null)?res.value:null;
+		}
+		
+	} else  {
 		var namespaceString="";
 		for(var prefix in theObjResolver) {
 			namespaceString+=' xmlns:'+prefix+'="'+theObjResolver[prefix]+'"';
 		}
-		namespaceString=namespaceString.substring(1);
-		thecontext.setProperty("SelectionLanguage", "XPath"); 
-		thecontext.setProperty("SelectionNamespaces", namespaceString);
+		Sarissa.setXpathNamespaces(thecontext,namespaceString.substring(1));
 
 		return thecontext.selectNodes(thexpath);
+	}
+		/*
+		var firstVal=thecontext.evaluate(thexpath,thecontext,function(prefix) {return theObjResolver[prefix];},0,null);
+		var retval=new Array();
+		var thisnode=firstVal.iterateNext();
+		while(thisnode) {
+			retval.push(thisnode);
+			thisnode=firstVal.iterateNext();
+		}
+		return retval;
+		*/
+	/*
 	} else {
 		// my attempt to tackle with XPath-less browsers
 		var xpath=xpathParse(thexpath);
 		var result=xpath.evaluate(thecontext);
 		alert(result);
 	}
+	*/
 }
 
 function showError(e,widURL) {
 	xmlDoc=null;
-	getElemById("pager").innerHTML = DEFAULTLOGO;
-	getElemById("pageContent").innerHTML = "<h2><i>There was an error while retrieving <a href='"+widURL+"'>"+widURL+"</a></i></h2>";
-	alert(e.message);
+	getElemById(pagerPane).innerHTML = DEFAULTLOGO;
+	var errmesg;
+	if(!e) {
+		errmesg='';
+	} else {
+		errmesg="<br />JavaScript Error: "+e.name+"<br />JavaScript Message: "+e.message;
+	}
+	getElemById(pageContentPane).innerHTML = "<h2><i>There was an error while retrieving <a href='"+widURL+"'>"+widURL+"</a></i>"+errmesg+"</h2>";
 }
 
 function Init() {
@@ -71,102 +153,225 @@ function Init() {
 	
 	//netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
 	
-	var ensemblId=null;
-	var namespace=null;
-	
-	if(qsParm['ensemblId'] && qsParm['ensemblId'].length>0) {
-		ensemblId=qsParm['ensemblId'];
-	} else {
-		if(qsParm['ensID'] && qsParm['ensID'].length>0) {
-			ensemblId=qsParm['ensID'];
+	if(widgetURI && pagerPane && pageContentPane) {
+		if(BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
+			ishtmlfetch='true';
+		}
+		ensemblId=null;
+		namespace=null;
+
+		if(qsParm['ensemblId'] && qsParm['ensemblId'].length>0) {
+			ensemblId=qsParm['ensemblId'];
 		} else {
-			if(qsParm['search'] && qsParm['search'].length>0) {
-				ensemblId=qsParm['search'];
+			if(qsParm['ensID'] && qsParm['ensID'].length>0) {
+				ensemblId=qsParm['ensID'];
+			} else {
+				if(qsParm['search'] && qsParm['search'].length>0) {
+					ensemblId=qsParm['search'];
+				}
 			}
 		}
-	}
 
-	if(qsParm['namespace'] && qsParm['namespace'].length>0) {
-		namespace=qsParm['namespace'];
-	} else {
-		namespace='EnsEMBL';
-	}
+		if(qsParm['namespace'] && qsParm['namespace'].length>0) {
+			namespace=qsParm['namespace'];
+		} else {
+			namespace='EnsEMBL';
+		}
 
-	if(ensemblId) {
-		var widURL=callWidgetURL(omimWidget,ensemblId,namespace);
-		var myXMLHTTPRequest = new XMLHttpRequest();
-		try {
-			myXMLHTTPRequest.open("GET", widURL, true);
-			myXMLHTTPRequest.onreadystatechange = function() {
-				if(myXMLHTTPRequest.readyState==4) {
-					if(myXMLHTTPRequest.status==200) {
-						getPager(myXMLHTTPRequest.responseXML,widURL);
-					} else {
-						getPager(null,widURL);
+		if(ensemblId) {
+			var widURL=buildWidgetURI(ensemblId,namespace);
+			var myXMLHTTPRequest = new XMLHttpRequest();
+			try {
+				myXMLHTTPRequest.open("GET", widURL, true);
+				myXMLHTTPRequest.onreadystatechange = function() {
+					if(myXMLHTTPRequest.readyState==4) {
+						if(myXMLHTTPRequest.status==200) {
+							gotResults(myXMLHTTPRequest.responseXML,widURL);
+						} else {
+							gotResults(null,widURL);
+						}
 					}
-				}
-			};
-			
-			// Go, go, power asynchronous
-			myXMLHTTPRequest.send(null);
-			
-		} catch(e) {
-			showError(e,widURL);
+				};
+
+				// Go, go, power asynchronous
+				getElemById(pagerPane).innerHTML = 'Querying for results. Please wait...';
+				myXMLHTTPRequest.send(null);
+
+			} catch(e) {
+				showError(e,widURL);
+			}
+		} else {
+			getElemById(pagerPane).innerHTML = DEFAULTLOGO;
+			getElemById(pageContentPane).innerHTML = "<h2><i>No EnsEMBL ID has been specified using ensemblId parameter</i></h2>";
 		}
 	} else {
-		getElemById("pager").innerHTML = DEFAULTLOGO;
-		getElemById("pageContent").innerHTML = "<h2><i>No EnsEMBL ID has been specified using ensemblId parameter</i></h2>";
+		if(pagerPane && pageContentPane) {
+			getElemById(pagerPane).innerHTML = DEFAULTLOGO;
+			getElemById(pageContentPane).innerHTML = "<h2><i>No widget has been instantiated using javascript function setWidgetParams</i></h2>";
+		} else {
+			alert("FATAL ERROR: You (the widget creator) must call setPanes before using this generic widget pager!!!!");
+		}
 	}
 }
 
-function getPager(responseXML,widURL)
+function gotResults(responseXML,widURL)
 {
 	try {
 		if(responseXML==null)
 			throw "Request "+widURL+" failed";
 			
 		xmlDoc = responseXML;
-
-		// Do the pager task
-		var xslPagerURL='';
-		if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
-			// Get the pager
-			var nodeList=xpathEvaluate("//msg:pagerView/@href",xmlDoc,NSprefix);
-			xslPagerURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
-		} else {
-			// Get the pager
-			xslPagerURL=xpathEvaluate("//msg:pagerView/@href",xmlDoc,NSprefix,xpathStringType,null);
-		}
+		getElemById(pageContentPane).innerHTML = 'Results have been obtained. Starting pre-processing task...';
 		
-		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
-			xslPagerURL=xslDefaultPagerURL;
-		} else {
-			// It is custom, so apply what it is needed by the pager
-			var nodeList=xpathEvaluate("//msg:pagerView/msg:include",xmlDoc,NSprefix);
-
-			processIncludeNodes(nodeList);
+		
+		// Getting default fetch uri and parameters
+		var nodeFetchURI=xpathEvaluate("//msg:defaultFetchURI",xmlDoc,NSprefix);
+		if(nodeFetchURI!=null && nodeFetchURI.length>0) {
+			widgetFetchURI=nodeFetchURI[0].getAttribute('href');
+			widgetFetchParamId=nodeFetchURI[0].getAttribute('idAttr');
+			widgetFetchParamNS=nodeFetchURI[0].getAttribute('nsAttr');
+			widgetFetchParamHTML=nodeFetchURI[0].getAttribute('htmlAttr');
+			if(!widgetFetchURI) {
+				widgetFetchURI=null;
+			}
+			if(!widgetFetchParamId) {
+				widgetFetchParamId=null;
+			}
+			if(!widgetFetchParamNS) {
+				widgetFetchParamNS=null;
+			}
+			if(!widgetFetchParamHTML) {
+				widgetFetchParamHTML=null;
+			}
 		}
-	
-		var myXMLHTTPRequest=new XMLHttpRequest();
-		myXMLHTTPRequest.onreadystatechange = function() {
-			if(myXMLHTTPRequest.readyState==4) {
-				if(myXMLHTTPRequest.status==200) {
-					showPager(myXMLHTTPRequest.responseXML,xslPagerURL);
+		nodeFetchURI=null;
+		
+		// Getting document fragments
+		var nodeResult=xpathEvaluate("//msg:result",xmlDoc,NSprefix);
+		if(nodeResult!=null && nodeResult.length>0) {
+			var nodei=0;
+			maxcontent=nodeResult.length;
+			for(nodei=0;nodei<maxcontent;nodei++) {
+				// Finding the child
+				var child=nodeResult[nodei].firstChild;
+				while(child && child.nodeType!=1 && child.tagName.substr(child.tagName.indexOf(':',0)+1)!='content') {
+					child=child.nextSibling;
+					break;
+				}
+				// Did we find the child?
+				content[nodei+1]=nodeResult[nodei];
+				if(child) {
+					if(ishtmlfetch) {
+						var strser="";
+						var ser=new XMLSerializer();
+
+						var itergrand=child.firstChild;
+						while(itergrand) {
+							if(itergrand.nodeType==1) {
+								strser+=ser.serializeToString(itergrand);
+							} else {
+								if(itergrand.nodeType==3 || itergrand.nodeType==4) {
+									strser+=Sarissa.getText(itergrand,false);
+								}
+							}
+							itergrand=itergrand.nextSibling;
+						}
+						content[nodei+1]=strser;
+					}
+					state[nodei+1]=new String('');
 				} else {
-					showPager(null,xslPagerURL);
+					state[nodei+1]=null;
 				}
 			}
-		};
 
-		// Go, go, power asynchronous
-		myXMLHTTPRequest.open("GET", xslPagerURL, true);
-		myXMLHTTPRequest.send(null);
+			// Now do the pager task
+			var pagerURL=null;
+
+			// In HTML mode we must used a degraded pager (sigh)
+			if(!ishtmlfetch) {
+				// Get the pager
+				var nodePager=xpathEvaluate("//msg:pagerView",xmlDoc,NSprefix);
+				pagerURL=(nodePager!=null && nodePager.length>0)?nodePager[0].getAttribute('href'):null;
+
+				if(pagerURL==null || pagerURL == undefined || pagerURL=='') {
+					pagerURL=xslDefaultPagerURL;
+					pagerMode='XSLT';
+				} else {
+					pagerMode=nodePager[0].getAttribute('showMode');
+					if(!pagerMode) {
+						pagerMode='none';
+					}
+					if(pagerMode!='none' && nodePager!=null && nodePager.length>0) {
+						// It is custom, so apply what it is needed by the pager
+						var nodeInc=xpathEvaluate("//msg:pagerView/msg:include",xmlDoc,NSprefix);
+
+						processIncludeNodes(nodeInc);
+					}
+				}
+			} else {
+				pagerMode='none';
+			}
+			if(pagerMode!='none') {
+				var myXMLHTTPRequest=new XMLHttpRequest();
+				myXMLHTTPRequest.onreadystatechange = function() {
+					if(myXMLHTTPRequest.readyState==4) {
+						if(myXMLHTTPRequest.status==200) {
+							gotPagerXSLT(myXMLHTTPRequest.responseXML,pagerURL);
+						} else {
+							gotPagerXSLT(null,pagerURL);
+						}
+					}
+				};
+
+				// Go, go, power asynchronous
+				myXMLHTTPRequest.open("GET", pagerURL, true);
+				getElemById(pagerPane).innerHTML = "Fetching pager's stylesheet. Please wait...";
+				myXMLHTTPRequest.send(null);
+			} else {
+				setLocalPager();
+				processDefaultView();
+			}
+		} else {
+			// Sanity
+			if(!namespace) {
+				namespace='';
+			}
+			if(!ensemblId) {
+				ensemblId='';
+			}
+			// Last message
+			getElemById(pageContentPane).innerHTML='No OMIM result was found for '+ensemblId+' on namespace '+namespace;
+			getElemById(pagerPane).innerHTML=DEFAULT_LOGO;
+		}
+		
 	} catch(e) {
 		showError(e,widURL);
 	}
 }
 
-function showPager(responseXML,xslPagerURL)
+function setLocalPager()
+{
+	// By program pager
+	getElemById(pagerPane).innerHTML = '<div align="center">Found '+maxcontent+' result'+((maxcontent>1)?'s':'')+'<form name="pagerForm"><a href="javascript:showOne(1)">First</a> <select id="computedPager" name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)"></select> <a href="javascript:showOne('+(content.length - 1)+')">Last</a></form></div>';
+	var selectElem=getElemById('computedPager');
+	for(var coni=1;coni<=maxcontent;coni++) {
+		var title=content[coni].getAttribute('title');
+		if(!title) {
+			title=new String(coni);
+		}
+		
+		var optelem=document.createElement('option');
+		optelem.text=title.substr(0,30)+((title.length>30)?'...':'');
+		optelem.value=coni;
+		try {
+			selectElem.add(optelem,null);
+		} catch(ex) {
+			selectElem.add(optelem);
+		}
+	}
+}
+
+function gotPagerXSLT(responseXML,xslPagerURL)
 {
 	try {
 		if(responseXML==null)
@@ -174,58 +379,70 @@ function showPager(responseXML,xslPagerURL)
 		
 		// Do the pager task
 		var xslPager = responseXML;
-
-		if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
-			var xsltPagerProc = new XSLTProcessor();
-			xsltPagerProc.importStylesheet(xslPager);
-
-			var fragment = xsltPagerProc.transformToFragment(xmlDoc, document);
-
-			getElemById("pager").innerHTML = "";
-
-			getElemById("pager").appendChild(fragment);
-		} else {
-			var xml = xmlParse(xmlDoc.value);
-			var xslt = xmlParse(xslPager.value);
-
-			getElemById("pager").innerHTML = xsltProcess(xml,xslt);
-		}
 		
-		// Get the XSL URL, if any
-		var nodeList=xpathEvaluate("//msg:defaultView/@href",xmlDoc,NSprefix);
-		var xslURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
+		var xsltProc = new XSLTProcessor();
+		getElemById(pagerPane).innerHTML = "Importing pager's stylesheet...";
+		xsltProc.importStylesheet(xslPager);
+		xsltProc.clearParameters();
 
-		if(xslURL!=null) {
-			// It is custom, so apply what it is needed by the pager
-			var nodeList=xpathEvaluate("//msg:defaultView/msg:include",xmlDoc,NSprefix);
+		getElemById(pagerPane).innerHTML = "Applying pager's stylesheet...";
+		var fragment = xsltProc.transformToFragment(xmlDoc, document);
+		//xsltProc.reset();
 
-			processIncludeNodes(nodeList);
-			
-			// And now, get XSL itself
-			var myXMLHTTPRequest=new XMLHttpRequest();
-			myXMLHTTPRequest.onreadystatechange = function() {
-				if(myXMLHTTPRequest.readyState==4) {
-					if(myXMLHTTPRequest.status==200) {
-						applyXSLT(myXMLHTTPRequest.responseXML,xslURL);
-					} else {
-						applyXSLT(null,xslURL);
-					}
-				}
-			};
-			
-			// Go, go, power asynchronous
-			myXMLHTTPRequest.open("GET", xslURL, true);
-			myXMLHTTPRequest.send(null);
-		} else {
-			// And we don't have to forget this
-			showOne(1);
-		}
+		getElemById(pagerPane).innerHTML = "";
+
+		getElemById(pagerPane).appendChild(fragment);
+		processDefaultView();
 	} catch(e) {
 		showError(e,xslPagerURL);
 	}
 }
 
-function applyXSLT(responseXML,xslURL)
+function processDefaultView()
+{		
+	// Get the XSL URL, if any
+	var viewURL=null;
+	if(!ishtmlfetch) {
+		var nodeDefView=xpathEvaluate("//msg:defaultView",xmlDoc,NSprefix);
+		if(nodeDefView!=null && nodeDefView.length>0) {
+			viewURL=nodeDefView[0].getAttribute('href');
+			viewMode=nodeDefView[0].getAttribute('showMode');
+		}
+
+		if(!viewMode) {
+			viewMode='none';
+		}
+	} else {
+			viewMode='none';
+	}
+	
+	var nodeInc=xpathEvaluate("//msg:defaultView/msg:include",xmlDoc,NSprefix);
+	processIncludeNodes(nodeInc);
+	
+	if(!viewURL || viewMode=='none') {
+		// And we don't have to forget this
+		showOne(1);
+	} else {
+		// And now, get XSL itself
+		var myXMLHTTPRequest=new XMLHttpRequest();
+		myXMLHTTPRequest.onreadystatechange = function() {
+			if(myXMLHTTPRequest.readyState==4) {
+				if(myXMLHTTPRequest.status==200) {
+					gotContentXSLT(myXMLHTTPRequest.responseXML,viewURL);
+				} else {
+					gotContentXSLT(null,viewURL);
+				}
+			}
+		};
+
+		// Go, go, power asynchronous
+		myXMLHTTPRequest.open("GET", viewURL, true);
+		getElemById(pageContentPane).innerHTML = "Fetching content's stylesheet. Please wait...";
+		myXMLHTTPRequest.send(null);
+	}
+}
+
+function gotContentXSLT(responseXML,xslURL)
 {
 	try {
 		if(responseXML==null)
@@ -233,10 +450,7 @@ function applyXSLT(responseXML,xslURL)
 			
 		xslStylesheet = responseXML;
 
-		if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
-			xsltProcessor = new XSLTProcessor();
-			xsltProcessor.importStylesheet(xslStylesheet);
-		}
+		
 		// And we don't have to forget this
 		showOne(1);
 	} catch(e) {
@@ -246,28 +460,139 @@ function applyXSLT(responseXML,xslURL)
 
 function showOne(theVal) {
 	show(theVal,theVal);
+	//prefetch(theVal+1,theVal+5);
 }
+
+var continuedTimeOut=null;
+var continueLoops=null;
 
 function show(fromVal,toVal)
 {
-	if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
-		xsltProcessor.setParameter(null, "fromVal", fromVal);
-		xsltProcessor.setParameter(null, "toVal", toVal);
+	getElemById(pageContentPane).innerHTML = "";
+	
+	prefetch(fromVal,toVal+5);
+	continueShow(fromVal,toVal);
+}
 
-		var fragment = xsltProcessor.transformToFragment(xmlDoc, document);
-
-		getElemById("pageContent").innerHTML = "";
-
-		getElemById("pageContent").appendChild(fragment);
+function continueShow(fromVal,toVal)
+{
+	if(continuedTimeOut!=null) {
+		clearTimeout(continuedTimeOut);
+		continuedTimeOut=null;
 	} else {
-		var xml = xmlParse(xmlDoc.value);
-		var xslt = xmlParse(xslStylesheet.value);
-		var xslparams=new Object();
-		xslparams['fromVal']=fromVal;
-		xslparams['toVal']=toVal;
-		
-		getElemById("pageContent").innerHTML = xsltProcessWithParam(xml,xslt, xslparams);
+		continueLoops=600;
 	}
+	if(toVal>maxcontent) {
+		toVal=maxcontent;
+	}
+	if(fromVal<1) {
+		fromVal=1;
+	}
+	if(fromVal<=toVal) {
+		//getElemById(pageContentPane).innerHTML = "Importing content's stylesheet...";
+		for(var nodei=fromVal;nodei<=toVal;nodei++) {
+			// Skipping null contents
+			if(state[nodei]!=null && state[nodei] instanceof String) {
+				if(state[nodei].length==0) {
+					if(viewMode=='none') {
+						getElemById(pageContentPane).innerHTML += content[nodei];
+					} else {
+						var xsltProc = new XSLTProcessor();
+						xsltProc.importStylesheet(xslStylesheet);
+						xsltProc.clearParameters();
+
+						// This is the ONLY point which is stopping Opera to work in native mode!
+						var fragment = xsltProc.transformToFragment(content[nodei], document);
+						//xsltProc.reset();
+						getElemById(pageContentPane).appendChild(fragment);
+					}
+				} else {
+					getElemById(pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: '+state[nodei];
+				}
+			} else {
+				//alert("Waiting for the fetch "+nodei+" state "+state[nodei]);
+				continueLoops--;
+				if(continueLoops<=0) {
+					//alert("Ya estoy hasta los bytes de iterar!");
+				} else {
+					// Each half a second results are checked
+					continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",500);
+				}
+				break;
+			}
+		}
+	}
+}
+
+function prefetch(fromVal,toVal)
+{
+	// It is a noop when there is no fetch uri
+	if(widgetFetchURI) {
+		if(toVal>maxcontent) {
+			toVal=maxcontent;
+		}
+		if(fromVal<1) {
+			fromVal=1;
+		}
+		for(var nodei=fromVal;nodei<=toVal;nodei++) {
+			if(state[nodei]!=null) {
+				// Already fetched (or fetching)
+				continue;
+			}
+			// So, let's fetch!
+			var fetchURI;
+			
+			if(!content[nodei].getAttribute('href')) {
+				var id=content[nodei].getAttribute('id');
+				var namespace=content[nodei].getAttribute('namespace');
+				if(!namespace) {
+					namespace=null;
+				}
+				fetchURI=buildFetchURI(id,namespace,ishtmlfetch);
+			} else {
+				fetchURI=content[nodei].getAttribute('href');
+			}
+			
+			doPrefetch(fetchURI,nodei,fromVal);
+		}
+	}
+}
+
+function doPrefetch(fetchURI,nodei,fromVal)
+{
+	var prefetchXML=state[nodei]=new XMLHttpRequest();
+	prefetchXML.thei=nodei;
+	prefetchXML.render=(nodei==fromVal)?1:null;
+	prefetchXML.onreadystatechange = function() {
+		if(prefetchXML.readyState==4) {
+			if(prefetchXML.status==200) {
+				if(ishtmlfetch) {
+					content[prefetchXML.thei]=prefetchXML.responseText;
+				} else {
+					content[prefetchXML.thei]=prefetchXML.responseXML;
+					//content[thei].appendChild(prefetchXML.responseXML.documentElement);
+				}
+				
+				state[prefetchXML.thei]=new String('');
+				
+				/*
+				if(prefetchXML.render) {
+					continueShow(prefetchXML.thei,prefetchXML.thei);
+				}
+				var divi=document.createElement('div');
+				divi.innerHTML=prefetchXML.thei;
+				getElemById(pageContentPane).appendChild(divi);
+				*/
+			} else {
+				//alert("ERROR: Could not fetch information for "+id);
+				state[prefetchXML.thei]=new String("ERROR: Could not fetch "+fetchURI);
+			}
+		}
+	};
+
+	// Go, go, power asynchronous
+	prefetchXML.open("GET", fetchURI, true);
+	prefetchXML.send(null);
 }
 
 function parseQS(qsParm)
@@ -277,8 +602,10 @@ function parseQS(qsParm)
 	for (var i=0; i<parms.length; i++) {
 		var pos = parms[i].indexOf('=');
 		if (pos > 0) {
-			var key = unescape(parms[i].substring(0,pos));
-			var val = unescape(parms[i].substring(pos+1));
+			var key = parms[i].substring(0,pos);
+			key = unescape(key.replace(/\+/g,' '));
+			var val = parms[i].substring(pos+1);
+			val = unescape(val.replace(/\+/g,' '));
 			qsParm[key] = val;
 		}
 	}
@@ -297,13 +624,32 @@ function generateQS(url,qsParm)
 	return url+'?'+query.substring(1);
 }
 
-function callWidgetURL(url,ensID,namespace)
+function buildWidgetURI(ensID,namespace,html)
 {
 	var qsParm=new Array();
-	qsParm['id']=ensID;
-	qsParm['namespace']=namespace;
+	qsParm[widgetParamId]=ensID;
+	if(widgetParamNS && namespace) {
+		qsParm[widgetParamNS]=namespace;
+	}
+	if(widgetParamHTML && html) {
+		qsParm[widgetParamHTML]=html;
+	}
 	
-	return generateQS(url,qsParm);
+	return generateQS(widgetURI,qsParm);
+}
+
+function buildFetchURI(id,namespace,html)
+{
+	var qsParm=new Array();
+	qsParm[widgetFetchParamId]=id;
+	if(widgetFetchParamNS && namespace) {
+		qsParm[widgetFetchParamNS]=namespace;
+	}
+	if(widgetFetchParamHTML && html) {
+		qsParm[widgetFetchParamHTML]='true';
+	}
+	
+	return generateQS(widgetFetchURI,qsParm);
 }
 
 function dhtmlLoadScript(url)
@@ -345,84 +691,6 @@ function processIncludeNodes(nodeList)
 				dhtmlLoadScript(includeURL);
 			}
 		}
-	}
-}
-
-function oldInit2(myXMLHTTPRequest,widURL)
-{
-	try {
-		if(myXMLHTTPRequest==null)
-			throw "Request "+widURL+" failed";
-			
-		xmlDoc = myXMLHTTPRequest.responseXML;
-
-		// Do the pager task
-		showPager(myXMLHTTPRequest,xmlDoc);
-
-		// Get the XSL URL, if any
-		var nodeList=xpathEvaluate("//msg:defaultView/@href",xmlDoc,NSprefix);
-		var xslURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
-
-		if(xslURL!=null) {
-			// And now, get XSL itself
-			myXMLHTTPRequest.open("GET", xslURL, true);
-			myXMLHTTPRequest.onreadystatechange = function() {
-				if(myXMLHTTPRequest.readyState==4) {
-					if(myXMLHTTPRequest.status==200) {
-						applyXSLT(myXMLHTTPRequest,xslURL);
-					} else {
-						applyXSLT(null,xslURL);
-					}
-				}
-			};
-			
-			// Go, go, power asynchronous
-			myXMLHTTPRequest.send(null);
-		} else {
-			// And we don't have to forget this
-			showOne(1);
-		}
-	} catch(e) {
-		showError(e,widURL);
-	}
-}
-
-function oldShowPager(myXMLHTTPRequest,xmlDocu)
-{
-	if(_SARISSA_IS_MOZ || _SARISSA_IS_IE) {
-		// Get the pager
-		var nodeList=xpathEvaluate("//msg:pagerView/@href",xmlDocu,NSprefix);
-		var xslPagerURL=(nodeList!=null && nodeList.length>0)?Sarissa.getText(nodeList[0],false):null;
-		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
-			xslPagerURL=xslDefaultPagerURL;
-		}
-
-		myXMLHTTPRequest.open("GET", xslPagerURL, false);
-		myXMLHTTPRequest.send(null);
-		var xslPager = myXMLHTTPRequest.responseXML;
-		var xsltPagerProc = new XSLTProcessor();
-		xsltPagerProc.importStylesheet(xslPager);
-		
-		var fragment = xsltPagerProc.transformToFragment(xmlDocu, document);
-
-		getElemById("pager").innerHTML = "";
-
-		getElemById("pager").appendChild(fragment);
-	} else {
-		// Get the pager
-		var xslPagerURL=xpathEvaluate("//msg:pagerView/@href",xmlDocu,NSprefix,xpathStringType,null);
-		if(xslPagerURL==null || xslPagerURL == undefined || xslPagerURL=='') {
-			xslPagerURL=xslDefaultPagerURL;
-		}
-
-		myXMLHTTPRequest.open("GET", xslPagerURL, false);
-		myXMLHTTPRequest.send(null);
-		var xslPager = myXMLHTTPRequest.responseXML;
-		
-		var xml = xmlParse(xmlDoc.value);
-		var xslt = xmlParse(xslPager.value);
-		
-		getElemById("pager").innerHTML = xsltProcess(xml,xslt);
 	}
 }
 
