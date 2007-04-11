@@ -202,7 +202,8 @@ function Init() {
 			}
 		} else {
 			getElemById(pagerPane).innerHTML = DEFAULTLOGO;
-			getElemById(pageContentPane).innerHTML = "<h2><i>No EnsEMBL ID has been specified using ensemblId parameter</i></h2>";
+			//getElemById(pageContentPane).innerHTML = "<h2><i>No EnsEMBL ID has been specified using ensemblId parameter</i></h2>";
+			getElemById(pageContentPane).innerHTML = "<h2><i>Please select a gene</i></h2>";
 		}
 	} else {
 		if(pagerPane && pageContentPane) {
@@ -341,7 +342,7 @@ function gotResults(responseXML,widURL)
 			}
 			// Last message
 			getElemById(pageContentPane).innerHTML='No OMIM result was found for '+ensemblId+' on namespace '+namespace;
-			getElemById(pagerPane).innerHTML=DEFAULT_LOGO;
+			getElemById(pagerPane).innerHTML=DEFAULTLOGO;
 		}
 		
 	} catch(e) {
