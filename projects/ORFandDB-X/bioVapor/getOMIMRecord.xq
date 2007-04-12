@@ -17,6 +17,6 @@ return
 		util:declare-option('exist:serialize',"indent=no media-type=text/html"),
 		transform:stream-transform($res,'xmldb:exist:///xslt/omim.xsl',())
 	) else (
-		util:declare-option('exist:serialize',"omit-xml-declaration=no indent=yes media-type=application/xml"),
+		util:declare-option('exist:serialize',"omit-xml-declaration=no indent=yes media-type=text/xml"),
 		$res
 	)

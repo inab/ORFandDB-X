@@ -12,7 +12,7 @@
 	<xsl:template match="/">
 <html>
 <head>
-<title>Results for <xsl:choose><xsl:when test="msg:message/@query"><xsl:value-of select="msg:message/@query"/></xsl:when><xsl:otherwise><xsl:value-of select="mim:record/@title"/> <xsl:value-of select="mim:record/@mimNumber"/></xsl:otherwise></xsl:choose><xsl:if test="msg:message/@timestamp"> on <xsl:value-of select="msg:message/@timestamp"/></xsl:if></title>
+<title>Results for <xsl:choose><xsl:when test="msg:message/@query"><xsl:value-of select="msg:message/@query"/></xsl:when><xsl:otherwise><xsl:value-of select="mim:record/@title"/> (<xsl:value-of select="mim:record/@mimNumber"/>)</xsl:otherwise></xsl:choose><xsl:if test="msg:message/@timestamp"> on <xsl:value-of select="msg:message/@timestamp"/></xsl:if></title>
 <script type="text/javascript" src="xslt/omim.js" />
 <link rel="stylesheet" href="xslt/omim.css" type="text/css" />
 </head>
