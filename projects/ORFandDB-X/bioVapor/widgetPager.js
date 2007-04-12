@@ -138,14 +138,17 @@ function xpathEvaluate(thexpath,thecontext,theObjResolver)
 
 function showError(e,widURL) {
 	xmlDoc=null;
-	getElemById(pagerPane).innerHTML = DEFAULTLOGO;
+	if(widURL!=null) {
+		getElemById(pagerPane).innerHTML = DEFAULTLOGO;
+	}
 	var errmesg;
 	if(!e) {
 		errmesg='';
 	} else {
 		errmesg="<br />JavaScript Error: "+e.name+"<br />JavaScript Message: "+e.message;
 	}
-	getElemById(pageContentPane).innerHTML = "<h2><i>There was an error while retrieving <a href='"+widURL+"'>"+widURL+"</a></i>"+errmesg+"</h2>";
+	var urlerrmesg=(widURL!=null && widURL!='')?"<i>There was an error while retrieving <a href='"+widURL+"'>"+widURL+"</a></i>":'';
+	getElemById(pageContentPane).innerHTML = "<h2>"+urlerrmesg+errmesg+"</h2>";
 }
 
 function Init() {
@@ -511,15 +514,26 @@ function continueShow(fromVal,toVal)
 					getElemById(pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: '+state[nodei];
 				}
 			} else {
-				//alert("Waiting for the fetch "+nodei+" state "+state[nodei]);
-				continueLoops--;
-				if(continueLoops<=0) {
-					//alert("Ya estoy hasta los bytes de iterar!");
+				if(state[nodei]!=null) {
+					//alert("Waiting for the fetch "+nodei+" state "+state[nodei]);
+					continueLoops--;
+					if(continueLoops<=0) {
+						//alert("Ya estoy hasta los bytes de iterar!");
+						if('cancel' in state[nodei]) {
+							state[nodei].cancel();
+						}
+						
+					} else {
+						// Each half a second results are checked
+						continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",500);
+					}
 				} else {
-					// Each half a second results are checked
-					continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",500);
+					try {
+						throw "FATAL ERROR: Null asynchronous query object found on continueShow!";
+					} catch(e) {
+						showError(e,null);
+					}
 				}
-				break;
 			}
 		}
 	}
