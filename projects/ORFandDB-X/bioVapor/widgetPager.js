@@ -484,7 +484,7 @@ function continueShow(fromVal,toVal)
 		clearTimeout(continuedTimeOut);
 		continuedTimeOut=null;
 	} else {
-		continueLoops=600;
+		continueLoops=1200;
 	}
 	if(toVal>maxcontent) {
 		toVal=maxcontent;
@@ -495,9 +495,11 @@ function continueShow(fromVal,toVal)
 	if(fromVal<=toVal) {
 		//getElemById(pageContentPane).innerHTML = "Importing content's stylesheet...";
 		for(var nodei=fromVal;nodei<=toVal;nodei++) {
+			// Avoiding race conditions
+			var thestate=state[nodei];
 			// Skipping null contents
-			if(state[nodei]!=null && state[nodei] instanceof String) {
-				if(state[nodei].length==0) {
+			if(thestate!=null && thestate instanceof String) {
+				if(thestate.length==0) {
 					if(viewMode=='none') {
 						getElemById(pageContentPane).innerHTML += content[nodei];
 					} else {
@@ -511,21 +513,25 @@ function continueShow(fromVal,toVal)
 						getElemById(pageContentPane).appendChild(fragment);
 					}
 				} else {
-					getElemById(pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: '+state[nodei];
+					getElemById(pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: '+thestate;
 				}
 			} else {
-				if(state[nodei]!=null) {
-					//alert("Waiting for the fetch "+nodei+" state "+state[nodei]);
+				if(thestate!=null) {
+					//alert("Waiting for the fetch "+nodei+" state "+thestate);
 					continueLoops--;
 					if(continueLoops<=0) {
 						//alert("Ya estoy hasta los bytes de iterar!");
-						if('cancel' in state[nodei]) {
-							state[nodei].cancel();
+						if('cancel' in thestate) {
+							try {
+								thestate.cancel();
+							} catch(e) {
+								// Do nothing(R)
+							}
 						}
 						
 					} else {
-						// Each half a second results are checked
-						continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",500);
+						// Each quarter of a second, results are checked
+						continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",250);
 					}
 				} else {
 					try {
