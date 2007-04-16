@@ -20,7 +20,10 @@
 <xsl:otherwise><xsl:value-of select="position()"/></xsl:otherwise>
 </xsl:choose>
 </xsl:variable>
+<!--
 <option value="{position()}"><xsl:value-of select="substring($title,1,30)"/><xsl:if test="string-length($title) &gt; 30">...</xsl:if></option>
+-->
+<option value="{position()}"><xsl:value-of select="$title"/></option>
 </xsl:for-each>
 </select> <a href="javascript:showOne({count(//msg:result)})">Last</a></form>
 </div>

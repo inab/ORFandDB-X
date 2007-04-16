@@ -365,7 +365,8 @@ function setLocalPager()
 		}
 		
 		var optelem=document.createElement('option');
-		optelem.text=title.substr(0,30)+((title.length>30)?'...':'');
+		//optelem.text=title.substr(0,30)+((title.length>30)?'...':'');
+		optelem.text=title;
 		optelem.value=coni;
 		try {
 			selectElem.add(optelem,null);
