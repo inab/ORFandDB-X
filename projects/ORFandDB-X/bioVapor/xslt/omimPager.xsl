@@ -17,7 +17,7 @@
 <tr valign="top"><td align="center">Found <xsl:value-of select="count(//msg:result)" /> result<xsl:if test="count(//msg:result)!=1">s</xsl:if> on <img src="images/omim.gif"/>
 <xsl:choose>
 <xsl:when test="//msg:result">
-<form name="pagerForm"><select name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)">
+<form name="pagerForm"><select name="pager" size="1" style="width:280" onChange="showOne(this.options[this.selectedIndex].value)">
 <xsl:for-each select="//msg:result">
 <xsl:variable name="title">
 <xsl:choose>

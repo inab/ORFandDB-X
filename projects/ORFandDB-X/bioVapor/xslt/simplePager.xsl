@@ -12,7 +12,7 @@
 </head>
 <body>
 <div align="center">
-<form name="pagerForm"><a href="javascript:showOne(1)">First</a> <select name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)">
+<form name="pagerForm"><a href="javascript:showOne(1)">First</a> <select name="pager" size="1" style="width:280" onChange="showOne(this.options[this.selectedIndex].value)">
 <xsl:for-each select="//msg:result">
 <xsl:variable name="title">
 <xsl:choose>

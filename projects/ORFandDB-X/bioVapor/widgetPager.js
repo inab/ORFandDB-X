@@ -356,7 +356,7 @@ function gotResults(responseXML,widURL)
 function setLocalPager()
 {
 	// By program pager
-	getElemById(pagerPane).innerHTML = '<div align="center">Found '+maxcontent+' result'+((maxcontent>1)?'s':'')+'<form name="pagerForm"><a href="javascript:showOne(1)">First</a> <select id="computedPager" name="pager" size="1" onChange="showOne(this.options[this.selectedIndex].value)"></select> <a href="javascript:showOne('+(content.length - 1)+')">Last</a></form></div>';
+	getElemById(pagerPane).innerHTML = '<div align="center">Found '+maxcontent+' result'+((maxcontent>1)?'s':'')+'<form name="pagerForm"><a href="javascript:showOne(1)">First</a> <select id="computedPager" name="pager" size="1" style="width:280" onChange="showOne(this.options[this.selectedIndex].value)"></select> <a href="javascript:showOne('+(content.length - 1)+')">Last</a></form></div>';
 	var selectElem=getElemById('computedPager');
 	for(var coni=1;coni<=maxcontent;coni++) {
 		var title=content[coni].getAttribute('title');
