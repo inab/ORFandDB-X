@@ -114,7 +114,8 @@ function liveSearchDoSearch() {
 			liveSearchQ=liveSearchReq=null;
 		}
 		liveSearchLast = liveSearch;
-		if ( liveSearch == "") {
+		// Restricting searches to terms of 2 or more words
+		if ( liveSearch.length < 2 ) {
 			liveSearchHide();
 			return false;
 		}
