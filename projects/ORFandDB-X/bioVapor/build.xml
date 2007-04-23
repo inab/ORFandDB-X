@@ -6,7 +6,7 @@
 	<!--
 		Configuration properties
 	-->
-	<property name="deploy.machine" value="jabba" />
+	<property name="deploy.host" value="jabba" />
 	<property name="deploy.eXist.port" value="8089" />
 	<property name="deploy.eXist.user" value="admin" />
 	<property name="deploy.eXist.pass" value="" />
@@ -49,14 +49,14 @@
 	</target>
 	
 	<target depends="init" description="Listing" name="list">
-		<xdb:list uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" resources="true" outputproperty="resources"/>
-		<xdb:list uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" collections="true" outputproperty="collections" />
+		<xdb:list uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" resources="true" outputproperty="resources"/>
+		<xdb:list uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" collections="true" outputproperty="collections" />
 		<echo>Resources:${line.separator}${resources}${line.separator}and Collections:${line.separator}${collections}</echo>
 	</target>
 
 	<target depends="init" description="Upload" name="upload">
 		<!-- First, XML content -->
-		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
+		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel">
 				<include name="**/*.xsd" />
 				<include name="**/*.xsl" />
@@ -65,7 +65,7 @@
 			</fileset>
 		</xdb:store>
 		<!-- Then, non XML content -->
-		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
+		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel" defaultexcludes="no">
 				<exclude name="**/*.xsd" />
 				<exclude name="**/*.xsl" />
@@ -87,8 +87,8 @@
 			<arg value="${omim.temp.file}" />
 		</exec>
 		<!-- Then, XML content storage -->
-		<echo>Storing OMIM document ${omim.temp.filename} at ${deploy.machine}:${deploy.eXist.port}</echo>
-		<xdb:store uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db/OMIM"
+		<echo>Storing OMIM document ${omim.temp.filename} at ${deploy.host}:${deploy.eXist.port}</echo>
+		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db/OMIM"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
 			failonerror="true"
@@ -99,15 +99,15 @@
 		<!-- Let's erase the generated local file -->
 		<delete file="${omim.temp.file}" />
 		<!-- Last, renaming -->
-		<echo>Renaming OMIM document ${omim.temp.filename} at ${deploy.machine}:${deploy.eXist.port}</echo>
-		<xdb:xpath uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db"
+		<echo>Renaming OMIM document ${omim.temp.filename} at ${deploy.host}:${deploy.eXist.port}</echo>
+		<xdb:xpath uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
 			failonerror="true"
 			query="xmldb:rename('OMIM','${omim.temp.filename}','omim.xml')"
 		/>
 		<!--
-		<xdb:move uri="xmldb:exist://${deploy.machine}:${deploy.eXist.port}/xmlrpc/db/OMIM"
+		<xdb:move uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db/OMIM"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
 			failonerror="true"
@@ -118,7 +118,7 @@
 	</target>
 
 	<target depends="compile.ensembl-exist-module" description="It copies the files to the destination" name="jarinstall">
-		<scp todir="${deploy.ssh.user}:${deploy.ssh.password}@${deploy.machine}:${deploy.eXist.dir}/lib/user">
+		<scp todir="${deploy.ssh.user}:${deploy.ssh.password}@${deploy.host}:${deploy.eXist.dir}/lib/user">
 			<fileset dir="${ensembl-exist-module.dist.dir}">
 				<include name="*.jar"/>
 			</fileset>

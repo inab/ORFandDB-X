@@ -36,10 +36,12 @@ var state=new Array();
 
 // Possible widget GET parameters
 var qsParm = new Array();
+/*
 qsParm['ensemblId'] = null;
 qsParm['ensID'] = null;
 qsParm['search'] = null;
 qsParm['namespace'] = null;
+*/
 
 // widget message namespace
 var NSprefix = new Array();
@@ -62,80 +64,6 @@ function setWidgetParams(theuri,thedefaultlogo,theparamid,theparamns,theparamhtm
 	widgetParamHTML=theparamhtml;
 }
 
-function NSResolver(prefix)
-{
-	return NSprefix[prefix];
-}
-
-function getElemById(id)
-{
-	if(document.getElementById){    // test the most common method first.  Most browsers won't get past this test
-		return document.getElementById(id);
-	} else if(document.all){         // test older versions of IE
-		return document.all[id];
-	} else if(document.layers){      // test older versions of Netscape
-		return document.layers[id];
-	} else {                          // not sure what to do...return null
-		return null;
-	}
-}
-
-function xpathEvaluate(thexpath,thecontext,theObjResolver)
-{
-	if(BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
-		var expcon=new ExprContext(thecontext);
-		var tagname=thecontext.documentElement.tagName;
-		// Getting main prefix (if any)
-		var pretag=tagname.substring(0,tagname.indexOf(':',0));
-		if(!pretag) {
-			pretag='';
-		} else {
-			pretag+=':';
-		}
-		var prematch=new String(thexpath.match(/[^a-zA-Z0-9][a-zA-Z0-9]+:/));
-		if(!prematch) {
-			prematch='';
-		} else {
-			prematch=prematch.substr(1);
-		}
-		// Replacing prefixes
-		var re=new RegExp("/"+prematch+"([^/])","g");
-		var repxpath=thexpath.replace(re,"/"+pretag+"$1");
-		var xp=xpathParse(repxpath);
-		if(xp!=null) {
-			var res=xp.evaluate(expcon);
-			return (res!=null)?res.value:null;
-		}
-		
-	} else  {
-		var namespaceString="";
-		for(var prefix in theObjResolver) {
-			namespaceString+=' xmlns:'+prefix+'="'+theObjResolver[prefix]+'"';
-		}
-		Sarissa.setXpathNamespaces(thecontext,namespaceString.substring(1));
-
-		return thecontext.selectNodes(thexpath);
-	}
-		/*
-		var firstVal=thecontext.evaluate(thexpath,thecontext,function(prefix) {return theObjResolver[prefix];},0,null);
-		var retval=new Array();
-		var thisnode=firstVal.iterateNext();
-		while(thisnode) {
-			retval.push(thisnode);
-			thisnode=firstVal.iterateNext();
-		}
-		return retval;
-		*/
-	/*
-	} else {
-		// my attempt to tackle with XPath-less browsers
-		var xpath=xpathParse(thexpath);
-		var result=xpath.evaluate(thecontext);
-		alert(result);
-	}
-	*/
-}
-
 function showError(e,widURL) {
 	xmlDoc=null;
 	if(widURL!=null) {
@@ -151,37 +79,45 @@ function showError(e,widURL) {
 	getElemById(pageContentPane).innerHTML = "<h2>"+urlerrmesg+errmesg+"</h2>";
 }
 
-function Init() {
+function widgetPagerInit() {
 	// load the xslt file, example1.xsl
 	
 	//netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
 	
-	if(widgetURI && pagerPane && pageContentPane) {
+	if(widgetURI!=null && pagerPane!=null && pageContentPane!=null) {
 		if(BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
 			ishtmlfetch='true';
 		}
 		ensemblId=null;
 		namespace=null;
 
-		if(qsParm['ensemblId'] && qsParm['ensemblId'].length>0) {
-			ensemblId=qsParm['ensemblId'];
+		if('ensemblId' in qsParm && qsParm['ensemblId'].length>0) {
+			ensemblId=qsParm['ensemblId'][0];
 		} else {
-			if(qsParm['ensID'] && qsParm['ensID'].length>0) {
-				ensemblId=qsParm['ensID'];
+			if('ensID' in qsParm && qsParm['ensID'].length>0) {
+				ensemblId=qsParm['ensID'][0];
 			} else {
-				if(qsParm['search'] && qsParm['search'].length>0) {
-					ensemblId=qsParm['search'];
+				if('search' in qsParm && qsParm['search'].length>0) {
+					ensemblId=qsParm['search'][0];
 				}
 			}
 		}
+		
+		if(ensemblId!=null && ensemblId.length==0) {
+			ensemblId=null;
+		}
 
-		if(qsParm['namespace'] && qsParm['namespace'].length>0) {
-			namespace=qsParm['namespace'];
+		if('namespace' in qsParm && qsParm['namespace'].length>0) {
+			namespace=qsParm['namespace'][0];
 		} else {
 			namespace='EnsEMBL';
 		}
-
-		if(ensemblId) {
+		
+		if(namespace && namespace.length==0) {
+			namespace=null;
+		}
+		
+		if(ensemblId!=null) {
 			var widURL=buildWidgetURI(ensemblId,namespace);
 			var myXMLHTTPRequest = new XMLHttpRequest();
 			try {
@@ -209,7 +145,7 @@ function Init() {
 			getElemById(pageContentPane).innerHTML = "<h2><i>Please select a gene</i></h2>";
 		}
 	} else {
-		if(pagerPane && pageContentPane) {
+		if(pagerPane!=null && pageContentPane!=null) {
 			getElemById(pagerPane).innerHTML = DEFAULTLOGO;
 			getElemById(pageContentPane).innerHTML = "<h2><i>No widget has been instantiated using javascript function setWidgetParams</i></h2>";
 		} else {
@@ -258,13 +194,12 @@ function gotResults(responseXML,widURL)
 			for(nodei=0;nodei<maxcontent;nodei++) {
 				// Finding the child
 				var child=nodeResult[nodei].firstChild;
-				while(child && child.nodeType!=1 && child.tagName.substr(child.tagName.indexOf(':',0)+1)!='content') {
+				while(child!=null && child.nodeType!=1 && child.tagName.substr(child.tagName.indexOf(':',0)+1)!='content') {
 					child=child.nextSibling;
-					break;
 				}
 				// Did we find the child?
 				content[nodei+1]=nodeResult[nodei];
-				if(child) {
+				if(child!=null) {
 					if(ishtmlfetch) {
 						var strser="";
 						var ser=new XMLSerializer();
@@ -485,7 +420,7 @@ function continueShow(fromVal,toVal)
 		clearTimeout(continuedTimeOut);
 		continuedTimeOut=null;
 	} else {
-		continueLoops=1200;
+		continueLoops=600;
 	}
 	if(toVal>maxcontent) {
 		toVal=maxcontent;
@@ -497,21 +432,33 @@ function continueShow(fromVal,toVal)
 		//getElemById(pageContentPane).innerHTML = "Importing content's stylesheet...";
 		for(var nodei=fromVal;nodei<=toVal;nodei++) {
 			// Avoiding race conditions
+			var thecontent=content[nodei];
 			var thestate=state[nodei];
 			// Skipping null contents
 			if(thestate!=null && thestate instanceof String) {
 				if(thestate.length==0) {
 					if(viewMode=='none') {
-						getElemById(pageContentPane).innerHTML += content[nodei];
+						getElemById(pageContentPane).innerHTML += thecontent;
 					} else {
 						var xsltProc = new XSLTProcessor();
 						xsltProc.importStylesheet(xslStylesheet);
 						xsltProc.clearParameters();
 
 						// This is the ONLY point which is stopping Opera to work in native mode!
-						var fragment = xsltProc.transformToFragment(content[nodei], document);
+						var fragment;
+						try {
+							fragment = xsltProc.transformToFragment(thecontent, document);
+							getElemById(pageContentPane).appendChild(fragment);
+						} catch(e) {
+							/*
+							alert(e.name);
+							alert(e.message);
+							alert(thecontent);
+							alert(thestate);
+							*/
+							getElemById(pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: '+e.message;
+						}
 						//xsltProc.reset();
-						getElemById(pageContentPane).appendChild(fragment);
 					}
 				} else {
 					getElemById(pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: '+thestate;
@@ -532,7 +479,7 @@ function continueShow(fromVal,toVal)
 						
 					} else {
 						// Each quarter of a second, results are checked
-						continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",250);
+						continuedTimeOut=setTimeout("continueShow("+nodei+","+toVal+")",500);
 					}
 				} else {
 					try {
@@ -557,7 +504,7 @@ function prefetch(fromVal,toVal)
 			fromVal=1;
 		}
 		for(var nodei=fromVal;nodei<=toVal;nodei++) {
-			if(state[nodei]!=null) {
+			if(state[nodei]) {
 				// Already fetched (or fetching)
 				continue;
 			}
@@ -582,7 +529,7 @@ function prefetch(fromVal,toVal)
 
 function doPrefetch(fetchURI,nodei,fromVal)
 {
-	var prefetchXML=state[nodei]=new XMLHttpRequest();
+	var prefetchXML=new XMLHttpRequest();
 	prefetchXML.thei=nodei;
 	prefetchXML.render=(nodei==fromVal)?1:null;
 	prefetchXML.onreadystatechange = function() {
@@ -591,10 +538,10 @@ function doPrefetch(fetchURI,nodei,fromVal)
 				if(ishtmlfetch) {
 					content[prefetchXML.thei]=prefetchXML.responseText;
 				} else {
-					content[prefetchXML.thei]=prefetchXML.responseXML;
-					//content[thei].appendChild(prefetchXML.responseXML.documentElement);
+					//content[prefetchXML.thei]=prefetchXML.responseXML;
+					content[prefetchXML.thei].appendChild(prefetchXML.responseXML.documentElement);
 				}
-				
+
 				state[prefetchXML.thei]=new String('');
 				
 				/*
@@ -613,37 +560,9 @@ function doPrefetch(fetchURI,nodei,fromVal)
 	};
 
 	// Go, go, power asynchronous
+	state[nodei]=prefetch;
 	prefetchXML.open("GET", fetchURI, true);
 	prefetchXML.send(null);
-}
-
-function parseQS(qsParm)
-{
-	var query = document.location.search.substring(1);
-	var parms = query.split('&');
-	for (var i=0; i<parms.length; i++) {
-		var pos = parms[i].indexOf('=');
-		if (pos > 0) {
-			var key = parms[i].substring(0,pos);
-			key = unescape(key.replace(/\+/g,' '));
-			var val = parms[i].substring(pos+1);
-			val = unescape(val.replace(/\+/g,' '));
-			qsParm[key] = val;
-		}
-	}
-	
-	return qsParm;
-}
-
-function generateQS(url,qsParm)
-{
-	var query='';
-	for (var term in qsParm) {
-		if(qsParm[term]) {
-			query+='&'+escape(term)+'='+escape(qsParm[term]);
-		}
-	}
-	return url+'?'+query.substring(1);
 }
 
 function buildWidgetURI(ensID,namespace,html)
@@ -657,7 +576,7 @@ function buildWidgetURI(ensID,namespace,html)
 		qsParm[widgetParamHTML]=html;
 	}
 	
-	return generateQS(widgetURI,qsParm);
+	return generateQS(qsParm,widgetURI);
 }
 
 function buildFetchURI(id,namespace,html)
@@ -671,23 +590,7 @@ function buildFetchURI(id,namespace,html)
 		qsParm[widgetFetchParamHTML]='true';
 	}
 	
-	return generateQS(widgetFetchURI,qsParm);
-}
-
-function dhtmlLoadScript(url)
-{
-   var e = document.createElement("script");
-   e.src = url;
-   e.type="text/javascript";
-   document.getElementsByTagName("head")[0].appendChild(e);
-}
-
-function dhtmlLoadCSS(url)
-{
-   var e = document.createElement("link");
-   e.rel="stylesheet";
-   e.href = url;
-   document.getElementsByTagName("head")[0].appendChild(e);
+	return generateQS(qsParm,widgetFetchURI);
 }
 
 function processIncludeNodes(nodeList)

@@ -15,9 +15,12 @@
 	display: block;
 	border: 1px dotted #000;
 	position: relative;
+/*
 	left:20px;
 	width:90%;
 	max-width:90%;
+*/
+	margin-left: 20px;
 	text-align:justify;
 	background-color: #B0FFB0
 }
@@ -30,9 +33,12 @@
 .expander-open .expander-content
 {
 	position: relative;
+/*
 	left:20px;
 	width:90%;
 	max-width:90%;
+*/
+	margin-left: 20px;
 	text-align:justify;
 }
 
@@ -42,9 +48,12 @@
 {
 	display: block;
 	position: relative;
+/*
 	left:20px;
 	width:90%;
 	max-width:90%;
+*/
+	margin-left: 20px;
 	text-align:justify;
 }
 
@@ -54,3 +63,20 @@
 
 .expander-popup .expander + *[class~=expander-content]:hover { display: block }
 */
+
+/* From intellinuxwireless */
+
+a[href] {
+	padding-right: 0px;
+	background: none;
+}
+
+a[href ^="ftp://"] {
+	background: url(link.png) center right no-repeat;
+	padding-right: 13px;
+}
+
+a[href ^="http://"] {
+	background: url(link.png) center right no-repeat;
+	padding-right: 13px;
+}

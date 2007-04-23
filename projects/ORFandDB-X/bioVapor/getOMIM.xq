@@ -11,6 +11,8 @@ declare namespace msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5"
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
 import module namespace request="http://exist-db.org/xquery/request";
+import module namespace util="http://exist-db.org/xquery/util";
+import module namespace transform="http://exist-db.org/xquery/transform";
 
 let $query:=request:get-parameter("id",())
 let $nsquery:=request:get-parameter("namespace","EnsEMBL")

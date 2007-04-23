@@ -8,6 +8,8 @@ declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=ap
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
 import module namespace request="http://exist-db.org/xquery/request";
+import module namespace util="http://exist-db.org/xquery/util";
+import module namespace transform="http://exist-db.org/xquery/transform";
 
 let $query:=request:get-parameter("id",())
 let $gethtml:=request:get-parameter("html","false")
