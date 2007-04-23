@@ -106,9 +106,12 @@ function liveSearchDoSearch() {
 	if (liveSearchLast != liveSearch) {
 		// Aborting previous search in course
 		var liveSearchQ=liveSearchReq;
-		if (liveSearchQ && liveSearchQ.readyState < 4) {
-			liveSearchQ.abort();
-			liveSearchReq=null;
+		if (liveSearchQ) {
+			if(liveSearchQ.readyState < 4) {
+				liveSearchQ.onreadystatechange=null;
+				liveSearchQ.abort();
+			}
+			liveSearchQ=liveSearchReq=null;
 		}
 		liveSearchLast = liveSearch;
 		if ( liveSearch == "") {
