@@ -103,6 +103,13 @@ function liveSearchDoSearch() {
 		var liveSearchTokens=liveSearch.split(" ");
 		liveSearch=liveSearchTokens.pop();
 	}
+	
+	// Asterisk removal
+	var aster=liveSearch.indexOf('*');
+	if(aster!=-1) {
+		liveSearch=liveSearch.substring(0,aster);
+	}
+	
 	if (liveSearchLast != liveSearch) {
 		// Aborting previous search in course
 		var liveSearchQ=liveSearchReq;
@@ -114,6 +121,7 @@ function liveSearchDoSearch() {
 			liveSearchQ=liveSearchReq=null;
 		}
 		liveSearchLast = liveSearch;
+		
 		// Restricting searches to terms of 2 or more words
 		if ( liveSearch.length < 2 ) {
 			liveSearchHide();
@@ -137,12 +145,13 @@ function liveSearchDoSearch() {
 						var foundterms=liveSearchQ.responseXML.getElementsByTagName('term');
 						if(foundterms.length>0) {
 							var lista=document.createElement('ul');
-							lista.className="LSRes";
+							lista.className+=' '+"LSRes";
 							for(var i=0;i<foundterms.length;i++) {
 								var term=foundterms[i].getAttribute('name');
 								var hits=foundterms[i].getAttribute('hits');
+								//var freq=foundterms[i].getAttribute('freq');
 								var elem=document.createElement('li');
-								elem.className="LSRow";
+								elem.className+=' '+"LSRow";
 								elem.termText=term;
 								elem.innerHTML='<a href="javascript:termSelected('+
 									"'"+term+"'"+
@@ -153,7 +162,7 @@ function liveSearchDoSearch() {
 							var hasmore=liveSearchQ.responseXML.getElementsByTagName('more');
 							if(hasmore.length>0) {
 								var elem=document.createElement('li');
-								elem.className="LSRow";
+								elem.className+=' '+"LSRow";
 								elem.innerHTML='<span style="margin-left: 1em;">...</span>';
 								lista.appendChild(elem);
 							}

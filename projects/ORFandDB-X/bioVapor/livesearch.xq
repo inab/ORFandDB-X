@@ -15,7 +15,7 @@ declare variable $maxterms as xs:int := 15;
 
 declare function ls:term-callback($term as xs:string, $data as xs:int+) 
 as element()+ {
-	<term name="{$term}" hits="{$data[2]}" />,
+	<term name="{$term}" hits="{$data[4]}" freq="{$data[1]}" />,
 	if ($data[3] > 15) then
 		<more />
 	else

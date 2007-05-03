@@ -7,55 +7,56 @@
 */
 
 #LSResult {    
-    position: absolute;
-    background-color: #aaa; 
-    min-width: 180px; 
-    margin: 1px 0px 2px 0px;
-    padding: 0px;
+	position: absolute;
+	background-color: #aaa; 
+	min-width: 180px;
+	margin: 1px 0px 2px 0px;
+	padding: 0px;
 }
 
 #LSResult li {
-    padding-bottom: 2px;
-    padding-top: 2px;
-    line-height:15px;
-    margin-bottom: 0px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	line-height:15px;
+	margin-bottom: 0px;
 }
     
   
 ul#LSShadow {
-      position: relative;
-      right: 1px;
-      margin: 0px;
-      padding: 0px;
-      background-color: #666; /*shadow color*/
-      color: inherit;
+	position: relative;
+	right: 1px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #666; /*shadow color*/
+	color: inherit;
 }
   
   
  
 #LSResult ul {
-     margin-bottom: -5px;
-     margin-top: 0px;
-     padding-top: 0px;  
-     margin: 0px;
-     padding: 0px;
+	margin-bottom: -5px;
+	margin-top: 0px;
+	padding-top: 0px;  
+	margin: 0px;
+	padding: 0px;
+	list-style-image: url('arrow.gif');
+	list-style-position: inside;
 }
 
 #LSResult ul li {
-    text-indent: -20px;
-    padding: 0px 15px 3px 20px;
+	text-indent: -20px;
+	padding: 0px 15px 3px 20px;
 }
  
 .LSRes {
-      position: relative;
-      bottom: 1px;
-      right: 1px;
-      background-color: white;
-//      border:  1px solid #AAA;
-    }
+	position: relative;
+	bottom: 1px;
+	right: 1px;
+	background-color: white;
+	border:  1px solid #AAA;
+}
   
 #LSHighlight {
-     
-     color: #564b47;  
-     background-color: #ccc;
+	color: #564b47;  
+	background-color: #ccc;
 }
