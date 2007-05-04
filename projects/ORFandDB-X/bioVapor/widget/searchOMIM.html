@@ -1,26 +1,26 @@
 <html>
 <head>
 <title>OMIM widget search</title>
-<script type="text/javascript" src="browserdetect/BrowserDetect.js"></script>
-<script type="text/javascript" src="sarissa/sarissa.js"></script>
-<script type="text/javascript" src="sarissa/sarissa_ieemu_xpath.js"></script>
-<script type="text/javascript" src="ajaxslt/xmltoken.js"></script>
-<script type="text/javascript" src="ajaxslt/util.js"></script>
-<script type="text/javascript" src="ajaxslt/dom.js"></script>
-<script type="text/javascript" src="ajaxslt/xpath.js"></script>
-<script type="text/javascript" src="widgetCommon.js"></script>
-<script type="text/javascript" src="livesearch.js"></script>
-<link rel="stylesheet" href="livesearch.css" type="text/css" />
+<script type="text/javascript" src="js/browserdetect/BrowserDetect.js"></script>
+<script type="text/javascript" src="js/sarissa/sarissa.js"></script>
+<script type="text/javascript" src="js/sarissa/sarissa_ieemu_xpath.js"></script>
+<script type="text/javascript" src="js/ajaxslt/xmltoken.js"></script>
+<script type="text/javascript" src="js/ajaxslt/util.js"></script>
+<script type="text/javascript" src="js/ajaxslt/dom.js"></script>
+<script type="text/javascript" src="js/ajaxslt/xpath.js"></script>
+<script type="text/javascript" src="js/common/widgetCommon.js"></script>
+<script type="text/javascript" src="livesearch/livesearch.js"></script>
+<link rel="stylesheet" href="livesearch/livesearch.css" type="text/css" />
 </head>
 <body onload="liveSearchInit()">
 <table align="center">
-<tr valign="top"><td align="center"><img src="images/omim.gif"/>
+<tr valign="top"><td align="center"><img src="OMIM/images/omim.gif"/>
 <form method="GET" name="searchform" action="widgetOMIM.html" target="results" onSubmit="liveSearchHide();return true;">
-<input type="hidden" name="namespace" value="FTS" />
+<input type="hidden" name="namespace" value="General" />
 <h2>Just type free text to search on OMIM</h2>
 <div id="livesearch" align="center"><input type="text" name="search" size="50" autocomplete="off" onkeypress="liveSearchStart()"/><div id="LSResult" align="left" style="display: none;"><div id="LSShadow"></div></div></div>
 </form></td>
-<td><img src="images/jhu.gif"/></td></tr>
+<td><img src="OMIM/images/jhu.gif"/></td></tr>
 </table>
 </form>
 <hr />
