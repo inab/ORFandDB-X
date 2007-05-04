@@ -1,1 +1,0 @@
-../widgetPager.js

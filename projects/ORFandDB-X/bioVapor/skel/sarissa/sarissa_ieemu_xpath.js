@@ -1,1 +1,0 @@
-../../sarissa/sarissa_ieemu_xpath.js
