@@ -23,6 +23,8 @@
 
 */
 
+var liveSearchRoot = "livesearch/";
+var liveSearchRootSubDir = "";
 var liveSearchParams = "";
 
 var liveSearchReq = null;
@@ -45,7 +47,9 @@ function liveSearchHideDelayed() {
 }
 	
 function liveSearchKeyPress(event) {
-	
+	var error=getElemById('LSError');
+	if(error)  return;
+	if(liveSearchReq)  return;
 	if (event.keyCode == 10 || event.keyCode == 13 || event.keyCode == 27) {
 		//Enter or ESC
 		getElemById("LSResult").style.display = "none";
@@ -88,7 +92,6 @@ function liveSearchKeyPress(event) {
 
 
 function liveSearchDoSearch() {
-
 	if (typeof liveSearchRoot == "undefined") {
 		liveSearchRoot = "";
 	}
@@ -136,11 +139,12 @@ function liveSearchDoSearch() {
 		liveSearchQ = new XMLHttpRequest();
 		liveSearchQ.onreadystatechange= function() {
 			if (liveSearchQ.readyState == 4) {
+				var  sh = getElemById("LSShadow");
 				if(liveSearchQ.status==200) {
 					if(liveSearchQ==liveSearchReq) {
+						liveSearchReq=null;
 						var  res = getElemById("LSResult");
 						res.style.display = "block";
-						var  sh = getElemById("LSShadow");
 						sh.innerHTML = '';
 						var foundterms=liveSearchQ.responseXML.getElementsByTagName('term');
 						if(foundterms.length>0) {
@@ -168,9 +172,13 @@ function liveSearchDoSearch() {
 							}
 							sh.appendChild(lista);
 						} else {
-							sh.innerHTML="<span class='LSNotFound'>(No hits found for '"+liveSearchQ.responseXML.documentElement.getAttribute('search')+"')</span>";
+							sh.innerHTML="<div class='LSRes'><span id='LSNotFound'>(No hits found for '"+liveSearchQ.responseXML.documentElement.getAttribute('search')+"')</span></div>";
 						}
 					}
+				 } else if(liveSearchQ.status==404) {
+				 	sh.innerHTML="<div class='LSRes'><span id='LSError'>Error while connecting to '"+searchQuery+"': not found</span></div>";
+				 } else {
+				 	sh.innerHTML="<div class='LSRes'><span id='LSError'>Error while connecting to '"+searchQuery+"': code "+liveSearchQ.status+"</span></div>";
 				 }
 			}
 		};
@@ -181,7 +189,7 @@ function liveSearchDoSearch() {
 		var  res = getElemById("LSResult");
 		res.style.display = "block";
 		var  sh = getElemById("LSShadow");
-		sh.innerHTML = "<i>Looking for '"+liveSearch+"'</i>";
+		sh.innerHTML = "<div class='LSRes'><span id='LSSearching'>Looking for terms beginning with '"+liveSearch+"'</span></div>";
 	}
 }
 

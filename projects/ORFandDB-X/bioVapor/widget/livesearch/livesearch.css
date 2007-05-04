@@ -1,4 +1,4 @@
-/* This CSS is a fragment from an eXist example, which had the next copyright */
+/* Part of this CSS is a fragment from an eXist example, which had the next copyright */
 /*
 	... IN VALID CODE WE TRUST ...http://www.intensivstation.ch
 	css created by miss monorom 2004 http://www.monorom.to
@@ -14,11 +14,25 @@
 	padding: 0px;
 }
 
-#LSNotFound {
+#LSSearching {
 	background: url('ajaxLoader.gif') center left no-repeat;
-	padding-left: 13px;
+	padding-left: 25px;
 	text-align:left;
 	font-style:italic;
+}
+
+#LSNotFound {
+	background: url('notfound.png') center left no-repeat;
+	padding-left: 25px;
+	text-align:left;
+	font-style:italic;
+}
+
+#LSError {
+	background: url('error.png') center left no-repeat;
+	padding-left: 25px;
+	text-align:left;
+	color:red;
 }
 
 #LSResult li {
