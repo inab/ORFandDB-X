@@ -21,7 +21,13 @@
 		<include path="//mim:term"/>
 	</fulltext>
 	-->
-        <fulltext default="all" attributes="true" alphanum="true" />
+	
+	<!--
+		Excluding entry history from FTI & FTS
+	-->
+        <fulltext default="all" attributes="true" alphanum="true">
+		<exclude path="//mim:entryHistory"/>
+	</fulltext>
         <create path="//odb:link/@namespace" type="xs:string"/>
         <create path="//odb:link/@id" type="xs:string"/>
         <create path="//mim:movedTo/@mimNumber" type="xs:string"/>
