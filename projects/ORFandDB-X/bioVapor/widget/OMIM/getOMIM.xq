@@ -23,7 +23,7 @@ let $results:=(
 	return if($nsquery="OMIM") then (
 			mim:getRecord($id)
 		) else (
-			if($nsquery="FTS") then (
+			if($nsquery="General") then (
 				mim:getRecordsWithFTS($id)
 			) else (
 				mim:getRecordsFromEnsID($id)
