@@ -72,11 +72,11 @@ a[href] {
 }
 
 a[href ^="ftp://"] {
-	background: url(link.png) center right no-repeat;
+	background: url('link.png') center right no-repeat;
 	padding-right: 13px;
 }
 
 a[href ^="http://"] {
-	background: url(link.png) center right no-repeat;
+	background: url('link.png') center right no-repeat;
 	padding-right: 13px;
 }

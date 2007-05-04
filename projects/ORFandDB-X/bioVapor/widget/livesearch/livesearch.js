@@ -168,7 +168,7 @@ function liveSearchDoSearch() {
 							}
 							sh.appendChild(lista);
 						} else {
-							sh.innerHTML="<i>(No hits found for '"+liveSearchQ.responseXML.documentElement.getAttribute('search')+"')</i>";
+							sh.innerHTML="<span class='LSNotFound'>(No hits found for '"+liveSearchQ.responseXML.documentElement.getAttribute('search')+"')</span>";
 						}
 					}
 				 }

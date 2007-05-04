@@ -34,23 +34,23 @@ return
 <msg:message query='{$query}' namespace='{$nsquery}' timestamp='{current-dateTime()}'>
 <msg:defaultView showMode='{if($gethtml = "true") then "none" else "XSLT"}' mime='text/html'>{
 	if($gethtml != "true") then
-		 attribute href {'xslt/omim.xsl'}
+		 attribute href {'OMIM/xslt/omim.xsl'}
 	else
 		()
-}	<msg:include type='javascript' href='xslt/omim.js' />
-	<msg:include type='CSS' href='xslt/omim.css' />
+}	<msg:include type='javascript' href='OMIM/xslt/omim.js' />
+	<msg:include type='CSS' href='OMIM/xslt/omim.css' />
 </msg:defaultView>{
 	if($gethtml != 'true') then
-		<msg:pagerView showMode='XSLT' mime='text/html' href='xslt/omimPager.xsl' />
+		<msg:pagerView showMode='XSLT' mime='text/html' href='OMIM/xslt/omimPager.xsl' />
 	else
 		()
-}<msg:defaultFetchURI href='getOMIMRecord.xq' idAttr='id' htmlAttr='html' />{
+}<msg:defaultFetchURI href='OMIM/getOMIMRecord.xq' idAttr='id' htmlAttr='html' />{
 	for $res in $results
 	return <msg:result namespace='OMIM' id='{$res/@mimNumber}' title='{$res/@title}'>{
 			if($onefetch = 'true') then
 				<msg:content>{
 					if($gethtml = 'true') then
-						transform:transform($res,'xmldb:exist:///xslt/omim.xsl',())
+						transform:transform($res,'xmldb:exist:///widget/OMIM/xslt/omim.xsl',())
 					else
 						$res
 				}</msg:content>

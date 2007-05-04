@@ -10,7 +10,7 @@ case "$THEBASEDIR" in
 		;;
 esac
 
-LOCALSARISSA="$THEBASEDIR"/widget/sarissa
+LOCALSARISSA="$THEBASEDIR"/widget/js/sarissa
 
 # Getting the latest copy!
 rm -rf "$LOCALSARISSA"

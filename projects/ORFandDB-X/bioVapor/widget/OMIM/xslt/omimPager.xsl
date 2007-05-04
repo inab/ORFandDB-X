@@ -14,7 +14,7 @@
 <body>
 <div align="left">
 <table>
-<tr valign="top"><td align="center">Found <xsl:value-of select="count(//msg:result)" /> result<xsl:if test="count(//msg:result)!=1">s</xsl:if> on <img src="images/omim.gif"/>
+<tr valign="top"><td align="center">Found <xsl:value-of select="count(//msg:result)" /> result<xsl:if test="count(//msg:result)!=1">s</xsl:if> on <img src="OMIM/images/omim.gif"/>
 <xsl:choose>
 <xsl:when test="//msg:result">
 <form name="pagerForm"><select name="pager" size="1" style="width:280" onChange="showOne(this.options[this.selectedIndex].value)">
@@ -37,7 +37,7 @@
 <h2><i>No result was found for <xsl:value-of select="/msg:message/@query"/>.<br />We apologize for the inconvenience</i></h2>
 </xsl:otherwise>
 </xsl:choose></td>
-<td><img src="images/jhu.gif"/></td></tr>
+<td><img src="OMIM/images/jhu.gif"/></td></tr>
 </table>
 </div>
 </body>

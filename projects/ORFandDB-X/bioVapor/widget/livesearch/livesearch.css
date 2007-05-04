@@ -6,12 +6,19 @@
 	css released under Creative Commons License - http://creativecommons.org/licenses/by/2.0/deed.en
 */
 
-#LSResult {    
+#LSResult {
 	position: absolute;
 	background-color: #aaa; 
 	min-width: 180px;
 	margin: 1px 0px 2px 0px;
 	padding: 0px;
+}
+
+#LSNotFound {
+	background: url('ajaxLoader.gif') center left no-repeat;
+	padding-left: 13px;
+	text-align:left;
+	font-style:italic;
 }
 
 #LSResult li {

@@ -8,21 +8,21 @@ import module namespace ens="http://www.cnio.es/scombio/jmfernandez/widget/ensem
 
 declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
 {
-	collection('/OMIM')//mim:record[@mimNumber=$mimNumber]
+	collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
 };
 
 declare function mim:getRecordsFromEnsID($ensID as xs:string) as element(mim:record)*
 {
 	for $mimNumber in ens:getmimrefs($ensID)
-		return collection('/OMIM')//mim:record[@mimNumber=$mimNumber]
+		return collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
 };
 
 declare function mim:getEnsIDWithFTS($term as xs:string) as xs:string*
 {
-	distinct-values(for $entry in collection('/OMIM')//mim:record[. &= $term] return ens:fetchbymimrefs($entry/@mimNumber))
+	distinct-values(for $entry in collection('/db/OMIM')//mim:record[. &= $term] return ens:fetchbymimrefs($entry/@mimNumber))
 };
 
 declare function mim:getRecordsWithFTS($term as xs:string) as element(mim:record)*
 {
-	collection('/OMIM')//mim:record[. &= $term]
+	collection('/db/OMIM')//mim:record[. &= $term]
 };

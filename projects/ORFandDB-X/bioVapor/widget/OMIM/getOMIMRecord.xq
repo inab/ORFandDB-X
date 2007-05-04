@@ -17,7 +17,7 @@ let $res:=mim:getRecord($query)
 return 
 	if($gethtml = 'true') then (
 		util:declare-option('exist:serialize',"indent=no media-type=text/html"),
-		transform:stream-transform($res,'xmldb:exist:///xslt/omim.xsl',())
+		transform:stream-transform($res,'xmldb:exist:///widget/OMIM/xslt/omim.xsl',())
 	) else (
 		util:declare-option('exist:serialize',"omit-xml-declaration=no indent=yes media-type=application/xml"),
 		$res

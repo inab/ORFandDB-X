@@ -10,7 +10,7 @@ case "$THEBASEDIR" in
 		;;
 esac
 
-LOCALAJAXSLT="$THEBASEDIR"/widget/ajaxslt
+LOCALAJAXSLT="$THEBASEDIR"/widget/js/ajaxslt
 
 # Getting the latest copy!
 rm -rf "$LOCALAJAXSLT"
