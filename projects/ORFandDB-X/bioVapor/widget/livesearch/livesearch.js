@@ -140,46 +140,50 @@ function liveSearchDoSearch() {
 		liveSearchQ.onreadystatechange= function() {
 			if (liveSearchQ.readyState == 4) {
 				var  sh = getElemById("LSShadow");
-				if(liveSearchQ.status==200) {
-					if(liveSearchQ==liveSearchReq) {
-						liveSearchReq=null;
-						var  res = getElemById("LSResult");
-						res.style.display = "block";
-						sh.innerHTML = '';
-						var foundterms=liveSearchQ.responseXML.getElementsByTagName('term');
-						if(foundterms.length>0) {
-							var lista=document.createElement('ul');
-							lista.className+=' '+"LSRes";
-							for(var i=0;i<foundterms.length;i++) {
-								var term=foundterms[i].getAttribute('name');
-								var hits=foundterms[i].getAttribute('hits');
-								//var freq=foundterms[i].getAttribute('freq');
-								var elem=document.createElement('li');
-								elem.className+=' '+"LSRow";
-								elem.termText=term;
-								elem.innerHTML='<a href="javascript:termSelected('+
-									"'"+term+"'"+
-									')"><span class="term">'+term+'</span> ('+
-									hits+' hit'+((hits==1)?'':'s')+')</a>';
-								lista.appendChild(elem);
+				try {
+					if(liveSearchQ.status==200) {
+						if(liveSearchQ==liveSearchReq) {
+							liveSearchReq=null;
+							var  res = getElemById("LSResult");
+							res.style.display = "block";
+							sh.innerHTML = '';
+							var foundterms=liveSearchQ.responseXML.getElementsByTagName('term');
+							if(foundterms.length>0) {
+								var lista=document.createElement('ul');
+								lista.className+=' '+"LSRes";
+								for(var i=0;i<foundterms.length;i++) {
+									var term=foundterms[i].getAttribute('name');
+									var hits=foundterms[i].getAttribute('hits');
+									//var freq=foundterms[i].getAttribute('freq');
+									var elem=document.createElement('li');
+									elem.className+=' '+"LSRow";
+									elem.termText=term;
+									elem.innerHTML='<a href="javascript:termSelected('+
+										"'"+term+"'"+
+										')"><span class="term">'+term+'</span> ('+
+										hits+' hit'+((hits==1)?'':'s')+')</a>';
+									lista.appendChild(elem);
+								}
+								var hasmore=liveSearchQ.responseXML.getElementsByTagName('more');
+								if(hasmore.length>0) {
+									var elem=document.createElement('li');
+									elem.className+=' '+"LSRow";
+									elem.innerHTML='<span style="margin-left: 1em;">...</span>';
+									lista.appendChild(elem);
+								}
+								sh.appendChild(lista);
+							} else {
+								sh.innerHTML="<div class='LSRes'><span id='LSNotFound'>(No hits found for '"+liveSearchQ.responseXML.documentElement.getAttribute('search')+"')</span></div>";
 							}
-							var hasmore=liveSearchQ.responseXML.getElementsByTagName('more');
-							if(hasmore.length>0) {
-								var elem=document.createElement('li');
-								elem.className+=' '+"LSRow";
-								elem.innerHTML='<span style="margin-left: 1em;">...</span>';
-								lista.appendChild(elem);
-							}
-							sh.appendChild(lista);
-						} else {
-							sh.innerHTML="<div class='LSRes'><span id='LSNotFound'>(No hits found for '"+liveSearchQ.responseXML.documentElement.getAttribute('search')+"')</span></div>";
 						}
+					} else if(liveSearchQ.status==404) {
+				 		sh.innerHTML="<div class='LSRes'><span id='LSError'>Error while connecting to '"+searchQuery+"': not found</span></div>";
+					} else {
+				 		sh.innerHTML="<div class='LSRes'><span id='LSError'>Error while connecting to '"+searchQuery+"': code "+liveSearchQ.status+"</span></div>";
 					}
-				 } else if(liveSearchQ.status==404) {
-				 	sh.innerHTML="<div class='LSRes'><span id='LSError'>Error while connecting to '"+searchQuery+"': not found</span></div>";
-				 } else {
-				 	sh.innerHTML="<div class='LSRes'><span id='LSError'>Error while connecting to '"+searchQuery+"': code "+liveSearchQ.status+"</span></div>";
-				 }
+				} catch(e) {
+					sh.innerHTML="<div class='LSRes'><span id='LSError'>Your browser is probably in offline mode. Please switch it to online mode</span></div>";
+				}
 			}
 		};
 		liveSearchQ.open("GET", searchQuery);

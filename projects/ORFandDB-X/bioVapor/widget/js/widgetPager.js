@@ -124,9 +124,13 @@ function widgetPagerInit() {
 				myXMLHTTPRequest.open("GET", widURL, true);
 				myXMLHTTPRequest.onreadystatechange = function() {
 					if(myXMLHTTPRequest.readyState==4) {
-						if(myXMLHTTPRequest.status==200) {
-							gotResults(myXMLHTTPRequest.responseXML,widURL);
-						} else {
+						try {
+							if(myXMLHTTPRequest.status==200) {
+								gotResults(myXMLHTTPRequest.responseXML,widURL);
+							} else {
+								gotResults(null,widURL);
+							}
+						} catch(e) {
 							gotResults(null,widURL);
 						}
 					}
@@ -254,9 +258,13 @@ function gotResults(responseXML,widURL)
 				var myXMLHTTPRequest=new XMLHttpRequest();
 				myXMLHTTPRequest.onreadystatechange = function() {
 					if(myXMLHTTPRequest.readyState==4) {
-						if(myXMLHTTPRequest.status==200) {
-							gotPagerXSLT(myXMLHTTPRequest.responseXML,pagerURL);
-						} else {
+						try {
+							if(myXMLHTTPRequest.status==200) {
+								gotPagerXSLT(myXMLHTTPRequest.responseXML,pagerURL);
+							} else {
+								gotPagerXSLT(null,pagerURL);
+							}
+						} catch(e) {
 							gotPagerXSLT(null,pagerURL);
 						}
 					}
@@ -367,9 +375,13 @@ function processDefaultView()
 		var myXMLHTTPRequest=new XMLHttpRequest();
 		myXMLHTTPRequest.onreadystatechange = function() {
 			if(myXMLHTTPRequest.readyState==4) {
-				if(myXMLHTTPRequest.status==200) {
-					gotContentXSLT(myXMLHTTPRequest.responseXML,viewURL);
-				} else {
+				try {
+					if(myXMLHTTPRequest.status==200) {
+						gotContentXSLT(myXMLHTTPRequest.responseXML,viewURL);
+					} else {
+						gotContentXSLT(null,viewURL);
+					}
+				} catch(e) {
 					gotContentXSLT(null,viewURL);
 				}
 			}
@@ -534,27 +546,31 @@ function doPrefetch(fetchURI,nodei,fromVal)
 	prefetchXML.render=(nodei==fromVal)?1:null;
 	prefetchXML.onreadystatechange = function() {
 		if(prefetchXML.readyState==4) {
-			if(prefetchXML.status==200) {
-				if(ishtmlfetch) {
-					content[prefetchXML.thei]=prefetchXML.responseText;
-				} else {
-					//content[prefetchXML.thei]=prefetchXML.responseXML;
-					content[prefetchXML.thei].appendChild(prefetchXML.responseXML.documentElement);
-				}
+			try {
+				if(prefetchXML.status==200) {
+					if(ishtmlfetch) {
+						content[prefetchXML.thei]=prefetchXML.responseText;
+					} else {
+						//content[prefetchXML.thei]=prefetchXML.responseXML;
+						content[prefetchXML.thei].appendChild(prefetchXML.responseXML.documentElement);
+					}
 
-				state[prefetchXML.thei]=new String('');
-				
-				/*
-				if(prefetchXML.render) {
-					continueShow(prefetchXML.thei,prefetchXML.thei);
+					state[prefetchXML.thei]=new String('');
+
+					/*
+					if(prefetchXML.render) {
+						continueShow(prefetchXML.thei,prefetchXML.thei);
+					}
+					var divi=document.createElement('div');
+					divi.innerHTML=prefetchXML.thei;
+					getElemById(pageContentPane).appendChild(divi);
+					*/
+				} else {
+					//alert("ERROR: Could not fetch information for "+id);
+					state[prefetchXML.thei]=new String("ERROR: Could not fetch "+fetchURI);
 				}
-				var divi=document.createElement('div');
-				divi.innerHTML=prefetchXML.thei;
-				getElemById(pageContentPane).appendChild(divi);
-				*/
-			} else {
-				//alert("ERROR: Could not fetch information for "+id);
-				state[prefetchXML.thei]=new String("ERROR: Could not fetch "+fetchURI);
+			} catch(e) {
+				state[prefetchXML.thei]=new String("ERROR: Could not fetch "+fetchURI+" because your browser is perhaps in offline mode!!!");
 			}
 		}
 	};
