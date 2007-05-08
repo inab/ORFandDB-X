@@ -6,7 +6,7 @@ declare option exist:optimize "enable=yes";
 
 declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 
-declare namespace msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5";
+declare namespace msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.6";
 
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
@@ -32,7 +32,7 @@ let $results:=(
 	)
 return
 <msg:message query='{$query}' namespace='{$nsquery}' timestamp='{current-dateTime()}'>
-<msg:defaultView showMode='{if($gethtml = "true") then "none" else "XSLT"}' mime='text/html'>{
+<msg:defaultView name='default' showMode='{if($gethtml = "true") then "none" else "XSLT"}' mime='text/html'>{
 	if($gethtml != "true") then
 		 attribute href {'OMIM/xslt/omim.xsl'}
 	else
@@ -44,7 +44,7 @@ return
 		<msg:pagerView showMode='XSLT' mime='text/html' href='OMIM/xslt/omimPager.xsl' />
 	else
 		()
-}<msg:defaultFetchURI href='OMIM/getOMIMRecord.xq' idAttr='id' htmlAttr='html' />{
+}<msg:defaultFetchURI href='OMIM/getOMIMRecord.xq' idAttr='id' htmlAttr='html' markupAttr='markup' />{
 	for $res in $results
 	return <msg:result namespace='OMIM' id='{$res/@mimNumber}' title='{$res/@title}'>{
 			if($onefetch = 'true') then

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5"
+	xmlns:msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.6"
 	xmlns:mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM"
-	xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0">
+	xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"
+	xmlns:exist="http://exist.sourceforge.net/NS/exist"
+>
 
 	<xsl:param name="fromVal">1</xsl:param>
 	<xsl:param name="toVal">1</xsl:param>
@@ -156,8 +158,8 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 	
 	<xsl:template match="odb:link">
 		<xsl:variable name="texto"><xsl:choose>
-			<xsl:when test="odb:text and string-length(odb:text/text()) &gt; 0">
-				<xsl:value-of select="odb:text/text()"/>
+			<xsl:when test="odb:text and (odb:text/exist:match or string-length(odb:text/text()) &gt; 0)">
+				<xsl:apply-templates select="odb:text/node()"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="@id"/>
@@ -173,13 +175,17 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 			
 			<xsl:choose>
 				<xsl:when test="$exthref">
-					<a href="{$exthref}{@id}" target="_blank"><xsl:value-of select="$texto"/></a>
+					<a href="{$exthref}{@id}" target="_blank"><xsl:copy-of select="$texto"/></a>
 				</xsl:when>
 				<xsl:otherwise>
 					<u><xsl:value-of select="$texto"/></u>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="exist:match">
+		<span class="highlight"><xsl:apply-templates select="node()"/></span>
 	</xsl:template>
 	
 	<xsl:template match="mim:section">
@@ -200,8 +206,12 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 		<h3 class="expander" onclick="swe(this)"><span class="expander-plus">+</span> <a name="{@allelicID}"><xsl:value-of select="@allelicID"/></a><xsl:text>: </xsl:text><xsl:value-of select="@name"/> [<xsl:value-of select="mim:mutation/@raw"/>]</h3>
 		<div class="expander-content">
 		<xsl:if test="mim:alias">
-<h4>ALIASES</h4>
+<div class="expander-closed">
+<h4 class="expander" onclick="swe(this)"><span class="expander-plus">+</span> ALIASES</h4>
+<div class="expander-content">
 <xsl:for-each select="mim:alias"><b><xsl:value-of select="text()"/></b><br/></xsl:for-each>
+</div>
+</div>
 		</xsl:if>
 		<xsl:apply-templates select="mim:text">
 			<xsl:with-param name="level" select="4"/>

@@ -1,84 +1,165 @@
-function NSResolver(prefix)
-{
-	return NSprefix[prefix];
-}
+/* Made by José María Fernández, CNIO 2007*/
+/* For ORFandDB/X */
+var WidgetCommon = {};
 
-function getElemById(id)
+/* Zero, JavaScript dependencies */
+WidgetCommon.JSDEPS=new Array(
+	"browserdetect/BrowserDetect.js",
+	"sarissa/sarissa.js",
+	"sarissa/sarissa_ieemu_xpath.js",
+	"ajaxslt/xmltoken.js",
+	"ajaxslt/util.js",
+	"ajaxslt/dom.js",
+	"ajaxslt/xpath.js"
+);
+
+/* First, essential functions!!!! */
+WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc)
 {
-	if(document.getElementById){    // test the most common method first.  Most browsers won't get past this test
-		return document.getElementById(id);
-	} else if(document.all){         // test older versions of IE
-		return document.all[id];
-	} else if(document.layers){      // test older versions of Netscape
-		return document.layers[id];
-	} else {                          // not sure what to do...return null
-		return null;
+	if(!thedoc) {
+		thedoc=document;
 	}
-}
-
-function getForm(formName)
-{
-	return ('forms' in document)?document.forms[formName]:document[formName];
-}
-
-function xpathEvaluate(thexpath,thecontext,theObjResolver)
-{
-	if(BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
-		var expcon=new ExprContext(thecontext);
-		var tagname=thecontext.documentElement.tagName;
-		// Getting main prefix (if any)
-		var pretag=tagname.substring(0,tagname.indexOf(':',0));
-		if(!pretag) {
-			pretag='';
-		} else {
-			pretag+=':';
-		}
-		var prematch=new String(thexpath.match(/[^a-zA-Z0-9][a-zA-Z0-9]+:/));
-		if(!prematch) {
-			prematch='';
-		} else {
-			prematch=prematch.substr(1);
-		}
-		// Replacing prefixes
-		var re=new RegExp("/"+prematch+"([^/])","g");
-		var repxpath=thexpath.replace(re,"/"+pretag+"$1");
-		var xp=xpathParse(repxpath);
-		if(xp!=null) {
-			var res=xp.evaluate(expcon);
-			return (res!=null)?res.value:null;
-		}
-		
-	} else  {
-		var namespaceString="";
-		for(var prefix in theObjResolver) {
-			namespaceString+=' xmlns:'+prefix+'="'+theObjResolver[prefix]+'"';
-		}
-		Sarissa.setXpathNamespaces(thecontext,namespaceString.substring(1));
-
-		return thecontext.selectNodes(thexpath);
+	var e = thedoc.createElement("script");
+	if(!basehref) {
+		basehref='';
 	}
-		/*
-		var firstVal=thecontext.evaluate(thexpath,thecontext,function(prefix) {return theObjResolver[prefix];},0,null);
-		var retval=new Array();
-		var thisnode=firstVal.iterateNext();
-		while(thisnode) {
-			retval.push(thisnode);
-			thisnode=firstVal.iterateNext();
-		}
-		return retval;
-		*/
-	/*
-	} else {
-		// my attempt to tackle with XPath-less browsers
-		var xpath=xpathParse(thexpath);
-		var result=xpath.evaluate(thecontext);
-		alert(result);
+	e.src = basehref+url;
+	e.type="text/javascript";
+	thedoc.getElementsByTagName("head")[0].appendChild(e);
+};
+
+WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
+{
+	if(!thedoc) {
+		thedoc=document;
 	}
-	*/
+	var e = thedoc.createElement("link");
+	e.rel="stylesheet";
+	if(!basehref) {
+		basehref='';
+	}
+	e.href = basehref+url;;
+	thedoc.getElementsByTagName("head")[0].appendChild(e);
+};
+
+WidgetCommon.widgetCommonInit = function ()
+{
+	var basehref=null;
+	
+	var scripts=document.getElementsByTagName("script");
+	var isc;
+	for(isc=0;isc < scripts.length ; isc++) {
+		var src = scripts[isc].getAttribute("src");
+		// Anonymous javascript blocks
+		if(!src) {
+			continue;
+		}
+		var last=src.lastIndexOf('widgetCommon.js');
+		if(last!=-1 && src.match(/\/widgetCommon\.js$/)) {
+			basehref=src.substring(0, last);
+			break;
+		}
+	}
+	
+	if(!basehref) {
+		basehref=location.href;
+	}
+	var lastslash=basehref.lastIndexOf('/');
+	if((lastslash+1)!=basehref.length) {
+		basehref=basehref.substring(0,lastslash+1);
+	}
+	for(var elem in WidgetCommon.JSDEPS) {
+		WidgetCommon.dhtmlLoadScript(WidgetCommon.JSDEPS[elem],basehref);
+	}
+};
+
+/* Second, dynamically loading the libraries (bootstraping) */
+WidgetCommon.widgetCommonInit();
+
+/* And third, the additional functions!!!! */
+WidgetCommon.dhtmlLoadCSSContent = function (csscontent,/* optional */ thedoc)
+{
+	if(!thedoc) {
+		thedoc=document;
+	}
+	var e = thedoc.createElement("style");
+	e.type="text/css";
+	e.innerHTML = csscontent;
+	thedoc.getElementsByTagName("head")[0].appendChild(e);
+};
+
+WidgetCommon.dhtmlLoadScriptContent = function (javascriptcontent,/* optional */ thedoc)
+{
+	if(!thedoc) {
+		thedoc=document;
+	}
+	var e = thedoc.createElement("script");
+	e.type="text/javascript";
+	thedoc.innerHTML = javascriptcontent;
+	thedoc.getElementsByTagName("head")[0].appendChild(e);
+};
+
+// Sort of optimization
+if(document.getElementById){    // test the most common method first.  Most browsers won't get past this test
+	WidgetCommon.getElementById = function (id) { return document.getElementById(id); };
+} else if(document.all){         // test older versions of IE
+	WidgetCommon.getElementById = function (id) { return document.all[id]; };
+} else if(document.layers){      // test older versions of Netscape
+	WidgetCommon.getElementById = function (id) { return document.layers[id]; };
+} else {                          // not sure what to do...return null
+	WidgetCommon.getElementById = function (id) { return null; };
 }
+
+WidgetCommon.getForm = ('forms' in document)?
+	function (formName) {
+		return document.forms[formName];
+	}:
+	function (formName) {
+		return document[formName];
+	};
+
+/* This is a sort of lazy evaluation */
+WidgetCommon.xpathEvaluate = function (thexpath,thecontext,theObjResolver) {
+	WidgetCommon.xpathEvaluate = (BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') ?
+		function (thexpath,thecontext,theObjResolver) {
+			var expcon=new ExprContext(thecontext);
+			var tagname=thecontext.documentElement.tagName;
+			// Getting main prefix (if any)
+			var pretag=tagname.substring(0,tagname.indexOf(':',0));
+			if(!pretag) {
+				pretag='';
+			} else {
+				pretag+=':';
+			}
+			var prematch=new String(thexpath.match(/[^a-zA-Z0-9][a-zA-Z0-9]+:/));
+			if(!prematch) {
+				prematch='';
+			} else {
+				prematch=prematch.substr(1);
+			}
+			// Replacing prefixes
+			var re=new RegExp("/"+prematch+"([^/])","g");
+			var repxpath=thexpath.replace(re,"/"+pretag+"$1");
+			var xp=xpathParse(repxpath);
+			if(xp!=null) {
+				var res=xp.evaluate(expcon);
+				return (res!=null)?res.value:null;
+			}
+		}:
+		function (thexpath,thecontext,theObjResolver) {
+			var namespaceString="";
+			for(var prefix in theObjResolver) {
+				namespaceString+=' xmlns:'+prefix+'="'+theObjResolver[prefix]+'"';
+			}
+			Sarissa.setXpathNamespaces(thecontext,namespaceString.substring(1));
+
+			return thecontext.selectNodes(thexpath);
+		};
+	return WidgetCommon.xpathEvaluate(thexpath,thecontext,theObjResolver);
+};
 
 /* Second parameter is optional */
-function parseQS(qsParm,url)
+WidgetCommon.parseQS = function (qsParm,/* optional */ url)
 {
 	var query = (url)?url:document.location.search.substring(1);
 	var parms = query.split('&');
@@ -99,9 +180,9 @@ function parseQS(qsParm,url)
 	}
 	
 	return qsParm;
-}
+};
 
-function generateQS(qsParm,baseurl)
+WidgetCommon.generateQS = function (qsParm,baseurl)
 {
 	var query='';
 	for (var term in qsParm) {
@@ -114,20 +195,12 @@ function generateQS(qsParm,baseurl)
 		}
 	}
 	return baseurl+'?'+query.substring(1);
-}
+};
 
-function dhtmlLoadScript(url)
-{
-   var e = document.createElement("script");
-   e.src = url;
-   e.type="text/javascript";
-   document.getElementsByTagName("head")[0].appendChild(e);
-}
 
-function dhtmlLoadCSS(url)
-{
-   var e = document.createElement("link");
-   e.rel="stylesheet";
-   e.href = url;
-   document.getElementsByTagName("head")[0].appendChild(e);
-}
+WidgetCommon.DebugError = function (e) {
+	return 	"JavaScript error name: "+e.name+
+		"\nMessage: "+e.message+
+		"\nFileName: "+e.fileName+", line "+e.lineNumber+
+		"\nStackTrace: "+e.stack;
+};

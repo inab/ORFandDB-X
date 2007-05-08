@@ -57,6 +57,12 @@
 	text-align:justify;
 }
 
+.highlight
+{
+	border: thin dotted rgb(0,0,0);
+	background-color: yellow;
+}
+
 /*
 *[class~=expander-popup]:hover *[class~=expander-content]:hover { display: block }
 .expander-popup *[class~=expander]:hover + .expander-content { display: block }

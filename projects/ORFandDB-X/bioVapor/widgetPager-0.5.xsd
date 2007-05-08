@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema targetNamespace="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5" xmlns="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.5" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema targetNamespace="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.6" xmlns="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.6" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
-    <xsd:documentation xml:lang="en">Widget message v0.5 schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
+    <xsd:documentation xml:lang="en">Widget message v0.6 schema definition. José María Fernández (jmfernandez@cnio.es) CNIO (C) 2007</xsd:documentation>
   </xsd:annotation>
   <xsd:element name="content">
     <xsd:annotation>
@@ -104,6 +104,16 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
         <xsd:documentation><![CDATA[If this attribute exists, then content element is ignored, and the information is fetched from the provided URI.]]></xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
+    <xsd:attribute default="default" name="name" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[The name of this view.]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="scope" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[If this attribute exists, then this is the namespace scope of the view.]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
   <xsd:element name="message">
     <xsd:annotation>
@@ -111,7 +121,7 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence maxOccurs="1" minOccurs="1">
-        <xsd:element maxOccurs="1" minOccurs="0" name="defaultView" type="viewType">
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="defaultView" type="viewType">
           <xsd:annotation>
             <xsd:documentation><![CDATA[If this element exists, it defines the default way to show the contained information inside result/content tags.]]></xsd:documentation>
           </xsd:annotation>
@@ -121,7 +131,7 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
             <xsd:documentation><![CDATA[If this element exists, it defines the default way to show the pager for the contained information inside result/content tags.]]></xsd:documentation>
           </xsd:annotation>
         </xsd:element>
-        <xsd:element maxOccurs="1" minOccurs="0" name="defaultFetchURI">
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="defaultFetchURI">
           <xsd:annotation>
             <xsd:documentation><![CDATA[If this element exists, it defines the URI to be used to dynamically fetch the information.]]></xsd:documentation>
           </xsd:annotation>
@@ -146,6 +156,16 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
                 <xsd:documentation><![CDATA[The parameter name to set that we require HTML content (server side rendering).]]></xsd:documentation>
               </xsd:annotation>
             </xsd:attribute>
+            <xsd:attribute name="markupAttr" type="xsd:string" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The parameter name to set what we want to markup.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="scope" type="xsd:string" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[If this parameter is set, then this default fetch uri is used for only for these namespace's entries.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
           </xsd:complexType>
         </xsd:element>
         <xsd:element maxOccurs="unbounded" minOccurs="0" name="result">
@@ -154,7 +174,7 @@ Depending on the kind of processing, it can make sense or not.]]></xsd:documenta
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence maxOccurs="1" minOccurs="1">
-              <xsd:element maxOccurs="1" minOccurs="0" name="view" type="viewType">
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="view" type="viewType">
                 <xsd:annotation>
                   <xsd:documentation><![CDATA[If this element exists, it defines the way to show the contained information]]></xsd:documentation>
                 </xsd:annotation>

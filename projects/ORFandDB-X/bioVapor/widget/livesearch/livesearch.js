@@ -35,8 +35,8 @@ var isIE = false;
 // on !IE we only have to initialize it once
 
 function liveSearchHide() {
-	getElemById("LSResult").style.display = "none";
-	var highlight = getElemById("LSHighlight");
+	WidgetCommon.getElementById("LSResult").style.display = "none";
+	var highlight = WidgetCommon.getElementById("LSHighlight");
 	if (highlight) {
 		highlight.removeAttribute("id");
 	}
@@ -47,13 +47,13 @@ function liveSearchHideDelayed() {
 }
 	
 function liveSearchKeyPress(event) {
-	var error=getElemById('LSError');
+	var error=WidgetCommon.getElementById('LSError');
 	if(error)  return;
 	if(liveSearchReq)  return;
 	if (event.keyCode == 10 || event.keyCode == 13 || event.keyCode == 27) {
 		//Enter or ESC
-		getElemById("LSResult").style.display = "none";
-		highlight = getElemById("LSHighlight");
+		WidgetCommon.getElementById("LSResult").style.display = "none";
+		highlight = WidgetCommon.getElementById("LSHighlight");
 		if (highlight) {
 			highlight.removeAttribute("id");
 			if(event.keyCode != 27 && 'termText' in highlight) {
@@ -63,9 +63,9 @@ function liveSearchKeyPress(event) {
 		return;
 	} else if (event.keyCode == 40 ) {
 		//KEY DOWN
-		highlight = getElemById("LSHighlight");
+		highlight = WidgetCommon.getElementById("LSHighlight");
 		if (!highlight) {
-			highlight = getElemById("LSShadow").firstChild.firstChild;
+			highlight = WidgetCommon.getElementById("LSShadow").firstChild.firstChild;
 		} else {
 			highlight.removeAttribute("id");
 			highlight = highlight.nextSibling;
@@ -76,9 +76,9 @@ function liveSearchKeyPress(event) {
 		if (!isIE) { event.preventDefault(); }
 	} else if (event.keyCode == 38 ) {
 		//KEY UP
-		highlight = getElemById("LSHighlight");
+		highlight = WidgetCommon.getElementById("LSHighlight");
 		if (!highlight) {
-			highlight = getElemById("LSResult").firstChild.firstChild.lastChild;
+			highlight = WidgetCommon.getElementById("LSResult").firstChild.firstChild.lastChild;
 		} else {
 			highlight.removeAttribute("id");
 			highlight = highlight.previousSibling;
@@ -101,7 +101,7 @@ function liveSearchDoSearch() {
 	if (typeof liveSearchParams == "undefined") {
 		liveSearchParams = "";
 	}
-	var liveSearch=getForm('searchform').search.value;
+	var liveSearch=WidgetCommon.getForm('searchform').search.value;
 	if(liveSearch != '') {
 		var liveSearchTokens=liveSearch.split(" ");
 		liveSearch=liveSearchTokens.pop();
@@ -135,16 +135,16 @@ function liveSearchDoSearch() {
 		var qsParm=new Array();
 		qsParm['search'] = liveSearch;
 
-		var searchQuery=generateQS(qsParm,liveSearchRoot + "livesearch.xq");
+		var searchQuery=WidgetCommon.generateQS(qsParm,liveSearchRoot + "livesearch.xq");
 		liveSearchQ = new XMLHttpRequest();
 		liveSearchQ.onreadystatechange= function() {
 			if (liveSearchQ.readyState == 4) {
-				var  sh = getElemById("LSShadow");
+				var  sh = WidgetCommon.getElementById("LSShadow");
 				try {
 					if(liveSearchQ.status==200) {
 						if(liveSearchQ==liveSearchReq) {
 							liveSearchReq=null;
-							var  res = getElemById("LSResult");
+							var  res = WidgetCommon.getElementById("LSResult");
 							res.style.display = "block";
 							sh.innerHTML = '';
 							var foundterms=liveSearchQ.responseXML.getElementsByTagName('term');
@@ -190,9 +190,9 @@ function liveSearchDoSearch() {
 		liveSearchQ.send(null);
 		// Advertising the search
 		liveSearchReq = liveSearchQ;
-		var  res = getElemById("LSResult");
+		var  res = WidgetCommon.getElementById("LSResult");
 		res.style.display = "block";
-		var  sh = getElemById("LSShadow");
+		var  sh = WidgetCommon.getElementById("LSShadow");
 		sh.innerHTML = "<div class='LSRes'><span id='LSSearching'>Looking for terms beginning with '"+liveSearch+"'</span></div>";
 	}
 }
@@ -205,7 +205,7 @@ function liveSearchStart() {
 }
 
 function liveSearchSubmit() {
-	var highlight = getElemById("LSHighlight");
+	var highlight = WidgetCommon.getElementById("LSHighlight");
 	if (highlight && highlight.firstChild) {
 		window.location = liveSearchRoot + liveSearchRootSubDir + highlight.firstChild.nextSibling.getAttribute("href");
 		return false;
@@ -216,7 +216,7 @@ function liveSearchSubmit() {
 }
 
 function termSelected(term) {
-    var q = getForm('searchform').search;
+    var q = WidgetCommon.getForm('searchform').search;
     var tokens=q.value.split(" ");
     tokens[tokens.length-1]=liveSearchLast=term;
     q.value=tokens.join(" ");
@@ -226,21 +226,21 @@ function termSelected(term) {
 
 function liveSearchInit() {
 	
-	if (navigator.userAgent.indexOf("Safari") > 0) {
-		getElemById('livesearch').addEventListener("keydown",liveSearchKeyPress,false);
-//		getElemById('livesearch').addEventListener("blur",liveSearchHide,false);
+	if (BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
+		WidgetCommon.getElementById('livesearch').addEventListener("keydown",liveSearchKeyPress,false);
+//		WidgetCommon.getElementById('livesearch').addEventListener("blur",liveSearchHide,false);
 	} else if (navigator.product == "Gecko") {
 		
-		getElemById('livesearch').addEventListener("keypress",liveSearchKeyPress,false);
-		getElemById('livesearch').addEventListener("blur",liveSearchHideDelayed,false);
+		WidgetCommon.getElementById('livesearch').addEventListener("keypress",liveSearchKeyPress,false);
+		WidgetCommon.getElementById('livesearch').addEventListener("blur",liveSearchHideDelayed,false);
 		
 	} else {
-		getElemById('livesearch').attachEvent('onkeydown',liveSearchKeyPress);
-//		getElemById('livesearch').attachEvent("onblur",liveSearchHide,false);
+		WidgetCommon.getElementById('livesearch').attachEvent('onkeydown',liveSearchKeyPress);
+//		WidgetCommon.getElementById('livesearch').attachEvent("onblur",liveSearchHide,false);
 		isIE = true;
 	}
 	
-	getElemById('livesearch').setAttribute("autocomplete","off");
+	WidgetCommon.getElementById('livesearch').setAttribute("autocomplete","off");
 
 }
 

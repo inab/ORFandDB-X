@@ -5,15 +5,33 @@ declare option exist:optimize "enable=yes";
 declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 :)
 
+declare namespace mimmark="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM/mark";
+
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace transform="http://exist-db.org/xquery/transform";
 
+declare function mimmark:set-markups($input as node()*,$markup as xs:string?) as node()*
+{
+	if($markup) then (
+		for $elem in $input
+		let $marked := $elem[. &= $markup]
+			return
+				if ($marked) then
+					$marked
+				else
+					$elem
+	) else
+		$input
+};
+
+
 let $query:=request:get-parameter("id",())
+let $markup:=request:get-parameter("markup",())
 let $gethtml:=request:get-parameter("html","false")
-let $res:=mim:getRecord($query)
+let $res:=mimmark:set-markups(mim:getRecord($query),$markup)
 return 
 	if($gethtml = 'true') then (
 		util:declare-option('exist:serialize',"indent=no media-type=text/html"),
