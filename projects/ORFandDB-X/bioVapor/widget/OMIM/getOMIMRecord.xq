@@ -2,8 +2,8 @@ xquery version "1.0";
 
 (:
 declare option exist:optimize "enable=yes";
-declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 :)
+declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
 
 declare namespace mimmark="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM/mark";
 

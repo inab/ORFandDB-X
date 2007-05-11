@@ -2,15 +2,15 @@
 /* For ORFandDB/X */
 
 /* Widget Pager object declaration */
-WidgetPager = function (theuri,theparamid,theparamns,theparamhtml,/* optional */ thedefaultlogo) {
+WidgetPager = function (theuri,theparamid,theparamns,theparamhtml,/* optional */ thedefaultlogo,thePager,thePageContent) {
 	this.widgetURI=theuri;
 	this.widgetParamId=theparamid;
 	this.widgetParamNS=theparamns;
 	this.widgetParamHTML=theparamhtml;
 	this.DEFAULTLOGO=(!thedefaultlogo)?"<div align='center'><h3><i>NO LOGO WAS SET FOR THE WIDGET</i></h3></div>":thedefaultlogo;
 
-	this.pagerPane=null;
-	this.pageContentPane=null;
+	this.pagerPane=thePager;
+	this.pageContentPane=thePageContent;
 	
 	this.defaultFetch=new Array();
 	
@@ -55,12 +55,17 @@ WidgetPager = function (theuri,theparamid,theparamns,theparamhtml,/* optional */
 	
 	// Let's work!!!!!
 	// this.widgetPagerInit();
+	
+	this.includeNodes=new Array();
 };
+
+WidgetPager._timer=null;
+WidgetPager._init=null;
 
 WidgetPager.prototype = {
 	setPanes: function (thePager,thePageContent) {
-		this.pagerPane=thePager;
-		this.pageContentPane=thePageContent;
+		if(thePager)  this.pagerPane=thePager;
+		if(thePageContent)  this.pageContentPane=thePageContent;
 	},
 	
 	showError: function (e,widURL) {
@@ -72,6 +77,8 @@ WidgetPager.prototype = {
 		if(!e) {
 			errmesg='';
 		} else {
+			//alert(e.message);
+			//throw(e);
 			errmesg="<br /><pre>"+WidgetCommon.DebugError(e)+"</pre>";
 		}
 		var urlerrmesg=(widURL!=null && widURL!='')?"<i>There was an error while retrieving <a href='"+widURL+"'>"+widURL+"</a></i>":'';
@@ -79,6 +86,53 @@ WidgetPager.prototype = {
 	},
 
 	widgetPagerInit: function () {
+		/*
+		if(navigator.vendor.indexOf('KDE')!=-1 || navigator.vendor.indexOf('Apple')!=-1) {
+			if(!/loaded|complete/.test(document.readyState)) {
+			//if(!/complete/.test(document.readyState)) {
+				WidgetPager._timer = setInterval(function() {
+					if (/loaded|complete/.test(document.readyState)) {
+					//if (/complete/.test(document.readyState)) {
+						this.widgetPagerInit(); // call the onload handler
+					}
+				}, 10);
+				return;
+			} else if(WidgetPager._timer) {
+				clearInterval(WidgetPager._timer);
+			}
+		}
+		*/
+		if(WidgetPager._init)  return;
+		WidgetPager._init=1;
+		
+		var widgetPager=this;
+		if(navigator.vendor) {
+			if(navigator.vendor.indexOf('KDE')!=-1 || navigator.vendor.indexOf('Apple')!=-1) {
+				if(!WidgetCommon._loaded) {
+					WidgetCommon.onload=function () { widgetPager.widgetPagerInit(); };
+					if(!WidgetCommon._loaded) {
+						WidgetPager._init=null;
+						return;
+					}
+				}
+
+				if(!/loaded|complete/.test(document.readyState)) {
+				//if(!/complete/.test(document.readyState)) {
+					WidgetPager._init=null;
+					WidgetPager._timer = setInterval(function() {
+						if (/loaded|complete/.test(document.readyState)) {
+						//if (/complete/.test(document.readyState)) {
+							widgetPager.widgetPagerInit(); // call the onload handler
+						}
+					}, 50);
+					return;
+				} else if(WidgetPager._timer) {
+					clearInterval(WidgetPager._timer);
+					WidgetPager._timer=null;
+				}
+			}
+		}
+		
 		// Parsing Query String
 		var qsParm = new Array();
 		WidgetCommon.parseQS(qsParm);
@@ -129,24 +183,33 @@ WidgetPager.prototype = {
 				var widURL=this.buildWidgetURI(this.ensemblId,this.namespace);
 				var myXMLHTTPRequest = new XMLHttpRequest();
 				try {
-					myXMLHTTPRequest.widget=this;
-					myXMLHTTPRequest.open("GET", widURL, true);
 					myXMLHTTPRequest.onreadystatechange = function() {
 						if(myXMLHTTPRequest.readyState==4) {
 							try {
 								if(myXMLHTTPRequest.status==200) {
-									myXMLHTTPRequest.widget.gotResults(myXMLHTTPRequest.responseXML,widURL);
+									var response=myXMLHTTPRequest.responseXML;
+									if(!response) {
+										if(myXMLHTTPRequest.responseText) {
+											var parser=new DOMParser();
+											response=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
+										} else {
+											throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+										}
+									}
+									widgetPager.gotResults(response,widURL);
 								} else {
-									myXMLHTTPRequest.widget.gotResults(null,widURL);
+									widgetPager.gotResults(null,widURL);
 								}
 							} catch(e) {
-								myXMLHTTPRequest.widget.gotResults(null,widURL);
+								throw(e);
+								//widgetPager.gotResults(null,widURL);
 							}
 						}
 					};
 
 					// Go, go, power asynchronous
 					WidgetCommon.getElementById(this.pagerPane).innerHTML = 'Querying for results. Please wait...';
+					myXMLHTTPRequest.open("GET", widURL, true);
 					myXMLHTTPRequest.send(null);
 
 				} catch(e) {
@@ -180,8 +243,8 @@ WidgetPager.prototype = {
 
 		return WidgetCommon.generateQS(qsParm,this.widgetURI);
 	},
-
-	processIncludeNodes: function (nodeList)
+	
+	buildIncludeNodes: function (nodeList,includeNodes)
 	{
 		// Internet Explorer has a weird behavior
 		// related to JavaScript and CSS on content dynamically
@@ -194,14 +257,64 @@ WidgetPager.prototype = {
 			var iinc=0;
 			var minc=nodeList.length;
 			for(;iinc<minc;iinc++) {
+				var include=new Object();
+				include.includeType=nodeList[iinc].getAttribute("type");
+				include.includeURL=nodeList[iinc].getAttribute("href");
+				includeNodes.push(include);
+			}
+		}
+	},
+
+	includeNodesOnce: function (nodeList,thedoc)
+	{
+		// Internet Explorer has a weird behavior
+		// related to JavaScript and CSS on content dynamically
+		// loaded using XMLHTTPRequest (like CARGO widgets)
+		// and put as DIV children,
+		// probably due the severe security problems
+		// it had with JavaScript and CSS in the past.
+		// So, we have to dynamically load both of them.
+		if(nodeList!=null) {
+			if(!thedoc)  thedoc=document;
+			
+			var iinc=0;
+			var minc=nodeList.length;
+			for(;iinc<minc;iinc++) {
 				var includeType=nodeList[iinc].getAttribute("type");
 				var includeURL=nodeList[iinc].getAttribute("href");
-
 				if(includeType=='CSS') {
-					WidgetCommon.dhtmlLoadCSS(includeURL);
+					WidgetCommon.dhtmlLoadCSS(includeURL,null,thedoc);
 				}
 				if(includeType=='javascript') {
-					WidgetCommon.dhtmlLoadScript(includeURL);
+					WidgetCommon.dhtmlLoadScript(includeURL,null,thedoc);
+				}
+			}
+		}
+	},
+	
+	processIncludeNodes: function (includeNodes,thedoc)
+	{
+		// Internet Explorer has a weird behavior
+		// related to JavaScript and CSS on content dynamically
+		// loaded using XMLHTTPRequest (like CARGO widgets)
+		// and put as DIV children,
+		// probably due the severe security problems
+		// it had with JavaScript and CSS in the past.
+		// So, we have to dynamically load both of them.
+		if(includeNodes!=null) {
+			if(!thedoc)  thedoc=document;
+			
+			var iinc=0;
+			var minc=includeNodes.length;
+			for(;iinc<minc;iinc++) {
+				var includeType=includeNodes[iinc].includeType;
+				var includeURL=includeNodes[iinc].includeURL;
+
+				if(includeType=='CSS') {
+					WidgetCommon.dhtmlLoadCSS(includeURL,null,thedoc);
+				}
+				if(includeType=='javascript') {
+					WidgetCommon.dhtmlLoadScript(includeURL,null,thedoc);
 				}
 			}
 		}
@@ -210,12 +323,14 @@ WidgetPager.prototype = {
 	gotResults: function (responseXML,widURL)
 	{
 		try {
-			if(responseXML==null)
-				throw "Request "+widURL+" failed";
+			if(responseXML==null) {
+				var err=new Error("RequestError");
+				err.message="Request "+widURL+" failed";
+				throw err;
+			}
 
 			this.xmlDoc = responseXML;
 			WidgetCommon.getElementById(this.pageContentPane).innerHTML = 'Results have been obtained. Starting pre-processing task...';
-
 
 			// Getting default fetch uri and parameters
 			var nodeFetchURI=WidgetCommon.xpathEvaluate("//msg:defaultFetchURI",this.xmlDoc,this.NSprefix);
@@ -309,7 +424,7 @@ WidgetPager.prototype = {
 							// It is custom, so apply what it is needed by the pager
 							var nodeInc=WidgetCommon.xpathEvaluate("//msg:pagerView/msg:include",this.xmlDoc,this.NSprefix);
 
-							this.processIncludeNodes(nodeInc);
+							this.includeNodesOnce(nodeInc);
 						}
 					}
 				} else {
@@ -318,17 +433,26 @@ WidgetPager.prototype = {
 				
 				if(this.pagerMode!='none') {
 					var myXMLHTTPRequest=new XMLHttpRequest();
-					myXMLHTTPRequest.widget=this;
+					myXMLHTTPRequest.widgetPager=this;
 					myXMLHTTPRequest.onreadystatechange = function() {
 						if(myXMLHTTPRequest.readyState==4) {
 							try {
 								if(myXMLHTTPRequest.status==200) {
-									myXMLHTTPRequest.widget.gotPagerXSLT(myXMLHTTPRequest.responseXML,pagerURL);
+									var response=myXMLHTTPRequest.responseXML;
+									if(!response) {
+										if(myXMLHTTPRequest.responseText) {
+											var parser=new DOMParser();
+											response=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
+										} else {
+											throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+										}
+									}
+									myXMLHTTPRequest.widgetPager.gotPagerXSLT(response,pagerURL);
 								} else {
-									myXMLHTTPRequest.widget.gotPagerXSLT(null,pagerURL);
+									myXMLHTTPRequest.widgetPager.gotPagerXSLT(null,pagerURL);
 								}
 							} catch(e) {
-								myXMLHTTPRequest.widget.gotPagerXSLT(null,pagerURL);
+								myXMLHTTPRequest.widgetPager.gotPagerXSLT(null,pagerURL);
 							}
 						}
 					};
@@ -388,8 +512,11 @@ WidgetPager.prototype = {
 	gotPagerXSLT: function (responseXML,xslPagerURL)
 	{
 		try {
-			if(responseXML==null)
-				throw "Request "+xslPagerURL+" failed";
+			if(responseXML==null) {
+				var err=new Error("RequestError");
+				err.message="Request "+xslPagerURL+" failed";
+				throw err;
+			}
 
 			// Do the pager task
 			var xslPager = responseXML;
@@ -431,7 +558,7 @@ WidgetPager.prototype = {
 		}
 
 		var nodeInc=WidgetCommon.xpathEvaluate("//msg:defaultView/msg:include",this.xmlDoc,this.NSprefix);
-		this.processIncludeNodes(nodeInc);
+		this.buildIncludeNodes(nodeInc,this.includeNodes);
 
 		if(!viewURL || this.viewMode=='none') {
 			// And we don't have to forget this
@@ -439,17 +566,27 @@ WidgetPager.prototype = {
 		} else {
 			// And now, get XSL itself
 			var myXMLHTTPRequest=new XMLHttpRequest();
-			myXMLHTTPRequest.widget=this;
+			myXMLHTTPRequest.widgetPager=this;
 			myXMLHTTPRequest.onreadystatechange = function() {
 				if(myXMLHTTPRequest.readyState==4) {
 					try {
 						if(myXMLHTTPRequest.status==200) {
-							myXMLHTTPRequest.widget.gotContentXSLT(myXMLHTTPRequest.responseXML,viewURL);
+							var resp=myXMLHTTPRequest.responseXML;
+							if(resp==null || resp == undefined) {
+								if(myXMLHTTPRequest.responseText) {
+									var parser=new DOMParser();
+									resp=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
+								} else {
+									throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+								}
+							}
+							
+							myXMLHTTPRequest.widgetPager.gotContentXSLT(resp,viewURL);
 						} else {
-							myXMLHTTPRequest.widget.gotContentXSLT(null,viewURL);
+							myXMLHTTPRequest.widgetPager.gotContentXSLT(null,viewURL);
 						}
 					} catch(e) {
-						myXMLHTTPRequest.widget.gotContentXSLT(null,viewURL);
+						myXMLHTTPRequest.widgetPager.gotContentXSLT(null,viewURL);
 					}
 				}
 			};
@@ -464,9 +601,12 @@ WidgetPager.prototype = {
 	gotContentXSLT: function (responseXML,xslURL)
 	{
 		try {
-			if(responseXML==null)
-				throw "Request "+xslURL+" failed";
-
+			if(responseXML==null) {
+				var err=new Error("RequestError");
+				err.message="Request "+xslURL+" failed";
+				throw err;
+			}
+			
 			this.xslStylesheet = responseXML;
 
 
@@ -484,8 +624,56 @@ WidgetPager.prototype = {
 
 	show: function (fromVal,toVal)
 	{
-		WidgetCommon.getElementById(this.pageContentPane).innerHTML = "";
-
+		// Killing previous show!!!
+		if(this.continuedTimeOut!=null) {
+			clearTimeout(this.continuedTimeOut);
+			this.continuedTimeOut=null;
+		}
+		
+		//WidgetCommon.getElementById(this.pageContentPane).innerHTML = "";
+		var ifra=WidgetCommon.getIFrameDocument('_ifra_');
+		if(!ifra) {
+			var conpane=WidgetCommon.getElementById(this.pageContentPane);
+			conpane.innerHTML="";
+			conpane=null;
+			
+			conpane=WidgetCommon.getElementById(this.pageContentPane);
+			conpane.innerHTML="<iframe id='_ifra_' name='_ifra_' frameborder='0' style='border-bottom:1px dashed gray; border-top:1px dashed gray; margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; overflow: auto; width: 100%;'></iframe>";
+			/*
+			conpane.style.marginTop='0px';
+			conpane.style.marginBottom='0px';
+			*/
+			conpane.style.marginLeft='0px';
+			conpane.style.marginRight='0px';
+			conpane.style.marginBottom='0px';
+			conpane.style.paddingLeft='0px';
+			conpane.style.paddingRight='0px';
+			conpane.style.paddingBottom='0px';
+			conpane=null;
+			conpane=document.getElementsByTagName('body')[0];
+			conpane.style.marginLeft='0px';
+			conpane.style.marginRight='0px';
+			conpane.style.marginBottom='0px';
+			conpane.style.paddingLeft='0px';
+			conpane.style.paddingRight='0px';
+			conpane.style.paddingBottom='0px';
+			
+			WidgetCommon.setIFrameAutoResize('_ifra_');
+			ifra=WidgetCommon.getIFrameDocument('_ifra_');
+		}
+		
+		/*
+		for(var facet in ifra) {
+			alert(facet);
+		}
+		*/
+		
+		ifra.open('text/html');
+		ifra.write('<html><head></head><body><div id="__result__"></div></body></html>');
+		this.processIncludeNodes(this.includeNodes,ifra);
+		ifra.close();
+		ifra=null;
+		
 		this.prefetch(fromVal,toVal+5);
 		WidgetPager.ContinueShow(this.activePlace,fromVal,toVal);
 	},
@@ -553,7 +741,17 @@ WidgetPager.prototype = {
 							prefetchXML.widget.content[prefetchXML.thei]=prefetchXML.responseText;
 						} else {
 							//content[prefetchXML.thei]=prefetchXML.responseXML;
-							prefetchXML.widget.content[prefetchXML.thei].appendChild(prefetchXML.responseXML.documentElement);
+							var response=prefetchXML.responseXML;
+							if(!response) {
+								// To avoid possible bugs!
+								if(prefetchXML.responseText) {
+									var parser=new DOMParser();
+									response=parser.parseFromString(prefetchXML.responseText,'application/xml');
+								} else {
+									throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+								}
+							}
+							prefetchXML.widget.content[prefetchXML.thei].appendChild(response.documentElement);
 						}
 
 						prefetchXML.widget.state[prefetchXML.thei]=new String('');
@@ -611,6 +809,7 @@ WidgetPager.ContinueShow = function (activePlace,fromVal,toVal) {
 	}
 	if(fromVal<=toVal) {
 		//WidgetCommon.getElementById(pageContentPane).innerHTML = "Importing content's stylesheet...";
+		var ifra=WidgetCommon.getIFrameDocument('_ifra_');
 		for(var nodei=fromVal;nodei<=toVal;nodei++) {
 			// Avoiding race conditions
 			var thestate=widget.state[nodei];
@@ -619,17 +818,25 @@ WidgetPager.ContinueShow = function (activePlace,fromVal,toVal) {
 				if(thestate.length==0) {
 					var thecontent=widget.content[nodei];
 					if(widget.viewMode=='none') {
-						WidgetCommon.getElementById(widget.pageContentPane).innerHTML += thecontent;
+						//WidgetCommon.getElementById(widget.pageContentPane).innerHTML += thecontent;
+						var divres=ifra.createElement('div');
+						divres.id='carajo';
+						divres.innerHTML=thecontent;
+						WidgetCommon.getElementById('__result__',ifra).appendChild(divres);
 					} else {
 						var xsltProc = new XSLTProcessor();
 						xsltProc.importStylesheet(widget.xslStylesheet);
 						xsltProc.clearParameters();
 
-						// This is the ONLY point which is stopping Opera to work in native mode!
-						var fragment;
+						// This is the ONLY point which was stopping Opera to work in native mode!
 						try {
-							fragment = xsltProc.transformToFragment(thecontent, document);
-							WidgetCommon.getElementById(widget.pageContentPane).appendChild(fragment);
+							var fragment;
+							//fragment = xsltProc.transformToFragment(thecontent, document);
+							//WidgetCommon.getElementById(widget.pageContentPane).appendChild(fragment);
+							fragment = xsltProc.transformToFragment(thecontent, ifra);
+							//var bod=ifra.getElementsByTagName('body')[0];
+							//bod.appendChild(fragment);
+							WidgetCommon.getElementById('__result__',ifra).appendChild(fragment);
 						} catch(e) {
 							/*
 							alert(e.name);
@@ -637,7 +844,7 @@ WidgetPager.ContinueShow = function (activePlace,fromVal,toVal) {
 							alert(thecontent);
 							alert(thestate);
 							*/
-							WidgetCommon.getElementById(widget.pageContentPane).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: <pre>'+WidgetCommon.DebugError(e)+'</pre>';
+							WidgetCommon.getElementById(widget.pageContentPane).innerHTML='Could not process this record?!?!?!?<br />Reason: <pre>'+WidgetCommon.DebugError(e)+'</pre>';
 						}
 						//xsltProc.reset();
 					}
@@ -665,10 +872,11 @@ WidgetPager.ContinueShow = function (activePlace,fromVal,toVal) {
 					}
 				} else {
 					try {
-						throw "FATAL ERROR: Null asynchronous query object found on WidgetPager.ContinueShow!";
+						throw new Error("FATAL ERROR: Null asynchronous query object found on WidgetPager.ContinueShow!");
 					} catch(e) {
 						widget.showError(e,null);
 					}
+					break;
 				}
 			}
 		}
@@ -684,7 +892,7 @@ WidgetPager.DefaultFetchURI = function (thefetchuri,theidattr,thensattr,thehtmla
 	this.widgetFetchURI=thefetchuri;
 	this.widgetFetchParamId=theidattr;
 	this.widgetFetchParamNS=thensattr;
-	this.widgetFetchParamHTML=(!thehtmlattr)?false:true;
+	this.widgetFetchParamHTML=thehtmlattr;
 	this.widgetFetchParamMarkup=themarkupattr;
 	this.widgetFetchScope=(!thenamespace)?WidgetPager.DefaultScope:thenamespace;
 };
@@ -775,7 +983,16 @@ WidgetPager.Data.prototype = {
 							prefetchXML.data.content=prefetchXML.responseText;
 						} else {
 							//content[prefetchXML.thei]=prefetchXML.responseXML;
-							prefetchXML.data.content.appendChild(prefetchXML.responseXML.documentElement);
+							var response=prefetchXML.responseXML;
+							if(!response) {
+								if(prefetchXML.responseText) {
+									var parser=new DOMParser();
+									response=parser.parseFromString(prefetchXML.responseText,'application/xml');
+								} else {
+									throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+								}
+							}
+							prefetchXML.data.content.appendChild(response.documentElement);
 						}
 
 						prefetchXML.data.state=new String('');
@@ -786,7 +1003,7 @@ WidgetPager.Data.prototype = {
 					}
 				} catch(e) {
 					prefetchXML.data.state=new String(
-						"ERROR: Could not fetch "+fetchURI+" because your browser is perhaps in offline mode!!!<pre>"+
+						"ERROR: Could not fetch "+fetchURI+" (Perhaps your browser is perhaps in offline mode?)<pre>"+
 						WidgetCommon.DebugError(e)+"</pre>"
 					);
 				}

@@ -1,12 +1,14 @@
 <html>
 <head>
 <title>Results for widget OMIM</title>
+<script type="text/javascript" src="js/browserdetect/BrowserDetect.js"></script>
 <script type="text/javascript" src="js/widgetCommon.js"></script>
 <script type="text/javascript" src="js/widgetPager.js"></script>
 <script type="text/javascript">
 <!--
-var widgetPager=new WidgetPager('OMIM/getOMIM.xq','id','namespace','html',"<div align='center'><img src='OMIM/images/vitruvioSmall.gif'/></div>");
-widgetPager.setPanes('pager','pageContent');
+var widgetPager=new WidgetPager('OMIM/getOMIM.xq','id','namespace','html',
+	"<div align='center'><img src='OMIM/images/vitruvioSmall.gif'/></div>",
+	'pager','pageContent');
 //-->
 </script>
 <!--
@@ -20,9 +22,11 @@ widgetPager.setPanes('pager','pageContent');
 -->
 <link rel="stylesheet" href="/css/general_style.css" type="text/css" />
 </head>
-<body onload="widgetPager.widgetPagerInit()">
+<body onload="widgetPager.widgetPagerInit('pager','pageContent')">
 <div id="pager">Loading pager. Please wait...</div>
+<!--
 <hr/>
+-->
 <div id="pageContent">Loading records. Please wait...</div>
 </body>
 </html>

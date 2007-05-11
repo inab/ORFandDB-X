@@ -224,7 +224,27 @@ function termSelected(term) {
     q.focus();
 }
 
+var _timer=null;
+var _init=null;
+
 function liveSearchInit() {
+	if(navigator.vendor) {
+		if(navigator.vendor.indexOf('KDE')!=-1 || navigator.vendor.indexOf('Apple')!=-1) {
+			if(!WidgetCommon._loaded) {
+				_timer = setInterval(function() {
+					if (WidgetCommon._loaded && !_init) {
+						_init=1;
+						liveSearchInit(); // call the onload handler
+					}
+				}, 10);
+				return;
+			} else if(_timer) {
+				_init=1;
+				clearInterval(_timer);
+			}
+		}
+	}
+	
 	
 	if (BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
 		WidgetCommon.getElementById('livesearch').addEventListener("keydown",liveSearchKeyPress,false);

@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>OMIM widget search</title>
+<script type="text/javascript" src="js/browserdetect/BrowserDetect.js"></script>
 <script type="text/javascript" src="js/widgetCommon.js"></script>
 <script type="text/javascript" src="livesearch/livesearch.js"></script>
 <link rel="stylesheet" href="livesearch/livesearch.css" type="text/css" />
@@ -13,7 +14,7 @@
 <h2>Just type free text to search on OMIM</h2>
 <div align="center">
 <div id="livesearch" align="left">
-	<input type="text" name="search" size="50" autocomplete="off" onkeypress="liveSearchStart()"/>
+	<input type="text" name="search" size="50" autocomplete="off" onkeypress="liveSearchStart()"/><br/>
 	<div id="LSResult" align="left" style="display: none;">
 		<div id="LSShadow"></div>
 	</div>
