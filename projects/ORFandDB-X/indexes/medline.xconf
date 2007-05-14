@@ -6,10 +6,19 @@
 			<include path="//AbstractText" />
 			<include path="//ArticleTitle" />
 			<include path="//Author" />
+			<include path="//DescriptorName" />
+			<include path="//NameOfSubstance" />
 		</fulltext>
+		
 		<create path="//PMID" type="xs:string"/>
+		<create path="//NlmUniqueID" type="xs:string"/>
+		<create path="//PubDate/Year" type="xs:integer"/>
+		<create path="//QualifierName" type="xs:string"/>
 		
 		<!-- And QName indexes -->
 		<create qname="PMID" type="xs:string"/>
+		<create qname="NlmUniqueID" type="xs:string"/>
+		<create qname="Year" type="xs:integer"/>
+		<create qname="QualifierName" type="xs:string"/>
 	</index>
 </collection>
