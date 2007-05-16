@@ -5,7 +5,7 @@
 in Pfam database in their extended MSA Stockholm format.]]></xsd:documentation>
   </xsd:annotation>
   <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA" schemaLocation="MSA-ODB.xsd"/>
-  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"/>
+  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0" schemaLocation="ORFandDB-Link.xsd"/>
   <xsd:attribute name="acc" type="xsd:string">
     <xsd:annotation>
       <xsd:documentation><![CDATA[The Pfam accession number: PFxxxxx or PBxxxxxx]]></xsd:documentation>
@@ -125,7 +125,7 @@ These scores may not refer to the same sequence.]]></xsd:documentation>
                   </xsd:choice>
                 </xsd:complexType>
               </xsd:element>
-              <xsd:element name="maybeNested">
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="maybeNested">
                 <xsd:annotation>
                   <xsd:documentation><![CDATA[Pfam family acc may be nested within this family.
 Family acc aand this family are allowed to overlap]]></xsd:documentation>

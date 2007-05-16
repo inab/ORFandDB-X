@@ -3,7 +3,7 @@
   <xsd:annotation>
     <xsd:documentation xml:lang="en">This schema describes the XML representation of OMIM database for ORFandDB/X</xsd:documentation>
   </xsd:annotation>
-  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"/>
+  <xsd:import namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0" schemaLocation="ORFandDB-Link.xsd"/>
   <xsd:attribute name="mimNumber">
     <xsd:annotation>
       <xsd:documentation><![CDATA[The value of this attribute comes from OMIM NO field

@@ -143,16 +143,16 @@ The difference is the disposition, so conserved residues are together.]]></xsd:d
               <xsd:element maxOccurs="unbounded" minOccurs="1" name="r">
                 <xsd:annotation>
                   <xsd:documentation><![CDATA[This is a single residue, which has its original position relative to
-the gapped fragment (i attribute).
+the gapped fragment (n attribute).
 p attribute is the position inside the original sequence (using original sequence coordinates).
 The content of the element is the residue itself.]]></xsd:documentation>
                 </xsd:annotation>
                 <xsd:complexType>
                   <xsd:simpleContent>
                     <xsd:extension base="singleResidue">
-                      <xsd:attribute name="i" type="xsd:positiveInteger" use="required">
+                      <xsd:attribute name="n" type="xsd:positiveInteger" use="required">
                         <xsd:annotation>
-                          <xsd:documentation><![CDATA[Original position relative to the gapped fragment.]]></xsd:documentation>
+                          <xsd:documentation><![CDATA[Original position relative to the gapped fragment MSA.]]></xsd:documentation>
                         </xsd:annotation>
                       </xsd:attribute>
                       <xsd:attribute name="p" type="xsd:integer" use="required">

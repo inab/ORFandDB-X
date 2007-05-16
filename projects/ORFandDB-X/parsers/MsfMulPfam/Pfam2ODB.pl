@@ -16,7 +16,7 @@ sub toPfamRef($);
 sub toPubMedRef($$);
 
 if(scalar(@ARGV)<2) {
-	die "This program takes at least two parameters:\n\tone or more input files in mul format\n\tthe output XML file\n";
+	die "This program takes at least two parameters:\n\tone or more input files in Pfam extended mul format (and maybe compressed with gzip)\n\tthe output XML file\n";
 }
 
 local(*OUTPUT);
@@ -35,7 +35,20 @@ print OUTPUT <<EOF;
 <PfamSet xmlns:odb='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0' xmlns:m='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA' xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam'>
 EOF
 
+my($dumpres)=undef;
 foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
+	if(length($ifile)>0 && index($ifile,'-')==0) {
+		# It is a parameter
+		if($ifile eq '-r') {
+			$dumpres=1;
+		} elsif($ifile eq '-R') {
+			$dumpres=undef;
+		} else {
+			warn "ERROR: Unknown flag $ifile\n";
+		}
+		next;
+	}
+
 	local(*IFILE);
 	
 	my($openline)=undef;
@@ -339,7 +352,7 @@ sub printGappedFragment($\@\@;$) {
 	while(($key,$val)=each(%{$msa->[1]})) {
 		print $OUTPUT "<content type='$key'",((defined($id) && $key eq 'res')?" id='$id'":''),">$val</content>";
 	}
-	if(defined($msa->[5]) && exists($msa->[1]{'res'})) {
+	if(defined($dumpres) && defined($msa->[5]) && exists($msa->[1]{'res'})) {
 		my($buffer)='';
 		my($pos)=$msa->[6];
 		my($i)=0;
@@ -375,7 +388,7 @@ sub printResidues($$\@) {
 		foreach my $res (unpack($alength, $msa->[1]{'res'})) {
 			$i++;
 			next  if($res eq '-' || $res eq '.');
-			print $OUTPUT "<r i='$i' p='$pos'>$res</r>";
+			print $OUTPUT "<r n='$i' p='$pos'>$res</r>";
 			$pos++;
 		}
 		print $OUTPUT "</s>\n";

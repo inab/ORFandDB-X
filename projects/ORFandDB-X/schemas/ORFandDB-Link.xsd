@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema targetNamespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0" xmlns="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation>This schema is an stub about ORFandDB. It contains basic shared definitions (link, for instance).</xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="link">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This element represents a database reference or link.
+Its main attributes are namespace and id (like BioMOBY!).
+Because this tag can be embedded on text, it can contain a text subtag.
+Also, as a reference can have more additional information, additional attributes can be represented.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element maxOccurs="unbounded" minOccurs="1" name="attr">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[An attribute assigned to the link.
+The possible attributes depend on the namespace and nature of the link,
+so it can only be validated on special cases.]]></xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+              <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                  <xsd:attribute name="name" type="xsd:string" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The name of the attribute. The value is the text from this tag.]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                </xsd:extension>
+              </xsd:simpleContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="comment" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[A comment, which can or cannot have meaning. It is free text.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:choice>
+        <xsd:element maxOccurs="1" minOccurs="0" name="text" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[Tagged text. This element contains the tagged text which representes a link.]]></xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="namespace" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A namespace, like the ones from BioMOBY.
+The contents of this attribute should follow a controlled vocabulary.
+Part of this vocabulary has been borrowed from Pfam.
+This is:
+
+ENZYME
+UniProt
+Pfam
+PubMed
+MIM (for OMIM) (it can have attribute allelicID)
+SCOP (it can have attribute level)
+PDB (it can have attribute chain)
+dbSNP
+URL (for HTML URLs)
+PROSITE
+PRINTS
+SMART]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="id" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[An id which is only valid on the namespace scope.
+It can be an accession number, an id , an URL, etc...]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

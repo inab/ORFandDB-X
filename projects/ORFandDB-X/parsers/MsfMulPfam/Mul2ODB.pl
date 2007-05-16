@@ -3,7 +3,7 @@
 use strict;
 
 if(scalar(@ARGV)<2) {
-	die "This program takes at least two parameters:\n\tone or more input files in mul format\n\tthe output XML file\n";
+	die "This program takes at least two parameters:\n\tone or more input files in mul format (and maybe compressed with gzip)\n\tthe output XML file\n";
 }
 
 local(*OUTPUT);
@@ -22,7 +22,20 @@ print OUTPUT <<EOF;
 <MSASet xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA'>
 EOF
 
+my($dumpres)=undef;
 foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
+	if(length($ifile)>0 && index($ifile,'-')==0) {
+		# It is a parameter
+		if($ifile eq '-r') {
+			$dumpres=1;
+		} elsif($ifile eq '-R') {
+			$dumpres=undef;
+		} else {
+			warn "ERROR: Unknown flag $ifile\n";
+		}
+		next;
+	}
+
 	local(*IFILE);
 	
 	my($openline)=undef;
@@ -51,19 +64,23 @@ foreach my $ifile (@ARGV[0..($#ARGV - 1)]) {
 						print OUTPUT "\t\t<gappedFragment name='".$msa->[0]."'",
 							(defined($msa->[2])?" start='$msa->[2]'":''),
 							(defined($msa->[3])?" end='$msa->[3]'":''),
-							"><content type='res' id='$id'>$msa->[1]</content><residues>";
+							"><content type='res' id='$id'>$msa->[1]</content>";
+						
+						if(defined($dumpres)) {
+							print OUTPUT "<residues>";
+							my($buffer)='';
+							my($pos)=$msa->[4];
+							my($i)=0;
+							foreach my $res (unpack($alength, $msa->[1])) {
+								$i++;
+								next  if($res eq '-' || $res eq '.');
+								$buffer .= '<r n="'.$i.'" p="'.$pos.'">'.$res.'</r>';
+								$pos++;
+							}
 
-						my($buffer)='';
-						my($pos)=$msa->[4];
-						my($i)=0;
-						foreach my $res (unpack($alength, $msa->[1])) {
-							$i++;
-							next  if($res eq '-' || $res eq '.');
-							$buffer .= '<r n="'.$i.'" p="'.$pos.'">'.$res.'</r>';
-							$pos++;
+							print OUTPUT $buffer,"</residues>";
 						}
-
-						print OUTPUT $buffer,"</residues></gappedFragment>\n";
+						print OUTPUT "</gappedFragment>\n";
 						$id++;
 					}
 					
