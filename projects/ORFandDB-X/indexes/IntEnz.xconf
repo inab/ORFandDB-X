@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<collection xmlns="http://exist-db.org/collection-config/1.0">
+	<index xmlns:enz="http://www.ebi.ac.uk/intenz">
+		<fulltext default="none" attributes="false" alphanum="true">
+			<include path="//enz:name"/>
+			<include path="//enz:description"/>
+			<include path="//enz:accepted_name"/>
+			<include path="//enz:systematic_name"/>
+			<include path="//enz:synonym"/>
+			<include path="//enz:reaction"/>
+			<include path="//enz:cofactor"/>
+			<include path="//enz:link"/>
+		</fulltext>
+		
+		<create path="//enz:ec_class/@ec1" type="xs:integer"/>
+		<create path="//enz:ec_subclass/@ec2" type="xs:integer"/>
+		<create path="//enz:ec_sub-subclass/@ec3" type="xs:integer"/>
+		<create path="//enz:enzyme/@ec4" type="xs:integer"/>
+		
+		<!-- Links to other pieces of information -->
+		<create path="//enz:ec" type="xs:string"/>
+		<create path="//enz:link" type="xs:string"/>
+		<create path="//enz:link/@db" type="xs:string"/>
+		<create path="//enz:link/@accession_number" type="xs:string"/>
+		<create path="//enz:pubmed" type="xs:string"/>
+		<create path="//enz:medline" type="xs:string"/>
+		
+		<!-- And QName indexes -->
+		<create qname="@ec1" type="xs:integer"/>
+		<create qname="@ec2" type="xs:integer"/>
+		<create qname="@ec3" type="xs:integer"/>
+		<create qname="@ec4" type="xs:integer"/>
+		<create qname="enz:ec" type="xs:string"/>
+		<create qname="enz:link" type="xs:string"/>
+		<create qname="@db" type="xs:string"/>
+		<create qname="@accession_number" type="xs:string"/>
+		<create qname="enz:pubmed" type="xs:string"/>
+		<create qname="enz:medline" type="xs:string"/>
+	</index>
+</collection>
