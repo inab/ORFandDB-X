@@ -1,0 +1,110 @@
+hmmpfam - search one or more sequences against HMM database
+HMMER 2.3.2 (Oct 2003)
+Copyright (C) 1992-2003 HHMI/Washington University School of Medicine
+Freely distributed under the GNU General Public License (GPL)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HMM file:                 /scratch/databases/PfamDB/pfam_fs
+Sequence file:            input-pfam.fas
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query sequence: trembl|:A0B5V1|Hypothetical
+Accession:      [none]
+Description:    protein
+
+Scores for sequence family classification (score includes all domains):
+Model           Description                             Score    E-value  N 
+--------        -----------                             -----    ------- ---
+DUF45           Protein of unknown function DUF45       110.9    3.8e-32   2
+WLM             WLM domain                                9.6      0.026   1
+DMPK_coil       DMPK coiled coil domain like              9.3      0.064   1
+Peptidase_M1    Peptidase family M1                       0.0       0.94   1
+DUF1530         ProFAR isomerase associated               4.4        1.2   1
+BTAD            Bacterial transcriptional activator d     2.6        3.2   1
+CHCH            CHCH domain                               3.7        5.2   1
+Peptidase_M56   BlaR1 peptidase M56                       1.4        5.8   1
+V-SNARE         Vesicle transport v-SNARE protein         1.0          8   1
+Caldesmon       Caldesmon                                -2.7        8.8   1
+DUF1971         Domain of unknown function (DUF1971)      1.8        9.5   1
+
+Parsed for domains:
+Model           Domain  seq-f seq-t    hmm-f hmm-t      score  E-value
+--------        ------- ----- -----    ----- -----      -----  -------
+Caldesmon         1/1       2    24 ..     1    25 [.    -2.7      8.8
+DUF1530           1/1      12    32 ..    14    34 ..     4.4      1.2
+DUF45             1/2      13    43 ..     1    32 [.    10.3    0.011
+V-SNARE           1/1      13    22 ..   156   165 .]     1.0        8
+DMPK_coil         1/1      36    54 ..    43    61 .]     9.3    0.064
+DUF45             2/2      85   154 ..   140   210 .]   100.6  3.9e-29
+DUF1971           1/1     107   115 ..     1     9 [.     1.8      9.5
+Peptidase_M56     1/1     115   124 ..    27    36 ..     1.4      5.8
+Peptidase_M1      1/1     116   125 ..   337   346 ..     0.0     0.94
+WLM               1/1     120   139 ..    99   118 ..     9.6    0.026
+BTAD              1/1     135   152 ..    88   105 ..     2.6      3.2
+CHCH              1/1     148   160 ..    32    44 .]     3.7      5.2
+
+Alignments of top-scoring domains:
+Caldesmon: domain 1 of 1, from 2 to 24: score -2.7, E = 8.8
+                   *->mDDFERRRELRRqKREEmRLEAERl<-*
+                        D E RR  RR+K  E+RL  +++   
+  trembl|:A0     2    --DVEIRRSKRRKKTIEIRLREDKI    24   
+
+DUF1530: domain 1 of 1, from 12 to 32: score 4.4, E = 1.2
+                   *->kKtIEvRlkdakrrqikvGDi<-*
+                      kKtIE+Rl ++k   +++ Di   
+  trembl|:A0    12    KKTIEIRLREDKIEVLAPADI    32   
+
+DUF45: domain 1 of 2, from 13 to 43: score 10.3, E = 0.011
+                   *->ktlrlrvepdgsvrVsaPpgvseeeierfvqk<-*
+                      kt+ +r ++ ++++V aP + s+ ++ + +++   
+  trembl|:A0    13    KTIEIRLRE-DKIEVLAPADISDGDLNAHIAR    43   
+
+V-SNARE: domain 1 of 1, from 13 to 22: score 1.0, E = 8
+                   *->rlInRRrrrD<-*
+                      ++I++R+r+D   
+  trembl|:A0    13    KTIEIRLRED    22   
+
+DMPK_coil: domain 1 of 1, from 36 to 54: score 9.3, E = 0.064
+                   *->eLeaeleqLkkemEelRar<-*
+                      +L a++++ + +mE+ ++r   
+  trembl|:A0    36    DLNAHIARFRSRMEMRKSR    54   
+
+DUF45: domain 2 of 2, from 85 to 154: score 100.6, E = 3.9e-29
+                   *->dmktRWGSCnsskgrIrlNwrLvkaPpevidYVvvHELaHLkEmNHS
+                      +m +R GSC++s+g+Ir++ rL  +P  v dYV+vHELaH +E+NH+
+  trembl|:A0    85    KMERRYGSCTPSNGTIRISPRLRSMPVWVEDYVIVHELAHMIEPNHG 131  
+
+                   prFWaLverfmPdwkearrwLkrh<-*
+                   prFW+Lv+r+ P +++ar  L ++   
+  trembl|:A0   132 PRFWSLVNRY-PLAERARGFLMAM    154  
+
+DUF1971: domain 1 of 1, from 107 to 115: score 1.8, E = 9.5
+                   *->KrtPvwtkd<-*
+                      +++Pvw +d   
+  trembl|:A0   107    RSMPVWVED    115  
+
+Peptidase_M56: domain 1 of 1, from 115 to 124: score 1.4, E = 5.8
+                   *->dyIllHElaH<-*
+                      dy++ HElaH   
+  trembl|:A0   115    DYVIVHELAH    124  
+
+Peptidase_M1: domain 1 of 1, from 116 to 125: score 0.0, E = 0.94
+                   *->eViAHELAHQ<-*
+                      +Vi+HELAH+   
+  trembl|:A0   116    YVIVHELAHM    125  
+
+WLM: domain 1 of 1, from 120 to 139: score 9.6, E = 0.026
+                   *->HELaHnvhgpHDakFyalld<-*
+                      HELaH+   +H+ +F++l +   
+  trembl|:A0   120    HELAHMIEPNHGPRFWSLVN    139  
+
+BTAD: domain 1 of 1, from 135 to 152: score 2.6, E = 3.2
+                   *->qrLleldPlrErayRqLM<-*
+                      + L++ +Pl Era+++LM   
+  trembl|:A0   135    WSLVNRYPLAERARGFLM    152  
+
+CHCH: domain 1 of 1, from 148 to 160: score 3.7, E = 5.2
+                   *->reffkalrqCrek<-*
+                      r+f++a++ Cr++   
+  trembl|:A0   148    RGFLMAMDMCRRN    160  
+
+//

@@ -1,0 +1,1 @@
+Run hmmpfam with '--acc' parameter.
