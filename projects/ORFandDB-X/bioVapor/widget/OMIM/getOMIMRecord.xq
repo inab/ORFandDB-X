@@ -1,10 +1,6 @@
 xquery version "1.0";
 
-(:
-declare option exist:optimize "enable=yes";
-:)
-declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
-
+declare namespace exist="http://exist.sourceforge.net/NS/exist";
 declare namespace mimmark="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM/mark";
 
 import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
@@ -12,6 +8,12 @@ import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace transform="http://exist-db.org/xquery/transform";
+
+declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
+
+(:
+declare option exist:optimize "enable=yes";
+:)
 
 declare function mimmark:set-markups($input as node()*,$markup as xs:string?) as node()*
 {

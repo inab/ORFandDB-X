@@ -150,13 +150,13 @@ WidgetPager.prototype = {
 			*/
 
 			if('ensemblId' in qsParm && qsParm['ensemblId'].length>0) {
-				this.ensemblId=qsParm['ensemblId'][0];
+				this.ensemblId=qsParm['ensemblId'];
 			} else {
 				if('ensID' in qsParm && qsParm['ensID'].length>0) {
-					this.ensemblId=qsParm['ensID'][0];
+					this.ensemblId=qsParm['ensID'];
 				} else {
 					if('search' in qsParm && qsParm['search'].length>0) {
-						this.ensemblId=qsParm['search'][0];
+						this.ensemblId=qsParm['search'];
 					}
 				}
 			}
@@ -175,7 +175,7 @@ WidgetPager.prototype = {
 				if(this.namespace.length==0) {
 					this.namespace=null;
 				} else if(this.namespace=='General') {
-					this.markup=this.ensemblId;
+					this.markup=this.ensemblId[0];
 				}
 			}
 
@@ -930,13 +930,17 @@ WidgetPager.Data = function (thecontent,thefetchuri,thedataname,theusagescope) {
 	if(!thefetchuri) {
 		this.state=new String('');
 		this.content=thecontent;
+		this.fetchURI=null;
 	} else {
 		this.state=null;
-		this.content=thefetchuri;
+		this.content=null;
+		this.fetchURI=thefetchuri;
 	}
 	this.dataName=thedataname;
 	this.usageScope=theusagescope;
-	this.onReady=null;
+	this.onload=null;
+	this.retries=0;
+	this.dontFetch=null;
 };
 
 WidgetPager.Data.prototype = {
@@ -965,14 +969,27 @@ WidgetPager.Data.prototype = {
 		}
 	},
 	
-	doPrefetch: function (onreadyfunction)
+	doPrefetch: function (/* optional */ onLoadFunction,force)
 	{
-		if(this.state) {
-			// Already fetched (or fetching)
+		if(this.dontFetch)  return;
+		
+		if(this.state && !force) {
 			return;
 		}
-		this.onReady = onreadyfunction;
-		var fetchURI = this.content;
+		
+		if(force) {
+			if(!(this.state instanceof String) && !(this.state instanceof Error)) {
+				// In progress fetches must not be cancelled...
+				return;
+			} else {
+				// Forcing
+				this.state=null;
+				this.content=null;
+			}
+		}
+		
+		this.onload = onLoadFunction;
+		var fetchURI = this.fetchURI;
 		var prefetchXML=new XMLHttpRequest();
 		prefetchXML.data=this;
 		prefetchXML.onreadystatechange = function() {
@@ -989,28 +1006,38 @@ WidgetPager.Data.prototype = {
 									var parser=new DOMParser();
 									response=parser.parseFromString(prefetchXML.responseText,'application/xml');
 								} else {
-									throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+									var err=new Error("Both responseXML and responseText were unparsable!\nPlease talk to the developer about this problem");
+									err.name='UnparsableResponse';
+									throw err;
 								}
 							}
-							prefetchXML.data.content.appendChild(response.documentElement);
+							prefetchXML.data.content=response.documentElement;
 						}
 
 						prefetchXML.data.state=new String('');
 
 					} else {
 						//alert("ERROR: Could not fetch information for "+id);
-						prefetchXML.data.state=new String("ERROR: Could not fetch "+fetchURI);
+						var err = new Error("Could not fetch "+fetchURI+" (code "+prefetchXML.status+")");
+						err.name='DataFetchError';
+						prefetchXML.data.state=err;
+						prefetchXML.data.retries++;
 					}
 				} catch(e) {
-					prefetchXML.data.state=new String(
+					prefetchXML.data.onreadystatechange=null;
+					prefetchXML.data.state=e;
+					prefetchXML.data.retries++;
+					/*
+					new String(
 						"ERROR: Could not fetch "+fetchURI+" (Perhaps your browser is perhaps in offline mode?)<pre>"+
 						WidgetCommon.DebugError(e)+"</pre>"
 					);
+					*/
 				}
 				// Calling the last function
-				if(prefetchXML.data.onReady instanceof Function) {
-					prefetchXML.data.onReady();
-					prefetchXML.data.onReady=null;
+				if(prefetchXML.data.onload instanceof Function) {
+					prefetchXML.data.onload();
+					prefetchXML.data.onload=null;
 				}
 			}
 		};
@@ -1039,53 +1066,124 @@ WidgetPager.View = function (thename,thescope,theviewmode,thecontent,thefetchuri
 WidgetPager.View.prototype = new WidgetPager.Data;
 WidgetPager.View.prototype.constructor = WidgetPager.View;
 
-WidgetPager.View.prototype.applyView = function (data,elementId) {
+WidgetPager.View.DEFAULT_CONTENT_PANE='__result__';
+
+WidgetPager.View.prototype.applyView = function (data,/* optional */ thedoc, pageContentPane) {
 	// Precondition: the information must be previously fetched (if needed).
+	if(!thedoc)  thedoc=document;
+	if(!pageContentPane)  pageContentPane=WidgetPager.View.DEFAULT_CONTENT_PANE;
 
-	for(var iinc=0;iinc<this.includeNodes.length;iinc++) {
-		var include=this.includeNodes[iinc];
-
-		if(include.includeType=='CSS') {
-			WidgetCommon.dhtmlLoadCSS(include.includeURL);
-		}
-		if(include.includeType=='javascript') {
-			WidgetCommon.dhtmlLoadScript(include.includeURL);
-		}
-	}
 	// Now, time to apply the view.
-	switch(this.viewMode) {
-		case 'CSS':
-		case 'javascript':
-			if(this.viewMode=='CSS') {
-				WidgetCommon.dhtmlLoadCSSContent(this.content);
-			} else {
-				WidgetCommon.dhtmlLoadScriptContent(this.content);
-			}
-		case 'none':
-			WidgetCommon.getElementById(elementId).innerHTML += data.content;
-			break;
-		case 'XSLT':
-			var xsltProc = new XSLTProcessor();
-			xsltProc.importStylesheet(this.content);
-			xsltProc.clearParameters();
+	if(this.state instanceof Error) {
+		WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='ERROR: Could not fetch the view code used by this record<br />Reason: <pre>'+WidgetCommon.DebugError(this.state)+'</pre>';
+	} else if(this.dontFetch && !this.fetchURI) {
+		WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='FATAL ERROR: Unfetchable view!!!';
+	} else if(data.state instanceof Error) {
+		WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='ERROR: Could not fetch/show this record<br />Reason: <pre>'+WidgetCommon.DebugError(data.state)+'</pre>';
+	} else if(data.dontFetch && !data.fetchURI) {
+		WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='FATAL ERROR: Unfetchable record!!!';
+	} else {
+		for(var iinc=0;iinc<this.includeNodes.length;iinc++) {
+			var include=this.includeNodes[iinc];
 
-			var fragment;
-			try {
-				fragment = xsltProc.transformToFragment(data.content, document);
-				WidgetCommon.getElementById(elementId).appendChild(fragment);
-			} catch(e) {
-				/*
-				alert(e.name);
-				alert(e.message);
-				alert(thecontent);
-				alert(thestate);
-				*/
-				WidgetCommon.getElementById(elementId).innerHTML='Could not fetch/show this record?!?!?!?<br />Reason: <pre>'+WidgetCommon.DebugError(e)+'</pre>';
+			if(include.includeType=='CSS') {
+				WidgetCommon.dhtmlLoadCSS(include.includeURL,thedoc);
 			}
-			break;
-		case 'applet':
-		case 'plugin':
-			/* Not implemented yet */
-			break;
+			if(include.includeType=='javascript') {
+				WidgetCommon.dhtmlLoadScript(include.includeURL,thedoc);
+			}
+		}
+		
+		switch(this.viewMode) {
+			case 'CSS':
+			case 'javascript':
+				if(this.viewMode=='CSS') {
+					if(this.dontFetch) {
+						WidgetCommon.dhtmlLoadCSS(this.fetchURI,thedoc);
+					} else {
+						WidgetCommon.dhtmlLoadCSSContent(this.content,thedoc);
+					}
+				} else {
+					if(this.dontFetch) {
+						WidgetCommon.dhtmlLoadScript(this.fetchURI,thedoc);
+					} else {
+						WidgetCommon.dhtmlLoadScriptContent(this.content,thedoc);
+					}
+				}
+			case 'none':
+				if(data.dontFetch) {
+					thedoc.parentWindow.location.replace(data.fetchURI);
+				} else {
+					var divres=thedoc.createElement('div');
+					divres.id='fake';
+					divres.innerHTML=data.content;
+					WidgetCommon.getElementById(pageContentPane,thedoc).appendChild(divres);
+				}
+				break;
+			case 'XSLT':
+				if(this.dontFetch || data.dontFetch) {
+					WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='FATAL ERROR: Applying XSLT over XML without prefetch all the participants is not supported yet!!!';
+				} else {
+					var xsltProc=null;
+					try {
+						xsltProc = new XSLTProcessor();
+						xsltProc.importStylesheet(this.content);
+						xsltProc.clearParameters();
+					} catch(e) {
+						WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='Error while creating XSLT processor<br />Reason: <pre>'+WidgetCommon.DebugError(e)+'</pre>';
+					}
+
+					if(xsltProc) {
+						try {
+							var fragment = xsltProc.transformToFragment(data.content, thedoc);
+							WidgetCommon.getElementById(pageContentPane,thedoc).appendChild(fragment);
+						} catch(e) {
+							/*
+							alert(e.name);
+							alert(e.message);
+							alert(thecontent);
+							alert(thestate);
+							*/
+							WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='Could not apply XSLT stylesheet to this record<br />Reason: <pre>'+WidgetCommon.DebugError(e)+'</pre>';
+						}
+					}
+				}
+				break;
+			case 'applet':
+				/* Not implemented yet */
+				/*				
+<object 
+  classid="clsid:CAFEEFAC-0015-0000-0000-ABCDEFFEDCBA"
+  <param name="code" value="Applet1.class">
+    <comment>
+      <embed code="Applet1.class"
+        type="application/x-java-applet;jpi-version=1.5.0">
+        <noembed>
+          No Java Support.
+        </noembed>
+      </embed>
+    </comment>
+  </object>
+				*/
+				break;
+			case 'object':
+				/* Not implemented yet */
+				/*
+<object width="550" height="400">
+<param name="movie" value="somefilename.swf">
+<embed src="somefilename.swf" width="550" height="400">
+</embed>
+</object>
+				*/
+				var objres=thedoc.createElement('obj');
+				for(var iobjparam=0;iobjparam<this.params.length;iobjparam++) {
+					
+				}
+				WidgetCommon.getElementById(pageContentPane,thedoc).appendChild(objres);
+				break;
+			default:
+				WidgetCommon.getElementById(pageContentPane,thedoc).innerHTML='FATAL ERROR: Unknown view '+this.viewMode+' for this record!';
+				break;
+		}
 	}
 };
