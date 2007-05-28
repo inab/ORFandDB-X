@@ -27,7 +27,10 @@
         <create path="//msa:r/@n" type="xs:integer"/>
         <create path="//msa:r/@p" type="xs:integer"/>
 	-->
+	<!--
 	<xi:include href="/db/system/config/db//MSA/collection.xconf#xpointer(//create[path])" />
+	<xi:include parse="xml" href="/db/system/config/db/results/MSA/collection.xconf" xpointer="xpointer(//create[@path])" />
+	-->
 	
 	<create qname="@acc" type="xs:string" />
 	<create qname="@rev" type="xs:string" />
@@ -44,6 +47,12 @@
         <create qname="@n" type="xs:integer"/>
         <create qname="@p" type="xs:integer"/>
 	-->
+	<!--
 	<xi:include href="/db/system/config/db//MSA/collection.xconf#xpointer(//create[qname])" />
+	<xi:include parse="xml" href="/db/system/config/db/results/MSA/collection.xconf" xpointer="xpointer(//create[@qname])" />
+	
+	<xi:include parse="xml" href="/db/system/config/db" xpointer="xpointer(//create)" />
+	-->
+	<xi:include parse="xml" href="/db/system/config/db" xpointer="xpointer(//create[tokenize(document-uri(.),'/')[last()-1]='MSA'])" />
     </index>
 </collection>
