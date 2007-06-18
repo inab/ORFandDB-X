@@ -27,7 +27,21 @@
 	-->
         <fulltext default="all" attributes="true" alphanum="true">
 		<exclude path="//mim:entryHistory"/>
+		
+		<create qname="mim:alias"/>
+		<create qname="@name"/>
+		<create qname="@mutation"/>
+		<create qname="odb:text"/>
+		<create qname="@id"/>
+		<create qname="@namespace"/>
+		<create qname="mim:geneSymbol"/>
+		<create qname="mim:included"/>
+		<create qname="mim:para"/>
+		<create qname="@title" />
+		<create qname="@mimNumber" />
+		<create qname="mim:term"/>
 	</fulltext>
+	
         <create path="//odb:link/@namespace" type="xs:string"/>
         <create path="//odb:link/@id" type="xs:string"/>
         <create path="//mim:movedTo/@mimNumber" type="xs:string"/>
