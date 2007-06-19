@@ -8,6 +8,12 @@
 			<include path="//Author" />
 			<include path="//DescriptorName" />
 			<include path="//NameOfSubstance" />
+			
+			<create qname="AbstractText" />
+			<create qname="ArticleTitle" />
+			<create qname="Author" />
+			<create qname="DescriptorName" />
+			<create qname="NameOfSubstance" />
 		</fulltext>
 		
 		<create path="//PMID" type="xs:string"/>
