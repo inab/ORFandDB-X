@@ -5,6 +5,9 @@
 		<fulltext default="none" attributes="false" alphanum="true">
 			<include path="//name" />
 			<include path="//description" />
+			
+			<create qname="name" />
+			<create qname="description" />
 		</fulltext>
 		
 		<create path="//keyword/@id" type="xs:string"/>
