@@ -6,7 +6,7 @@ xquery version "1.0";
 :)
 
 (::pragma exist:output-size-limit -1::)
-declare namespace ls="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/livesearch";
+declare namespace ls="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/livesearch";
 declare namespace t="http://exist-db.org/xquery/text";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace request="http://exist-db.org/xquery/request";

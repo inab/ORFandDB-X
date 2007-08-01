@@ -4,7 +4,7 @@ declare namespace exist="http://exist.sourceforge.net/NS/exist";
 declare namespace msg="http://www.cnio.es/scombio/jmfernandez/widgetMessage/0.6";
 
 
-import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
+import module namespace mim="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace util="http://exist-db.org/xquery/util";

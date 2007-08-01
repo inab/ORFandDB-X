@@ -1,4 +1,4 @@
-module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM";
+module namespace mim="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM";
 
 (:
 declare option exist:optimize "enable=yes";

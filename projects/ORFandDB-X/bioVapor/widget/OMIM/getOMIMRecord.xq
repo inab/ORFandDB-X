@@ -1,9 +1,9 @@
 xquery version "1.0";
 
 declare namespace exist="http://exist.sourceforge.net/NS/exist";
-declare namespace mimmark="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM/mark";
+declare namespace mimmark="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM/mark";
 
-import module namespace mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
+import module namespace mim="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM" at "omim.xqws";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace util="http://exist-db.org/xquery/util";
