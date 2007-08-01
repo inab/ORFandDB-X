@@ -1,126 +1,408 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema targetNamespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/filter/1.0" xmlns="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/filter/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema targetNamespace="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/filter/1.0" xmlns="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/filter/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
     <xsd:documentation>ORFandDB/X filters definition.  These are the base bricks of the update system. So, definitions must be adequate enough!</xsd:documentation>
   </xsd:annotation>
-  <xsd:element name="filterList">
+  <xsd:element name="toolchest">
     <xsd:annotation>
       <xsd:documentation><![CDATA[A set of filter definitions. The whole definition names list must have the uniquenes property.]]></xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element maxOccurs="unbounded" minOccurs="1" name="filter">
+        <xsd:element maxOccurs="unbounded" minOccurs="1" name="tool">
           <xsd:annotation>
-            <xsd:documentation><![CDATA[A single filter definition. A filter can be either a program or a Java class.]]></xsd:documentation>
+            <xsd:documentation><![CDATA[A single tool definition. A tool can be either a program, a Java class or a workflow.]]></xsd:documentation>
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
               <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string">
                 <xsd:annotation>
-                  <xsd:documentation><![CDATA[This is an optional description of the filter]]></xsd:documentation>
+                  <xsd:documentation><![CDATA[This is an optional description of the tool.]]></xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
               <xsd:choice maxOccurs="1" minOccurs="1">
-                <xsd:element maxOccurs="1" minOccurs="1" name="class">
-                  <xsd:annotation>
-                    <xsd:documentation><![CDATA[This filter has been implemented by a Java class. That class follows ??? interface.]]></xsd:documentation>
-                  </xsd:annotation>
-                  <xsd:complexType>
-                    <xsd:sequence>
-                      <xsd:element maxOccurs="unbounded" minOccurs="0" name="library" type="xsd:string">
-                        <xsd:annotation>
-                          <xsd:documentation><![CDATA[This element contains a path to a JAR to be loaded. There can be zero or more JAR to load.]]></xsd:documentation>
-                        </xsd:annotation>
-                      </xsd:element>
-                    </xsd:sequence>
-                    <xsd:attribute name="import" type="xsd:string" use="required">
-                      <xsd:annotation>
-                        <xsd:documentation><![CDATA[This attribute has the class to be loaded using Class.forName]]></xsd:documentation>
-                      </xsd:annotation>
-                    </xsd:attribute>
-                  </xsd:complexType>
-                </xsd:element>
-                <xsd:element maxOccurs="1" minOccurs="1" name="program">
-                  <xsd:annotation>
-                    <xsd:documentation><![CDATA[This filter has been implemented by a program. Java class ??? is the responsible of the instances of this filter.]]></xsd:documentation>
-                  </xsd:annotation>
-                  <xsd:complexType>
-                    <xsd:sequence>
-                      <xsd:element maxOccurs="unbounded" minOccurs="1" name="paramSet">
-                        <xsd:annotation>
-                          <xsd:documentation><![CDATA[Programs have at least one parameter set. Each parameter set describes a set of "compatible" parameters.]]></xsd:documentation>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                          <xsd:sequence>
-                            <xsd:element name="param">
-                              <xsd:annotation>
-                                <xsd:documentation><![CDATA[Each usable parameter must be described]]></xsd:documentation>
-                              </xsd:annotation>
-                              <xsd:complexType>
-                                <xsd:choice>
-                                  <xsd:element name="switch">
-                                    <xsd:annotation>
-                                      <xsd:documentation><![CDATA[Switch class of flag]]></xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:complexType>
-                                      <xsd:attribute name="paramOn" type="xsd:string" use="required"/>
-                                      <xsd:attribute name="paramOff" type="xsd:string" use="optional"/>
-                                    </xsd:complexType>
-                                  </xsd:element>
-                                  <xsd:element name="value">
-                                    <xsd:annotation>
-                                      <xsd:documentation><![CDATA[Value class of flag]]></xsd:documentation>
-                                    </xsd:annotation>
-                                    <xsd:complexType>
-                                      <xsd:attribute name="param" type="xsd:string" use="required"/>
-                                      <xsd:attribute default="false" name="valJoin" type="xsd:boolean" use="optional"/>
-                                    </xsd:complexType>
-                                  </xsd:element>
-                                </xsd:choice>
-                                <xsd:attribute name="name" type="xsd:string" use="required"/>
-                                <xsd:attribute name="optional" type="xsd:boolean" use="required"/>
-                                <xsd:attribute name="default" type="xsd:string" use="optional"/>
-                              </xsd:complexType>
-                            </xsd:element>
-                          </xsd:sequence>
-                          <xsd:attribute name="name" type="xsd:string" use="required"/>
-                        </xsd:complexType>
-                        <xsd:key name="paramKey">
-                          <xsd:annotation>
-                            <xsd:documentation><![CDATA[Each param must have its own name.]]></xsd:documentation>
-                          </xsd:annotation>
-                          <xsd:selector xpath="param"/>
-                          <xsd:field xpath="@name"/>
-                        </xsd:key>
-                      </xsd:element>
-                    </xsd:sequence>
-                    <xsd:attribute name="path" type="xsd:string" use="required"/>
-                  </xsd:complexType>
-                  <xsd:key name="paramSetKey">
-                    <xsd:annotation>
-                      <xsd:documentation><![CDATA[Each paramSet must have its own name.]]></xsd:documentation>
-                    </xsd:annotation>
-                    <xsd:selector xpath="paramSet"/>
-                    <xsd:field xpath="@name"/>
-                  </xsd:key>
-                </xsd:element>
+                <xsd:element maxOccurs="1" minOccurs="1" ref="class"/>
+                <xsd:element maxOccurs="1" minOccurs="1" ref="program"/>
+                <xsd:element maxOccurs="1" minOccurs="1" ref="workflow"/>
               </xsd:choice>
             </xsd:sequence>
             <xsd:attribute name="name" type="xsd:string" use="required">
               <xsd:annotation>
-                <xsd:documentation><![CDATA[The symbolic filter name. This name will be used by database workflows, when steps have been defined.]]></xsd:documentation>
+                <xsd:documentation><![CDATA[The symbolic tool name. This name is used when the tool is instantiated by a task.]]></xsd:documentation>
               </xsd:annotation>
             </xsd:attribute>
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
     </xsd:complexType>
-    <xsd:key name="filterKey">
+    <xsd:key name="toolKey">
       <xsd:annotation>
-        <xsd:documentation><![CDATA[This key assures that all the filter names are distinct.]]></xsd:documentation>
+        <xsd:documentation><![CDATA[This key assures that all the tool names are distinct.]]></xsd:documentation>
       </xsd:annotation>
-      <xsd:selector xpath="filter"/>
+      <xsd:selector xpath="tool"/>
       <xsd:field xpath="@name"/>
     </xsd:key>
+  </xsd:element>
+  <xsd:element name="class">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This tool has been implemented by a Java class. That class follows ??? interface.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="library" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[This element contains a path to a JAR to be loaded. There can be zero or more JAR to load.]]></xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="import" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[This attribute has the class to be loaded using Class.forName]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="program">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This tool has been implemented by a program.
+Java class ??? is the responsible of the instances of this kind of tools.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" minOccurs="1" name="optionSet">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[Programs have at least one set of options. Each set of options describes a set of "compatible" options.]]></xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="option">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[Each usable input and output parameter/file must be described.]]></xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:choice maxOccurs="1" minOccurs="1">
+                      <xsd:element maxOccurs="unbounded" minOccurs="1" name="switch" nillable="true">
+                        <xsd:annotation>
+                          <xsd:documentation><![CDATA[Switch class of option]]></xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:complexType>
+                          <xsd:simpleContent>
+                            <xsd:extension base="xsd:string">
+                              <xsd:attribute name="label" type="xsd:string" use="required">
+                                <xsd:annotation>
+                                  <xsd:documentation><![CDATA[The label for this option of the switch.
+The label is used to separate physical invocation from logical representation.]]></xsd:documentation>
+                                </xsd:annotation>
+                              </xsd:attribute>
+                            </xsd:extension>
+                          </xsd:simpleContent>
+                        </xsd:complexType>
+                      </xsd:element>
+                      <xsd:element maxOccurs="1" minOccurs="1" name="param">
+                        <xsd:complexType>
+                          <xsd:attribute name="prefix" type="xsd:string" use="optional">
+                            <xsd:annotation>
+                              <xsd:documentation><![CDATA[Parameter prefix (if any).]]></xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:attribute>
+                          <xsd:attribute name="postfix" type="xsd:string" use="optional">
+                            <xsd:annotation>
+                              <xsd:documentation><![CDATA[Parameter postfix (if any).]]></xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:attribute>
+                          <xsd:attribute name="prefixJoin" type="xsd:boolean" use="optional">
+                            <xsd:annotation>
+                              <xsd:documentation><![CDATA[Must prefix be joined to the parameter?]]></xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:attribute>
+                          <xsd:attribute name="postfixJoin" type="xsd:boolean" use="optional">
+                            <xsd:annotation>
+                              <xsd:documentation><![CDATA[Must postfix be joined to the parameter?]]></xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:attribute>
+                        </xsd:complexType>
+                      </xsd:element>
+                      <xsd:element maxOccurs="1" minOccurs="1" name="optionBasedOutput">
+                        <xsd:annotation>
+                          <xsd:documentation><![CDATA[This option represents output files which have been generated
+using as pattern the value used on an option instantiation.]]></xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:complexType>
+                          <xsd:attribute name="refOption" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                      </xsd:element>
+                    </xsd:choice>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="defVal">
+                      <xsd:annotation>
+                        <xsd:documentation><![CDATA[The default value for the option if it is not set.
+Depending on the type of option, this value can be interpreted either as a file content or a value.]]></xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:sequence>
+                  <xsd:attribute name="name" type="xsd:string" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The symbolic name of the option, used to give it a value on a task.]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                  <xsd:attribute name="optional" type="xsd:boolean" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[Is this an optional option?]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                  <xsd:attribute name="type" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The kind of the option: a value or a file.]]></xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="file"/>
+                        <xsd:enumeration value="value"/>
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                  <xsd:attribute name="course" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[The course of the option: input or output.
+TIP: output parameters are usually files.]]></xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="input"/>
+                        <xsd:enumeration value="output"/>
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                  <xsd:attribute name="isMultiple" type="xsd:boolean" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation><![CDATA[Can this option be set multiple times?]]></xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                </xsd:complexType>
+                <xsd:key name="switchLabelKey">
+                  <xsd:annotation>
+                    <xsd:documentation><![CDATA[We cannot repeat label names.]]></xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:selector xpath="switch"/>
+                  <xsd:field xpath="@label"/>
+                </xsd:key>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute default="default" name="name" type="xsd:string" use="optional">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The name of this optionSet. It is used by the task to distinguish it among the available optionSets.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+          </xsd:complexType>
+          <xsd:key name="optionKey">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[Each option must have its own name inside this optionSet.]]></xsd:documentation>
+            </xsd:annotation>
+            <xsd:selector xpath="option"/>
+            <xsd:field xpath="@name"/>
+          </xsd:key>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="path" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[Full local path to the program.]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+    </xsd:complexType>
+    <xsd:key name="optionSetKey">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[Each optionSet must have its own name.]]></xsd:documentation>
+      </xsd:annotation>
+      <xsd:selector xpath="optionSet"/>
+      <xsd:field xpath="@name"/>
+    </xsd:key>
+  </xsd:element>
+  <xsd:complexType name="ComplexTasksType">
+    <xsd:sequence>
+      <xsd:group ref="TaskGroup"/>
+      <xsd:group maxOccurs="unbounded" minOccurs="1" ref="TaskTypesGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="TaskGroup">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="input">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[An input option of the task.]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute name="fromTask" type="xsd:string" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The task where the input content was generated.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+          <xsd:attribute name="fromOutput" type="xsd:string" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The task's output where the input content was generated.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+          <xsd:attribute name="toOption" type="xsd:string" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The destination option for this input.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="param">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[An input option, which is not set from other tasks.]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="xsd:anyType">
+              <xsd:attribute name="name" type="xsd:string" use="optional">
+                <xsd:annotation>
+                  <xsd:documentation><![CDATA[The name of the option to be set.]]></xsd:documentation>
+                </xsd:annotation>
+              </xsd:attribute>
+            </xsd:extension>            
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="output">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[An output of the task.]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:attribute name="name" type="xsd:string" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The option name used to publish this output to other adjacent tasks.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+          <xsd:attribute name="fromParam" type="xsd:string" use="required">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The tool's option name which is coupled to this output.]]></xsd:documentation>
+            </xsd:annotation>
+          </xsd:attribute>
+          <xsd:attribute name="type" use="optional">
+            <xsd:annotation>
+              <xsd:documentation><![CDATA[The explicit output type, which can be either a file or a value.
+If the type of the output from the tool is the same as this type, no conversion is done.
+Otherwise, the output is either read from the generated file or written to a file.
+If this attribute is not set, then the type is the same as the one from the output.]]></xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="file"/>
+                <xsd:enumeration value="value"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:attributeGroup name="TaskAttributeGroup">
+    <xsd:attribute name="name" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[The name of the task.]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="description" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation><![CDATA[The optional description of the task.]]></xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:attributeGroup>
+  <xsd:group name="TaskTypesGroup">
+    <xsd:choice>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="task"/>
+      <xsd:element maxOccurs="1" minOccurs="1" name="seqTasks" type="ComplexTasksType">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A set of sequential tasks. They are done in the same order as especified, and if one of them fails, the next ones are not done.
+The block finishes when all the tasks have finished.
+The published outputs ]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="1" name="parTasks" type="ComplexTasksType">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A set of parallel tasks. They are done simultaneously, and if one of them fails, the others are killed.
+The block finishes when all the tasks have finished.
+The published outputs ]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="1" name="choiceTasks" type="ComplexTasksType">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A set of tasks, and at most one is done.
+The selection is made based on the special input 'choice:condition'.
+If no one is selected, it fails.
+The published outputs ]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="1" name="fallBackTasks" type="ComplexTasksType">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[A set of tasks sequentially done. If a task finishes, the next tasks are not done. Otherwise, next task (if any) is done.
+The block finishes when at least one of the tasks have finished, or all have failed.
+The published outputs ]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:element name="workflow">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This kind of tool is a workflow. So, its behavior depends on smaller bricks.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="include" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[Read additional toolchest definitions, so tools used by this workflow which are declare elsewhere are available.]]></xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="option">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="unbounded" minOccurs="1" name="connectsTo">
+                <xsd:complexType>
+                  <xsd:attribute name="task" type="xsd:string"/>
+                  <xsd:attribute name="option" type="xsd:string"/>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The symbolic name of the option, used to give it a value on a task.]]></xsd:documentation>
+              </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="course" use="required">
+              <xsd:annotation>
+                <xsd:documentation><![CDATA[The course of the option: input or output.
+TIP: output parameters are usually files.]]></xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="input"/>
+                  <xsd:enumeration value="output"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:group ref="TaskTypesGroup"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="task">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This is a task, which instantiates a tool. It uses an optionSet from the tool, setting up its inputs and its outputs.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:group ref="TaskGroup"/>
+      <xsd:attributeGroup ref="TaskAttributeGroup"/>
+      <xsd:attribute name="callTool" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[The tool which is called.]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="callOptionSet" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[The optionSet used when the tool is called.]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+    </xsd:complexType>
   </xsd:element>
 </xsd:schema>
