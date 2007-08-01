@@ -19,7 +19,7 @@ print OUTPUT <<EOF;
 	which was created by José María Fernández González
 	jmfernandez\@cnio.es CNIO (C) 2006
 -->
-<MSASet xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA'>
+<MSASet xmlns='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/MSA'>
 EOF
 
 my($dumpres)=undef;

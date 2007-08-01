@@ -2,18 +2,17 @@
 
 use strict;
 
-if(scalar(@ARGV)==3 && -d $ARGV[1]) {
+if(scalar(@ARGV)==2 && -d $ARGV[0]) {
 	local(*OUTXML);
-	my($tag)=$ARGV[0];
 	
-	if(open(OUTXML,'>'.$ARGV[2])) {
+	if(open(OUTXML,'>'.$ARGV[1])) {
 		my($good)=1;
 		my($file);
 		
 		print OUTXML <<XML;
 <?xml version='1.0' encoding='ISO-8859-1'?>
 
-<$tag namespace="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/3/$tag">
+<taxonomy namespace="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4/NCBI-Taxonomy">
 XML
 		
 		{
@@ -21,7 +20,7 @@ XML
 			local $/="\t|\n";
 			
 			# OrganismDivision
-			$file=$ARGV[1].'/division.dmp';
+			$file=$ARGV[0].'/division.dmp';
 			if(open(INFILE,'<'.$file)) {
 				my($line);
 
@@ -49,7 +48,7 @@ DIVNAME
 			}
 			
 			# Organism
-			$file=$ARGV[1].'/nodes.dmp';
+			$file=$ARGV[0].'/nodes.dmp';
 			if(defined($good) && open(INFILE,'<'.$file)) {
 				my($line);
 				my(@parent)=();
@@ -110,7 +109,7 @@ ORGNAMEIS
 			}
 			
 			# OrganismName		
-			$file=$ARGV[1].'/names.dmp';
+			$file=$ARGV[0].'/names.dmp';
 			if(defined($good) && open(INFILE,'<'.$file)) {
 				my($line);
 
@@ -139,16 +138,16 @@ ORGNAME
 			}
 		}
 		
-		print OUTXML "</$tag>\n";
+		print OUTXML "</taxonomy>\n";
 		close(OUTXML);
 		
 		unless(defined($good)) {
-			unlink($ARGV[2]);
+			unlink($ARGV[1]);
 			exit 1;
 		}
 	} else {
-		die "ERROR: Unable to create file $ARGV[1]!!!\n";
+		die "ERROR: Unable to create file $ARGV[0]!!!\n";
 	}
 } else {
-	die "$0: This program takes three parameters: a tag, a directory and an output file\n";
+	die "$0: This program takes two parameters: a directory with NCBI TaxDump files and the output file\n";
 }

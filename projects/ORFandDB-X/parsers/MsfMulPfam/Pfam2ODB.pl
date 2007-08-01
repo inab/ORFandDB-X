@@ -32,7 +32,7 @@ print OUTPUT <<EOF;
 	which was created by José María Fernández González
 	jmfernandez\@cnio.es CNIO (C) 2007
 -->
-<PfamSet xmlns:odb='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0' xmlns:m='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA' xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam'>
+<PfamSet xmlns:odb='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0' xmlns:m='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/MSA' xmlns='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/Pfam'>
 EOF
 
 my($dumpres)=undef;
@@ -346,7 +346,7 @@ sub printGappedFragment($\@\@;$) {
 	print $OUTPUT "\t\t\t<gappedFragment name='".$msa->[0]."'",
 		(defined($msa->[2])?" start='$msa->[2]'":''),
 		(defined($msa->[3])?" end='$msa->[3]'":''),
-		" xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA'>";
+		" xmlns='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/MSA'>";
 		
 	my($key,$val);
 	while(($key,$val)=each(%{$msa->[1]})) {
@@ -374,7 +374,7 @@ sub printGappedFragment($\@\@;$) {
 sub printResidues($$\@) {
 	my($OUTPUT,$alignlength,$p_mulord)=@_;
 	
-	print $OUTPUT "\t\t<residues xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA'>\n";
+	print $OUTPUT "\t\t<residues xmlns='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/MSA'>\n";
 	my($seqnum)=1;
 	my($alength)='a' x $alignlength;
 	foreach my $msa (@{$p_mulord}) {

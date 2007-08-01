@@ -1,9 +1,9 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
     <index
     	xmlns:xi="http://www.w3.org/2001/XInclude"
-    	xmlns:pfam="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/Pfam"
-    	xmlns:msa="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/MSA"
-    	xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"
+    	xmlns:pfam="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/Pfam"
+    	xmlns:msa="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/MSA"
+    	xmlns:odb="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0"
     >
 	
         <fulltext default="none" attributes="true" alphanum="true">

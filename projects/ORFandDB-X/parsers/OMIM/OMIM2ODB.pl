@@ -151,7 +151,7 @@ if(open(OUTPUT,'>'.$ARGV[1])) {
 	-	genemap
 	-	omim.txt.Z
 -->
-<OMIM xmlns='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM' xmlns:odb='http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0'>
+<OMIM xmlns='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM' xmlns:odb='http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0'>
 EOF
 
 	# Printing the codes information

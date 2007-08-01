@@ -1,7 +1,7 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
     <index
-    	xmlns:mim="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0/OMIM"
-    	xmlns:odb="http://www.pdg.cnb.uam.es/jmfernandez/ORFandDB/4.0"
+    	xmlns:mim="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM"
+    	xmlns:odb="http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0"
     >
     	<!--
         <fulltext default="none" attributes="false" alphanum="true">
