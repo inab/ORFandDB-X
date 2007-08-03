@@ -9,6 +9,11 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
+        <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation><![CDATA[This is an optional description of the toolchest.]]></xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
         <xsd:element maxOccurs="unbounded" minOccurs="1" name="tool">
           <xsd:annotation>
             <xsd:documentation><![CDATA[A single tool definition. A tool can be either a program, a Java class or a workflow.]]></xsd:documentation>
@@ -34,6 +39,11 @@
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="required">
+        <xsd:annotation>
+          <xsd:documentation><![CDATA[The logical name of the toolchest]]></xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
     </xsd:complexType>
     <xsd:key name="toolKey">
       <xsd:annotation>
@@ -75,7 +85,7 @@ Java class ??? is the responsible of the instances of this kind of tools.]]></xs
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="option">
+              <xsd:element name="option" minOccurs="1" maxOccurs="unbounded">
                 <xsd:annotation>
                   <xsd:documentation><![CDATA[Each usable input and output parameter/file must be described.]]></xsd:documentation>
                 </xsd:annotation>
@@ -123,13 +133,25 @@ The label is used to separate physical invocation from logical representation.]]
                           </xsd:attribute>
                         </xsd:complexType>
                       </xsd:element>
-                      <xsd:element maxOccurs="1" minOccurs="1" name="optionBasedOutput">
+                      <xsd:element maxOccurs="1" minOccurs="1" name="paramBasedOutput">
                         <xsd:annotation>
-                          <xsd:documentation><![CDATA[This option represents output files which have been generated
-using as pattern the value used on an option instantiation.]]></xsd:documentation>
+                          <xsd:documentation><![CDATA[This param represents output files which have been generated
+using as pattern the value used on an param instantiation.]]></xsd:documentation>
                         </xsd:annotation>
                         <xsd:complexType>
-                          <xsd:attribute name="refOption" type="xsd:string" use="required"/>
+                          <xsd:attribute name="refParam" type="xsd:string" use="required"/>
+                          <xsd:attribute name="prefix" type="xsd:string" use="optional"/>
+                          <xsd:attribute name="postfix" type="xsd:string" use="optional"/>
+                        </xsd:complexType>
+                      </xsd:element>
+                      <xsd:element name="constantOutput">
+                        <xsd:annotation>
+                          <xsd:documentation><![CDATA[This option represents output files which have always the same name.
+Their generation can be optionally controlled by a switch. If it is not, file is always generated.
+The filename can have patterns]]></xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:complexType>
+                          <xsd:attribute name="filePattern" type="xsd:string" use="required"/>
                         </xsd:complexType>
                       </xsd:element>
                     </xsd:choice>
@@ -247,7 +269,7 @@ TIP: output parameters are usually files.]]></xsd:documentation>
           </xsd:attribute>
         </xsd:complexType>
       </xsd:element>
-      <xsd:element maxOccurs="unbounded" minOccurs="0" name="param">
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="fixedParam">
         <xsd:annotation>
           <xsd:documentation><![CDATA[An input option, which is not set from other tasks.]]></xsd:documentation>
         </xsd:annotation>
