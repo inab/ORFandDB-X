@@ -9,6 +9,7 @@
 			<include path="//DescriptorName" />
 			<include path="//NameOfSubstance" />
 			
+			<create qname="MedlineCitation" />
 			<create qname="AbstractText" />
 			<create qname="ArticleTitle" />
 			<create qname="Author" />

@@ -26,20 +26,21 @@
 		Excluding entry history from FTI & FTS
 	-->
         <fulltext default="all" attributes="true" alphanum="true">
-		<exclude path="//mim:entryHistory"/>
+		<exclude path="//mim:entryHistory" />
 		
-		<create qname="mim:alias"/>
-		<create qname="@name"/>
-		<create qname="@mutation"/>
-		<create qname="odb:text"/>
-		<create qname="@id"/>
-		<create qname="@namespace"/>
-		<create qname="mim:geneSymbol"/>
-		<create qname="mim:included"/>
-		<create qname="mim:para"/>
+		<create qname="mim:record" />
+		<create qname="mim:alias" />
+		<create qname="@name" />
+		<create qname="@mutation" />
+		<create qname="odb:text" />
+		<create qname="@id" />
+		<create qname="@namespace" />
+		<create qname="mim:geneSymbol" />
+		<create qname="mim:included" />
+		<create qname="mim:para" />
 		<create qname="@title" />
 		<create qname="@mimNumber" />
-		<create qname="mim:term"/>
+		<create qname="mim:term" />
 	</fulltext>
 	
         <create path="//odb:link/@namespace" type="xs:string"/>
