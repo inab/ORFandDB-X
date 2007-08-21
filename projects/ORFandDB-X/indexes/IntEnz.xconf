@@ -11,6 +11,11 @@
 			<include path="//enz:reaction"/>
 			<include path="//enz:cofactor"/>
 			<include path="//enz:link"/>
+			
+			<create qname="enz:enzyme" />
+			<create qname="enz:ec_sub-subclass" />
+			<create qname="enz:ec_subclass" />
+			<create qname="enz:ec_class" />
 		</fulltext>
 		
 		<create path="//enz:ec_class/@ec1" type="xs:integer"/>

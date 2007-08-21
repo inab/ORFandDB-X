@@ -6,11 +6,19 @@
 			<include path="//@rdf:about" />
 			<include path="//@rdf:resource" />
 			<include path="//go:reference" />
+			<include path="//go:definition" />
+			
+			<create qname="go:term" />
 		</fulltext>
-		<create path="//go:accession" type="xs:string"/>
-		<create path="//go:synonym" type="xs:string"/>
+		
+		<!-- No range index -->
+		
 		<!-- And QName indexes -->
-		<create qname="go:accession" type="xs:string"/>
-		<create qname="go:synonym" type="xs:string"/>
+		<create qname="go:accession" type="xs:string" />
+		<create qname="go:name" type="xs:string" />
+		<create qname="go:synonym" type="xs:string" />
+		<create qname="go:reference" type="xs:string" />
+		<create qname="@rdf:about" type="xs:string" />
+		<create qname="@rdf:resource" type="xs:string" />
 	</index>
 </collection>

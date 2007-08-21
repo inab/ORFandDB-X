@@ -4,6 +4,7 @@
 	<index>
 		<!-- TBD -->
 		<fulltext default="none" attributes="false" alphanum="false" />
+		
 		<!--
 		<fulltext default="none" attributes="false" alphanum="true">
 			<include path="//AbstractText" />

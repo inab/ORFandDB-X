@@ -10,6 +10,7 @@
 			<include path="//NameOfSubstance" />
 			
 			<create qname="MedlineCitation" />
+			
 			<create qname="AbstractText" />
 			<create qname="ArticleTitle" />
 			<create qname="Author" />
@@ -17,15 +18,17 @@
 			<create qname="NameOfSubstance" />
 		</fulltext>
 		
-		<create path="//PMID" type="xs:string"/>
-		<create path="//NlmUniqueID" type="xs:string"/>
-		<create path="//PubDate/Year" type="xs:integer"/>
-		<create path="//QualifierName" type="xs:string"/>
+		<!-- Range indexes: disabled
+		<create path="//PMID" type="xs:string" />
+		<create path="//NlmUniqueID" type="xs:string" />
+		<create path="//PubDate/Year" type="xs:integer" />
+		<create path="//QualifierName" type="xs:string" />
+		-->
 		
 		<!-- And QName indexes -->
-		<create qname="PMID" type="xs:string"/>
-		<create qname="NlmUniqueID" type="xs:string"/>
-		<create qname="Year" type="xs:integer"/>
-		<create qname="QualifierName" type="xs:string"/>
+		<create qname="PMID" type="xs:string" />
+		<create qname="NlmUniqueID" type="xs:string" />
+		<create qname="Year" type="xs:integer" />
+		<create qname="QualifierName" type="xs:string" />
 	</index>
 </collection>

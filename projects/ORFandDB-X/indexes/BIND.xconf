@@ -11,11 +11,17 @@
 			<include path="//Title_E_name" />
 			<include path="//Auth-list_names_ml_E" />
 			<include path="//Medline-entry_abstract" />
+			
+			<create qname="BIND-Interaction" />
 		</fulltext>
+		
+		<!-- Range indexes: Disabled
 		<create path="//PubMedId" type="xs:string"/>
 		<create path="//Medline-mesh_term" type="xs:string" />
 		<create path="//Geninfo-id" type="xs:string"/>
 		<create path="//Object-id_id" type="xs:string"/>
+		-->
+		
 		<!-- And QName indexes -->
 		<create qname="PubMedId" type="xs:string"/>
 		<create qname="Medline-mesh_term" type="xs:string" />

@@ -3,6 +3,7 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
 	<index xmlns:h="org:hprd:dtd:hprd" xmlns:i="net:sf:psidev:mi">
 		<fulltext default="none" attributes="false" alphanum="false" />
+		
 		<create path="//h:entry_cdna" type="xs:string"/>
 		<create path="//h:entry_protein" type="xs:string"/>
 		

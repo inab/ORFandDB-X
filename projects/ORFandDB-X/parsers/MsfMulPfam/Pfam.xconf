@@ -18,7 +18,7 @@
         <create path="//odb:link/@id" type="xs:string"/>
 	<create path="//pfam:maybeNested/@acc" type="xs:string" />
 	<create path="//pfam:gappedFragment/@uniAcc" type="xs:string" />
-	<!--
+	<!-- This content should come from XInclude -->
         <create path="//msa:gappedFragment/@name" type="xs:string"/>
         <create path="//msa:gappedFragment/@start" type="xs:integer"/>
         <create path="//msa:gappedFragment/@end" type="xs:integer"/>
@@ -26,8 +26,7 @@
         <create path="//msa:r" type="xs:string"/>
         <create path="//msa:r/@n" type="xs:integer"/>
         <create path="//msa:r/@p" type="xs:integer"/>
-	-->
-	<!--
+	<!-- This ones, fail???
 	<xi:include href="/db/system/config/db//MSA/collection.xconf#xpointer(//create[path])" />
 	<xi:include parse="xml" href="/db/system/config/db/results/MSA/collection.xconf" xpointer="xpointer(//create[@path])" />
 	-->
@@ -38,7 +37,8 @@
         <create qname="@namespace" type="xs:string"/>
         <create qname="@id" type="xs:string"/>
 	<create qname="@uniAcc" type="xs:string" />
-	<!--
+	
+	<!-- This content should come from XInclude -->
         <create qname="@name" type="xs:string"/>
         <create qname="@start" type="xs:integer"/>
         <create qname="@end" type="xs:integer"/>
@@ -46,13 +46,14 @@
         <create qname="msa:r" type="xs:string"/>
         <create qname="@n" type="xs:integer"/>
         <create qname="@p" type="xs:integer"/>
-	-->
-	<!--
+	<!-- This ones fail
 	<xi:include href="/db/system/config/db//MSA/collection.xconf#xpointer(//create[qname])" />
 	<xi:include parse="xml" href="/db/system/config/db/results/MSA/collection.xconf" xpointer="xpointer(//create[@qname])" />
 	
 	<xi:include parse="xml" href="/db/system/config/db" xpointer="xpointer(//create)" />
 	-->
+	<!--
 	<xi:include parse="xml" href="/db/system/config/db" xpointer="xpointer(//create[tokenize(document-uri(.),'/')[last()-1]='MSA'])" />
+	-->
     </index>
 </collection>

@@ -3,8 +3,10 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
 	<index>
 		<fulltext default="none" attributes="false" alphanum="false" />
+		
 		<create path="//BlastOutput_query-def" type="xs:string"/>
 		<create path="//Hit_def" type="xs:string"/>
+		
 		<!-- And QName indexes -->
 		<create qname="BlastOutput_query-def" type="xs:string"/>
 		<create qname="Hit_def" type="xs:string"/>

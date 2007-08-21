@@ -6,6 +6,8 @@
 			<include path="//name" />
 			<include path="//description" />
 			
+			<create qname="keyword" />
+			
 			<create qname="name" />
 			<create qname="description" />
 		</fulltext>

@@ -3,6 +3,7 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
 	<index xmlns:PDBx="http://deposit.pdb.org/pdbML/pdbx.xsd">
 		<fulltext default="none" attributes="false" alphanum="false" />
+		
 		<create path="//PDBx:cell/@entry_id" type="xs:string"/>
 		<create path="//PDBx:computing/@entry_id" type="xs:string"/>
 		<create path="//PDBx:datablock/@datablockName" type="xs:string"/>

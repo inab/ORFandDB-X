@@ -3,6 +3,7 @@
 <collection xmlns="http://exist-db.org/collection-config/1.0">
 	<index>
 		<fulltext default="none" attributes="false" alphanum="false" />
+		
 		<create path="//@id" type="xs:string"/>
 		<create path="//db_xref/@dbkey" type="xs:string"/>
 		<create path="//rel_ref/@ipr_ref" type="xs:string"/>
