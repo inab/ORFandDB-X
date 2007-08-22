@@ -141,7 +141,7 @@ Gene map locus <xsl:value-of select="@id"/> <i>(<xsl:value-of select="@eDate"/>)
 	</xsl:template>
 	
 	<xsl:template match="mim:bibref">
-<tr valign="top"><td align="right"><b><xsl:value-of select="@num"/>.</b></td><td><xsl:value-of select="text()"/></td></tr>
+<tr valign="top"><td align="right"><b><xsl:value-of select="@num"/>.</b></td><td><xsl:value-of select="mim:rawref/text()"/></td></tr>
 	</xsl:template>
 	
 	<xsl:template match="mim:text">

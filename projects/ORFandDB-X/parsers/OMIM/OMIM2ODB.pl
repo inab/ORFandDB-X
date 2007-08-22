@@ -177,6 +177,7 @@ EOF
 	my($isAlias)=1;
 	my(@included)=();
 	my($seeAlso)='';
+	my($bibtmpidx)=undef;
 	my($bibtmp)=undef;
 	my(@bibref)=();
 	my(@clinicalSynopsis)=();
@@ -266,7 +267,48 @@ EOF
 				foreach my $bibind (0..$#bibref) {
 					next unless(defined($bibref[$bibind]));
 
-					print OUTPUT "\t\t<bibref num='$bibind'>",XMLize($bibref[$bibind]),"</bibref>\n";
+					print OUTPUT "\t\t<bibref num='$bibind'";
+					if(scalar(@{$bibref[$bibind]})>1) {
+						print OUTPUT " pubtype='",$bibref[$bibind][12],"'",
+							defined($bibref[$bibind][7])?(" year='".$bibref[$bibind][7]."'"):'',
+							defined($bibref[$bibind][8])?(" month='".$bibref[$bibind][8]."'"):'',
+							defined($bibref[$bibind][9])?(" day='".$bibref[$bibind][9]."'"):'',
+							defined($bibref[$bibind][4])?(" volume='".XMLize($bibref[$bibind][4])."'"):'',
+							defined($bibref[$bibind][6])?(" pubplace='".XMLize($bibref[$bibind][6])."'"):'',
+							">";
+
+						foreach my $aut (@{$bibref[$bibind][1]}) {
+							my($surname,$initials)=split(/, */,$aut,2);
+							unless(defined($initials)) {
+								($surname,$initials)=split(/ /,$aut,2);
+							}
+							# $initials='KAKA' unless(defined($initials));
+							print OUTPUT "<author surname='",XMLize($surname),"' initials='",XMLize($initials),"'/>";
+						}
+
+						if(defined($bibref[$bibind][2])) {
+							print OUTPUT "<title>",XMLize($bibref[$bibind][2]),"</title>";
+						}
+
+						if(defined($bibref[$bibind][3])) {
+							print OUTPUT "<journal>",$bibref[$bibind][3],"</journal>";
+						}
+
+						foreach my $pag (@{$bibref[$bibind][5]}) {
+							print OUTPUT "<page from='",XMLize($pag->[0]),"' to='",XMLize($pag->[1]),"'/>";
+						}
+
+						if(defined($bibref[$bibind][10])) {
+							print OUTPUT "<note isErratum='",(defined($bibref[$bibind][11])?'true':'false'),"'>",XMLize($bibref[$bibind][10]),"</note>";
+						}
+
+						if(defined($bibref[$bibind][13])) {
+							print OUTPUT "<pubcomment>",XMLize($bibref[$bibind][13]),"</pubcomment>";
+						}
+					} else {
+						print OUTPUT "><!--KOKO-->";
+					}
+					print OUTPUT "<rawref>",XMLize($bibref[$bibind][0]),"</rawref></bibref>\n";
 				}
 				
 				# clinicalSynopsis
@@ -309,6 +351,7 @@ EOF
 				@included=();
 				$seeAlso='';
 				@bibref=();
+				$bibtmpidx=undef;
 				$bibtmp=undef;
 				@clinicalSynopsis=();
 				$clitmp=undef;
@@ -386,13 +429,314 @@ EOF
 		} elsif($currentField eq 'RF') {
 			if(defined($bibtmp)) {
 				if(length($line)>0) {
-					$$bibtmp .= ' ' . $line;
+					$bibtmp .= ' ' . $line;
 				} else {
+					# Old fashion
+					$bibtmp =~ s/[ \t]+/ /g;
+					$bibref[$bibtmpidx]=[$bibtmp];
+					
+					# New fashion (alpha)
+					my($fullbibtmp)=$bibtmp;
+					my(@authors)=();
+					my($title)=undef;
+					my($journal)=undef;
+					my($volume)=undef;
+					my(@page)=();
+					my($place)=undef;
+					my($year)=undef;
+					my($month)=undef;
+					my($day)=undef;
+					my($note)=undef;
+					my($isnoteerr)=undef;
+					my($pubtype)=undef;
+					my($pubcomment)=undef;
+					my($quack)=undef;
+					
+					my($notepat)=" Note: ";
+					my($noteidx)=rindex($fullbibtmp,$notepat);
+					if($noteidx!=-1) {
+						$note=substr($fullbibtmp,$noteidx+length($notepat),-1);
+						$bibtmp=substr($fullbibtmp,0,$noteidx);
+						
+						my($errpat)="Erratum: ";
+						if(index($note,$errpat)==0) {
+							$note=substr($note,length($errpat));
+							$isnoteerr=1;
+						}
+						
+						my(@endsearch)=(
+							"Electronic Article",
+							"Advance Electronic Publication",
+							"Electronic Letter",
+							"Electronic Publication",
+							"Electronic only",
+						);
+					}
+					
+					my($splitidx)=undef;
+					my($subsize)=undef;
+					if(($splitidx=index($bibtmp,'.: '))!=-1) {
+						$splitidx++;
+						$subsize=2;
+					} elsif(($splitidx=index($bibtmp,'. :'))!=-1) {
+						$splitidx++;
+						$subsize=2;
+					} elsif(($splitidx=index($bibtmp,'.:'))!=-1) {
+						$subsize=2;
+					} elsif($bibtmp=~/[A-Za-z]: /) {
+						$splitidx=length($`)+1;
+						$subsize=1;
+					} elsif(($splitidx=index($bibtmp,' : '))!=-1) {
+						$subsize=3;
+					} elsif(($splitidx=index($bibtmp,'. '))!=-1) {
+						$subsize=2;
+					}
+					
+					if($splitidx!=-1) {
+						@authors=split(/; ?/,substr($bibtmp,0,$splitidx));
+						
+						#print STDERR "Authors: $authorstmp\n";
+						
+						# Now, the rest...
+						my($titletmp)=substr($bibtmp,$splitidx+$subsize);
+						
+						$titletmp =~ s/[ .]+$//;
+						
+						my($perconpat)="Personal Communication. ";
+						if(index($titletmp,$perconpat)==0) {
+							$titletmp=substr($titletmp,length($perconpat));
+							my($pcidx)=rindex($titletmp,' ');
+							$place=substr($titletmp,0,$pcidx);
+							($month,$day,$year)=split('/',substr($titletmp,$pcidx+1),3);
+							
+							# Patching the date
+							unless(defined($day)) {
+								$year=$month;
+								$month=undef;
+							} elsif(!defined($year)) {
+								$year=$day;
+								$day=undef;
+							}
+							$pubtype='Personal Communication';
+							# print STDERR "PC($titletmp): $place | $year | $month | $day\n";
+						} else {
+							if($titletmp =~ /\. \[([^\]]+)\]$/) {
+								$pubcomment=$1;
+								$titletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp =~ /\. (Fig\. [0-9]+)$/) {
+								$pubcomment=$1;
+								$titletmp=substr($titletmp,0,-length($&));
+							}
+							
+							# New
+							my($subtitletmp)=undef;
+							if(rindex($titletmp,'(pub.)')!=-1) {
+								if($titletmp =~ / ?\(pub\.\) ([0-9]+)$/) {
+									$year=$1;
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)$/) {
+									$volume=$1;
+									$year=$2;
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) (\([^)]+\)) ([0-9]+)$/) {
+									$volume=$1;
+									$year=$2;
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$volume=$1;
+									$year=$2;
+									push(@page,[$3,$4]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$volume=$1;
+									$year=$2;
+									push(@page,[$3,$4],[$5,$6]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$volume=$1;
+									$year=$2;
+									push(@page,[$3,$4],[$5,$5]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp?\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)(?: only)?$/) {
+									$volume=$1;
+									$year=$2;
+									push(@page,[$3,$3]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\/([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$month=$1;
+									$year=$2;
+									push(@page,[$3,$4]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. (?:\). )?Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$year=$1;
+									push(@page,[$2,$3]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$year=$1;
+									push(@page,[$2,$3],[$4,$5]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$year=$1;
+									push(@page,[$2,$3],[$4,$4]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp?\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)(?: only)?$/) {
+									$year=$1;
+									push(@page,[$2,$2]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} elsif($titletmp =~ / ?\(pub\.\) (\([^)]+\)) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+									$volume=$1;
+									$year=$2;
+									push(@page,[$3,$4]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+								} else {
+									print STDERR "ProblemRF $mimNumber OFFENDINGPUB: $fullbibtmp\n";
+								}
+							} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\. ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
+									$year=$1;
+									push(@page,[$2,$3],[$4,$5]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\. ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
+									$year=$1;
+									push(@page,[$2,$2],[$3,$4]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\.? ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
+									$year=$1;
+									push(@page,[$2,$3]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/[:,]? ?([0-9]{4})\. Pp?\. ((?:[a-zA-Z]*[0-9]+[a-zA-Z]*)|l)(?: only)?$/) {
+									$year=$1;
+									push(@page,[$2,$2]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
+									$volume=$1;
+									$year=$6;
+									push(@page,[$2,$3],[$4,$5]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
+									$volume=$1;
+									$year=$5;
+									push(@page,[$2,$3],[$4,$4]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
+									$volume=$1;
+									$year=$4;
+									push(@page,[$2,$3]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
+									$volume=$1;
+									$year=$3;
+									push(@page,[$2,$2]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;] ([0-9]{4})$/) {
+									$volume=$1;
+									$year=$2;
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
+									$year=$3;
+									push(@page,[$1,$2]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) only, ([0-9]+)\/([0-9]+)\/([0-9]{4})$/) {
+									$month=$2;
+									$day=$3;
+									$year=$4;
+									push(@page,[$1,$1]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
+									$year=$2;
+									push(@page,[$1,$1]);
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?,? ([0-9]+)\/([0-9]+)\/([0-9]{4})$/) {
+									$month=$1;
+									$day=$2;
+									$year=$3;
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?,? ([0-9]+)\/([0-9]{4})$/) {
+									$month=$1;
+									$year=$2;
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} elsif($titletmp=~/ ?,? ([0-9]{4})$/) {
+									$year=$1;
+									$subtitletmp=substr($titletmp,0,-length($&));
+							} else {
+								# Quack2!
+								print STDERR "ProblemRF $mimNumber OFFENDING2($titletmp): $fullbibtmp\n";
+								#print STDERR "ProblemRF $mimNumber OFFENDING2: $fullbibtmp\n";
+							}
+							
+							if(defined($subtitletmp)) {
+								my(@pubtypes)=(
+									'Letter',
+									'Abstract',
+									'Editorial',
+								);
+								
+								my($gotpat)=undef;
+								my($patind)=undef;
+								foreach my $pubtypepat (@pubtypes) {
+									if(($patind=index($subtitletmp,'('.$pubtypepat.') '))!=-1) {
+										$pubtype=$pubtypepat;
+										last;
+									}
+								}
+									
+								if(defined($patind) && $patind!=-1) {
+									$title=substr($subtitletmp,0,$patind);
+									$journal=substr($subtitletmp,$patind+length($pubtype)+3);
+								} else {
+									my($titleidx)=index($subtitletmp,'? ');
+									$titleidx=index($subtitletmp,'! ')  if($titleidx==-1);
+									$titleidx=index($subtitletmp,'. ')  if($titleidx==-1);
+									if($titleidx==-1) {
+										# Patch the string
+										if(($titleidx=index($subtitletmp,".' "))!=-1) {
+											$subtitletmp=substr($subtitletmp,0,$titleidx)."'. ".substr($subtitletmp,$titleidx+3);
+											$titleidx++;
+										} elsif(($titleidx=index($subtitletmp,'." '))!=-1) {
+											$subtitletmp=substr($subtitletmp,0,$titleidx).'". '.substr($subtitletmp,$titleidx+3);
+											$titleidx++;
+										}
+									}
+									
+									if($titleidx!=-1) {
+										$title=substr($subtitletmp,0,$titleidx);
+										$journal=substr($subtitletmp,$titleidx+2);
+									} else {
+										$subtitletmp =~ s/^ +//;
+										$subtitletmp =~ s/ +$//;
+										if(length($subtitletmp)>0) {
+											$journal=$subtitletmp;
+											# Old Quack3!
+											# $quack=3;
+											#print STDERR "ProblemRF $mimNumber OFFENDING3: $subtitletmp\n";
+										}
+									}
+								}
+							} else {
+								# Quack2
+								# print STDERR "ProblemRF $mimNumber OFFENDING2: $fullbibtmp\n";
+								$quack=2;
+							}
+							
+						}
+					} else {
+						# Quack!
+						$quack=1;
+						print STDERR "ProblemRF $mimNumber OFFENDING1: $fullbibtmp\n";
+					}
+					
+					unless(defined($quack)) {
+						# Last step: insertion
+						$pubtype='Article'  unless(defined($pubtype));
+						push(@{$bibref[$bibtmpidx]},\@authors,$title,$journal,$volume,\@page,$place,$year,$month,$day,$note,$isnoteerr,$pubtype,$pubcomment,);
+					}
+								
+					# Cleanup
+					$bibtmpidx=undef;
 					$bibtmp=undef;
 				}
 			} elsif($line =~ /^([1-9][0-9]*)\. (.+)/) {
-				$bibref[$1]=$2;
-				$bibtmp = \$bibref[$1];
+				$bibtmpidx=$1;
+				$bibtmp = $2;
 			}
 		} elsif($currentField eq 'TX') {
 			if(length($line)==0) {
