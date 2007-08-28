@@ -5,10 +5,12 @@
 		<fulltext default="none" attributes="false" alphanum="true">
 			<include path="//AbstractText" />
 			<include path="//ArticleTitle" />
+			<include path="//VernacularTitle" />
 			<include path="//Author" />
 			<include path="//DescriptorName" />
 			<include path="//NameOfSubstance" />
 			
+			<!-- The common parent -->
 			<create qname="MedlineCitation" />
 			
 			<create qname="AbstractText" />
