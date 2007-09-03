@@ -9,6 +9,8 @@
         <fulltext default="none" attributes="true" alphanum="true">
 		<include path="//pfam:comment" />
 		<include path="//pfam:entry/@description" />
+		
+		<create qname="pfam:entry" />
 	</fulltext>
 	
 	<create path="//pfam:entry/@acc" type="xs:string" />
@@ -46,7 +48,8 @@
         <create qname="msa:r" type="xs:string"/>
         <create qname="@n" type="xs:integer"/>
         <create qname="@p" type="xs:integer"/>
-	<!-- This ones fail
+	
+	<!-- These ones fail
 	<xi:include href="/db/system/config/db//MSA/collection.xconf#xpointer(//create[qname])" />
 	<xi:include parse="xml" href="/db/system/config/db/results/MSA/collection.xconf" xpointer="xpointer(//create[@qname])" />
 	
