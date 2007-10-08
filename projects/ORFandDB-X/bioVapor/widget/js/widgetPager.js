@@ -185,24 +185,28 @@ WidgetPager.prototype = {
 				try {
 					myXMLHTTPRequest.onreadystatechange = function() {
 						if(myXMLHTTPRequest.readyState==4) {
-							try {
-								if(myXMLHTTPRequest.status==200) {
-									var response=myXMLHTTPRequest.responseXML;
-									if(!response) {
-										if(myXMLHTTPRequest.responseText) {
-											var parser=new DOMParser();
-											response=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
-										} else {
-											throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+							if('status' in myXMLHTTPRequest) {
+								try {
+									if(myXMLHTTPRequest.status==200) {
+										var response=myXMLHTTPRequest.responseXML;
+										if(!response) {
+											if(myXMLHTTPRequest.responseText) {
+												var parser=new DOMParser();
+												response=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
+											} else {
+												throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+											}
 										}
+										widgetPager.gotResults(response,widURL);
+									} else {
+										widgetPager.gotResults(null,widURL);
 									}
-									widgetPager.gotResults(response,widURL);
-								} else {
-									widgetPager.gotResults(null,widURL);
+								} catch(e) {
+									throw(e);
+									//widgetPager.gotResults(null,widURL);
 								}
-							} catch(e) {
-								throw(e);
-								//widgetPager.gotResults(null,widURL);
+							} else {
+								alert("FATAL ERROR: Please notify it to this widget's developer");
 							}
 						}
 					};
