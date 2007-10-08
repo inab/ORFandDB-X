@@ -10,7 +10,7 @@ import module namespace request="http://exist-db.org/xquery/request";
 import module namespace util="http://exist-db.org/xquery/util";
 import module namespace transform="http://exist-db.org/xquery/transform";
 
-declare option exist:serialize "omit-xml-declaration=no indent=yes media-type=application/xml";
+declare option exist:serialize "highlight-matches=elements omit-xml-declaration=no indent=yes media-type=application/xml";
 
 (:
 declare option exist:optimize "enable=yes";
