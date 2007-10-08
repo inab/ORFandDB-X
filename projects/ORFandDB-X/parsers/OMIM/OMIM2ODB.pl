@@ -291,7 +291,7 @@ EOF
 						}
 
 						if(defined($bibref[$bibind][3])) {
-							print OUTPUT "<journal>",$bibref[$bibind][3],"</journal>";
+							print OUTPUT "<journal>",XMLize($bibref[$bibind][3]),"</journal>";
 						}
 
 						foreach my $pag (@{$bibref[$bibind][5]}) {
