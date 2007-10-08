@@ -5,3 +5,4 @@ OMIM	http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/OMIM
 MSA	http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/MSA
 Pfam	http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/Pfam
 NCBI TaxDump	http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/NCBI-Taxonomy
+DAS	http://www.cnio.es/scombio/jmfernandez/ORFandDB/4.0/DAS
