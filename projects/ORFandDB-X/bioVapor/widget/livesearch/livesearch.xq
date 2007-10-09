@@ -11,7 +11,7 @@ declare namespace t="http://exist-db.org/xquery/text";
 declare namespace util="http://exist-db.org/xquery/util";
 declare namespace request="http://exist-db.org/xquery/request";
 
-declare variable $maxterms as xs:int := 15;
+declare variable $maxterms as xs:int := xs:int(15);
 
 declare function ls:term-callback($term as xs:string, $data as xs:int+) 
 as element()+ {
