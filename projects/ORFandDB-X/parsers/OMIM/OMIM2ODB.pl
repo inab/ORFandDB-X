@@ -1,6 +1,8 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -W
 
 use strict;
+
+use Carp qw(cluck);
 
 sub ISO8601date($);
 sub XMLize($);
@@ -14,12 +16,14 @@ sub printText($\@);
 
 # Mutation handling
 sub processMutation($\@$);
+# Bibliography handling
+sub processBibLine($$);
 
 if(scalar(@ARGV)!=2) {
 	die "This program takes two parameters: the OMIM directory and the output XML file\n";
 }
 
-local(*MAP);
+my($MAP);
 
 # Reading various codes
 my($defaultType)='none';
@@ -37,12 +41,12 @@ my(@STATUSCODE)=();
 my(@METHODCODE)=();
 my($line);
 
-open(MAP,'<'.$ARGV[0].'/genemap.key') || die "ERROR: Unable to open $ARGV[0]/genemap.key for processing\n";
+open($MAP,'<',$ARGV[0].'/genemap.key') || die "ERROR: Unable to open $ARGV[0]/genemap.key for processing\n";
 
 my($codes)=undef;
 my($codekey)=undef;
 my($codeval)=undef;
-while($line=<MAP>) {
+while($line=<$MAP>) {
 	if(defined($codes)) {
 		chomp($line);
 		if($line =~ /^-+/) {
@@ -79,14 +83,14 @@ if(defined($codes)) {
 	$codes=undef;
 }
 
-close(MAP);
+close($MAP);
 
 # Reading gene map
 
-open(MAP,'<'.$ARGV[0].'/genemap') || die "ERROR: Unable to open $ARGV[0]/genemap for processing\n";
+open($MAP,'<',$ARGV[0].'/genemap') || die "ERROR: Unable to open $ARGV[0]/genemap for processing\n";
 
 my(%map)=();
-while($line=<MAP>) {
+while($line=<$MAP>) {
 	last unless(index($line,'|'));
 	
 	chomp($line);
@@ -105,12 +109,12 @@ while($line=<MAP>) {
 	]);
 }
 
-close(MAP);
+close($MAP);
 
 # Reading morbid map (disabled)
-#open(MAP,'<'.$ARGV[0].'/morbidmap') || die "ERROR: Unable to open $ARGV[0]/morbidmap for processing\n";
+#open($MAP,'<',$ARGV[0].'/morbidmap') || die "ERROR: Unable to open $ARGV[0]/morbidmap for processing\n";
 #
-#while($line=<MAP>) {
+#while($line=<$MAP>) {
 #	last unless(index($line,'|'));
 #	
 #	chomp($line);
@@ -122,16 +126,16 @@ close(MAP);
 #	push(@{$map{$entry[2]}},"joder");
 #}
 #
-#close(MAP);
+#close($MAP);
 
-local(*OMIM);
+my($OMIM);
 
-open(OMIM,"gunzip -c '$ARGV[0]/omim.txt.Z' |") || die "ERROR: Unable to open $ARGV[0] for processing\n";
+open($OMIM,"gunzip -c '$ARGV[0]/omim.txt.Z' |") || die "ERROR: Unable to open $ARGV[0] for processing\n";
 
-local(*OUTPUT);
+my($OUTPUT);
 
-if(open(OUTPUT,'>'.$ARGV[1])) {
-	print OUTPUT<<EOF;
+if(open($OUTPUT,'>',$ARGV[1])) {
+	print $OUTPUT <<EOF;
 <?xml version='1.0' encoding='ISO-8859-1'?>
 
 
@@ -155,17 +159,17 @@ if(open(OUTPUT,'>'.$ARGV[1])) {
 EOF
 
 	# Printing the codes information
-	print OUTPUT "\t<codes>\n";
+	print $OUTPUT "\t<codes>\n";
 
 	foreach my $keyval (@STATUSCODE) {
-		print OUTPUT "\t\t<statusCode key='$keyval->[0]'>$keyval->[1]</statusCode>\n";
+		print $OUTPUT "\t\t<statusCode key='$keyval->[0]'>$keyval->[1]</statusCode>\n";
 	}
 
 	foreach my $keyval (@METHODCODE) {
-		print OUTPUT "\t\t<methodCode key='$keyval->[0]'>$keyval->[1]</methodCode>\n";
+		print $OUTPUT "\t\t<methodCode key='$keyval->[0]'>$keyval->[1]</methodCode>\n";
 	}
 
-	print OUTPUT "\t</codes>\n";
+	print $OUTPUT "\t</codes>\n";
 	
 	my($currentField)=undef;
 	my($mimNumber)=undef;
@@ -192,48 +196,48 @@ EOF
 	my($alltmp)=undef;
 	my($allhd)=undef;
 	my($gotTit)=undef;
-	while($line=<OMIM>) {
+	while($line=<$OMIM>) {
 		chomp($line);
 		if($line eq "*RECORD*" || $line eq "*THEEND*") {
 			# Is this the first record?
 			if(defined($mimNumber)) {
-				print OUTPUT "\t<record mimNumber='$mimNumber' type='$recordType' title='",XMLize($title),"'>\n";
+				print $OUTPUT "\t<record mimNumber='$mimNumber' type='$recordType' title='",XMLize($title),"'>\n";
 				if($recordType ne $removedType) {
 					# Alias
-					printAlias(\*OUTPUT,@alias);
+					printAlias($OUTPUT,@alias);
 					
 					# Locus
 					foreach my $feature (@{$map{$mimNumber}}) {
-						print OUTPUT "\t\t<locus id='$feature->[0]' status='$feature->[3]' eDate='$feature->[2]'>\n";
+						print $OUTPUT "\t\t<locus id='$feature->[0]' status='$feature->[3]' eDate='$feature->[2]'>\n";
 						foreach my $gsymbol (@{$feature->[1]}) {
-							print OUTPUT "\t\t\t<geneSymbol>$gsymbol</geneSymbol>\n";
+							print $OUTPUT "\t\t\t<geneSymbol>$gsymbol</geneSymbol>\n";
 						}
 						foreach my $method (@{$feature->[4]}) {
-							print OUTPUT "\t\t\t<mappingMethod>$method</mappingMethod>\n";
+							print $OUTPUT "\t\t\t<mappingMethod>$method</mappingMethod>\n";
 						}
-						print OUTPUT "\t\t</locus>\n";
+						print $OUTPUT "\t\t</locus>\n";
 					}
 					
 					# included
 					foreach my $incl (@included) {
 						$incl =~ s/^ +//;
 						next if(length($incl)==0);
-						print OUTPUT "\t\t<included>",XMLize($incl),"</included>\n";
+						print $OUTPUT "\t\t<included>",XMLize($incl),"</included>\n";
 					}
 				
 					# seeAlso
 					foreach my $seea (split(/; /,$seeAlso)) {
 						next if(length($seea)==0);
-						print OUTPUT "\t\t<seeAlso>",XMLize($seea),"</seeAlso>\n";
+						print $OUTPUT "\t\t<seeAlso>",XMLize($seea),"</seeAlso>\n";
 					}
 				} else {
 					foreach my $mMim (@movedMim) {
-						print OUTPUT "\t\t<movedTo mimNumber='$mMim' />\n";
+						print $OUTPUT "\t\t<movedTo mimNumber='$mMim' />\n";
 					}
 				}
 					
 				# text
-				printText(\*OUTPUT,@section);
+				printText($OUTPUT,@section);
 					
 				# allelicVariant
 				foreach my $alle (@allelicVariant) {
@@ -249,27 +253,27 @@ EOF
 							$alleT='removed';
 						}
 					}
-					print OUTPUT	"\t\t<allelicVariant allelicID='",$alle->[0],
+					print $OUTPUT	"\t\t<allelicVariant allelicID='",$alle->[0],
 							"' name='",(defined($alle->[1])?XMLize($alle->[1]):'');
-					print OUTPUT	"' type='",$alleT  if(defined($alleT));
-					print OUTPUT	"'>\n";
+					print $OUTPUT	"' type='",$alleT  if(defined($alleT));
+					print $OUTPUT	"'>\n";
 					unless(defined($alleT)) {
-						printAlias(\*OUTPUT,@{$alle->[3]});
-						printMutation(\*OUTPUT,$mainGeneSymbol,$alle->[2]);
-						printText(\*OUTPUT,@{$alle->[4]});
+						printAlias($OUTPUT,@{$alle->[3]});
+						printMutation($OUTPUT,$mainGeneSymbol,$alle->[2]);
+						printText($OUTPUT,@{$alle->[4]});
 					} elsif(defined($mimA)) {
-						print OUTPUT "\t\t\t<movedTo mimNumber='$mimA' allelicID='$alleA' />\n";
+						print $OUTPUT "\t\t\t<movedTo mimNumber='$mimA' allelicID='$alleA' />\n";
 					}
-					print OUTPUT "\t\t</allelicVariant>\n";
+					print $OUTPUT "\t\t</allelicVariant>\n";
 				}
 
 				# bibref
 				foreach my $bibind (0..$#bibref) {
 					next unless(defined($bibref[$bibind]));
 
-					print OUTPUT "\t\t<bibref num='$bibind'";
+					print $OUTPUT "\t\t<bibref num='$bibind'";
 					if(scalar(@{$bibref[$bibind]})>1) {
-						print OUTPUT " pubtype='",$bibref[$bibind][12],"'",
+						print $OUTPUT " pubtype='",$bibref[$bibind][12],"'",
 							defined($bibref[$bibind][7])?(" year='".$bibref[$bibind][7]."'"):'',
 							defined($bibref[$bibind][8])?(" month='".$bibref[$bibind][8]."'"):'',
 							defined($bibref[$bibind][9])?(" day='".$bibref[$bibind][9]."'"):'',
@@ -282,62 +286,63 @@ EOF
 							unless(defined($initials)) {
 								($surname,$initials)=split(/ /,$aut,2);
 							}
+							$initials=''  unless(defined($initials));
 							# $initials='KAKA' unless(defined($initials));
-							print OUTPUT "<author surname='",XMLize($surname),"' initials='",XMLize($initials),"'/>";
+							print $OUTPUT "<author surname='",XMLize($surname),"' initials='",XMLize($initials),"'/>";
 						}
 
 						if(defined($bibref[$bibind][2])) {
-							print OUTPUT "<title>",XMLize($bibref[$bibind][2]),"</title>";
+							print $OUTPUT "<title>",XMLize($bibref[$bibind][2]),"</title>";
 						}
 
 						if(defined($bibref[$bibind][3])) {
-							print OUTPUT "<journal>",XMLize($bibref[$bibind][3]),"</journal>";
+							print $OUTPUT "<journal>",XMLize($bibref[$bibind][3]),"</journal>";
 						}
 
 						foreach my $pag (@{$bibref[$bibind][5]}) {
-							print OUTPUT "<page from='",XMLize($pag->[0]),"' to='",XMLize($pag->[1]),"'/>";
+							print $OUTPUT "<page from='",XMLize($pag->[0]),"' to='",XMLize($pag->[1]),"'/>";
 						}
 
 						if(defined($bibref[$bibind][10])) {
-							print OUTPUT "<note isErratum='",(defined($bibref[$bibind][11])?'true':'false'),"'>",XMLize($bibref[$bibind][10]),"</note>";
+							print $OUTPUT "<note isErratum='",(defined($bibref[$bibind][11])?'true':'false'),"'>",XMLize($bibref[$bibind][10]),"</note>";
 						}
 
 						if(defined($bibref[$bibind][13])) {
-							print OUTPUT "<pubcomment>",XMLize($bibref[$bibind][13]),"</pubcomment>";
+							print $OUTPUT "<pubcomment>",XMLize($bibref[$bibind][13]),"</pubcomment>";
 						}
 					} else {
-						print OUTPUT "><!--KOKO-->";
+						print $OUTPUT "><!--KOKO-->";
 					}
-					print OUTPUT "<rawref>",XMLize($bibref[$bibind][0]),"</rawref></bibref>\n";
+					print $OUTPUT "<rawref>",XMLize($bibref[$bibind][0]),"</rawref></bibref>\n";
 				}
 				
 				# clinicalSynopsis
 				if(scalar(@clinicalSynopsis)>0) {
-					print OUTPUT "\t\t<clinicalSynopsis>\n";
+					print $OUTPUT "\t\t<clinicalSynopsis>\n";
 					foreach my $syno (@clinicalSynopsis) {
-						print OUTPUT "\t\t\t<key name='$syno->[0]'>\n";
+						print $OUTPUT "\t\t\t<key name='$syno->[0]'>\n";
 						foreach my $term (@{$syno->[1]}) {
 							next if($term eq '');
-							print OUTPUT "\t\t\t\t<term>",referenceTagger($term),"</term>\n";
+							print $OUTPUT "\t\t\t\t<term>",referenceTagger($term),"</term>\n";
 						}
-						print OUTPUT "\t\t\t</key>\n";
+						print $OUTPUT "\t\t\t</key>\n";
 					}
-					print OUTPUT "\t\t</clinicalSynopsis>\n";
+					print $OUTPUT "\t\t</clinicalSynopsis>\n";
 				}
 
 				# entryHistory
-				print OUTPUT "\t\t<entryHistory>\n";
+				print $OUTPUT "\t\t<entryHistory>\n";
 				if(scalar(@created)>0) {
-					print OUTPUT "\t\t\t<created date='$created[1]'>$created[0]</created>\n";
+					print $OUTPUT "\t\t\t<created date='$created[1]'>$created[0]</created>\n";
 				}
 				foreach my $attr (@attribution) {
-					print OUTPUT "\t\t\t<atribution date='$attr->[1]'>$attr->[0]</atribution>\n";
+					print $OUTPUT "\t\t\t<atribution date='$attr->[1]'>$attr->[0]</atribution>\n";
 				}
 				foreach my $edit (@edited) {
-					print OUTPUT "\t\t\t<edited date='$edit->[1]'>$edit->[0]</edited>\n";
+					print $OUTPUT "\t\t\t<edited date='$edit->[1]'>$edit->[0]</edited>\n";
 				}
-				print OUTPUT "\t\t</entryHistory>\n";
-				print OUTPUT "\t</record>\n";
+				print $OUTPUT "\t\t</entryHistory>\n";
+				print $OUTPUT "\t</record>\n";
 				
 				# And now, cleanup
 				$currentField=undef;
@@ -431,305 +436,7 @@ EOF
 				if(length($line)>0) {
 					$bibtmp .= ' ' . $line;
 				} else {
-					# Old fashion
-					$bibtmp =~ s/[ \t]+/ /g;
-					$bibref[$bibtmpidx]=[$bibtmp];
-					
-					# New fashion (alpha)
-					my($fullbibtmp)=$bibtmp;
-					my(@authors)=();
-					my($title)=undef;
-					my($journal)=undef;
-					my($volume)=undef;
-					my(@page)=();
-					my($place)=undef;
-					my($year)=undef;
-					my($month)=undef;
-					my($day)=undef;
-					my($note)=undef;
-					my($isnoteerr)=undef;
-					my($pubtype)=undef;
-					my($pubcomment)=undef;
-					my($quack)=undef;
-					
-					my($notepat)=" Note: ";
-					my($noteidx)=rindex($fullbibtmp,$notepat);
-					if($noteidx!=-1) {
-						$note=substr($fullbibtmp,$noteidx+length($notepat),-1);
-						$bibtmp=substr($fullbibtmp,0,$noteidx);
-						
-						my($errpat)="Erratum: ";
-						if(index($note,$errpat)==0) {
-							$note=substr($note,length($errpat));
-							$isnoteerr=1;
-						}
-						
-						my(@endsearch)=(
-							"Electronic Article",
-							"Advance Electronic Publication",
-							"Electronic Letter",
-							"Electronic Publication",
-							"Electronic only",
-						);
-					}
-					
-					my($splitidx)=undef;
-					my($subsize)=undef;
-					if(($splitidx=index($bibtmp,'.: '))!=-1) {
-						$splitidx++;
-						$subsize=2;
-					} elsif(($splitidx=index($bibtmp,'. :'))!=-1) {
-						$splitidx++;
-						$subsize=2;
-					} elsif(($splitidx=index($bibtmp,'.:'))!=-1) {
-						$subsize=2;
-					} elsif($bibtmp=~/[A-Za-z]: /) {
-						$splitidx=length($`)+1;
-						$subsize=1;
-					} elsif(($splitidx=index($bibtmp,' : '))!=-1) {
-						$subsize=3;
-					} elsif(($splitidx=index($bibtmp,'. '))!=-1) {
-						$subsize=2;
-					}
-					
-					if($splitidx!=-1) {
-						@authors=split(/; ?/,substr($bibtmp,0,$splitidx));
-						
-						#print STDERR "Authors: $authorstmp\n";
-						
-						# Now, the rest...
-						my($titletmp)=substr($bibtmp,$splitidx+$subsize);
-						
-						$titletmp =~ s/[ .]+$//;
-						
-						my($perconpat)="Personal Communication. ";
-						if(index($titletmp,$perconpat)==0) {
-							$titletmp=substr($titletmp,length($perconpat));
-							my($pcidx)=rindex($titletmp,' ');
-							$place=substr($titletmp,0,$pcidx);
-							($month,$day,$year)=split('/',substr($titletmp,$pcidx+1),3);
-							
-							# Patching the date
-							unless(defined($day)) {
-								$year=$month;
-								$month=undef;
-							} elsif(!defined($year)) {
-								$year=$day;
-								$day=undef;
-							}
-							$pubtype='Personal Communication';
-							# print STDERR "PC($titletmp): $place | $year | $month | $day\n";
-						} else {
-							if($titletmp =~ /\. \[([^\]]+)\]$/) {
-								$pubcomment=$1;
-								$titletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp =~ /\. (Fig\. [0-9]+)$/) {
-								$pubcomment=$1;
-								$titletmp=substr($titletmp,0,-length($&));
-							}
-							
-							# New
-							my($subtitletmp)=undef;
-							if(rindex($titletmp,'(pub.)')!=-1) {
-								if($titletmp =~ / ?\(pub\.\) ([0-9]+)$/) {
-									$year=$1;
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)$/) {
-									$volume=$1;
-									$year=$2;
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) (\([^)]+\)) ([0-9]+)$/) {
-									$volume=$1;
-									$year=$2;
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$volume=$1;
-									$year=$2;
-									push(@page,[$3,$4]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$volume=$1;
-									$year=$2;
-									push(@page,[$3,$4],[$5,$6]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$volume=$1;
-									$year=$2;
-									push(@page,[$3,$4],[$5,$5]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp?\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)(?: only)?$/) {
-									$volume=$1;
-									$year=$2;
-									push(@page,[$3,$3]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\/([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$month=$1;
-									$year=$2;
-									push(@page,[$3,$4]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. (?:\). )?Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$year=$1;
-									push(@page,[$2,$3]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$year=$1;
-									push(@page,[$2,$3],[$4,$5]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$year=$1;
-									push(@page,[$2,$3],[$4,$4]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp?\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)(?: only)?$/) {
-									$year=$1;
-									push(@page,[$2,$2]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} elsif($titletmp =~ / ?\(pub\.\) (\([^)]+\)) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
-									$volume=$1;
-									$year=$2;
-									push(@page,[$3,$4]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-								} else {
-									print STDERR "ProblemRF $mimNumber OFFENDINGPUB: $fullbibtmp\n";
-								}
-							} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\. ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
-									$year=$1;
-									push(@page,[$2,$3],[$4,$5]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\. ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
-									$year=$1;
-									push(@page,[$2,$2],[$3,$4]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\.? ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
-									$year=$1;
-									push(@page,[$2,$3]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/[:,]? ?([0-9]{4})\. Pp?\. ((?:[a-zA-Z]*[0-9]+[a-zA-Z]*)|l)(?: only)?$/) {
-									$year=$1;
-									push(@page,[$2,$2]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
-									$volume=$1;
-									$year=$6;
-									push(@page,[$2,$3],[$4,$5]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
-									$volume=$1;
-									$year=$5;
-									push(@page,[$2,$3],[$4,$4]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
-									$volume=$1;
-									$year=$4;
-									push(@page,[$2,$3]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
-									$volume=$1;
-									$year=$3;
-									push(@page,[$2,$2]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;] ([0-9]{4})$/) {
-									$volume=$1;
-									$year=$2;
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
-									$year=$3;
-									push(@page,[$1,$2]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) only, ([0-9]+)\/([0-9]+)\/([0-9]{4})$/) {
-									$month=$2;
-									$day=$3;
-									$year=$4;
-									push(@page,[$1,$1]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
-									$year=$2;
-									push(@page,[$1,$1]);
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?,? ([0-9]+)\/([0-9]+)\/([0-9]{4})$/) {
-									$month=$1;
-									$day=$2;
-									$year=$3;
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?,? ([0-9]+)\/([0-9]{4})$/) {
-									$month=$1;
-									$year=$2;
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} elsif($titletmp=~/ ?,? ([0-9]{4})$/) {
-									$year=$1;
-									$subtitletmp=substr($titletmp,0,-length($&));
-							} else {
-								# Quack2!
-								print STDERR "ProblemRF $mimNumber OFFENDING2($titletmp): $fullbibtmp\n";
-								#print STDERR "ProblemRF $mimNumber OFFENDING2: $fullbibtmp\n";
-							}
-							
-							if(defined($subtitletmp)) {
-								my(@pubtypes)=(
-									'Letter',
-									'Abstract',
-									'Editorial',
-								);
-								
-								my($gotpat)=undef;
-								my($patind)=undef;
-								foreach my $pubtypepat (@pubtypes) {
-									if(($patind=index($subtitletmp,'('.$pubtypepat.') '))!=-1) {
-										$pubtype=$pubtypepat;
-										last;
-									}
-								}
-									
-								if(defined($patind) && $patind!=-1) {
-									$title=substr($subtitletmp,0,$patind);
-									$journal=substr($subtitletmp,$patind+length($pubtype)+3);
-								} else {
-									my($titleidx)=index($subtitletmp,'? ');
-									$titleidx=index($subtitletmp,'! ')  if($titleidx==-1);
-									$titleidx=index($subtitletmp,'. ')  if($titleidx==-1);
-									if($titleidx==-1) {
-										# Patch the string
-										if(($titleidx=index($subtitletmp,".' "))!=-1) {
-											$subtitletmp=substr($subtitletmp,0,$titleidx)."'. ".substr($subtitletmp,$titleidx+3);
-											$titleidx++;
-										} elsif(($titleidx=index($subtitletmp,'." '))!=-1) {
-											$subtitletmp=substr($subtitletmp,0,$titleidx).'". '.substr($subtitletmp,$titleidx+3);
-											$titleidx++;
-										}
-									}
-									
-									if($titleidx!=-1) {
-										$title=substr($subtitletmp,0,$titleidx);
-										$journal=substr($subtitletmp,$titleidx+2);
-									} else {
-										$subtitletmp =~ s/^ +//;
-										$subtitletmp =~ s/ +$//;
-										if(length($subtitletmp)>0) {
-											$journal=$subtitletmp;
-											# Old Quack3!
-											# $quack=3;
-											#print STDERR "ProblemRF $mimNumber OFFENDING3: $subtitletmp\n";
-										}
-									}
-								}
-							} else {
-								# Quack2
-								# print STDERR "ProblemRF $mimNumber OFFENDING2: $fullbibtmp\n";
-								$quack=2;
-							}
-							
-						}
-					} else {
-						# Quack!
-						$quack=1;
-						print STDERR "ProblemRF $mimNumber OFFENDING1: $fullbibtmp\n";
-					}
-					
-					unless(defined($quack)) {
-						# Last step: insertion
-						$pubtype='Article'  unless(defined($pubtype));
-						push(@{$bibref[$bibtmpidx]},\@authors,$title,$journal,$volume,\@page,$place,$year,$month,$day,$note,$isnoteerr,$pubtype,$pubcomment,);
-					}
-								
+					$bibref[$bibtmpidx]=processBibLine($bibtmp,$mimNumber);
 					# Cleanup
 					$bibtmpidx=undef;
 					$bibtmp=undef;
@@ -924,12 +631,12 @@ EOF
 		}
 	}
 	
-	print OUTPUT "</OMIM>\n";
-	close(OUTPUT);
+	print $OUTPUT "</OMIM>\n";
+	close($OUTPUT);
 } else {
 	warn "ERROR: Unable to open $ARGV[1] for writing\n";
 }
-close(OMIM);
+close($OMIM);
 
 exit(0);
 
@@ -979,6 +686,8 @@ sub toSNPRef($$) {
 # symbols by friendly equivalent ones
 sub XMLize($) {
 	my($text)=@_;
+	
+	cluck("This text should be non-undef")   unless(defined($text));
 	$text =~ s/&/&amp;/g;
 	$text =~ s/</&lt;/g;
 	$text =~ s/'/&apos;/g;
@@ -997,8 +706,8 @@ sub printAlias($\@) {
 }
 
 sub printSubstitution($$) {
-	my($OUTPUT)=$_[0];
-	my($nttype,$coords,$fromplace,$toplace,$oldnt,$nt,$on,$extension)=@{$_[1]};
+	my($OUTPUT)=shift;
+	my($nttype,$coords,$fromplace,$toplace,$oldnt,$nt,$on,$extension)=@{$_[0]};
 	
 	print $OUTPUT "<substitution",
 		(defined($nttype)?" resType='$nttype'":''),
@@ -1013,13 +722,15 @@ sub printSubstitution($$) {
 }
 
 sub processSubstitution($$) {
+	my($OUTPUT,$mutline)=@_;
+
 	my($oldN,$newN,$place)=(undef,undef,undef);
 	my($on,$extension)=(undef,undef);
 	my($nttype,$coords)=(undef,undef);
 	my($lmlength)=undef;
 	my($place2)=undef;
 	
-	if($_[1] =~ /^([ATCG]+)[-\/]([ATCG]+)(?:, (?:NT)?([-+]?[0-9]+))?/) {
+	if($mutline =~ /^([ATCG]+)[-\/]([ATCG]+)(?:, (?:NT)?([-+]?[0-9]+))?/) {
 		$oldN=$1;
 		$newN=$2;
 		$nttype='NT';
@@ -1028,36 +739,36 @@ sub processSubstitution($$) {
 			$coords='NT';
 		}
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^([-+]?[0-9]+)[, ]*([ATCG]+)[-\/]([ATCG]+)/) {
+	} elsif($mutline =~ /^([-+]?[0-9]+)[, ]*([ATCG]+)[-\/]([ATCG]+)/) {
 		$place=$1;
 		$oldN=$2;
 		$newN=$3;
 		$nttype=$coords='NT';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^(-?[0-9]*)(?:\+(-?[0-9]+))?[, ]*([ATCG]+)[-\/]([ATCG]+)/) {
+	} elsif($mutline =~ /^(-?[0-9]*)(?:\+(-?[0-9]+))?[, ]*([ATCG]+)[-\/]([ATCG]+)/) {
 		$place=$1 if(length($1)>0);
 		$extension=$2  if(defined($2));
 		$oldN=$3;
 		$newN=$4;
 		$nttype=$coords='NT';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^([ATCG-]+)(-?[0-9]+)([ATCG]+)/) {
+	} elsif($mutline =~ /^([ATCG-]+)(-?[0-9]+)([ATCG]+)/) {
 		$oldN=$1;
 		$place=$2;
 		$newN=$3;
 		$nttype=$coords='NT';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^NT(-?[0-9]+)/) {
+	} elsif($mutline =~ /^NT(-?[0-9]+)/) {
 		$place=$1;
 		$coords='NT';
 		$lmlength=length($&);
-	#} elsif($_[1] =~ /^(-?[0-9]*)([ATCG]+)-([ATCG]+)/) {
+	#} elsif($mutline =~ /^(-?[0-9]*)([ATCG]+)-([ATCG]+)/) {
 	#	$place=$1 if(length($1)>0);
 	#	$oldN=$2;
 	#	$newN=$3;
 	#	$nttype=$coords='NT';
 	#	$lmlength=length($&);
-	} elsif($_[1] =~ /^((?:INS)|(?:DEL)) EXON ([0-9]+)/) {
+	} elsif($mutline =~ /^((?:INS)|(?:DEL)) EXON ([0-9]+)/) {
 		$place=$2;
 		$nttype=$coords='EX';
 		if($1 eq 'INS') {
@@ -1066,13 +777,13 @@ sub processSubstitution($$) {
 			$oldN=$1;
 		}
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^IVS((?:AS)|(?:DS))([0-9]+)/) {
+	} elsif($mutline =~ /^IVS((?:AS)|(?:DS))([0-9]+)/) {
 		$newN=$1;
 		$nttype='IVS';
 		$place=$2;
 		$coords='IVS';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^IVS([0-9]*)(?:-([0-9]+))?[- ]?((?:AS)|(?:DS))?/) {
+	} elsif($mutline =~ /^IVS([0-9]*)(?:-([0-9]+))?[- ]?((?:AS)|(?:DS))?/) {
 		if(length($1)>0) {
 			$place=$1;
 			$place2=$2  if(defined($2));
@@ -1083,11 +794,11 @@ sub processSubstitution($$) {
 			$nttype='IVS';
 		}
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^INTRON ([0-9]+)/) {
+	} elsif($mutline =~ /^INTRON ([0-9]+)/) {
 		$place=$1;
 		$coords='IVS';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^EX([0-9]+)(?:-([0-9]+))? ?((?:INS)|(?:DEL))?/) {
+	} elsif($mutline =~ /^EX([0-9]+)(?:-([0-9]+))? ?((?:INS)|(?:DEL))?/) {
 		$place=$1;
 		$coords='EX';
 		$place2=$2  if(defined($2));
@@ -1099,7 +810,7 @@ sub processSubstitution($$) {
 			}
 		}
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^EXON ([0-9]+)(?:-([0-9]+))? ?((?:INS)|(?:DEL))?/) {
+	} elsif($mutline =~ /^EXON ([0-9]+)(?:-([0-9]+))? ?((?:INS)|(?:DEL))?/) {
 		$place=$1;
 		$coords='EX';
 		$place2=$2  if(defined($2));
@@ -1111,14 +822,14 @@ sub processSubstitution($$) {
 			}
 		}
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^([A-Z]{3})((?:-?[0-9]+)|I)([A-Z]{3})(?: ON ([A-Z0-9]+))?/) {
+	} elsif($mutline =~ /^([A-Z]{3})((?:-?[0-9]+)|I)([A-Z]{3})(?: ON ([A-Z0-9]+))?/) {
 		$oldN=$1;
 		$place=$2;
 		$newN=$3;
 		$on=$4  if(defined($4));
 		$nttype=$coords='AA';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^([A-Z]{3}(?:-[A-Z]{3})*) ((?:INS)|(?:DEL))(?:, CODONS? ([0-9]+)\+?(?:(?:[-\/,]|(?: OR ))([0-9]+))?)?/) {
+	} elsif($mutline =~ /^([A-Z]{3}(?:-[A-Z]{3})*) ((?:INS)|(?:DEL))(?:, CODONS? ([0-9]+)\+?(?:(?:[-\/,]|(?: OR ))([0-9]+))?)?/) {
 		if($2 eq 'DEL') {
 			$oldN=$1;
 		} else {
@@ -1129,41 +840,39 @@ sub processSubstitution($$) {
 		$place2=$4  if(defined($4) && length($4)>0);
 		$coords='AA';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^([A-Z]{3})[-?]([A-Z]{3})/) {
+	} elsif($mutline =~ /^([A-Z]{3})[-?]([A-Z]{3})/) {
 		$oldN=$1;
 		$newN=$2;
 		$nttype='AA';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^TER-([A-Z]{3})/) {
+	} elsif($mutline =~ /^TER-([A-Z]{3})/) {
 		$oldN='TER';
 		$newN=$1;
 		$nttype='AA';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^TER([0-9]+)/) {
+	} elsif($mutline =~ /^TER([0-9]+)/) {
 		$newN='TER';
 		$place=$1;
 		$nttype=$coords='AA';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^([A-Z]{3})(-?[0-9]+)/) {
+	} elsif($mutline =~ /^([A-Z]{3})(-?[0-9]+)/) {
 		$oldN=$1;
 		$place=$2;
 		$nttype=$coords='AA';
 		$lmlength=length($&);
-	} elsif($_[1] =~ /^(-?[0-9]+)([A-Z]+)/) {
+	} elsif($mutline =~ /^(-?[0-9]+)([A-Z]+)/) {
 		$oldN=$2;
 		$place=$1;
 		$nttype=$coords='AA';
 		$lmlength=length($&);
 	} else {
-		unkMutation($_[0],$_[1]);
+		unkMutation($OUTPUT,$mutline);
 		return undef;
 	}
 	
-	my($OUTPUT)=$_[0];
+	printSubstitution($OUTPUT,[$nttype,$coords,$place,$place2,$oldN,$newN,$on,$extension]);
 	
-	printSubstitution($_[0],[$nttype,$coords,$place,$place2,$oldN,$newN,$on,$extension]);
-	
-	my($postplace)=substr($_[1],$lmlength);
+	my($postplace)=substr($mutline,$lmlength);
 	$postplace =~ s/^[, \/;]+//;
 	
 	return $postplace;
@@ -1657,4 +1366,309 @@ sub printText($\@) {
 		$sectlevel--;
 	}
 	print $OUTPUT "\t\t</text>\n";
+}
+
+sub processBibLine($$) {
+	my($bibtmp,$mimNumber)=@_;
+	# Old fashion
+	$bibtmp =~ s/[ \t]+/ /g;
+	my($bibreftmp)=[$bibtmp];
+					
+
+	# New fashion (alpha)
+	my($fullbibtmp)=$bibtmp;
+	my(@authors)=();
+	my($title)=undef;
+	my($journal)=undef;
+	my($volume)=undef;
+	my(@page)=();
+	my($place)=undef;
+	my($year)=undef;
+	my($month)=undef;
+	my($day)=undef;
+	my($note)=undef;
+	my($isnoteerr)=undef;
+	my($pubtype)=undef;
+	my($pubcomment)=undef;
+	my($quack)=undef;
+
+	my($notepat)=" Note: ";
+	my($noteidx)=rindex($fullbibtmp,$notepat);
+	if($noteidx!=-1) {
+		$note=substr($fullbibtmp,$noteidx+length($notepat),-1);
+		$bibtmp=substr($fullbibtmp,0,$noteidx);
+
+		my($errpat)="Erratum: ";
+		if(index($note,$errpat)==0) {
+			$note=substr($note,length($errpat));
+			$isnoteerr=1;
+		}
+
+		my(@endsearch)=(
+			"Electronic Article",
+			"Advance Electronic Publication",
+			"Electronic Letter",
+			"Electronic Publication",
+			"Electronic only",
+		);
+	}
+
+	my($splitidx)=undef;
+	my($subsize)=undef;
+	if(($splitidx=index($bibtmp,'.: '))!=-1) {
+		$splitidx++;
+		$subsize=2;
+	} elsif(($splitidx=index($bibtmp,'. :'))!=-1) {
+		$splitidx++;
+		$subsize=2;
+	} elsif(($splitidx=index($bibtmp,'.:'))!=-1) {
+		$subsize=2;
+	} elsif($bibtmp=~/[A-Za-z]: /) {
+		$splitidx=length($`)+1;
+		$subsize=1;
+	} elsif(($splitidx=index($bibtmp,' : '))!=-1) {
+		$subsize=3;
+	} elsif(($splitidx=index($bibtmp,'. '))!=-1) {
+		$subsize=2;
+	}
+
+	if($splitidx!=-1) {
+		@authors=split(/; ?/,substr($bibtmp,0,$splitidx));
+
+		#print STDERR "Authors: $authorstmp\n";
+
+		# Now, the rest...
+		my($titletmp)=substr($bibtmp,$splitidx+$subsize);
+
+		$titletmp =~ s/[ .]+$//;
+
+		my($perconpat)="Personal Communication. ";
+		if(index($titletmp,$perconpat)==0) {
+			$titletmp=substr($titletmp,length($perconpat));
+			my($pcidx)=rindex($titletmp,' ');
+			$place=substr($titletmp,0,$pcidx);
+			($month,$day,$year)=split('/',substr($titletmp,$pcidx+1),3);
+
+			# Patching the date
+			unless(defined($day)) {
+				$year=$month;
+				$month=undef;
+			} elsif(!defined($year)) {
+				$year=$day;
+				$day=undef;
+			}
+			$pubtype='Personal Communication';
+			# print STDERR "PC($titletmp): $place | $year | $month | $day\n";
+		} else {
+			if($titletmp =~ /\. \[([^\]]+)\]$/) {
+				$pubcomment=$1;
+				$titletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp =~ /\. (Fig\. [0-9]+)$/) {
+				$pubcomment=$1;
+				$titletmp=substr($titletmp,0,-length($&));
+			}
+
+			# New
+			my($subtitletmp)=undef;
+			if(rindex($titletmp,'(pub.)')!=-1) {
+				if($titletmp =~ / ?\(pub\.\) ([0-9]+)$/) {
+					$year=$1;
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)$/) {
+					$volume=$1;
+					$year=$2;
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) (\([^)]+\)) ([0-9]+)$/) {
+					$volume=$1;
+					$year=$2;
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$volume=$1;
+					$year=$2;
+					push(@page,[$3,$4]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$volume=$1;
+					$year=$2;
+					push(@page,[$3,$4],[$5,$6]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$volume=$1;
+					$year=$2;
+					push(@page,[$3,$4],[$5,$5]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([^:]+): ([0-9]+)\. Pp?\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)(?: only)?$/) {
+					$volume=$1;
+					$year=$2;
+					push(@page,[$3,$3]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\/([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$month=$1;
+					$year=$2;
+					push(@page,[$3,$4]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. (?:\). )?Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$year=$1;
+					push(@page,[$2,$3]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$year=$1;
+					push(@page,[$2,$3],[$4,$5]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$year=$1;
+					push(@page,[$2,$3],[$4,$4]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) ([0-9]+)\. Pp?\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)(?: only)?$/) {
+					$year=$1;
+					push(@page,[$2,$2]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} elsif($titletmp =~ / ?\(pub\.\) (\([^)]+\)) ([0-9]+)\. Pp\. ([a-zA-Z]*[0-9]+[a-zA-Z]*)-([a-zA-Z]*[0-9]+[a-zA-Z]*)$/) {
+					$volume=$1;
+					$year=$2;
+					push(@page,[$3,$4]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+				} else {
+					print STDERR "ProblemRF $mimNumber OFFENDINGPUB: $fullbibtmp\n";
+				}
+			} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\. ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
+					$year=$1;
+					push(@page,[$2,$3],[$4,$5]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\. ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
+					$year=$1;
+					push(@page,[$2,$2],[$3,$4]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/:? ?([0-9]{4})\. P[gp]\.? ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)$/) {
+					$year=$1;
+					push(@page,[$2,$3]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/[:,]? ?([0-9]{4})\. Pp?\. ((?:[a-zA-Z]*[0-9]+[a-zA-Z]*)|l)(?: only)?$/) {
+					$year=$1;
+					push(@page,[$2,$2]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
+					$volume=$1;
+					$year=$6;
+					push(@page,[$2,$3],[$4,$5]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) and ([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
+					$volume=$1;
+					$year=$5;
+					push(@page,[$2,$3],[$4,$4]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
+					$volume=$1;
+					$year=$4;
+					push(@page,[$2,$3]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;][ -]([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
+					$volume=$1;
+					$year=$3;
+					push(@page,[$2,$2]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([^ :;]+(?: \([^):]+\))?)[:;] ([0-9]{4})$/) {
+					$volume=$1;
+					$year=$2;
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)-([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*), ([0-9]{4})$/) {
+					$year=$3;
+					push(@page,[$1,$2]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*) only, ([0-9]+)\/([0-9]+)\/([0-9]{4})$/) {
+					$month=$2;
+					$day=$3;
+					$year=$4;
+					push(@page,[$1,$1]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?([a-zA-Z]*[0-9]+[. ]*[0-9]*[a-zA-Z]*)(?: only)?, ([0-9]{4})$/) {
+					$year=$2;
+					push(@page,[$1,$1]);
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?,? ([0-9]+)\/([0-9]+)\/([0-9]{4})$/) {
+					$month=$1;
+					$day=$2;
+					$year=$3;
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?,? ([0-9]+)\/([0-9]{4})$/) {
+					$month=$1;
+					$year=$2;
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} elsif($titletmp=~/ ?,? ([0-9]{4})$/) {
+					$year=$1;
+					$subtitletmp=substr($titletmp,0,-length($&));
+			} else {
+				# Quack2!
+				print STDERR "ProblemRF $mimNumber OFFENDING2($titletmp): $fullbibtmp\n";
+				#print STDERR "ProblemRF $mimNumber OFFENDING2: $fullbibtmp\n";
+			}
+
+			if(defined($subtitletmp)) {
+				my(@pubtypes)=(
+					'Letter',
+					'Abstract',
+					'Editorial',
+				);
+
+				my($gotpat)=undef;
+				my($patind)=undef;
+				foreach my $pubtypepat (@pubtypes) {
+					if(($patind=index($subtitletmp,'('.$pubtypepat.') '))!=-1) {
+						$pubtype=$pubtypepat;
+						last;
+					}
+				}
+
+				if(defined($patind) && $patind!=-1) {
+					$title=substr($subtitletmp,0,$patind);
+					$journal=substr($subtitletmp,$patind+length($pubtype)+3);
+				} else {
+					my($titleidx)=index($subtitletmp,'? ');
+					$titleidx=index($subtitletmp,'! ')  if($titleidx==-1);
+					$titleidx=index($subtitletmp,'. ')  if($titleidx==-1);
+					if($titleidx==-1) {
+						# Patch the string
+						if(($titleidx=index($subtitletmp,".' "))!=-1) {
+							$subtitletmp=substr($subtitletmp,0,$titleidx)."'. ".substr($subtitletmp,$titleidx+3);
+							$titleidx++;
+						} elsif(($titleidx=index($subtitletmp,'." '))!=-1) {
+							$subtitletmp=substr($subtitletmp,0,$titleidx).'". '.substr($subtitletmp,$titleidx+3);
+							$titleidx++;
+						}
+					}
+
+					if($titleidx!=-1) {
+						$title=substr($subtitletmp,0,$titleidx);
+						$journal=substr($subtitletmp,$titleidx+2);
+					} else {
+						$subtitletmp =~ s/^ +//;
+						$subtitletmp =~ s/ +$//;
+						if(length($subtitletmp)>0) {
+							$journal=$subtitletmp;
+							# Old Quack3!
+							# $quack=3;
+							#print STDERR "ProblemRF $mimNumber OFFENDING3: $subtitletmp\n";
+						}
+					}
+				}
+			} else {
+				# Quack2
+				# print STDERR "ProblemRF $mimNumber OFFENDING2: $fullbibtmp\n";
+				$quack=2;
+			}
+
+		}
+	} else {
+		# Quack!
+		$quack=1;
+		print STDERR "ProblemRF $mimNumber OFFENDING1: $fullbibtmp\n";
+	}
+
+	unless(defined($quack)) {
+		# Last step: insertion
+		$pubtype='Article'  unless(defined($pubtype));
+		push(@{$bibreftmp},\@authors,$title,$journal,$volume,\@page,$place,$year,$month,$day,$note,$isnoteerr,$pubtype,$pubcomment,);
+	}
+	
+	return $bibreftmp;
 }
