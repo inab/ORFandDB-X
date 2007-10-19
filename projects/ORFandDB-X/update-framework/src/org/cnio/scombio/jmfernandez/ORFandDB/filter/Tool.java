@@ -1,4 +1,4 @@
-package org.cnio.ORFandDB.filter;
+package org.cnio.scombio.jmfernandez.ORFandDB.filter;
 
 public abstract class Tool {
 	protected String name;
