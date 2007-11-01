@@ -10,30 +10,32 @@ case "$THEBASEDIR" in
 		;;
 esac
 
-LOCALAJAXSLT="$THEBASEDIR"/widget/js/ajaxslt
+LDESTDIR=ajaxslt
+
+LOCALAJAXSLT="$THEBASEDIR"/widget/js/"${LDESTDIR}"
 
 # Getting the latest copy!
 rm -rf "$LOCALAJAXSLT"
 svn update "$LOCALAJAXSLT"
 
-if [ ! -d ajaxslt-svn ] ; then
-	svn checkout http://ajaxslt.googlecode.com/svn/trunk/ ajaxslt-svn
+if [ ! -d "${LDESTDIR}"-svn ] ; then
+	svn checkout http://ajaxslt.googlecode.com/svn/trunk/ "${LDESTDIR}"-svn
 else
-	svn update ajaxslt-svn
+	svn update "${LDESTDIR}"-svn
 fi
 
-rm -rf ajaxslt-snapshot
-cp -dprf ajaxslt-svn ajaxslt-snapshot
-find ajaxslt-snapshot -name .svn -exec rm -rf {} \; >& /dev/null
-find ajaxslt-snapshot -type f -name .svnignore -exec rm -rf {} \; >& /dev/null
-svn -R list ajaxslt | sed 's#/$##g' | sort > "$THEBASEDIR"/ajaxslt-old.ls-R
-find ajaxslt-snapshot | tail -n +2 | cut -d / -f 2- | sort > "$THEBASEDIR"/ajaxslt-snapshot.ls-R
-diff "$THEBASEDIR"/ajaxslt-old.ls-R "$THEBASEDIR"/ajaxslt-snapshot.ls-R > "$THEBASEDIR"/ajaxslt-ls-R.diff
-cp -dprf ajaxslt-snapshot/* ajaxslt-snapshot/.[a-zA-Z]* "$LOCALAJAXSLT"
+rm -rf "${LDESTDIR}"-snapshot
+cp -dprf "${LDESTDIR}"-svn "${LDESTDIR}"-snapshot
+find "${LDESTDIR}"-snapshot -name .svn -exec rm -rf {} \; >& /dev/null
+find "${LDESTDIR}"-snapshot -type f -name .svnignore -exec rm -rf {} \; >& /dev/null
+svn -R list "${LOCALAJAXSLT}" | sed 's#/$##g' | sort > "$THEBASEDIR"/"${LDESTDIR}"-old.ls-R
+find "${LDESTDIR}"-snapshot | tail -n +2 | cut -d / -f 2- | sort > "$THEBASEDIR"/"${LDESTDIR}"-snapshot.ls-R
+diff "$THEBASEDIR"/"${LDESTDIR}"-old.ls-R "$THEBASEDIR"/"${LDESTDIR}"-snapshot.ls-R > "$THEBASEDIR"/"${LDESTDIR}"-ls-R.diff
+cp -dprf "${LDESTDIR}"-snapshot/* "${LDESTDIR}"-snapshot/.[a-zA-Z]* "$LOCALAJAXSLT"
 
-cd ajaxslt
-addedfiles=$(grep '^> ' "$THEBASEDIR"/ajaxslt-ls-R.diff | cut -c 3-)
-erasedfiles=$(grep '^< ' "$THEBASEDIR"/ajaxslt-ls-R.diff | cut -c 3-)
+cd "${LOCALAJAXSLT}"
+addedfiles=$(grep '^> ' "$THEBASEDIR"/"${LDESTDIR}"-ls-R.diff | cut -c 3-)
+erasedfiles=$(grep '^< ' "$THEBASEDIR"/"${LDESTDIR}"-ls-R.diff | cut -c 3-)
 
 echo "Files to add:"
 echo "$addedfiles"
@@ -43,11 +45,11 @@ echo "$erasedfiles"
 echo
 
 if [ -n "$addedfiles" ] ; then
-	svn add $(grep '^> ' "$THEBASEDIR"/ajaxslt-ls-R.diff | cut -c 3-)
+	svn add $(grep '^> ' "$THEBASEDIR"/"${LDESTDIR}"-ls-R.diff | cut -c 3-)
 fi
 if [ -n "$erasedfiles" ] ; then
-	svn remove $(grep '^< ' "$THEBASEDIR"/ajaxslt-ls-R.diff | cut -c 3-)
+	svn remove $(grep '^< ' "$THEBASEDIR"/"${LDESTDIR}"-ls-R.diff | cut -c 3-)
 fi
 svn commit
 cd "$THEBASEDIR"
-rm -rf ajaxslt-snapshot ajaxslt-old.ls-R ajaxslt-snapshot.ls-R ajaxslt-ls-R.diff
+rm -rf "${LDESTDIR}"-snapshot "${LDESTDIR}"-old.ls-R "${LDESTDIR}"-snapshot.ls-R "${LDESTDIR}"-ls-R.diff
