@@ -3,7 +3,7 @@
  * About
  * ====================================================================
  * Sarissa cross browser XML library - IE .load eulation (deprecated)
- * @version @sarissa.version@
+ * @version ${project.version}
  * @author: Manos Batsis, mailto: mbatsis at users full stop sourceforge full stop net
  *
  * This script emulates Internet Explorer's .load method of DOM Document objects. 
@@ -13,6 +13,7 @@
  *
  * @version @sarissa.version@
  * @author: Manos Batsis, mailto: mbatsis at users full stop sourceforge full stop net
+ *
  * ====================================================================
  * Licence
  * ====================================================================
@@ -186,50 +187,50 @@ if(!_SARISSA_IS_IE){
             };
         }
         else {
-			Sarissa.getDomDocument = function(sUri, sName){
-				var oDoc = document.implementation.createDocument(sUri?sUri:null, sName?sName:null, null);
-				// looks like safari does not create the root element for some unknown reason
-				if(oDoc && (sUri || sName) && !oDoc.documentElement){
-				    oDoc.appendChild(oDoc.createElementNS(sUri, sName));
-				};
+            Sarissa.getDomDocument = function(sUri, sName){
+                var oDoc = document.implementation.createDocument(sUri?sUri:null, sName?sName:null, null);
+                // looks like safari does not create the root element for some unknown reason
+                if(oDoc && (sUri || sName) && !oDoc.documentElement){
+                    oDoc.appendChild(oDoc.createElementNS(sUri, sName));
+                };
                 // attachb to the new object as we have no prototype to use, this is for safari
-				if(!oDoc.load) {
-        				oDoc.load = function(sUrl) {
-        					var oldDoc = document.implementation.createDocument();
-        					Sarissa.copyChildNodes(this, oldDoc);
-        					this.parseError = {errorCode : 0};
-        					Sarissa.__setReadyState__(this, 1);
-        					if(this.async == false) {
-        						var tmp = new XMLHttpRequest();
-        						tmp.open("GET", sUrl, false);
-        						tmp.send(null);
-        						Sarissa.__setReadyState__(this, 2);
-        						Sarissa.copyChildNodes(tmp.responseXML, oDoc);
-        						if(!oDoc.documentElement || oDoc.getElementsByTagName("parsererror").length >0){
-        					        oDoc.parseError.errorCode = -1;
-        					    };
-        						Sarissa.__setReadyState__(this, 3);
-        						Sarissa.__setReadyState__(this, 4);
-        					}
-        					else {
-        						var xmlhttp = new XMLHttpRequest();
-        						xmlhttp.open('GET', sUrl, true);
-        						xmlhttp.onreadystatechange = function(){
-        						    if (xmlhttp.readyState == 4) {
-        							    Sarissa.copyChildNodes(xmlhttp.responseXML, oDoc);
-        							    if(!oDoc.documentElement || oDoc.getElementsByTagName("parsererror").length > 0){
-        							        oDoc.parseError.errorCode = -1;
-        							    };		
-        							};
-         						Sarissa.__setReadyState__(oDoc, xmlhttp.readyState);
-        						};
-        						xmlhttp.send(null);
-        					};
-        					return oldDoc;
-        				};
-				};
-				return oDoc;
-			};
+                if(!oDoc.load) {
+                        oDoc.load = function(sUrl) {
+                            var oldDoc = document.implementation.createDocument();
+                            Sarissa.copyChildNodes(this, oldDoc);
+                            this.parseError = {errorCode : 0};
+                            Sarissa.__setReadyState__(this, 1);
+                            if(this.async == false) {
+                                var tmp = new XMLHttpRequest();
+                                tmp.open("GET", sUrl, false);
+                                tmp.send(null);
+                                Sarissa.__setReadyState__(this, 2);
+                                Sarissa.copyChildNodes(tmp.responseXML, oDoc);
+                                if(!oDoc.documentElement || oDoc.getElementsByTagName("parsererror").length >0){
+                                    oDoc.parseError.errorCode = -1;
+                                };
+                                Sarissa.__setReadyState__(this, 3);
+                                Sarissa.__setReadyState__(this, 4);
+                            }
+                            else {
+                                var xmlhttp = new XMLHttpRequest();
+                                xmlhttp.open('GET', sUrl, true);
+                                xmlhttp.onreadystatechange = function(){
+                                    if (xmlhttp.readyState == 4) {
+                                        Sarissa.copyChildNodes(xmlhttp.responseXML, oDoc);
+                                        if(!oDoc.documentElement || oDoc.getElementsByTagName("parsererror").length > 0){
+                                            oDoc.parseError.errorCode = -1;
+                                        };      
+                                    };
+                                Sarissa.__setReadyState__(oDoc, xmlhttp.readyState);
+                                };
+                                xmlhttp.send(null);
+                            };
+                            return oldDoc;
+                        };
+                };
+                return oDoc;
+            };
         };
     };//if(_SARISSA_HAS_DOM_CREATE_DOCUMENT)
 };

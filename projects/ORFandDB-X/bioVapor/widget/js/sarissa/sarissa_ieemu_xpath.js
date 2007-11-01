@@ -3,15 +3,14 @@
  * About
  * ====================================================================
  * Sarissa cross browser XML library - IE XPath Emulation 
- * @version @sarissa.version@
- * @author: Manos Batsis, mailto: mbatsis at users full stop sourceforge full stop net
+ * @version ${project.version}
+ * @author: Copyright 2004-2007 Emmanouil Batsis, mailto: mbatsis at users full stop sourceforge full stop net
  *
  * This script emulates Internet Explorer's selectNodes and selectSingleNode
  * for Mozilla. Associating namespace prefixes with URIs for your XPath queries
  * is easy with IE's setProperty. 
  * USers may also map a namespace prefix to a default (unprefixed) namespace in the
  * source document with Sarissa.setXpathNamespaces
- *
  *
  * ====================================================================
  * Licence

@@ -3,8 +3,8 @@
  * About
  * ====================================================================
  * Sarissa cross browser XML library - IE XSLT Emulation (deprecated)
- * @version @sarissa.version@
- * @author: Manos Batsis, mailto: mbatsis at users full stop sourceforge full stop net
+ * @version ${project.version}
+ * @author: Copyright 2004-2007 Emmanouil Batsis, mailto: mbatsis at users full stop sourceforge full stop net
  *
  * This script emulates Internet Explorer's transformNode and transformNodeToObject
  * for Mozilla and provides a common way to set XSLT parameters
@@ -23,6 +23,7 @@
  * In case your copy of Sarissa does not include the license texts, you may find
  * them online in various formats at <a href="http://www.gnu.org">http://www.gnu.org</a> and 
  * <a href="http://www.apache.org">http://www.apache.org</a>.
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY 
  * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
  * WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE 
@@ -32,7 +33,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-if(!Sarissa.IS_ENABLED_TRANSFORM_NODE && window.XSLTProcessor){
+if(!Sarissa.IS_ENABLED_TRANSFORM_NODE && window.XSLTProcessor && self.XMLElement){
     /** 
      * <p><b>Deprecated, will be removed in 0.9.6 (use XSLTProcessor instead): </b>Extends the Element class to emulate IE's transformNodeToObject (deprecated).
      * <b>Note </b>: The transformation result <i>must </i> be well formed,

@@ -1179,7 +1179,7 @@ WidgetPager.View.prototype.applyView = function (data,/* optional */ thedoc, pag
 </embed>
 </object>
 				*/
-				var objres=thedoc.createElement('obj');
+				var objres=thedoc.createElement('object');
 				for(var iobjparam=0;iobjparam<this.params.length;iobjparam++) {
 					
 				}

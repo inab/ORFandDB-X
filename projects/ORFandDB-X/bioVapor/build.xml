@@ -12,7 +12,6 @@
 	<property name="deploy.eXist.pass" value="" />
 	<property name="deploy.eXist.dir" value="/databases/eXist/eXist-dev" />
 	<property name="deploy.ssh.user" value="jmfernandez" />
-	<property name="deploy.ssh.pass" value="nR8Bg3zL" />
 	<property name="omim.dir" value="/drives/databases/OMIM" />
 	
 	<property name="src" location="src" />
@@ -118,7 +117,7 @@
 	</target>
 
 	<target depends="compile.ensembl-exist-module" description="It copies the files to the destination" name="jarinstall">
-		<scp todir="${deploy.ssh.user}:${deploy.ssh.password}@${deploy.host}:${deploy.eXist.dir}/lib/user">
+		<scp todir="${deploy.ssh.user}@${deploy.host}:${deploy.eXist.dir}/lib/user" keyfile="${user.home}/.ssh/id_dsa" passphrase="" verbose="true">
 			<fileset dir="${ensembl-exist-module.dist.dir}">
 				<include name="*.jar"/>
 			</fileset>
