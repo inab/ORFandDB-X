@@ -224,28 +224,25 @@ function termSelected(term) {
     q.focus();
 }
 
-var _timer=null;
-var _init=null;
+var _timer=undefined;
+var _init=undefined;
 
 function liveSearchInit() {
-	if(navigator.vendor) {
-		if(navigator.vendor.indexOf('KDE')!=-1 || navigator.vendor.indexOf('Apple')!=-1) {
-			if(!WidgetCommon._loaded) {
-				_timer = setInterval(function() {
-					if (WidgetCommon._loaded && !_init) {
-						_init=1;
-						liveSearchInit(); // call the onload handler
-					}
-				}, 10);
-				return;
-			} else if(_timer) {
-				_init=1;
+	if (('WidgetCommon' in window) && ('_loaded' in window['WidgetCommon']) && window['WidgetCommon']['_loaded']) {
+		liveSearchRealInit(); // call the onload handler
+	} else {
+		_timer = setInterval(function() {
+			if (('WidgetCommon' in window) && ('_loaded' in window['WidgetCommon']) && window['WidgetCommon']['_loaded']) {
 				clearInterval(_timer);
+				liveSearchRealInit(); // call the onload handler
+				_timer=undefined;
 			}
-		}
+		}, 10);
 	}
-	
-	
+}
+
+function liveSearchRealInit() {	
+	_init=1;
 	if (BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
 		WidgetCommon.getElementById('livesearch').addEventListener("keydown",liveSearchKeyPress,false);
 //		WidgetCommon.getElementById('livesearch').addEventListener("blur",liveSearchHide,false);
