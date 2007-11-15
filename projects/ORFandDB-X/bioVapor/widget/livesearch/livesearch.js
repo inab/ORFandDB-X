@@ -244,16 +244,14 @@ function liveSearchInit() {
 function liveSearchRealInit() {	
 	_init=1;
 	if (BrowserDetect.browser=='Konqueror' || BrowserDetect.browser=='Safari') {
-		WidgetCommon.getElementById('livesearch').addEventListener("keydown",liveSearchKeyPress,false);
-//		WidgetCommon.getElementById('livesearch').addEventListener("blur",liveSearchHide,false);
+		WidgetCommon.addEventListenerToId('livesearch','keydown',liveSearchKeyPress,false);
+//		WidgetCommon.addEventListenerToId('livesearch',"blur",liveSearchHide,false);
 	} else if (navigator.product == "Gecko") {
-		
-		WidgetCommon.getElementById('livesearch').addEventListener("keypress",liveSearchKeyPress,false);
-		WidgetCommon.getElementById('livesearch').addEventListener("blur",liveSearchHideDelayed,false);
-		
+		WidgetCommon.addEventListenerToId('livesearch','keypress',liveSearchKeyPress,false);
+		WidgetCommon.addEventListenerToId('livesearch','blur',liveSearchHideDelayed,false);
 	} else {
-		WidgetCommon.getElementById('livesearch').attachEvent('onkeydown',liveSearchKeyPress);
-//		WidgetCommon.getElementById('livesearch').attachEvent("onblur",liveSearchHide,false);
+		WidgetCommon.addEventListenerToId('livesearch','keydown',liveSearchKeyPress,false);
+//		WidgetCommon.addEventListenerToId('livesearch',"blur",liveSearchHide,false);
 		isIE = true;
 	}
 	
