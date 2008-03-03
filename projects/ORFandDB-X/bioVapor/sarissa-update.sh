@@ -44,11 +44,11 @@ EOF
 		cp -dprf sarissa-cvs "$SNAPSHOT"
 		;;
 	*)
-		wget "http://prdownloads.sourceforge.net/sarissa/sarissa-${THEREV}.zip"
+		wget "http://prdownloads.sourceforge.net/sarissa/sarissa-full-${THEREV}.zip"
 		mkdir -p sarissa-sf
-		unzip "sarissa-${THEREV}.zip" -d sarissa-sf
-		cp -dprf "sarissa-sf/sarissa-${THEREV}/sarissa" "$SNAPSHOT"
-		rm -rf sarissa-sf "sarissa-${THEREV}.zip"
+		unzip "sarissa-full-${THEREV}.zip" -d sarissa-sf
+		cp -dprf "sarissa-sf/sarissa-full-${THEREV}/gr/abiss/js/sarissa" "$SNAPSHOT"
+		rm -rf sarissa-sf "sarissa-full-${THEREV}.zip"
 		;;
 esac
 find "$SNAPSHOT" -name CVS -exec rm -rf {} \; >& /dev/null
