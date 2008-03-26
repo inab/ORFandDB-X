@@ -1,0 +1,11 @@
+*	Asynchronous object loading callbacks do not work in Internet
+	Explorer.
+*	SVG must be dynamically created using embed tags instead of object
+	ones, due limitations in Internet Explorer.
+*	Javascript code embedded in SVG cannot be reached from outside in
+	Konqueror 3.5.x.
+*	Asynchronous script loading callbacks do not work in Konqueror.
+*	For SVG implementations, asynchronous script loading only works in
+	Firefox 2.x and Opera. It does not work in Adobe SVG nor Safari 3.
+*	For SVG implementations, asynchronous script loading callbacks only
+	work in Opera.
