@@ -159,13 +159,13 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 		if(helper) {
 			e.onreadystatechange = function() {
 				if(this.readyState == 'loaded' || this.readyState == 'complete') {
-					helper();
 					e.onreadystatechange = function() {};
+					helper();
 				}
 			};
 			e.onload = function () {
-				helper();
 				e.onload = function() {};
+				helper();
 			};
 		}
 		
