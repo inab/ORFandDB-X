@@ -68,20 +68,20 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 		basehref='';
 	}
 	
-	var delayed=null;
+	var useCallbacks=null;
 	if(navigator.vendor) {
 		if(navigator.vendor.indexOf('KDE')!=-1) {
-			delayed=1;
+			useCallbacks=1;
 		}
 	/*
 	} else if(navigator.userAgent) {
 		if(navigator.userAgent.indexOf('MSIE')!=-1) {
-			delayed=1;
+			useCallbacks=1;
 		}
 	*/
 	}
 	
-	if(delayed) {
+	if(useCallbacks) {
 		var baseindex=0;
 		var thecontext=thedoc;
 		WidgetCommon._timer = setInterval(function() {
@@ -102,12 +102,20 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 					WidgetCommon._timer=null;
 					WidgetCommon._loaded=1;
 
-					if(WidgetCommon.onload instanceof Function) {
-						WidgetCommon.onload();
+					if(typeof WidgetCommon.onload == 'function') {
+						try {
+							WidgetCommon.onload();
+						} catch(we) {
+							// IgnoreIt!!!(R)
+						}
 					} else if(WidgetCommon.onload instanceof Array) {
 						for(var loind in WidgetCommon.onload) {
-							if(WidgetCommon.onload[loind] instanceof Function) {
-								WidgetCommon.onload[loind]();
+							if(typeof WidgetCommon.onload[loind] == 'function') {
+								try {
+									WidgetCommon.onload[loind]();
+								} catch(we) {
+									// IgnoreIt!!!(R)
+								}
 							}
 						}
 					}
@@ -135,18 +143,20 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 		var e = thedoc.createElement("script");
 		e.type="text/javascript";
 		var helper=function() {
-			alert('haha');
 			WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,thelastscript,urlsi+1);
 		};
 		e.onreadystatechange = function() {
-			alert('haha');
 			if(this.readyState == 'loaded' || this.readyState == 'complete')  helper();
 		};
 		e.onload=helper;
 		e.src = basehref+urls[urlsi];
 		head.appendChild(e);
-	} else if(thelastscript instanceof Function) {
-		thelastscript();
+	} else if(typeof thelastscript == 'function') {
+		try {
+			thelastscript();
+		} catch(we) {
+			// IgnoreIT!!!(R)
+		}
 	}
 };
 
