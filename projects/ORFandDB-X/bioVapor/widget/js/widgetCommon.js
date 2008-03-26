@@ -12,9 +12,9 @@ WidgetCommon.JSDEPS=new Array(
 	"ajaxslt/xpath.js"
 );
 
-WidgetCommon._timer=null;
-WidgetCommon._loaded=null;
-WidgetCommon.onload=null;
+WidgetCommon._timer=undefined;
+WidgetCommon._loaded=undefined;
+WidgetCommon.onload=undefined;
 
 /* First, essential functions!!!! */
 WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc)
@@ -57,6 +57,28 @@ WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc)
 	*/
 };
 
+WidgetCommon.doOnload = function() {
+	WidgetCommon._loaded=1;
+
+	if(typeof WidgetCommon.onload == 'function') {
+		try {
+			WidgetCommon.onload();
+		} catch(we) {
+			// IgnoreIt!!!(R)
+		}
+	} else if(WidgetCommon.onload instanceof Array) {
+		for(var loind in WidgetCommon.onload) {
+			if(typeof WidgetCommon.onload[loind] == 'function') {
+				try {
+					WidgetCommon.onload[loind]();
+				} catch(we) {
+					// IgnoreIt!!!(R)
+				}
+			}
+		}
+	}
+};
+
 WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,thedoc)
 {
 	if(!thedoc) {
@@ -68,20 +90,21 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 		basehref='';
 	}
 	
-	var useCallbacks=null;
+	var useIntervals=null;
 	if(navigator.vendor) {
 		if(navigator.vendor.indexOf('KDE')!=-1) {
-			useCallbacks=1;
+			useIntervals=1;
 		}
 	/*
 	} else if(navigator.userAgent) {
 		if(navigator.userAgent.indexOf('MSIE')!=-1) {
-			useCallbacks=1;
+			useIntervals=1;
 		}
 	*/
 	}
 	
-	if(useCallbacks) {
+	WidgetCommon._loaded=undefined;
+	if(useIntervals) {
 		var baseindex=0;
 		var thecontext=thedoc;
 		WidgetCommon._timer = setInterval(function() {
@@ -99,31 +122,13 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 					baseindex++;
 				} else {
 					clearInterval(WidgetCommon._timer);
-					WidgetCommon._timer=null;
-					WidgetCommon._loaded=1;
-
-					if(typeof WidgetCommon.onload == 'function') {
-						try {
-							WidgetCommon.onload();
-						} catch(we) {
-							// IgnoreIt!!!(R)
-						}
-					} else if(WidgetCommon.onload instanceof Array) {
-						for(var loind in WidgetCommon.onload) {
-							if(typeof WidgetCommon.onload[loind] == 'function') {
-								try {
-									WidgetCommon.onload[loind]();
-								} catch(we) {
-									// IgnoreIt!!!(R)
-								}
-							}
-						}
-					}
+					WidgetCommon._timer=undefined;
+					WidgetCommon.doOnload();
 				}
 			}
 		}, 100);
 	} else {
-		WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,function() {WidgetCommon._loaded=1;});
+		WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,WidgetCommon.doOnload);
 	}
 };
 
@@ -142,13 +147,28 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 	if(urlsi<urls.length) {
 		var e = thedoc.createElement("script");
 		e.type="text/javascript";
-		var helper=function() {
-			WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,thelastscript,urlsi+1);
-		};
-		e.onreadystatechange = function() {
-			if(this.readyState == 'loaded' || this.readyState == 'complete')  helper();
-		};
-		e.onload=helper;
+		var helper;
+		
+		if(urlsi+1!=urls.length) {
+			helper=function() {
+				WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,thelastscript,urlsi+1);
+			};
+		} else if(typeof thelastscript == 'function') {
+			helper=thelastscript;
+		}
+		if(helper) {
+			e.onreadystatechange = function() {
+				if(this.readyState == 'loaded' || this.readyState == 'complete') {
+					helper();
+					e.onreadystatechange = function() {};
+				}
+			};
+			e.onload = function () {
+				helper();
+				e.onload = function() {};
+			};
+		}
+		
 		e.src = basehref+urls[urlsi];
 		head.appendChild(e);
 	} else if(typeof thelastscript == 'function') {
