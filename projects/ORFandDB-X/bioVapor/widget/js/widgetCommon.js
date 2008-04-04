@@ -190,7 +190,7 @@ WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
 	if(!basehref) {
 		basehref='';
 	}
-	e.href = basehref+url;;
+	e.href = basehref+url;
 	thedoc.getElementsByTagName("head")[0].appendChild(e);
 };
 
