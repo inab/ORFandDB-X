@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <project basedir="." default="build" name="ensembl-exist-module">
-	<description>EnsEMBL-MIM-eXist glue classes by jmfernandez Ant script $Id$</description>
+	<description>$Id$
+EnsEMBL-MIM-eXist glue classes by jmfernandez Ant script</description>
 
 	<property location="src" name="src" />
 	<property location="build" name="build" />
@@ -15,7 +16,7 @@
 	
 	<fileset dir="${ensembl-mim-java.dir}/dist" id="libfiles">
 		<include name="ensj-39.2.jar"/>
-		<include name="mysql-connector-java-3.1.8-bin.jar"/>
+		<include name="mysql-connector-java-5.1.6-bin.jar"/>
 		<include name="ensembl-mim-java.jar"/>
 	</fileset>
 	
@@ -51,7 +52,7 @@
 	</target>
 	
 	<target depends="build" description="It copies the files to the destination" name="install">
-		<scp sftp="true" todir="jmfernandez:nR8Bg3zL@jabba:/databases/eXist/eXist-vapor/lib/user">
+		<scp sftp="true" todir="jmfernandez:nR8Bg3zL@padme:/databases/eXist/eXist-vapor/lib/user">
 			<fileset dir="${dist}">
 				<include name="*.jar"/>
 			</fileset>

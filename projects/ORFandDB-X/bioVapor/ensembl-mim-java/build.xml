@@ -12,7 +12,7 @@
 
 	<fileset dir="." id="libfiles">
 		<include name="${rellibs}/ensj-39.2.jar"/>
-		<include name="${rellibs}/mysql-connector-java-3.1.8-bin.jar"/>
+		<include name="${rellibs}/mysql-connector-java-5.1.6-bin.jar"/>
 	</fileset>
 	<path id="org.cnio.scombio.jmfernandez.widget.javalibs">
 		<fileset refid="libfiles"/>
