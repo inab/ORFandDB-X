@@ -620,10 +620,15 @@ WidgetCommon.DebugError = function (e) {
 			if(!stack)  stack='';
 			return 	"JavaScript error name: "+name+
 				"\nMessage: "+message+
-				"\nFileName: "+fileName+", line "+lineNumber+
+				"\nURL: "+fileName+", line "+lineNumber+
 				"\nStackTrace: "+stack;
 		}
 	}
+};
+
+WidgetCommon.parseOnError = function(msg,url,lineNumber) {
+	return "JavaScript error:\nMessage: "+msg+
+		"\nURL: "+url+", line "+lineNumber;
 };
 
 /****************************************************************/
