@@ -6,12 +6,12 @@
 	<!--
 		Configuration properties
 	-->
-	<property name="deploy.host" value="jabba" />
+	<property name="deploy.host" value="wato" />
 	<property name="deploy.eXist.port" value="8089" />
 	<property name="deploy.eXist.user" value="admin" />
 	<property name="deploy.eXist.pass" value="" />
 	<property name="deploy.eXist.dir" value="/databases/eXist/eXist-dev" />
-	<property name="deploy.ssh.user" value="jmfernandez" />
+	<property name="deploy.ssh.user" value="exist" />
 	<property name="omim.dir" value="/drives/databases/OMIM" />
 	
 	<property name="src" location="src" />
