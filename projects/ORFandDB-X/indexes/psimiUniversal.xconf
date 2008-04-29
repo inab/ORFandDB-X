@@ -12,6 +12,7 @@
 		<!-- From PSI-MI 2.5 -->
 		<create path="//i:experimentRef" type="xs:string"/>
 		<create path="//i:interactorRef" type="xs:string"/>
+		<create path="//@dbAc" type="xs:string"/>
 		<!-- From PSI-MI 1.0 -->
 		<create path="//@ref" type="xs:string"/>
 		<!-- Common to both -->
@@ -23,6 +24,7 @@
 		<!-- From PSI-MI 2.5 -->
 		<create qname="i:experimentRef" type="xs:string"/>
 		<create qname="i:interactorRef" type="xs:string"/>
+		<create qname="@dbAc" type="xs:string"/>
 		<!-- From PSI-MI 1.0 -->
 		<create qname="@ref" type="xs:string"/>
 		<!-- Common to both -->

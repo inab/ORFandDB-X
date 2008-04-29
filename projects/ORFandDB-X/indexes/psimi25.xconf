@@ -11,6 +11,7 @@
 		<create path="//i:experimentRef" type="xs:string"/>
 		<create path="//i:interactorRef" type="xs:string"/>
 		<create path="//@id" type="xs:string"/>
+		<create path="//@dbAc" type="xs:string"/>
 		<create path="//@secondary" type="xs:string"/>
 		<create path="//@ncbiTaxId" type="xs:string"/>
 		
@@ -18,6 +19,7 @@
 		<create qname="i:experimentRef" type="xs:string"/>
 		<create qname="i:interactorRef" type="xs:string"/>
 		<create qname="@id" type="xs:string"/>
+		<create qname="@dbAc" type="xs:string"/>
 		<create qname="@secondary" type="xs:string"/>
 		<create qname="@ncbiTaxId" type="xs:string"/>
 	</index>
