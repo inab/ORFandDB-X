@@ -189,15 +189,18 @@ WidgetPager.prototype = {
 							if('status' in myXMLHTTPRequest) {
 								try {
 									if(myXMLHTTPRequest.status==200) {
-										var response=myXMLHTTPRequest.responseXML;
-										if(!response) {
-											if(myXMLHTTPRequest.responseText) {
-												var parser=new DOMParser();
-												response=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
-											} else {
-												throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
+										var response=undefined;
+										if(!(myXMLHTTPRequest.parseError && myXMLHTTPRequest.parseError.errorCode!=0)) {
+											response = myXMLHTTPRequest.responseXML;
+											if(response==null || response==undefined) {
+												if(myXMLHTTPRequest.responseText) {
+													var parser=new DOMParser();
+													response=parser.parseFromString(myXMLHTTPRequest.responseText,'application/xml');
+												}
 											}
 										}
+										if(response==null || response==undefined || response.documentElement.tagName=='parsererror')
+											throw new Error("Both responseXML and responseText were unparsable!\nPleast talk to the developer about this problem");
 										widgetPager.gotResults(response,widURL);
 									} else {
 										widgetPager.gotResults(null,widURL);
