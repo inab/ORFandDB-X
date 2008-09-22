@@ -224,7 +224,7 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 				e.onreadystatechange = function() {
 					// On IE 'complete' state is reached both in complete *and* in error loads
 					if(this.readyState == 'loaded' || this.readyState == 'complete') {
-						e.onreadystatechange = function() {};
+						this.onreadystatechange = function() {};
 						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts');
 						try {
 							helper();
