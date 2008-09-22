@@ -12,9 +12,13 @@ WidgetCommon.JSDEPS=new Array(
 	"ajaxslt/xpath.js"
 );
 
+//WidgetCommon.DEBUG=true;
+WidgetCommon.DEBUG=undefined;
 WidgetCommon._timer=undefined;
 WidgetCommon._loaded=undefined;
 WidgetCommon.onload=undefined;
+WidgetCommon.DEBUGDIV=undefined;
+WidgetCommon.DEBUGDOC=undefined;
 
 /* First, essential functions!!!! */
 WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc)
@@ -79,17 +83,46 @@ WidgetCommon.doOnload = function() {
 	}
 };
 
-WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,thedoc)
+WidgetCommon.DebugMSG = function(msg) {
+	if(WidgetCommon.DEBUG) {
+		if(WidgetCommon.DEBUGDIV==undefined || WidgetCommon.DEBUGDOC==undefined) {
+			var DEBUGWIN=window.open('','','width=400,height=400,scrollbars=1');
+			WidgetCommon.DEBUGDOC=DEBUGWIN.document;
+			WidgetCommon.DEBUGDOC.write('<html><head><title>WidgetCommon debugging</title></head><body><div id="DEBUGID"></div></body></html>');
+			WidgetCommon.DEBUGDOC.close();
+			WidgetCommon.DEBUGDIV = WidgetCommon.DEBUGDOC.getElementById("DEBUGID");
+		}
+		
+		var p=WidgetCommon.DEBUGDOC.createElement('p');
+		p.appendChild(WidgetCommon.DEBUGDOC.createTextNode((new Date()).getTime()+': '+msg));
+		WidgetCommon.DEBUGDIV.insertBefore(p,WidgetCommon.DEBUGDIV.firstChild);
+		//WidgetCommon.DEBUGDIV.appendChild(p);
+	}
+};
+
+WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,thedoc,theLastScript)
 {
 	if(!thedoc) {
 		thedoc=document;
 	}
-	var head=thedoc.getElementsByTagName("head")[0];
-	// Browser detection
-	if(!basehref) {
+	if(urls.length==0) {
+		if(typeof theLastScript=='function') {
+			//WidgetCommon.DebugMSG('0 elements last script starts');
+			try {
+				theLastScript();
+			} catch(we) {
+				//WidgetCommon.DebugMSG('0 elements last script error: '+we);
+				// IgnoreIT!!!(R)
+			}
+			//WidgetCommon.DebugMSG('0 elements last script ends');
+		}
+		return;
+	}
+	if(basehref==undefined) {
 		basehref='';
 	}
 	
+	// Browser detection
 	var useIntervals=null;
 	if(navigator.vendor) {
 		if(navigator.vendor.indexOf('KDE')!=-1) {
@@ -105,6 +138,7 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 	
 	WidgetCommon._loaded=undefined;
 	if(useIntervals) {
+		var head=thedoc.getElementsByTagName("head")[0];
 		var baseindex=0;
 		var thecontext=thedoc;
 		WidgetCommon._timer = setInterval(function() {
@@ -113,26 +147,31 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 			//if (/loaded|complete/.test(thecontext.readyState)) {
 			//if (/complete/.test(thecontext.readyState)) {
 				if(baseindex<urls.length) {
+					//WidgetCommon.DebugMSG('Delayed script '+urls[baseindex]+' starts');
 					thecontext=WidgetCommon.dhtmlLoadScript(urls[baseindex],basehref,thedoc); // call the onload handler
-					/*
-					for(var ia in thecontext) {
-						alert(ia);
-					}
-					*/
 					baseindex++;
 				} else {
 					clearInterval(WidgetCommon._timer);
 					WidgetCommon._timer=undefined;
-					WidgetCommon.doOnload();
+					if(typeof theLastScript == 'function') {
+						//WidgetCommon.DebugMSG('Delayed last script starts');
+						try {
+							theLastScript();
+						} catch(e) {
+							//WidgetCommon.DebugMSG('Delayed last script error: '+e);
+							// IgnoreIT!!!(R)
+						}
+						//WidgetCommon.DebugMSG('Delayed last script ends');
+					}
 				}
 			}
 		}, 100);
 	} else {
-		WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,WidgetCommon.doOnload);
+		WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,theLastScript);
 	}
 };
 
-WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc,thelastscript,urlsi)
+WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc,theLastScript,urlsi)
 {
 	if(!thedoc) {
 		thedoc=document;
@@ -140,43 +179,82 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 	var head=thedoc.getElementsByTagName("head")[0];
 	
 	if(urlsi==undefined)  urlsi=0;
-	// Browser detection
-	if(!basehref) {
+	
+	if(basehref==undefined) {
 		basehref='';
 	}
+	
 	if(urlsi<urls.length) {
 		var e = thedoc.createElement("script");
 		e.type="text/javascript";
 		var helper;
 		
+		var scriptURL=urls[urlsi];
 		if(urlsi+1!=urls.length) {
 			helper=function() {
-				WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,thelastscript,urlsi+1);
+				//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' ends');
+				WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,theLastScript,urlsi+1);
 			};
-		} else if(typeof thelastscript == 'function') {
-			helper=thelastscript;
+		} else if(typeof theLastScript == 'function') {
+			//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' ends');
+			helper=theLastScript;
 		}
 		if(helper) {
-			e.onreadystatechange = function() {
-				if(this.readyState == 'loaded' || this.readyState == 'complete') {
-					e.onreadystatechange = function() {};
-					helper();
+			if(e.addEventListener) {
+				var loadE;
+				var loadF = function () {
+					e.removeEventListener('load',loadF,false);
+					e.removeEventListener('error',loadE,false);
+					loadF=undefined;
+					loadE=undefined;
+					try {
+						helper();
+					} catch(e) {
+						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' error: '+e);
+						// IgnoreIT!!!(R)
+					}
 				}
-			};
-			e.onload = function () {
-				e.onload = function() {};
-				helper();
-			};
+				loadE = function(evt) {
+					//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' error: '+evt.toString());
+					loadF();
+				};
+				e.addEventListener('error',loadE,false);
+				e.addEventListener('load',loadF,false);
+			} else {
+				e.onreadystatechange = function() {
+					// On IE 'complete' state is reached both in complete *and* in error loads
+					if(this.readyState == 'loaded' || this.readyState == 'complete') {
+						e.onreadystatechange = function() {};
+						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts');
+						try {
+							helper();
+						} catch(e) {
+							//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' error: '+e);
+							// IgnoreIT!!!(R)
+						}
+						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' ends');
+					}
+				};
+			}
 		}
 		
-		e.src = basehref+urls[urlsi];
-		head.appendChild(e);
-	} else if(typeof thelastscript == 'function') {
+		e.src = basehref+scriptURL;
+		//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts');
 		try {
-			thelastscript();
-		} catch(we) {
+			head.appendChild(e);
+		} catch(e) {
+			//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts error: '+e);
 			// IgnoreIT!!!(R)
 		}
+	} else if(typeof theLastScript == 'function') {
+		//WidgetCommon.DebugMSG('Bulk last script starts');
+		try {
+			theLastScript();
+		} catch(we) {
+			//WidgetCommon.DebugMSG('Bulk last script error: '+we);
+			// IgnoreIT!!!(R)
+		}
+		//WidgetCommon.DebugMSG('Bulk last script ends');
 	}
 };
 
@@ -194,33 +272,42 @@ WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
 	thedoc.getElementsByTagName("head")[0].appendChild(e);
 };
 
-WidgetCommon.widgetCommonInit = function ()
+WidgetCommon.widgetCommonInit = function (/* optional */ JSDEPS, theLastScript, basehref)
 {
-	var basehref=null;
+	//WidgetCommon.DebugMSG("WidgetCommonInit was called");
+	if(JSDEPS==undefined)
+		JSDEPS=WidgetCommon.JSDEPS;
+		
+	if(theLastScript==undefined)
+		theLastScript=WidgetCommon.doOnload;
 	
-	var scripts=document.getElementsByTagName("script");
-	var isc;
-	for(isc=0;isc < scripts.length ; isc++) {
-		var src = scripts[isc].getAttribute("src");
-		// Anonymous javascript blocks
-		if(!src) {
-			continue;
+	// Special behavior only on init
+	if(basehref==undefined) {
+		var scripts=document.getElementsByTagName("script");
+		var isc;
+		for(isc=0;isc < scripts.length ; isc++) {
+			var src = scripts[isc].getAttribute("src");
+			// Anonymous javascript blocks
+			if(!src) {
+				continue;
+			}
+			var last=src.lastIndexOf('widgetCommon.js');
+			if(last!=-1 && src.match(/\/widgetCommon\.js$/)) {
+				basehref=src.substring(0, last);
+				break;
+			}
 		}
-		var last=src.lastIndexOf('widgetCommon.js');
-		if(last!=-1 && src.match(/\/widgetCommon\.js$/)) {
-			basehref=src.substring(0, last);
-			break;
+		
+		if(!basehref) {
+			basehref=location.href;
+		}
+		var lastslash=basehref.lastIndexOf('/');
+		if((lastslash+1)!=basehref.length) {
+			basehref=basehref.substring(0,lastslash+1);
 		}
 	}
 	
-	if(!basehref) {
-		basehref=location.href;
-	}
-	var lastslash=basehref.lastIndexOf('/');
-	if((lastslash+1)!=basehref.length) {
-		basehref=basehref.substring(0,lastslash+1);
-	}
-	WidgetCommon.dhtmlDelayedLoadScript(WidgetCommon.JSDEPS,basehref);
+	WidgetCommon.dhtmlDelayedLoadScript(JSDEPS,basehref,undefined,theLastScript);
 };
 
 /* Second, dynamically loading the libraries (bootstraping) */
@@ -245,7 +332,7 @@ WidgetCommon.dhtmlLoadScriptContent = function (javascriptcontent,/* optional */
 	}
 	var e = thedoc.createElement("script");
 	e.type="text/javascript";
-	thedoc.innerHTML = javascriptcontent;
+	e.appendChild(thedoc.createTextNode("<!--\n"+javascriptcontent+"\n// -->"));
 	thedoc.getElementsByTagName("head")[0].appendChild(e);
 };
 
