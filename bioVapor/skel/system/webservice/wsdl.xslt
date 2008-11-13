@@ -1,0 +1,1 @@
+../../../ensembl-exist-module/eXist/tools/SOAPServer/wsdl.xslt

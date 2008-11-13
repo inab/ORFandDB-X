@@ -131,7 +131,7 @@ public class ReferringFunction
 					}
 				}
 			} else {
-				String[] sstr=new String[args[0].getLength()];
+				String[] sstr=new String[args[0].getItemCount()];
 				int ssi=0;
 				for (SequenceIterator si = args[0].iterate(); si.hasNext();ssi++) {
 					sstr[ssi] = si.nextItem().getStringValue();

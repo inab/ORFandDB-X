@@ -44,6 +44,25 @@
 		<create qname="mim:term" />
 	</fulltext>
 	
+	<lucene>
+	    <analyzer class="org.apache.lucene.analysis.SimpleAnalyzer"/>
+	    
+		<text qname="mim:record" />
+		
+		<text qname="mim:alias" />
+		<text qname="@name" />
+		<text qname="@mutation" />
+		<text qname="odb:text" />
+		<text qname="@id" />
+		<text qname="@namespace" />
+		<text qname="mim:geneSymbol" />
+		<text qname="mim:included" />
+		<text qname="mim:para" />
+		<text qname="@title" />
+		<text qname="@mimNumber" />
+		<text qname="mim:term" />
+	</lucene>
+	
 	<!--
         <create path="//odb:link/@namespace" type="xs:string"/>
         <create path="//odb:link/@id" type="xs:string"/>

@@ -2,31 +2,57 @@
 
 <project basedir="." default="build" name="ensembl-mim-java">
 	<description>EnsEMBL-MIM glue classes by jmfernandez Ant script $Id$</description>
+	
+	<dirname property="ant.file.dir" file="${ant.file}"/>
+	<property file="${ant.file.dir}/build.properties"/>
+	
+	<property name="src" location="src" />
+	<property name="res" value="resources" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+	<property name="ensj.dir.rel" value="biojava-ensj"/>
+	<property name="ensj.dir" location="${ensj.dir.rel}"/>
 
-	<property location="src" name="src" />
-	<property value="resources" name="res" />
-	<property location="build" name="build" />
-	<property value="libs" name="rellibs" />
-	<property location="${rellibs}" name="libs" />
-	<property location="dist" name="dist" />
-
-	<fileset dir="." id="libfiles">
-		<include name="${rellibs}/ensj-39.2.jar"/>
-		<include name="${rellibs}/mysql-connector-java-5.1.6-bin.jar"/>
+	<fileset dir="." id="lib.files">
+		<include name="${ensj.dir.rel}/build/ensj.jar"/>
+		<include name="${mysql.jar}"/>
 	</fileset>
 	<path id="org.cnio.scombio.jmfernandez.widget.javalibs">
-		<fileset refid="libfiles"/>
+		<fileset refid="lib.files"/>
 	</path>
 
 	<target name="init">
 		<!-- Creating the timestamp -->
 		<tstamp/>
-		<mkdir dir="${build}"/>
-		<mkdir dir="${dist}"/>
 	</target>
-
-	<target depends="init" description="compiles the source" name="compile">
-		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}">
+	
+	<target name="compile.ensj" depends="init" description="compiles EnsJ">
+		<ant inheritAll="false" inheritRefs="false" dir="${ensj.dir}">
+			<target name="jar"/>
+		</ant>
+	</target>
+	
+	<target name="bootstrap.mysql.exists">
+		<available file="${mysql.jar}" property="mysql.archive.present"/>
+	</target>
+	
+	<target name="conditional.bootstrap.mysql" depends="bootstrap.mysql.exists" unless="mysql.archive.present">
+		<antcall target="bootstrap.mysql"/>
+	</target>
+	
+	<target name="bootstrap.mysql" description="It downloads MySQL/J binary and uncompress it">
+		<!-- Get MySQL -->
+		<get
+			src="${mysql.archive.remote}"
+			dest="${mysql.archive.local}"
+			verbose="true"
+			usetimestamp="true"/>
+		<untar src="${mysql.archive.local}" dest="${ant.file.dir}" compression="gzip"/>
+	</target>
+	
+	<target name="compile" depends="init,compile.ensj,conditional.bootstrap.mysql" description="compiles the source">
+		<mkdir dir="${build}"/>
+		<javac debug="on" destdir="${build}" includes="**" srcdir="${src}" source="1.5" target="1.5">
 			<classpath refid="org.cnio.scombio.jmfernandez.widget.javalibs" />
 		</javac>
 		<copy todir="${build}">
@@ -36,18 +62,23 @@
 		</copy>
 	</target>
 	
-	<target name="copyjars">
+	<target name="copyjars" depends="compile.ensj,conditional.bootstrap.mysql">
+		<mkdir dir="${dist}"/>
 		<copy todir="${dist}" flatten="true" verbose="true">
-			<fileset refid="libfiles"/>
+			<fileset refid="lib.files"/>
 		</copy>
 	</target>
 
-	<target depends="compile,copyjars" description="generates the internal distribution" name="build">
+	<target name="build" depends="compile,copyjars" description="generates the internal distribution">
 		<jar basedir="${build}" jarfile="${dist}/${ant.project.name}.jar"/>
 	</target>
 
-	<target description="clean up ${ant.project.name}" name="clean">
+	<target name="clean" description="clean up ${ant.project.name}">
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
+		<ant inheritAll="false" inheritRefs="false" dir="${ensj.dir}">
+			<target name="clean"/>
+		</ant>
+		<delete dir="${mysql.archive.dir}"/>
 	</target>
 </project>
