@@ -2,6 +2,7 @@
 
 <collection xmlns="http://exist-db.org/collection-config/1.0">
 	<index>
+		<!--
 		<fulltext default="none" attributes="false" alphanum="true">
 			<include path="//AbstractText" />
 			<include path="//ArticleTitle" />
@@ -10,7 +11,7 @@
 			<include path="//DescriptorName" />
 			<include path="//NameOfSubstance" />
 			
-			<!-- The common parent -->
+			<!- - The common parent - ->
 			<create qname="MedlineCitation" />
 			
 			<create qname="AbstractText" />
@@ -19,6 +20,20 @@
 			<create qname="DescriptorName" />
 			<create qname="NameOfSubstance" />
 		</fulltext>
+		-->
+		<fulltext default="none"/>
+
+		<lucene>
+			<analyzer class="org.apache.lucene.analysis.SimpleAnalyzer"/>
+			<text qname="MedlineCitation" />
+			
+			<text qname="AbstractText" />
+			<text qname="ArticleTitle" />
+			<text qname="Author" />
+			<text qname="DescriptorName" />
+			<text qname="NameOfSubstance" />
+		</lucene>
+
 		
 		<!-- Range indexes: disabled
 		<create path="//PMID" type="xs:string" />
