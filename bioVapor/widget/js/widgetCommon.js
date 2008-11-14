@@ -558,7 +558,7 @@ WidgetCommon.setIFrameAutoResize = function (iframe,/* optional */ percent,heade
 };
 
 WidgetCommon.setIFrameAutoResizeFromId = function (ifraname,/* optional */ percent, headerHeight, canreplace, thedoc) {
-	WidgetCommon,setIFrameAutoResizeFromId(WidgetCommon.getElementFromId(ifraname,thedoc),percent, headerHeight, canreplace);
+	WidgetCommon.setIFrameAutoResize(WidgetCommon.getElementById(ifraname,thedoc),percent, headerHeight, canreplace);
 };
 
 /*****************/

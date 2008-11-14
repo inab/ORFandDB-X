@@ -27,6 +27,6 @@ let $t := request:get-parameter("search", ()),
 return
     <terms search="{$t}">
 	{
-	    t:index-terms(collection($collection), $t, util:function("ls:term-callback", 2), $maxterms + 1)
+	    t:index-terms(collection($collection), $t, util:function(xs:QName("ls:term-callback"), 2), $maxterms + 1)
 	}
     </terms>

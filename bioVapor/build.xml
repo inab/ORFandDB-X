@@ -62,7 +62,7 @@
 		<echo>Resources:${line.separator}${resources}${line.separator}and Collections:${line.separator}${collections}</echo>
 	</target>
 
-	<target name="upload" depends="init.eXist.extension" description="Upload">
+	<target name="deploy.skel" depends="init.eXist.extension" description="Upload the skeleton">
 		<!-- First, XML content -->
 		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel">
@@ -85,7 +85,7 @@
 		</xdb:store>
 	</target>
 
-	<target name="omim-upload" depends="init.eXist.extension" description="Upload OMIM database">
+	<target name="deploy.OMIM" depends="init.eXist.extension" description="Upload OMIM database">
 		<tempfile property="omim.temp.file" suffix=".xml" destdir="${java.io.tmpdir}"/>
 		<basename property="omim.temp.filename" file="${omim.temp.file}" />
 		<echo>Generating OMIM document ${omim.temp.filename} from the contents at ${omim.dir}</echo>
@@ -96,7 +96,7 @@
 		</exec>
 		<!-- Then, XML content storage -->
 		<echo>Storing OMIM document ${omim.temp.filename} at ${deploy.host}:${deploy.eXist.port}</echo>
-		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db/OMIM"
+		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db/${omim.eXist.collection}"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
 			failonerror="true"
@@ -112,10 +112,10 @@
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
 			failonerror="true"
-			query="xmldb:rename('OMIM','${omim.temp.filename}','omim.xml')"
+			query="xmldb:rename('${omim.eXist.collection}','${omim.temp.filename}','omim.xml')"
 		/>
 		<!--
-		<xdb:move uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db/OMIM"
+		<xdb:move uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db/${omim.eXist.collection}"
 			user="${deploy.eXist.user}"
 			password="${deploy.eXist.pass}"
 			failonerror="true"
@@ -125,7 +125,17 @@
 		-->
 	</target>
 
-	<target name="deploy.jar" depends="compile.ensembl-exist-module" description="It copies the files to the destination">
+	<target name="reindex.OMIM" depends="deploy.skel" description="Reindex OMIM database">
+		<echo>Reindexing OMIM database at ${deploy.host}:${deploy.eXist.port}</echo>
+		<xdb:xpath uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db"
+			user="${deploy.eXist.user}"
+			password="${deploy.eXist.pass}"
+			failonerror="true"
+			query="xmldb:reindex('${omim.eXist.collection}')"
+		/>
+	</target>
+
+	<target name="deploy.jars" depends="compile.ensembl-exist-module" description="It copies the eXist Ensembl library JAR files to the eXist installation">
 		<scp todir="${deploy.ssh.user}@${deploy.host}:${deploy.eXist.dir}/lib/user" keyfile="${deploy.ssh.keyfile}" passphrase="${deploy.ssh.passphrase}" verbose="true">
 			<fileset dir="${ensembl-exist-module.dist.dir}">
 				<include name="*.jar"/>
@@ -133,7 +143,7 @@
 		</scp>
 	</target>
 	
-	<target name="deploy" depends="deploy.jar,upload" description="Installation procedure">
+	<target name="deploy" depends="deploy.jars,deploy.skel" description="Installation procedure">
 	</target>
 	
 	<target name="clean" depends="clean.ensembl-exist-module" description="clean up ${ant.project.name}">

@@ -99,8 +99,8 @@
 	Commented out to remove superfluous information
 <xsl:apply-templates select="mim:entryHistory"/>
 -->
-<br />Widget Design (C) 2006-2007 CNIO - José M. Fernández
-<br />Content Copyright (C) 1996-2007 Johns Hopkins University
+<br />Widget Design (C) 2006-2008 CNIO - José M. Fernández
+<br />Content Copyright (C) 1996-2008 Johns Hopkins University
 <hr />
 	</xsl:template>
 	

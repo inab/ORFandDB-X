@@ -107,10 +107,29 @@ function liveSearchDoSearch() {
 		liveSearch=liveSearchTokens.pop();
 	}
 	
-	// Asterisk removal
-	var aster=liveSearch.indexOf('*');
-	if(aster!=-1) {
-		liveSearch=liveSearch.substring(0,aster);
+	var pos;
+	if(liveSearch.indexOf('+')==0 || liveSearch.indexOf('-')==0) {
+		// Decorations removal
+		liveSearch=liveSearch.substring(1);
+	}
+	if(liveSearch.indexOf('(')==0) {
+		// Decorations removal
+		liveSearch=liveSearch.substring(1);
+	}
+	if(liveSearch.indexOf('"')==0) {
+		// Decorations removal
+		liveSearch=liveSearch.substring(1);
+	}
+	
+	if((pos=liveSearch.indexOf(')'))!=-1 && (pos+1)==liveSearch.length) {
+		liveSearch=liveSearch.substring(0,pos);
+	}
+	if((pos=liveSearch.indexOf('*'))!=-1 && (pos+1)==liveSearch.length) {
+		// Asterisk removal
+		liveSearch=liveSearch.substring(0,pos);
+	}
+	if((pos=liveSearch.indexOf('"'))!=-1 && (pos+1)==liveSearch.length) {
+		liveSearch=liveSearch.substring(0,pos);
 	}
 	
 	if (liveSearchLast != liveSearch) {
@@ -125,8 +144,8 @@ function liveSearchDoSearch() {
 		}
 		liveSearchLast = liveSearch;
 		
-		// Restricting searches to terms of 2 or more words
-		if ( liveSearch.length < 2 ) {
+		// Restricting searches to terms of 3 or more words
+		if ( liveSearch.length < 3 || liveSearch=='AND' || liveSearch=='NOT') {
 			liveSearchHide();
 			return false;
 		}

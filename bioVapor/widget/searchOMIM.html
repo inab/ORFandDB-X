@@ -4,6 +4,7 @@
 <script type="text/javascript" src="js/browserdetect/BrowserDetect.js"></script>
 <script type="text/javascript" src="js/widgetCommon.js"></script>
 <script type="text/javascript" src="livesearch/livesearch.js"></script>
+<link rel="stylesheet" href="css/general_style.css" type="text/css" />
 <link rel="stylesheet" href="livesearch/livesearch.css" type="text/css" />
 </head>
 <body onload="liveSearchInit()">
@@ -11,7 +12,7 @@
 <tr valign="top"><td align="center"><img src="OMIM/images/omim.gif"/>
 <form method="GET" name="searchform" action="widgetOMIM.html" target="results" onSubmit="liveSearchHide();return true;">
 <input type="hidden" name="namespace" value="General" />
-<h2>Just type free text to search on OMIM</h2>
+    <h2>Just type free text (following the <a href="http://lucene.apache.org/java/2_4_0/queryparsersyntax.html">Lucene convention</a>) to search on OMIM</h2>
 <div align="center">
 <div id="livesearch" align="left">
 	<input type="text" name="search" size="50" autocomplete="off" onkeypress="liveSearchStart()"/><br/>

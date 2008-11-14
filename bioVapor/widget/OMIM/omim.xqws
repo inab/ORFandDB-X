@@ -5,6 +5,7 @@ declare option exist:optimize "enable=yes";
 :)
 
 import module namespace ens="http://www.cnio.es/scombio/jmfernandez/widget/ensembl" at "java:org.cnio.scombio.jmfernandez.widget.exist.EnsemblModule";
+import module namespace ft="http://exist-db.org/xquery/lucene";
 
 declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
 {
@@ -19,10 +20,12 @@ declare function mim:getRecordsFromEnsID($ensID as xs:string) as element(mim:rec
 
 declare function mim:getEnsIDWithFTS($term as xs:string) as xs:string*
 {
-	distinct-values(for $entry in collection('/db/OMIM')//mim:record[. &= $term] return ens:fetchbymimrefs($entry/@mimNumber))
+	distinct-values(for $entry in collection('/db/OMIM')//mim:record[ft:query(.,$term)] return ens:fetchbymimrefs($entry/@mimNumber))
 };
 
 declare function mim:getRecordsWithFTS($term as xs:string) as element(mim:record)*
 {
-	collection('/db/OMIM')//mim:record[. &= $term]
+	for $s in collection('/db/OMIM')//mim:record[ft:query(.,$term)]
+	order by ft:score($s) descending
+	return $s
 };
