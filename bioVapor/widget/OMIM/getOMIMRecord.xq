@@ -24,13 +24,15 @@ declare option exist:optimize "enable=yes";
 declare function mimmark:set-markups($input as node()*,$markup as xs:string?) as node()*
 {
 	if($markup) then (
-		for $elem in $input
-		let $marked := $elem[ft:query(.,$markup)]
-			return
-				if ($marked) then
-					$marked
-				else
-					$elem
+	    util:expand(
+    		for $elem in $input
+    		let $marked := $elem[ft:query(.,$markup)]
+    			return
+    				if($marked) then
+    					$marked
+    				else
+    					$elem
+		)
 	) else
 		$input
 };
@@ -38,7 +40,7 @@ declare function mimmark:set-markups($input as node()*,$markup as xs:string?) as
 let $query:=request:get-parameter("id",())
 let $markup:=request:get-parameter("markup",())
 let $gethtml:=request:get-parameter("html","false")
-let $res:=util:expand(mimmark:set-markups(mim:getRecord($query),$markup))
+let $res:=mimmark:set-markups(mim:getRecord($query),$markup)
 return
 	if($gethtml = 'true') then (
 		util:declare-option('exist:serialize',"indent=no media-type=text/html"),
