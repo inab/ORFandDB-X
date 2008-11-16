@@ -12,13 +12,16 @@ declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
 	collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
 };
 
-declare function mim:getRecord($mimNumber as xs:string,$term as xs:string) as element(mim:record)?
+declare function mim:getRecord($mimNumber as xs:string,$term as xs:string?) as element(mim:record)?
 {
-	let $result:=collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber][ft:query(.,$term)]
-	return
-	if($result) then
-		util:expand($result)
-	else
+	if($term) then (
+		let $result:=collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber][ft:query(.,$term)]
+		return
+		if($result) then
+			util:expand($result)
+		else
+			collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
+	) else
 		collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
 };
 

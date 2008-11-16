@@ -64,7 +64,7 @@
 
 	<target name="deploy.skel" depends="compile.eXist,init.eXist.extension" description="Upload the skeleton">
 		<!-- First, XML content -->
-		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" type="xml" failonerror="true" createsubcollections="true">
+		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel">
 				<include name="**/*.xsd" />
 				<include name="**/*.xsl" />
@@ -73,7 +73,7 @@
 			</fileset>
 		</xdb:store>
 		<!-- Then, non XML content -->
-		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" type="binary" failonerror="true" createsubcollections="true">
+		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel" defaultexcludes="no">
 				<exclude name="**/*.xsd" />
 				<exclude name="**/*.xsl" />
