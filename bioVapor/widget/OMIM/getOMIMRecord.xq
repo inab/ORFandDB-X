@@ -40,7 +40,7 @@ declare function mimmark:set-markups($input as node()*,$markup as xs:string?) as
 let $query:=request:get-parameter("id",())
 let $markup:=request:get-parameter("markup",())
 let $gethtml:=request:get-parameter("html","false")
-let $res:=util:expand(mim:getRecord($query,$markup))
+let $res:=mim:getRecord($query,$markup)
 return
 	if($gethtml = 'true') then (
 		util:declare-option('exist:serialize',"indent=no media-type=text/html"),

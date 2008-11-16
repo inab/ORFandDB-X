@@ -14,11 +14,12 @@ declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
 
 declare function mim:getRecord($mimNumber as xs:string,$term as xs:string) as element(mim:record)?
 {
-	let $result:=collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber][ft:query(.,'term')]
-	if($result)
-		return $result
+	let $result:=collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber][ft:query(.,$term)]
+	return
+	if($result) then
+		util:expand($result)
 	else
-		return collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
+		collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
 };
 
 declare function mim:getRecordsFromEnsID($ensID as xs:string) as element(mim:record)*
