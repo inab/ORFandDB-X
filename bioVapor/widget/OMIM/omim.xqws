@@ -12,6 +12,15 @@ declare function mim:getRecord($mimNumber as xs:string) as element(mim:record)?
 	collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
 };
 
+declare function mim:getRecord($mimNumber as xs:string,$term as xs:string) as element(mim:record)?
+{
+	let $result:=collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber][ft:query(.,'term')]
+	if($result)
+		return $result
+	else
+		return collection('/db/OMIM')//mim:record[@mimNumber=$mimNumber]
+};
+
 declare function mim:getRecordsFromEnsID($ensID as xs:string) as element(mim:record)*
 {
 	for $mimNumber in ens:getmimrefs($ensID)
