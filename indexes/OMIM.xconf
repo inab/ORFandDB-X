@@ -25,6 +25,7 @@
 	<!--
 		Excluding entry history from FTI & FTS
 	-->
+	<!--
         <fulltext default="all" attributes="true" alphanum="true">
 		<exclude path="//mim:entryHistory" />
 		
@@ -43,6 +44,7 @@
 		<create qname="@mimNumber" />
 		<create qname="mim:term" />
 	</fulltext>
+	-->
 	
 	<lucene>
 	    <analyzer class="org.apache.lucene.analysis.SimpleAnalyzer"/>
