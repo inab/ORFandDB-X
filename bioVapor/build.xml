@@ -62,7 +62,7 @@
 		<echo>Resources:${line.separator}${resources}${line.separator}and Collections:${line.separator}${collections}</echo>
 	</target>
 
-	<target name="deploy.skel" depends="init.eXist.extension" description="Upload the skeleton">
+	<target name="deploy.skel" depends="compile.eXist,init.eXist.extension" description="Upload the skeleton">
 		<!-- First, XML content -->
 		<xdb:store uri="xmldb:exist://${deploy.host}:${deploy.eXist.port}/xmlrpc/db" user="${deploy.eXist.user}" password="${deploy.eXist.pass}" failonerror="true" createsubcollections="true">
 			<fileset dir="skel">
@@ -85,7 +85,7 @@
 		</xdb:store>
 	</target>
 
-	<target name="deploy.OMIM" depends="init.eXist.extension" description="Upload OMIM database">
+	<target name="deploy.OMIM" depends="compile.eXist,init.eXist.extension" description="Upload OMIM database">
 		<tempfile property="omim.temp.file" suffix=".xml" destdir="${java.io.tmpdir}"/>
 		<basename property="omim.temp.filename" file="${omim.temp.file}" />
 		<echo>Generating OMIM document ${omim.temp.filename} from the contents at ${omim.dir}</echo>
