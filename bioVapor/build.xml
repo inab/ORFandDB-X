@@ -19,9 +19,10 @@
 	
 	<property name="ensembl-exist-module.dir.rel" value="ensembl-exist-module" />
 	<property name="ensembl-exist-module.dir" location="${ensembl-exist-module.dir.rel}" />
+	<property name="ensembl-exist-module.eXist.dir" location="${ensembl-exist-module.dir.rel}/eXist" />
 	
 	<path id="exist-ant.classpath.core">
-		<fileset dir="${ensembl-exist-module.dir}/eXist">
+		<fileset dir="${ensembl-exist-module.eXist.dir}">
 			<include name="exist.jar" />
 			<include name="exist-optional.jar" />
 			<include name="lib/core/*.jar" />
@@ -155,7 +156,7 @@
 	</target>
 	
 	<target name="compile.eXist" depends="init" description="compiles eXist inside ensemble-exist-module">
-		<ant inheritAll="false" inheritRefs="false" dir="${ensembl-exist-module.dir}" target="compile.eXist" />
+		<ant inheritAll="false" inheritRefs="false" dir="${ensembl-exist-module.eXist.dir}" />
 	</target>
 	
 	<target name="clean.ensembl-exist-module" description="clean up ensembl-mim-java">
