@@ -641,7 +641,9 @@ WidgetCommon.generateQS = function (qsParm,baseurl)
 			var iterarray=(qsParm[term] instanceof Array)?qsParm[term]:new Array(qsParm[term]);
 			
 			for(var key in iterarray) {
-				query+=querySymbol+escape(term)+'='+escape(iterarray[key]);
+				var eterm=escape(term).replace('+','%2B');
+				var eiter=escape(iterarray[key]).replace('+','%2B');
+				query+=querySymbol+eterm+'='+eiter;
 				querySymbol='&';
 			}
 		}
