@@ -100,8 +100,13 @@ WidgetCommon.DebugMSG = function(msg) {
 			WidgetCommon.DEBUGDIV = WidgetCommon.DEBUGDOC.getElementById("DEBUGID");
 		}
 		
-		var p=WidgetCommon.DEBUGDOC.createElement('p');
-		p.appendChild(WidgetCommon.DEBUGDOC.createTextNode((new Date()).getTime()+': '+msg));
+		var p=WidgetCommon.DEBUGDOC.createElement('span');
+		var bo=WidgetCommon.DEBUGDOC.createElement('span');
+		bo.style.fontWeight='bold';
+		bo.appendChild(WidgetCommon.DEBUGDOC.createTextNode((new Date()).getTime()));
+		p.appendChild(bo);
+		p.appendChild(WidgetCommon.DEBUGDOC.createTextNode(': '+msg));
+		WidgetCommon.DEBUGDIV.insertBefore(WidgetCommon.DEBUGDOC.createElement('br'),WidgetCommon.DEBUGDIV.firstChild);
 		WidgetCommon.DEBUGDIV.insertBefore(p,WidgetCommon.DEBUGDIV.firstChild);
 		//WidgetCommon.DEBUGDIV.appendChild(p);
 	}
@@ -114,14 +119,14 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 	}
 	if(urls.length==0) {
 		if(typeof theLastScript=='function') {
-			//WidgetCommon.DebugMSG('0 elements last script starts');
+			// WidgetCommon.DebugMSG('0 elements last script starts');
 			try {
 				theLastScript();
 			} catch(we) {
-				//WidgetCommon.DebugMSG('0 elements last script error: '+we);
+				// WidgetCommon.DebugMSG('0 elements last script error: '+we);
 				// IgnoreIT!!!(R)
 			}
-			//WidgetCommon.DebugMSG('0 elements last script ends');
+			// WidgetCommon.DebugMSG('0 elements last script ends');
 		}
 		return;
 	}
@@ -155,7 +160,7 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 			if (/loaded|complete/.test(thecontext.readyState)) {
 			// if (/complete/.test(thecontext.readyState)) {
 				if(baseindex<urls.length) {
-					//WidgetCommon.DebugMSG('Delayed script '+urls[baseindex]+' starts');
+					// WidgetCommon.DebugMSG('Delayed script '+urls[baseindex]+' starts');
 					thecontext=WidgetCommon.dhtmlLoadScript(urls[baseindex],basehref,thedoc); // call the onload handler
 					baseindex++;
 					WidgetCommon._timer = setTimeout(timeoutFunc,100);
@@ -163,14 +168,14 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 					clearInterval(WidgetCommon._timer);
 					WidgetCommon._timer=undefined;
 					if(typeof theLastScript == 'function') {
-						//WidgetCommon.DebugMSG('Delayed last script starts');
+						// WidgetCommon.DebugMSG('Delayed last script starts');
 						try {
 							theLastScript();
 						} catch(e) {
-							//WidgetCommon.DebugMSG('Delayed last script error: '+e);
+							// WidgetCommon.DebugMSG('Delayed last script error: '+e);
 							// IgnoreIT!!!(R)
 						}
-						//WidgetCommon.DebugMSG('Delayed last script ends');
+						// WidgetCommon.DebugMSG('Delayed last script ends');
 					}
 				}
 			} else {
@@ -187,14 +192,14 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 				thecontext=WidgetCommon.dhtmlLoadScript(urls[basebase],basehref,thedoc,onLoadFunc); // call the onload handler
 			} else {
 				if(typeof theLastScript == 'function') {
-					//WidgetCommon.DebugMSG('Delayed last script starts');
+					// WidgetCommon.DebugMSG('Delayed last script starts');
 					try {
 						theLastScript();
 					} catch(e) {
-						//WidgetCommon.DebugMSG('Delayed last script error: '+e);
+						// WidgetCommon.DebugMSG('Delayed last script error: '+e);
 						// IgnoreIT!!!(R)
 					}
-					//WidgetCommon.DebugMSG('Delayed last script ends');
+					// WidgetCommon.DebugMSG('Delayed last script ends');
 				}
 			}
 		};
@@ -224,13 +229,21 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 		var helper;
 		
 		var scriptURL=urls[urlsi];
-		if(urlsi+1!=urls.length) {
+		var nexturlsi=urlsi+1;
+		// No undefined script, please!!!!!
+		if(scriptURL==undefined) {
+			// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] is undefined!');
+			WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,theLastScript,nexturlsi);
+			return;
+		}
+		
+		if(nexturlsi!=urls.length) {
 			helper=function() {
-				//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' ends');
-				WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,theLastScript,urlsi+1);
+				// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' ends');
+				WidgetCommon.dhtmlBulkLoadScript(urls,basehref,thedoc,theLastScript,nexturlsi);
 			};
 		} else if(typeof theLastScript == 'function') {
-			//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' ends');
+			// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' ends');
 			helper=theLastScript;
 		}
 		if(helper) {
@@ -244,12 +257,12 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 					try {
 						helper();
 					} catch(e) {
-						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' error: '+e);
+						// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' error: '+e);
 						// IgnoreIT!!!(R)
 					}
 				}
 				loadE = function(evt) {
-					//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' error: '+evt.toString());
+					// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' error: '+evt.toString());
 					loadF();
 				};
 				e.addEventListener('error',loadE,false);
@@ -259,36 +272,36 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 					// On IE 'complete' state is reached both in complete *and* in error loads
 					if(this.readyState == 'loaded' || this.readyState == 'complete') {
 						this.onreadystatechange = function() {};
-						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts');
+						this.onerror = function() {};
 						try {
 							helper();
 						} catch(e) {
-							//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' error: '+e);
+							// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' error: '+WidgetCommon.DebugError(e));
+							// WidgetCommon.DebugMSG('and was '+helper);
 							// IgnoreIT!!!(R)
 						}
-						//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' ends');
 					}
 				};
 			}
 		}
 		
 		e.src = basehref+scriptURL;
-		//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts');
+		// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' starts');
 		try {
 			head.appendChild(e);
 		} catch(e) {
-			//WidgetCommon.DebugMSG('Bulk script '+scriptURL+' starts error: '+e);
+			// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' sterror: '+WidgetCommon.DebugError(e));
 			// IgnoreIT!!!(R)
 		}
 	} else if(typeof theLastScript == 'function') {
-		//WidgetCommon.DebugMSG('Bulk last script starts');
+		// WidgetCommon.DebugMSG('Bulk last script starts');
 		try {
 			theLastScript();
 		} catch(we) {
-			//WidgetCommon.DebugMSG('Bulk last script error: '+we);
+			// WidgetCommon.DebugMSG('Bulk last script error: '+we);
 			// IgnoreIT!!!(R)
 		}
-		//WidgetCommon.DebugMSG('Bulk last script ends');
+		// WidgetCommon.DebugMSG('Bulk last script ends');
 	}
 };
 
@@ -693,6 +706,7 @@ WidgetCommon.DebugError = function (e) {
 			var name;
 			var message;
 			var number;
+			var facility;
 			var description;
 			try {
 				name=e.name;
@@ -705,7 +719,8 @@ WidgetCommon.DebugError = function (e) {
 				// IgnoreIt!
 			}
 			try {
-				number=e.number;
+				number=e.number & 0xFFFF;
+				facility=e.number >>> 16;
 			} catch(ee) {
 				// IgnoreIt!
 			}
@@ -717,10 +732,12 @@ WidgetCommon.DebugError = function (e) {
 			if(!name)  name='';
 			if(!message)  message='';
 			if(!number)  number='';
+			if(!facility)  facility='';
 			if(!description)  description='';
 			return 	"JavaScript error name: "+name+
 				"\nMessage: "+message+
 				"\nNumber: "+number+
+				"\nFacility: "+facility+
 				"\nDescription: "+description;
 		} else {
 			var name;

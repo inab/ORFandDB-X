@@ -150,14 +150,14 @@ WidgetPager.prototype = {
 			this.namespace=null;
 			*/
 
-			if('ensemblId' in qsParm && qsParm['ensemblId'].length>0) {
-				this.ensemblId=qsParm['ensemblId'];
+			if('ensemblId' in qsParm && qsParm['ensemblId']!=undefined && qsParm['ensemblId'].length>0 && qsParm['ensemblId'][0].length>0) {
+				this.ensemblId=qsParm['ensemblId'][0];
 			} else {
-				if('ensID' in qsParm && qsParm['ensID'].length>0) {
-					this.ensemblId=qsParm['ensID'];
+				if('ensID' in qsParm && qsParm['ensID']!=undefined && qsParm['ensID'].length>0 && qsParm['ensID'][0].length>0) {
+					this.ensemblId=qsParm['ensID'][0];
 				} else {
-					if('search' in qsParm && qsParm['search'].length>0) {
-						this.ensemblId=qsParm['search'];
+					if('search' in qsParm && qsParm['search']!=undefined && qsParm['search'].length>0 && qsParm['search'][0].length>0) {
+						this.ensemblId=qsParm['search'][0];
 					}
 				}
 			}
@@ -166,7 +166,7 @@ WidgetPager.prototype = {
 				this.ensemblId=null;
 			}
 
-			if('namespace' in qsParm && qsParm['namespace'].length>0) {
+			if('namespace' in qsParm && qsParm['namespace']!=undefined && qsParm['namespace'].length>0 && qsParm['namespace'][0].length>0) {
 				this.namespace=qsParm['namespace'][0];
 			} else {
 				this.namespace='EnsEMBL';
@@ -266,8 +266,8 @@ WidgetPager.prototype = {
 			var minc=nodeList.length;
 			for(;iinc<minc;iinc++) {
 				var include=new Object();
-				include.includeType=nodeList[iinc].getAttribute("type");
-				include.includeURL=nodeList[iinc].getAttribute("href");
+				include.includeType=nodeList.item(iinc).getAttribute("type");
+				include.includeURL=nodeList.item(iinc).getAttribute("href");
 				includeNodes.push(include);
 			}
 		}
@@ -288,8 +288,8 @@ WidgetPager.prototype = {
 			var iinc=0;
 			var minc=nodeList.length;
 			for(;iinc<minc;iinc++) {
-				var includeType=nodeList[iinc].getAttribute("type");
-				var includeURL=nodeList[iinc].getAttribute("href");
+				var includeType=nodeList.item(iinc).getAttribute("type");
+				var includeURL=nodeList.item(iinc).getAttribute("href");
 				if(includeType=='CSS') {
 					WidgetCommon.dhtmlLoadCSS(includeURL,null,thedoc);
 				}
@@ -970,8 +970,8 @@ WidgetPager.Data.prototype = {
 			var minc=nodeList.length;
 			for(;iinc<minc;iinc++) {
 				var include=new Object();
-				include.includeType=nodeList[iinc].getAttribute("type");
-				include.includeURL=nodeList[iinc].getAttribute("href");
+				include.includeType=nodeList.item(iinc).getAttribute("type");
+				include.includeURL=nodeList.item(iinc).getAttribute("href");
 				this.includeNodes.push(include);
 			}
 		}
