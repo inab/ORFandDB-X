@@ -1,9 +1,17 @@
-/* Made by JosÈ MarÌa Fern·ndez, CNIO 2007*/
+/* Made by Jos√© Mar√≠a Fern√°ndez, CNIO 2007*/
 /* For ORFandDB/X */
-var WidgetCommon = {};
 
-/* Zero, JavaScript dependencies */
+/**
+ * @constructor
+ */
+WidgetCommon = function() {
+};
+
+/**
+ *  WidgetCommon JavaScript dependencies
+ */
 WidgetCommon.JSDEPS=new Array(
+	"svgweb/svg.js",
 	"sarissa/sarissa.js",
 	"sarissa/sarissa_ieemu_xpath.js",
 	"ajaxslt/xmltoken.js",
@@ -13,6 +21,9 @@ WidgetCommon.JSDEPS=new Array(
 );
 
 //WidgetCommon.DEBUG=true;
+/**
+ * This variable controls whether the WidgetCommon library generates debug output
+ */
 WidgetCommon.DEBUG=undefined;
 WidgetCommon._timer=undefined;
 WidgetCommon._loaded=undefined;
@@ -22,6 +33,14 @@ WidgetCommon.DEBUGDOC=undefined;
 WidgetCommon.counter=0;
 
 /* First, essential functions!!!! */
+
+/**
+ * This function allows loading a javascript library in a dynamic way
+ * @param {String} url
+ * @param {String} basehref
+ * @param {HTMLDocument,document,Document} thedoc
+ * @param {Function} onLoadScript
+ */
 WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc,onLoadScript)
 {
 	if(!thedoc) {
@@ -68,6 +87,10 @@ WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc,onLo
 	return e;
 };
 
+/**
+ * This is the event listener used by WidgetCommon when Javascript libraries
+ * are being dynamically loaded.
+ */
 WidgetCommon.doOnload = function() {
 	WidgetCommon._loaded=1;
 
@@ -90,6 +113,11 @@ WidgetCommon.doOnload = function() {
 	}
 };
 
+/**
+ * The debug function used by internal WidgetCommon code. It takes as input
+ * either an input exception object or an string
+ * @param {Error} msg
+ */
 WidgetCommon.DebugMSG = function(msg) {
 	if(WidgetCommon.DEBUG) {
 		if(WidgetCommon.DEBUGDIV==undefined || WidgetCommon.DEBUGDOC==undefined) {
@@ -112,6 +140,14 @@ WidgetCommon.DebugMSG = function(msg) {
 	}
 };
 
+/**
+ * This function allows loading a ordered list of javascript library in a dynamic way.
+ * At the end, a function is called.
+ * @param {Array} urls
+ * @param {String} basehref
+ * @param {HTMLDocument,document,Document} thedoc
+ * @param {Function} theLastScript
+ */
 WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,thedoc,theLastScript)
 {
 	if(!thedoc) {
@@ -210,6 +246,15 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 	}
 };
 
+/**
+ * This function allows loading a ordered list of javascript library in a dynamic way.
+ * At the end, a function is called.
+ * @param {Array} urls
+ * @param {String} basehref
+ * @param {HTMLDocument,document,Document} thedoc
+ * @param {Function} theLastScript
+ * @param {Integer} urlsi
+ */
 WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc,theLastScript,urlsi)
 {
 	if(!thedoc) {
@@ -305,6 +350,12 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 	}
 };
 
+/**
+ * This function allows loading a CSS stylesheet in a dynamic way
+ * @param {String} url
+ * @param {String} basehref
+ * @param {HTMLDocument,document,Document} thedoc
+ */
 WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
 {
 	if(!thedoc) {
@@ -319,6 +370,12 @@ WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
 	thedoc.getElementsByTagName("head")[0].appendChild(e);
 };
 
+/**
+ * Initialization of the WidgetCommon library
+ * @param {Array} JSDEPS
+ * @param {Function} theLastScript
+ * @param {String} basehref
+ */
 WidgetCommon.widgetCommonInit = function (/* optional */ JSDEPS, theLastScript, basehref)
 {
 	//WidgetCommon.DebugMSG("WidgetCommonInit was called");
@@ -377,6 +434,12 @@ WidgetCommon.widgetCommonInit = function (/* optional */ JSDEPS, theLastScript, 
 WidgetCommon.widgetCommonInit();
 
 /* And third, the additional functions!!!! */
+
+/**
+ * This static method injects inline CSS declarations just at the end of the document's head
+ * @param {String} csscontent
+ * @param {HTMLDocument,document,Document} thedoc
+ */
 WidgetCommon.dhtmlLoadCSSContent = function (csscontent,/* optional */ thedoc)
 {
 	if(!thedoc) {
@@ -388,6 +451,11 @@ WidgetCommon.dhtmlLoadCSSContent = function (csscontent,/* optional */ thedoc)
 	thedoc.getElementsByTagName("head")[0].appendChild(e);
 };
 
+/**
+ * This static method injects inline Javascript sentences just at the end of the document's head 
+ * @param {String} javascriptcontent
+ * @param {HTMLDocument,document,Document} thedoc
+ */
 WidgetCommon.dhtmlLoadScriptContent = function (javascriptcontent,/* optional */ thedoc)
 {
 	if(!thedoc) {
@@ -404,32 +472,141 @@ WidgetCommon.dhtmlLoadScriptContent = function (javascriptcontent,/* optional */
 /* Generic getElementById */
 /**************************/
 // Sort of optimization
-if(document.getElementById){    // test the most common method first.  Most browsers won't get past this test
-	WidgetCommon.getElementById = function (id,/* optional */ thedoc) { if(!thedoc)  thedoc=document; return thedoc.getElementById(id); };
-} else if(document.all){         // test older versions of IE
-	WidgetCommon.getElementById = function (id,/* optional */ thedoc) { if(!thedoc)  thedoc=document; return thedoc.all[id]; };
-} else if(document.layers){      // test older versions of Netscape
-	WidgetCommon.getElementById = function (id,/* optional */ thedoc) { if(!thedoc)  thedoc=document; return thedoc.layers[id]; };
-} else {                          // not sure what to do...return null
-	WidgetCommon.getElementById = function (id,/* optional */ thedoc) { return null; };
-}
+/**
+ * Browser agnostic, generic getElementById implementation
+ * @param {String} id
+ * @param {HTMLDocument,document,Document} thedoc
+ * @return {HTMLElement, Element}
+ */
+WidgetCommon.getElementById = function(id,/* optional */ thedoc){
+	if(!thedoc)
+		thedoc = document;
+	if (thedoc.getElementById) { // test the most common method first.  Most browsers won't get past this test
+		/**
+		 * Browser agnostic, generic getElementById implementation
+		 * @param {String} id
+		 * @param {HTMLDocument,document,Document} thedoc
+		 * @return {HTMLElement, Element}
+		 */
+		WidgetCommon.getElementById = function(id,/* optional */ thedoc){
+			if (!thedoc) 
+				thedoc = document;
+			return thedoc.getElementById(id);
+		};
+	} else if (document.all) { // test older versions of IE
+		/**
+		 * Browser agnostic, generic getElementById implementation
+		 * @param {String} id
+		 * @param {HTMLDocument,document,Document} thedoc
+		 * @return {HTMLElement, Element}
+		 */
+		WidgetCommon.getElementById = function(id,/* optional */ thedoc){
+			if (!thedoc) 
+				thedoc = document;
+			return thedoc.all[id];
+		};
+	} else if (document.layers) { // test older versions of Netscape
+		/**
+		 * Browser agnostic, generic getElementById implementation
+		 * @param {String} id
+		 * @param {HTMLDocument,document,Document} thedoc
+		 * @return {HTMLElement, Element}
+		 */
+		WidgetCommon.getElementById = function(id,/* optional */ thedoc){
+			if (!thedoc) 
+				thedoc = document;
+			return thedoc.layers[id];
+		};
+	} else { // not sure what to do...return null
+		/**
+		 * Browser agnostic, generic getElementById implementation
+		 * @param {String} id
+		 * @param {HTMLDocument,document,Document} thedoc
+		 * @return {HTMLElement, Element}
+		 */
+		WidgetCommon.getElementById = function(id,/* optional */ thedoc){
+			return null;
+		};
+	}
+	
+	return WidgetCommon.getElementById(id,thedoc);
+};
 
-WidgetCommon.getForm = ('forms' in document)?
-	function (formName,/* optional */ thedoc) {
-		if(!thedoc)  thedoc=document;
-		return thedoc.forms[formName];
-	}:
-	function (formName,/* optional */ thedoc) {
-		if(!thedoc)  thedoc=document;
-		return thedoc[formName];
-	};
+/**
+ * This static method patches a IE document when there is no document.getElementsByClassName function available 
+ * @param {HTMLDocument, document, Document} thedoc
+ */
+WidgetCommon.getElementsByClassNamePatcher = function (thedoc) {
+	if(typeof thedoc.getElementsByClassName !== 'function')  {
+		thedoc.getElementsByClassName = function(cl) {
+			var retnode = [];
+			var myclass = new RegExp('\\b'+cl+'\\b');
+			var elem = thedoc.getElementsByTagName('*');
+			var elLength = elem.length;
+			for (var i = 0; i < elLength; i++) {
+				var classes = elem[i].className;
+				if(myclass.test(classes)) retnode.push(elem[i]);
+			}
+			return retnode;
+		};
+	}
+};
+
+/**
+ * This method looks for a FORM tag by its name attribute
+ * @param {String} formName
+ * @param {HTMLDocument, document, Document} thedoc
+ * @return {HTMLFormElement}
+ */
+WidgetCommon.getForm = function(formName,/* optional */ thedoc) {
+	if('forms' in document) {
+		/**
+		 * This method looks for a FORM tag by its name attribute
+		 * @param {String} formName
+		 * @param {HTMLDocument, document, Document} thedoc
+		 * @return {HTMLFormElement}
+		 */
+		WidgetCommon.getForm = function (formName,/* optional */ thedoc) {
+			if(!thedoc)  thedoc=document;
+			return thedoc.forms[formName];
+		};
+	} else {
+		/**
+		 * This method looks for a FORM tag by its name attribute
+		 * @param {String} formName
+		 * @param {HTMLDocument, document, Document} thedoc
+		 * @return {HTMLFormElement}
+		 */
+		WidgetCommon.getForm = function (formName,/* optional */ thedoc) {
+			if(!thedoc)  thedoc=document;
+			return thedoc[formName];
+		};
+	}
+	
+	return WidgetCommon.getForm(formName,thedoc);
+};
 
 /***********************/
 /* Event handling code */
 /***********************/
+
+/**
+ * Browser agnostic, generic addEventListener implementation
+ * @param {HTMLElement} object
+ * @param {String} eventType
+ * @param {Function} listener
+ * @param {Boolean} useCapture
+ */
 WidgetCommon.addEventListener = function (object, eventType, listener, useCapture) {
 	if(window.addEventListener) {
 		// W3C DOM compatible browsers
+		/**
+		 * Browser agnostic, generic addEventListener implementation
+		 * @param {HTMLElement} object
+		 * @param {String} eventType
+		 * @param {Function} listener
+		 * @param {Boolean} useCapture
+		 */
 		WidgetCommon.addEventListener = function (object, eventType, listener, useCapture) {
 			try {
 				if(object.addEventListener) {
@@ -444,6 +621,13 @@ WidgetCommon.addEventListener = function (object, eventType, listener, useCaptur
 		};
 	} else if(window.attachEvent) {
 		// Internet Explorer
+		/**
+		 * Browser agnostic, generic addEventListener implementation
+		 * @param {HTMLElement} object
+		 * @param {String} eventType
+		 * @param {Function} listener
+		 * @param {Boolean} useCapture
+		 */
 		WidgetCommon.addEventListener = function (object, eventType, listener, useCapture) {
 			try {
 				if(object.attachEvent) {
@@ -457,6 +641,13 @@ WidgetCommon.addEventListener = function (object, eventType, listener, useCaptur
 		};
 	} else {
 		// Other????
+		/**
+		 * Browser agnostic, generic addEventListener implementation
+		 * @param {HTMLElement} object
+		 * @param {String} eventType
+		 * @param {Function} listener
+		 * @param {Boolean} useCapture
+		 */
 		WidgetCommon.addEventListener = function (object, eventType, listener, useCapture) {
 			try {
 				object["on"+eventType]=listener;
@@ -468,13 +659,35 @@ WidgetCommon.addEventListener = function (object, eventType, listener, useCaptur
 	WidgetCommon.addEventListener(object, eventType, listener, useCapture);
 };
 
+/**
+ * Browser agnostic, generic addEventListener implementation, which works on element Ids
+ * @param {String} objectId
+ * @param {String} eventType
+ * @param {Function} listener
+ * @param {Boolean} useCapture
+ * @param {HTMLDocument, document, Document} thedoc
+ */
 WidgetCommon.addEventListenerToId = function (objectId, eventType, listener, useCapture, /* optional */ thedoc) {
 	WidgetCommon.addEventListener(WidgetCommon.getElementById(objectId,thedoc), eventType, listener, useCapture);
 };
 
+/**
+ * Browser agnostic, generic removeEventListener implementation
+ * @param {HTMLElement} object
+ * @param {String} eventType
+ * @param {Function} listener
+ * @param {Boolean} useCapture
+ */
 WidgetCommon.removeEventListener = function (object, eventType, listener, useCapture) {
 	if(window.removeEventListener) {
 		// W3C DOM compatible browsers
+		/**
+		 * Browser agnostic, generic removeEventListener implementation
+		 * @param {HTMLElement} object
+		 * @param {String} eventType
+		 * @param {Function} listener
+		 * @param {Boolean} useCapture
+		 */
 		WidgetCommon.removeEventListener = function (object, eventType, listener, useCapture) {
 			if(!useCapture)  useCapture=false;
 			try {
@@ -489,6 +702,13 @@ WidgetCommon.removeEventListener = function (object, eventType, listener, useCap
 		};
 	} else if(window.detachEvent) {
 		// Internet Explorer
+		/**
+		 * Browser agnostic, generic removeEventListener implementation
+		 * @param {HTMLElement} object
+		 * @param {String} eventType
+		 * @param {Function} listener
+		 * @param {Boolean} useCapture
+		 */
 		WidgetCommon.removeEventListener = function (object, eventType, listener, useCapture) {
 			try {
 				if(object.detachEvent) {
@@ -502,6 +722,13 @@ WidgetCommon.removeEventListener = function (object, eventType, listener, useCap
 		};
 	} else {
 		// Other????
+		/**
+		 * Browser agnostic, generic removeEventListener implementation
+		 * @param {HTMLElement} object
+		 * @param {String} eventType
+		 * @param {Function} listener
+		 * @param {Boolean} useCapture
+		 */
 		WidgetCommon.removeEventListener = function (object, eventType, listener, useCapture) {
 			try {
 				if(object["on"+eventType] && object["on"+eventType]==listener) {
@@ -515,6 +742,14 @@ WidgetCommon.removeEventListener = function (object, eventType, listener, useCap
 	WidgetCommon.removeEventListener(object, eventType, listener, useCapture);
 };
 
+/**
+ * Browser agnostic, generic removeEventListener implementation, which works on element Ids
+ * @param {String} objectId
+ * @param {String} eventType
+ * @param {Function} listener
+ * @param {Boolean} useCapture
+ * @param {HTMLDocument, document, Document} thedoc
+ */
 WidgetCommon.removeEventListenerFromId = function (objectId, eventType, listener, useCapture, /* optional */ thedoc) {
 	WidgetCommon.removeEventListener(WidgetCommon.getElementById(objectId,thedoc), eventType, listener, useCapture);
 };
@@ -522,6 +757,11 @@ WidgetCommon.removeEventListenerFromId = function (objectId, eventType, listener
 /*******************/
 /* IFrame handling */
 /*******************/
+/**
+ * This static, browser agnostic method, obtains the document managed by an iframe
+ * @param {HTMLElement} iframe
+ * @return {HTMLDocument, document, Document}
+ */
 WidgetCommon.getIFrameDocument = function (iframe) {
 	var rv = undefined;
 	
@@ -538,12 +778,25 @@ WidgetCommon.getIFrameDocument = function (iframe) {
 	return rv; 
 };
 
+/**
+ * This static, browser agnostic method, obtains the document managed by an iframe, using its id
+ * @param {String} aID
+ * @param {HTMLDocument, document, Document} thedoc
+ * @return {HTMLDocument, document, Document}
+ */
 WidgetCommon.getIFrameDocumentFromId = function (aID,/* optional */ thedoc) {
 	return WidgetCommon.getIFrameDocument(WidgetCommon.getElementById(aID,thedoc));
 };
 
 // for sizing and positioning the iframe in the window
 // .5 for height="50%"
+/**
+ * This static method sets the height of a given iframe
+ * @param {HTMLElement} theIframe
+ * @param {Float, Integer} h
+ * @param {Float, Integer} headerHeight
+ * @param {WidgetCommon.Viewport} viewport
+ */
 WidgetCommon.setIFrameHeight = function (theIframe, h, headerHeight, /* optional */ viewport) {
 	if(!viewport)  viewport=new WidgetCommon.Viewport();
 	if (theIframe) {
@@ -555,10 +808,25 @@ WidgetCommon.setIFrameHeight = function (theIframe, h, headerHeight, /* optional
 	}
 };
 
+/**
+ * This static method sets the height of a given iframe, based on its id
+ * @param {String} ifraname
+ * @param {Float, Integer} h
+ * @param {Float, Integer} headerHeight
+ * @param {WidgetCommon.Viewport} viewport
+ * @param {HTMLDocument, document, Document} thedoc
+ */
 WidgetCommon.setIFrameHeightFromId = function (ifraname, h, headerHeight, /* optional */ viewport, thedoc) {
 	WidgetCommon.setIFrameHeight(WidgetCommon.getElementById(ifraname,thedoc), h, headerHeight, viewport);
 };
 
+/**
+ * This static method sets an auto-resize behavior on a give IFRAME
+ * @param {HTMLElement} iframe
+ * @param {Float, Integer} percent
+ * @param {Float, Integer} headerHeight
+ * @param {Boolean} canreplace
+ */
 WidgetCommon.setIFrameAutoResize = function (iframe,/* optional */ percent,headerHeight,canreplace) {
 	if(!percent)  percent=1;
 	if(!headerHeight)  headerHeight=0;
@@ -570,6 +838,14 @@ WidgetCommon.setIFrameAutoResize = function (iframe,/* optional */ percent,heade
 	WidgetCommon.addEventListener(window,'resize',daemonfunc,false);
 };
 
+/**
+ * This static method sets an auto-resize behavior on a give IFRAME, based on its id
+ * @param {String} ifraname
+ * @param {Float, Integer} percent
+ * @param {Float, Integer} headerHeight
+ * @param {Boolean} canreplace
+ * @param {HTMLDocument, document, Document} thedoc
+ */
 WidgetCommon.setIFrameAutoResizeFromId = function (ifraname,/* optional */ percent, headerHeight, canreplace, thedoc) {
 	WidgetCommon.setIFrameAutoResize(WidgetCommon.getElementById(ifraname,thedoc),percent, headerHeight, canreplace);
 };
@@ -578,6 +854,13 @@ WidgetCommon.setIFrameAutoResizeFromId = function (ifraname,/* optional */ perce
 /* Generic XPath */
 /*****************/
 /* This is a sort of lazy evaluation */
+/**
+ * Browser agnostic XPath evaluation
+ * @param {String} thexpath
+ * @param {Node} thecontext
+ * @param {Object} theObjResolver
+ * @return {NodeList}
+ */
 WidgetCommon.xpathEvaluate = function (thexpath,thecontext,theObjResolver) {
 	WidgetCommon.xpathEvaluate = (BrowserDetect.browser=='Konqueror') ?
 		function (thexpath,thecontext,theObjResolver) {
@@ -621,6 +904,13 @@ WidgetCommon.xpathEvaluate = function (thexpath,thecontext,theObjResolver) {
 /******************************************/
 /* Client-side URI parsing and generation */
 /******************************************/
+/**
+ * Query string parsing
+ * @param {Object} qsParm
+ * @param {String} url
+ * @param {HTMLDocument, document, Document} thedoc
+ * @return {Object}
+ */
 WidgetCommon.parseQS = function (qsParm,/* optional */ url,thedoc)
 {
 	if(!thedoc)  thedoc=document;
@@ -645,6 +935,12 @@ WidgetCommon.parseQS = function (qsParm,/* optional */ url,thedoc)
 	return qsParm;
 };
 
+/**
+ * Query string generation
+ * @param {Object} qsParm
+ * @param {String} baseurl
+ * @return {String}
+ */
 WidgetCommon.generateQS = function (qsParm,baseurl)
 {
 	var query='';
@@ -667,6 +963,11 @@ WidgetCommon.generateQS = function (qsParm,baseurl)
 /**********************************/
 /* Javascript exception debugging */
 /**********************************/
+/**
+ * Javascript exception prettyprinter
+ * @param {Error, String, Number} e
+ * @return {String}
+ */
 WidgetCommon.DebugError = function (e) {
 	if(!e)  return 'Null or undefined error';
 	if(typeof e == 'string' || typeof e == 'number') {
@@ -783,6 +1084,13 @@ WidgetCommon.DebugError = function (e) {
 	}
 };
 
+/**
+ * On error event handler
+ * @param {String} msg
+ * @param {String} url
+ * @param {Integer} lineNumber
+ * @return {String}
+ */
 WidgetCommon.parseOnError = function(msg,url,lineNumber) {
 	return "JavaScript error:\nMessage: "+msg+
 		"\nURL: "+url+", line "+lineNumber;
@@ -803,13 +1111,22 @@ WidgetCommon.parseOnError = function(msg,url,lineNumber) {
   as long as this entire notice is included.
 
 *************************************************************************/  
-  
+
+/**
+ * @constructor
+ * @param {HTMLDocument,document,Document} thedoc
+ * @param {Window, window} thewin
+ */
 WidgetCommon.Viewport = function (/* optional */ thedoc,thewin) {
 	this.thedoc=(!thedoc)?document:thedoc;
 	this.thewin=(!thewin)?window:thewin;
 }
 
 WidgetCommon.Viewport.prototype = {
+	/**
+	 * This method obtains the window width, setting it up in the object
+	 * @method
+	 */
 	getWinWidth: function () {
 		this.width = 0;
 		if (this.thewin.innerWidth) this.width = this.thewin.innerWidth - 18;
@@ -818,7 +1135,10 @@ WidgetCommon.Viewport.prototype = {
 		else if (this.thedoc.body && this.thedoc.body.clientWidth) 
   			this.width = this.thedoc.body.clientWidth;
 	},
-
+	/**
+	 * This method obtains the window height, setting it up in the object
+	 * @method
+	 */
 	getWinHeight: function () {
 		this.height = 0;
 		if (this.thewin.innerHeight) this.height = this.thewin.innerHeight - 18;
@@ -827,7 +1147,10 @@ WidgetCommon.Viewport.prototype = {
 		else if (this.thedoc.body && this.thedoc.body.clientHeight) 
   			this.height = this.thedoc.body.clientHeight;
 	},
-
+	/**
+	 * This method obtains the horizontal scroll of the window content
+	 * @method
+	 */
 	getScrollX: function () {
 		this.scrollX = 0;
 		if (typeof this.thewin.pageXOffset == "number") this.scrollX = this.thewin.pageXOffset;
@@ -837,7 +1160,10 @@ WidgetCommon.Viewport.prototype = {
   			this.scrollX = this.thedoc.body.scrollLeft; 
 		else if (this.thewin.scrollX) this.scrollX = this.thewin.scrollX;
 	},
-
+	/**
+	 * This method obtains the vertical scroll of the window content
+	 * @method
+	 */
 	getScrollY: function () {
 		this.scrollY = 0;    
 		if (typeof this.thewin.pageYOffset == "number") this.scrollY = this.thewin.pageYOffset;
@@ -847,7 +1173,10 @@ WidgetCommon.Viewport.prototype = {
   			this.scrollY = this.thedoc.body.scrollTop; 
 		else if (this.thewin.scrollY) this.scrollY = this.thewin.scrollY;
 	},
-
+	/**
+	 * This method obtains all the window parameters previously described
+	 * @method
+	 */
 	getAll: function () {
 		this.getWinWidth();
 		this.getWinHeight();
@@ -867,6 +1196,12 @@ WidgetCommon.Viewport.prototype = {
 	It returns a random integer between min and max.
 	Using Math.round() will give you a non-uniform distribution!
 */
+/**
+ * This function generates a random integer number in the range [min,max]
+ * @param {Float, Integer} min
+ * @param {Float, Integer} max
+ * @return {Integer}
+ */
 WidgetCommon.getRandomInt = function (min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -874,6 +1209,10 @@ WidgetCommon.getRandomInt = function (min, max) {
 /**************************/
 /* Now, an UUID generator */
 /**************************/
+/**
+ * This method generates an UUID v4 (random)
+ * @return {String}
+ */
 WidgetCommon.getRandomUUID = function () {
 	var rarr=new Array();
 	for(var i=0;i<8;i++) {
@@ -886,6 +1225,11 @@ WidgetCommon.getRandomUUID = function () {
 /****************************/
 /* XML textContent handling */
 /****************************/
+/**
+ * This agnostic browser function obtains the text content from an XML node
+ * @param {Node} oNode
+ * @return {String}
+ */
 WidgetCommon.getTextContent = function (oNode) {
 	var retval;
 	if(oNode) {
@@ -905,6 +1249,13 @@ WidgetCommon.getTextContent = function (oNode) {
 	return retval;
 };
 
+/**
+ * This accesory function is used by WidgetCommon.getTextContent
+ * when there is no support for oNode.textContet
+ * @param {Node} oNode
+ * @param {Boolean} deep
+ * @return {String}
+ */
 WidgetCommon.nodeGetText = function (oNode,deep) {
 	var s = "";
 	for(var node=oNode.firstChild; node; node=node.nextSibling){
@@ -919,4 +1270,60 @@ WidgetCommon.nodeGetText = function (oNode,deep) {
 		}
 	}
 	return s;
+};
+
+/**
+ * It returns the local name of a node in an agnostic browser implementation
+ * @param {Node, HTMLElement} node
+ * @return {String}
+ */
+WidgetCommon.getLocalName = function(node) {
+	if('localName' in node)
+		return node.localName;
+	
+	var nodeTagName = node.tagName;
+	if (nodeTagName.indexOf(':') != -1) {
+		nodeTagName = nodeTagName.substring(nodeTagName.indexOf(':')+1);
+	}
+	
+	return nodeTagName;
+};
+
+/**
+ * 
+ * @param {Node, HTMLElement} node
+ */
+WidgetCommon.clearNode = function(node) {
+	while(node.hasChildNodes()) {
+		node.removeChild(node.firstChild);
+	}
+};
+
+/**
+ * This function creates either an object or an embed element in order to load an SVG
+ * @param {String} url
+ * @param {String, Integer, Float} width
+ * @param {String, Integer, Float} height
+ * @param {Function} eventListener
+ * @param {HTMLElement} parent
+ * @return {HTMLElement}
+ */
+WidgetCommon.createSVG = function (url, parent /* optional */, width,height,eventListener) {
+	var thedoc = parent.ownerDocument;
+	
+	// Non standard behavior, set by svgweb
+	var svg = thedoc.createElement('object',true);
+	svg.setAttribute('type','image/svg+xml');
+	svg.setAttribute('data',url);
+	if(width!=undefined && width!=null)
+		svg.setAttribute('width' , width);
+	if(height!=undefined && height!=null)
+		svg.setAttribute('height' , height);
+	
+	if(typeof eventListener == 'function')
+		svg.addEventListener('load',eventListener,false);
+	
+	svgweb.appendChild(svg,parent);
+	
+	return svg;
 };

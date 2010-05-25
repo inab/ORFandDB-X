@@ -1,7 +1,18 @@
-/* Made by JosÈ MarÌa Fern·ndez, CNIO 2007*/
+/* Made by Jos√© Mar√≠a Fern√°ndez, CNIO 2007*/
 /* For ORFandDB/X */
 
 /* Widget Pager object declaration */
+/**
+ * WidgetPager constructor, used in CARGO for OMIM Widget
+ * @constructor
+ * @param {String} theuri
+ * @param {String} theparamid
+ * @param {String} theparamns
+ * @param {String} theparamhtml
+ * @param {String} thedefaultlogo
+ * @param {String} thePager
+ * @param {String} thePageContent
+ */
 WidgetPager = function (theuri,theparamid,theparamns,theparamhtml,/* optional */ thedefaultlogo,thePager,thePageContent) {
 	this.widgetURI=theuri;
 	this.widgetParamId=theparamid;
@@ -64,11 +75,22 @@ WidgetPager._init=null;
 WidgetPager.FrameID='_ifra_';
 
 WidgetPager.prototype = {
+	/**
+	 * Panes internal variable initialization 
+	 * @method
+	 * @param {String} thePager
+	 * @param {String} thePageContent
+	 */
 	setPanes: function (thePager,thePageContent) {
 		if(thePager)  this.pagerPane=thePager;
 		if(thePageContent)  this.pageContentPane=thePageContent;
 	},
-	
+	/**
+	 * Error handling routine
+	 * @method
+	 * @param {Error, String} e
+	 * @param {String} widURL
+	 */
 	showError: function (e,widURL) {
 		this.xmlDoc=null;
 		if(widURL!=null) {
@@ -85,7 +107,10 @@ WidgetPager.prototype = {
 		var urlerrmesg=(widURL!=null && widURL!='')?"<i>There was an error while retrieving <a href='"+widURL+"'>"+widURL+"</a></i>":'';
 		WidgetCommon.getElementById(this.pageContentPane).innerHTML = "<h2>"+urlerrmesg+errmesg+"</h2>";
 	},
-
+	/**
+	 * Internal initialization routines (do not use)
+	 * @method
+	 */
 	widgetPagerInit: function () {
 		/*
 		if(navigator.vendor.indexOf('KDE')!=-1 || navigator.vendor.indexOf('Apple')!=-1) {
@@ -237,7 +262,14 @@ WidgetPager.prototype = {
 			}
 		}
 	},
-	
+	/**
+	 * It creates a query string for the widget
+	 * @method
+	 * @param {String} ensID
+	 * @param {String} namespace
+	 * @param {String} html
+	 * @return {String}
+	 */
 	buildWidgetURI: function (ensID,namespace,html)
 	{
 		var qsParm=new Array();
@@ -251,7 +283,11 @@ WidgetPager.prototype = {
 
 		return WidgetCommon.generateQS(qsParm,this.widgetURI);
 	},
-	
+	/**
+	 * @method
+	 * @param {NodeList} nodeList
+	 * @param {Array} includeNodes
+	 */
 	buildIncludeNodes: function (nodeList,includeNodes)
 	{
 		// Internet Explorer has a weird behavior
@@ -272,7 +308,11 @@ WidgetPager.prototype = {
 			}
 		}
 	},
-
+	/**
+	 * @method
+	 * @param {NodeList} nodeList
+	 * @param {HTMLDocument, Document} thedoc
+	 */
 	includeNodesOnce: function (nodeList,thedoc)
 	{
 		// Internet Explorer has a weird behavior
@@ -299,7 +339,11 @@ WidgetPager.prototype = {
 			}
 		}
 	},
-	
+	/**
+	 * @method
+	 * @param {Array} includeNodes
+	 * @param {HTMLDocument, Document} thedoc
+	 */
 	processIncludeNodes: function (includeNodes,thedoc)
 	{
 		// Internet Explorer has a weird behavior
@@ -327,7 +371,11 @@ WidgetPager.prototype = {
 			}
 		}
 	},
-	
+	/**
+	 * @method
+	 * @param {Dcoument, Element} responseXML
+	 * @param {String} widURL
+	 */
 	gotResults: function (responseXML,widURL)
 	{
 		try {
@@ -490,7 +538,9 @@ WidgetPager.prototype = {
 			this.showError(e,widURL);
 		}
 	},
-
+	/**
+	 * @method
+	 */
 	setLocalPager: function ()
 	{
 		// By program pager
@@ -516,7 +566,11 @@ WidgetPager.prototype = {
 			}
 		}
 	},
-
+	/**
+	 * @method
+	 * @param {Document, Element} responseXML
+	 * @param {String} xslPagerURL
+	 */
 	gotPagerXSLT: function (responseXML,xslPagerURL)
 	{
 		try {
@@ -546,7 +600,9 @@ WidgetPager.prototype = {
 			this.showError(e,xslPagerURL);
 		}
 	},
-
+	/**
+	 * @method
+	 */
 	processDefaultView: function ()
 	{		
 		// Get the XSL URL, if any
@@ -605,7 +661,11 @@ WidgetPager.prototype = {
 			myXMLHTTPRequest.send(null);
 		}
 	},
-
+	/**
+	 * @method
+	 * @param {Document, Element} responseXML
+	 * @param {String} xslURL
+	 */
 	gotContentXSLT: function (responseXML,xslURL)
 	{
 		try {
@@ -624,12 +684,19 @@ WidgetPager.prototype = {
 			this.showError(e,xslURL);
 		}
 	},
-	
+	/**
+	 * @method
+	 * @param {Integer} theVal
+	 */
 	showOne: function (theVal) {
 		this.show(theVal,theVal);
 		//this.prefetch(theVal+1,theVal+5);
 	},
-
+	/**
+	 * @method
+	 * @param {Integer} fromVal
+	 * @param {Integer} toVal
+	 */
 	show: function (fromVal,toVal)
 	{
 		// Killing previous show!!!
@@ -685,7 +752,11 @@ WidgetPager.prototype = {
 		this.prefetch(fromVal,toVal+5);
 		WidgetPager.ContinueShow(this.activePlace,fromVal,toVal);
 	},
-
+	/**
+	 * @method
+	 * @param {Integer} fromVal
+	 * @param {Integer} toVal
+	 */
 	prefetch: function (fromVal,toVal)
 	{
 		if(toVal>this.maxcontent) {
@@ -734,7 +805,12 @@ WidgetPager.prototype = {
 			}
 		}
 	},
-
+	/**
+	 * @method
+	 * @param {String} fetchURI
+	 * @param {Integer} nodei
+	 * @param {Integer} fromVal
+	 */
 	doPrefetch: function (fetchURI,nodei,fromVal)
 	{
 		var prefetchXML=new XMLHttpRequest();
@@ -797,6 +873,12 @@ WidgetPager.prototype = {
 
 WidgetPager.ActivePagers=new Array();
 
+/**
+ * 
+ * @param {Integer} activePlace
+ * @param {Integer} fromVal
+ * @param {Integer} toVal
+ */
 WidgetPager.ContinueShow = function (activePlace,fromVal,toVal) {
 	var widget=WidgetPager.ActivePagers[activePlace];
 	if(!widget) {
@@ -896,6 +978,15 @@ WidgetPager.DefaultScope = '__default__';
 WidgetPager.GlobalScope = 'General';
 
 /* URI builder */
+/**
+ * @constructor
+ * @param {String} thefetchuri
+ * @param {String} theidattr
+ * @param {String} thensattr
+ * @param {String} thehtmlattr
+ * @param {String} themarkupattr
+ * @param {String} thenamespace
+ */
 WidgetPager.DefaultFetchURI = function (thefetchuri,theidattr,thensattr,thehtmlattr,themarkupattr,thenamespace) {
 	this.widgetFetchURI=thefetchuri;
 	this.widgetFetchParamId=theidattr;
@@ -906,7 +997,15 @@ WidgetPager.DefaultFetchURI = function (thefetchuri,theidattr,thensattr,thehtmla
 };
 
 WidgetPager.DefaultFetchURI.prototype = {
-	buildURI: function (id, /* optional */ ns, html, markup) {
+	/**
+	 * @method
+	 * @param {String} id
+	 * @param {String} namespace
+	 * @param {Boolean} html
+	 * @param {String} markup
+	 * @return {String}
+	 */
+	buildURI: function (id, /* optional */ namespace, html, markup) {
 		var qsParm=new Array();
 		qsParm[this.widgetFetchParamId]=id;
 		if(this.widgetFetchParamNS && namespace) {
@@ -922,17 +1021,30 @@ WidgetPager.DefaultFetchURI.prototype = {
 
 		return WidgetCommon.generateQS(qsParm,this.widgetFetchURI);
 	},
-	
+	/**
+	 * @method
+	 * @return {String}
+	 */
 	isHTMLFetch: function () {
 		return this.widgetFetchParamHTML;
 	},
-	
+	/**
+	 * @method
+	 * @return {String}
+	 */
 	scope: function() {
 		return this.widgetFetchScope;
 	}
 };
 
 /* Data: either content or view */
+/**
+ * @constructor
+ * @param {Document, Element, String} thecontent
+ * @param {String} thefetchuri
+ * @param {String} thedataname
+ * @param {String} theusagescope
+ */
 WidgetPager.Data = function (thecontent,thefetchuri,thedataname,theusagescope) {
 	this.includeNodes=new Array();
 	if(!thefetchuri) {
@@ -952,10 +1064,17 @@ WidgetPager.Data = function (thecontent,thefetchuri,thedataname,theusagescope) {
 };
 
 WidgetPager.Data.prototype = {
+	/**
+	 * @method
+	 * @return {String}
+	 */
 	scope: function() {
 		return this.usageScope;
 	},
-	
+	/**
+	 * @method
+	 * @param {NodeList} nodeList
+	 */
 	processIncludeNodes: function (nodeList)
 	{
 		// Internet Explorer has a weird behavior
@@ -976,7 +1095,11 @@ WidgetPager.Data.prototype = {
 			}
 		}
 	},
-	
+	/**
+	 * @method
+	 * @param {Function, String} onLoadFunction
+	 * @param {Boolean} force
+	 */
 	doPrefetch: function (/* optional */ onLoadFunction,force)
 	{
 		if(this.dontFetch)  return;
@@ -1058,6 +1181,15 @@ WidgetPager.Data.prototype = {
 };
 	
 /* Contents */
+/**
+ * @constructor
+ * @extends {WidgetPager.Data}
+ * @param {String} theid
+ * @param {String} thenamespace
+ * @param {Document, Element, String} thecontent
+ * @param {String} thefetchuri
+ * @param {String} thetitle
+ */
 WidgetPager.Content = function (theid,thenamespace,thecontent,thefetchuri,thetitle) {
 	WidgetPager.Data.call(this,thecontent,thefetchuri,thetitle,(!thenamespace)?WidgetPager.GeneralScope:thenamespace);
 	this.id=theid;
@@ -1066,6 +1198,16 @@ WidgetPager.Content.prototype = new WidgetPager.Data;
 WidgetPager.Content.prototype.constructor = WidgetPager.Content;
 
 /* Views */
+/**
+ * @constructor
+ * @extends {WidgetPager.Data}
+ * @param {String} thename
+ * @param {String} thescope
+ * @param {String} theviewmode
+ * @param {Document, Element, String} thecontent
+ * @param {String} thefetchuri
+ * @param {String} themimetype
+ */
 WidgetPager.View = function (thename,thescope,theviewmode,thecontent,thefetchuri,themimetype) {
 	WidgetPager.Data.call(this,thecontent,thefetchuri,thename,(!thescope)?WidgetPager.DefaultScope:thescope);
 	this.viewMode=(!theviewmode)?'none':theviewmode;
@@ -1076,6 +1218,12 @@ WidgetPager.View.prototype.constructor = WidgetPager.View;
 
 WidgetPager.View.DEFAULT_CONTENT_PANE='__result__';
 
+/**
+ * @method
+ * @param {WidgetPager.Data, Error} data
+ * @param {HTMLDocument, Document} thedoc
+ * @param {String} pageContentPane
+ */
 WidgetPager.View.prototype.applyView = function (data,/* optional */ thedoc, pageContentPane) {
 	// Precondition: the information must be previously fetched (if needed).
 	if(!thedoc)  thedoc=document;
