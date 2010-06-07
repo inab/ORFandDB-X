@@ -1,5 +1,13 @@
-/* Made by José María Fernández, CNIO 2007*/
-/* For ORFandDB/X */
+/* Made by José María Fernández, CNIO 2007-2010 */
+/* Initially for ORFandDB/X */
+
+/*
+ * These global facets of window change the default behavior of WidgetCommon:
+ * 
+ * WidgetCommon_NO_INIT -> Bootstrap must be issued by hand
+ * WidgetCommon_DO_APPEND -> New 'script' children are appended instead of inserted just after widgetCommon.js node
+ * WidgetCommon_DEBUG -> Debug machinery is enabled, so calls to WidgetCommon.DebugMSG do work
+ */
 
 /**
  * @constructor
@@ -20,11 +28,15 @@ WidgetCommon.JSDEPS=new Array(
 	"ajaxslt/xpath.js"
 );
 
-//WidgetCommon.DEBUG=true;
-/**
- * This variable controls whether the WidgetCommon library generates debug output
- */
-WidgetCommon.DEBUG=undefined;
+if('WidgetCommon_DEBUG' in window) {
+	/**
+	 * This variable controls whether the WidgetCommon library generates debug output
+	 */
+	WidgetCommon.DEBUG=true;
+} else {
+	WidgetCommon.DEBUG=undefined;
+}
+
 WidgetCommon._timer=undefined;
 WidgetCommon._loaded=undefined;
 WidgetCommon.onload=undefined;
@@ -32,21 +44,33 @@ WidgetCommon.DEBUGDIV=undefined;
 WidgetCommon.DEBUGDOC=undefined;
 WidgetCommon.counter=0;
 
+WidgetCommon.referenceScriptElement = undefined;
+WidgetCommon.referenceParentElement = undefined;
+
 /* First, essential functions!!!! */
 
 /**
  * This function allows loading a javascript library in a dynamic way
  * @param {String} url
- * @param {String} basehref
- * @param {HTMLDocument,document,Document} thedoc
- * @param {Function} onLoadScript
+ * @param {String} [basehref]
+ * @param {HTMLDocument,document,Document} [thedoc]
+ * @param {Function} [onLoadScript]
  */
 WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc,onLoadScript)
 {
-	if(!thedoc) {
-		thedoc=document;
+	var head;
+	var reference;
+	if(WidgetCommon.referenceParentElement === undefined) {
+		if (!thedoc) {
+			thedoc = document;
+		}
+		head=thedoc.getElementsByTagName("head")[0];
+		reference = null;
+	} else {
+		head = WidgetCommon.referenceParentElement;
+		reference = WidgetCommon.referenceScriptElement;
+		thedoc = head.ownerDocument;
 	}
-	var head=thedoc.getElementsByTagName("head")[0];
 	
 	// Browser detection
 	if(!basehref) {
@@ -81,9 +105,11 @@ WidgetCommon.dhtmlLoadScript = function (url,/* optional */ basehref,thedoc,onLo
 		WidgetCommon.counter++;
 	}
 	e.src = basehref+url;
-	head.appendChild(e);
-	if(e2)
-		head.appendChild(e2);
+	head.insertBefore(e,reference);
+		
+	if(e2!=undefined)
+		head.insertBefore(e2,reference);
+	
 	return e;
 };
 
@@ -99,6 +125,7 @@ WidgetCommon.doOnload = function() {
 			WidgetCommon.onload();
 		} catch(we) {
 			// IgnoreIt!!!(R)
+			WidgetCommon.DebugMSG(we);
 		}
 	} else if(WidgetCommon.onload instanceof Array) {
 		for(var loind in WidgetCommon.onload) {
@@ -107,6 +134,7 @@ WidgetCommon.doOnload = function() {
 					WidgetCommon.onload[loind]();
 				} catch(we) {
 					// IgnoreIt!!!(R)
+					WidgetCommon.DebugMSG(we);
 				}
 			}
 		}
@@ -116,7 +144,7 @@ WidgetCommon.doOnload = function() {
 /**
  * The debug function used by internal WidgetCommon code. It takes as input
  * either an input exception object or an string
- * @param {Error} msg
+ * @param {Error,String} msg
  */
 WidgetCommon.DebugMSG = function(msg) {
 	if(WidgetCommon.DEBUG) {
@@ -144,9 +172,9 @@ WidgetCommon.DebugMSG = function(msg) {
  * This function allows loading a ordered list of javascript library in a dynamic way.
  * At the end, a function is called.
  * @param {Array} urls
- * @param {String} basehref
- * @param {HTMLDocument,document,Document} thedoc
- * @param {Function} theLastScript
+ * @param {String} [basehref]
+ * @param {HTMLDocument,document,Document} [thedoc]
+ * @param {Function} [theLastScript]
  */
 WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,thedoc,theLastScript)
 {
@@ -186,9 +214,9 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
 	
 	//WidgetCommon._loaded=undefined;
 	if(useIntervals) {
-		var head=thedoc.getElementsByTagName("head")[0];
+		var head=(WidgetCommon.referenceParentElement!=undefined)?WidgetCommon.referenceParentElement:thedoc.getElementsByTagName("head")[0];
 		var baseindex=0;
-		var thecontext=thedoc;
+		var thecontext=(WidgetCommon.referenceParentElement!=undefined)?WidgetCommon.referenceParentElement.ownerDocument:thedoc;
 		var timeoutFunc = function() {
 			//alert(baseindex+" "+urls.length+" "+thecontext.readyState+' '+thedoc.readyState+' '+thecontext.event);
 			clearTimeout(WidgetCommon._timer);
@@ -250,17 +278,26 @@ WidgetCommon.dhtmlDelayedLoadScript = function (urls,/* optional */ basehref,the
  * This function allows loading a ordered list of javascript library in a dynamic way.
  * At the end, a function is called.
  * @param {Array} urls
- * @param {String} basehref
- * @param {HTMLDocument,document,Document} thedoc
- * @param {Function} theLastScript
- * @param {Integer} urlsi
+ * @param {String} [basehref]
+ * @param {HTMLDocument,document,Document} [thedoc]
+ * @param {Function} [theLastScript]
+ * @param {Integer} [urlsi]
  */
 WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc,theLastScript,urlsi)
 {
-	if(!thedoc) {
-		thedoc=document;
+	var head;
+	var reference;
+	if(WidgetCommon.referenceParentElement === undefined) {
+		if (!thedoc) {
+			thedoc = document;
+		}
+		head = thedoc.getElementsByTagName("head")[0];
+		reference = null;
+	} else {
+		head = WidgetCommon.referenceParentElement;
+		thedoc = head.ownerDocument;
+		reference = WidgetCommon.referenceScriptElement;
 	}
-	var head=thedoc.getElementsByTagName("head")[0];
 	
 	if(urlsi==undefined)  urlsi=0;
 	
@@ -333,7 +370,7 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 		e.src = basehref+scriptURL;
 		// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' starts');
 		try {
-			head.appendChild(e);
+			head.insertBefore(e,reference);
 		} catch(e) {
 			// WidgetCommon.DebugMSG('Bulk script['+urlsi+'] '+scriptURL+' sterror: '+WidgetCommon.DebugError(e));
 			// IgnoreIT!!!(R)
@@ -353,8 +390,8 @@ WidgetCommon.dhtmlBulkLoadScript = function (urls,/* optional */ basehref,thedoc
 /**
  * This function allows loading a CSS stylesheet in a dynamic way
  * @param {String} url
- * @param {String} basehref
- * @param {HTMLDocument,document,Document} thedoc
+ * @param {String} [basehref]
+ * @param {HTMLDocument,document,Document} [thedoc]
  */
 WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
 {
@@ -372,23 +409,74 @@ WidgetCommon.dhtmlLoadCSS = function (url,/* optional */ basehref,thedoc)
 
 /**
  * Initialization of the WidgetCommon library
- * @param {Array} JSDEPS
- * @param {Function} theLastScript
- * @param {String} basehref
+ * @param {Array} [JSDEPS]
+ * @param {Function} [theLastScript]
+ * @param {String} [basehref]
  */
 WidgetCommon.widgetCommonInit = function (/* optional */ JSDEPS, theLastScript, basehref)
 {
 	//WidgetCommon.DebugMSG("WidgetCommonInit was called");
-	if(JSDEPS==undefined)
-		JSDEPS=WidgetCommon.JSDEPS;
+	var head = document.getElementsByTagName("head")[0];
+	
+	// Firing bootstrapping
+	if(WidgetCommon.referenceParentElement === undefined) {
+		var nextJSDEPS = JSDEPS;
+		JSDEPS = WidgetCommon.JSDEPS;
+		WidgetCommon.referenceParentElement = head;
+		WidgetCommon.referenceScriptElement = null;
+		if(!('WidgetCommon_DO_APPEND' in window)) {
+			var scripts = head.getElementsByTagName("script");
+			var isc;
+			for(isc = 0; isc < scripts.length; isc++) {
+				var theScript = scripts[isc];
+				var src = theScript.getAttribute("src");
+				// Anonymous javascript blocks
+				if (!src) {
+					continue;
+				}
+				var last = src.lastIndexOf('widgetCommon.js');
+				if (last != -1 && src.match(/\/widgetCommon\.js$/)) {
+					if (theScript.nextSibling != undefined) {
+						WidgetCommon.referenceScriptElement = theScript.nextSibling;
+					}
+					break;
+				}
+			}
+		}
 		
-	if(theLastScript==undefined)
-		theLastScript=WidgetCommon.doOnload;
+		var nextLastScript = theLastScript;
+		var nextBaseHREF = basehref;
+		basehref = undefined;
+		
+		if(nextJSDEPS!=null && nextJSDEPS!=undefined) {
+			theLastScript = function() {
+				WidgetCommon.doOnload();
+				WidgetCommon.widgetCommonInit(nextJSDEPS,nextLastScript,nextBaseHREF);
+			}
+		} else if(theLastScript === undefined || !(typeof theLastScript == 'function')) {
+			theLastScript = WidgetCommon.doOnload;
+		} else {
+			theLastScript = function() {
+				WidgetCommon.doOnload();
+				try {
+					nextLastScript();
+				} catch(e) {
+					WidgetCommon.DebugMSG('Bulk last script error: '+we);
+				}
+			};
+		}
+	} else {
+		if(JSDEPS===undefined) {
+			WidgetCommon.DebugMSG('Bulk load called with no argument');
+			return;
+		}
+	}
+
 	
 	// Special behavior only on init
 	var doTimer;
 	if(basehref==undefined) {
-		var scripts=document.getElementsByTagName("script");
+		var scripts=head.getElementsByTagName("script");
 		var isc;
 		for(isc=0;isc < scripts.length ; isc++) {
 			var src = scripts[isc].getAttribute("src");
@@ -431,41 +519,72 @@ WidgetCommon.widgetCommonInit = function (/* optional */ JSDEPS, theLastScript, 
 };
 
 /* Second, dynamically loading the libraries (bootstraping) */
-WidgetCommon.widgetCommonInit();
+if('WidgetCommon_NO_INIT' in window) {
+	if(typeof WidgetCommon.onload == 'function') {
+		var onArray = new Array();
+		onArray.push(WidgetCommon.onload);
+		WidgetCommon.onload = onArray;
+	} else if(!(WidgetCommon.onload instanceof Array)) {
+		WidgetCommon.onload = new Array();
+	}
+	
+	WidgetCommon.onload.push(function() {
+		window.svgweb._onDOMContentLoaded();
+	});
+} else {
+	WidgetCommon.widgetCommonInit();
+}
 
 /* And third, the additional functions!!!! */
 
 /**
  * This static method injects inline CSS declarations just at the end of the document's head
  * @param {String} csscontent
- * @param {HTMLDocument,document,Document} thedoc
+ * @param {HTMLDocument,document,Document} [thedoc]
  */
 WidgetCommon.dhtmlLoadCSSContent = function (csscontent,/* optional */ thedoc)
 {
-	if(!thedoc) {
-		thedoc=document;
+	var head;
+	if (WidgetCommon.referenceParentElement === undefined) {
+		if (!thedoc) {
+			thedoc = document;
+		}
+		head = thedoc.getElementsByTagName("head")[0];
+	} else {
+		head = WidgetCommon.referenceParentElement;
+		thedoc = head.ownerDocument;
 	}
+	
 	var e = thedoc.createElement("style");
 	e.type="text/css";
-	e.innerHTML = csscontent;
-	thedoc.getElementsByTagName("head")[0].appendChild(e);
+	e.appendChild(thedoc.createTextNode(csscontent));
+	head.appendChild(e);
 };
 
 /**
  * This static method injects inline Javascript sentences just at the end of the document's head 
  * @param {String} javascriptcontent
- * @param {HTMLDocument,document,Document} thedoc
+ * @param {HTMLDocument,document,Document} [thedoc]
  */
 WidgetCommon.dhtmlLoadScriptContent = function (javascriptcontent,/* optional */ thedoc)
 {
-	if(!thedoc) {
-		thedoc=document;
+	var head;
+	if (WidgetCommon.referenceParentElement === undefined) {
+		if (!thedoc) {
+			thedoc = document;
+		}
+		head = thedoc.getElementsByTagName("head")[0];
+	} else {
+		head = WidgetCommon.referenceParentElement;
+		thedoc = head.ownerDocument;
 	}
+	
 	var e = thedoc.createElement("script");
 	e.type="text/javascript";
 	//e.appendChild(thedoc.createTextNode("<!--\n"+javascriptcontent+"\n// -->"));
-	e.innerHTML=javascriptcontent;
-	thedoc.getElementsByTagName("head")[0].appendChild(e);
+	// e.innerHTML=javascriptcontent;
+	e.appendChild(thedoc.createTextNode(javascriptcontent));
+	head.appendChild(e);
 };
 
 /**************************/
@@ -475,7 +594,7 @@ WidgetCommon.dhtmlLoadScriptContent = function (javascriptcontent,/* optional */
 /**
  * Browser agnostic, generic getElementById implementation
  * @param {String} id
- * @param {HTMLDocument,document,Document} thedoc
+ * @param {HTMLDocument,document,Document} [thedoc]
  * @return {HTMLElement, Element}
  */
 WidgetCommon.getElementById = function(id,/* optional */ thedoc){
@@ -555,7 +674,7 @@ WidgetCommon.getElementsByClassNamePatcher = function (thedoc) {
 /**
  * This method looks for a FORM tag by its name attribute
  * @param {String} formName
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {HTMLDocument, document, Document} [thedoc]
  * @return {HTMLFormElement}
  */
 WidgetCommon.getForm = function(formName,/* optional */ thedoc) {
@@ -563,7 +682,7 @@ WidgetCommon.getForm = function(formName,/* optional */ thedoc) {
 		/**
 		 * This method looks for a FORM tag by its name attribute
 		 * @param {String} formName
-		 * @param {HTMLDocument, document, Document} thedoc
+		 * @param {HTMLDocument, document, Document} [thedoc]
 		 * @return {HTMLFormElement}
 		 */
 		WidgetCommon.getForm = function (formName,/* optional */ thedoc) {
@@ -574,7 +693,7 @@ WidgetCommon.getForm = function(formName,/* optional */ thedoc) {
 		/**
 		 * This method looks for a FORM tag by its name attribute
 		 * @param {String} formName
-		 * @param {HTMLDocument, document, Document} thedoc
+		 * @param {HTMLDocument, document, Document} [thedoc]
 		 * @return {HTMLFormElement}
 		 */
 		WidgetCommon.getForm = function (formName,/* optional */ thedoc) {
@@ -665,7 +784,7 @@ WidgetCommon.addEventListener = function (object, eventType, listener, useCaptur
  * @param {String} eventType
  * @param {Function} listener
  * @param {Boolean} useCapture
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {HTMLDocument, document, Document} [thedoc]
  */
 WidgetCommon.addEventListenerToId = function (objectId, eventType, listener, useCapture, /* optional */ thedoc) {
 	WidgetCommon.addEventListener(WidgetCommon.getElementById(objectId,thedoc), eventType, listener, useCapture);
@@ -748,7 +867,7 @@ WidgetCommon.removeEventListener = function (object, eventType, listener, useCap
  * @param {String} eventType
  * @param {Function} listener
  * @param {Boolean} useCapture
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {HTMLDocument, document, Document} [thedoc]
  */
 WidgetCommon.removeEventListenerFromId = function (objectId, eventType, listener, useCapture, /* optional */ thedoc) {
 	WidgetCommon.removeEventListener(WidgetCommon.getElementById(objectId,thedoc), eventType, listener, useCapture);
@@ -781,7 +900,7 @@ WidgetCommon.getIFrameDocument = function (iframe) {
 /**
  * This static, browser agnostic method, obtains the document managed by an iframe, using its id
  * @param {String} aID
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {HTMLDocument, document, Document} [thedoc]
  * @return {HTMLDocument, document, Document}
  */
 WidgetCommon.getIFrameDocumentFromId = function (aID,/* optional */ thedoc) {
@@ -795,7 +914,7 @@ WidgetCommon.getIFrameDocumentFromId = function (aID,/* optional */ thedoc) {
  * @param {HTMLElement} theIframe
  * @param {Float, Integer} h
  * @param {Float, Integer} headerHeight
- * @param {WidgetCommon.Viewport} viewport
+ * @param {WidgetCommon.Viewport} [viewport]
  */
 WidgetCommon.setIFrameHeight = function (theIframe, h, headerHeight, /* optional */ viewport) {
 	if(!viewport)  viewport=new WidgetCommon.Viewport();
@@ -813,8 +932,8 @@ WidgetCommon.setIFrameHeight = function (theIframe, h, headerHeight, /* optional
  * @param {String} ifraname
  * @param {Float, Integer} h
  * @param {Float, Integer} headerHeight
- * @param {WidgetCommon.Viewport} viewport
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {WidgetCommon.Viewport} [viewport]
+ * @param {HTMLDocument, document, Document} [thedoc]
  */
 WidgetCommon.setIFrameHeightFromId = function (ifraname, h, headerHeight, /* optional */ viewport, thedoc) {
 	WidgetCommon.setIFrameHeight(WidgetCommon.getElementById(ifraname,thedoc), h, headerHeight, viewport);
@@ -823,9 +942,9 @@ WidgetCommon.setIFrameHeightFromId = function (ifraname, h, headerHeight, /* opt
 /**
  * This static method sets an auto-resize behavior on a give IFRAME
  * @param {HTMLElement} iframe
- * @param {Float, Integer} percent
- * @param {Float, Integer} headerHeight
- * @param {Boolean} canreplace
+ * @param {Float, Integer} [percent]
+ * @param {Float, Integer} [headerHeight]
+ * @param {Boolean} [canreplace]
  */
 WidgetCommon.setIFrameAutoResize = function (iframe,/* optional */ percent,headerHeight,canreplace) {
 	if(!percent)  percent=1;
@@ -841,10 +960,10 @@ WidgetCommon.setIFrameAutoResize = function (iframe,/* optional */ percent,heade
 /**
  * This static method sets an auto-resize behavior on a give IFRAME, based on its id
  * @param {String} ifraname
- * @param {Float, Integer} percent
- * @param {Float, Integer} headerHeight
- * @param {Boolean} canreplace
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {Float, Integer} [percent]
+ * @param {Float, Integer} [headerHeight]
+ * @param {Boolean} [canreplace]
+ * @param {HTMLDocument, document, Document} [thedoc]
  */
 WidgetCommon.setIFrameAutoResizeFromId = function (ifraname,/* optional */ percent, headerHeight, canreplace, thedoc) {
 	WidgetCommon.setIFrameAutoResize(WidgetCommon.getElementById(ifraname,thedoc),percent, headerHeight, canreplace);
@@ -907,8 +1026,8 @@ WidgetCommon.xpathEvaluate = function (thexpath,thecontext,theObjResolver) {
 /**
  * Query string parsing
  * @param {Object} qsParm
- * @param {String} url
- * @param {HTMLDocument, document, Document} thedoc
+ * @param {String} [url]
+ * @param {HTMLDocument, document, Document} [thedoc]
  * @return {Object}
  */
 WidgetCommon.parseQS = function (qsParm,/* optional */ url,thedoc)
@@ -1114,8 +1233,8 @@ WidgetCommon.parseOnError = function(msg,url,lineNumber) {
 
 /**
  * @constructor
- * @param {HTMLDocument,document,Document} thedoc
- * @param {Window, window} thewin
+ * @param {HTMLDocument,document,Document} [thedoc]
+ * @param {Window, window} [thewin]
  */
 WidgetCommon.Viewport = function (/* optional */ thedoc,thewin) {
 	this.thedoc=(!thedoc)?document:thedoc;
@@ -1302,13 +1421,13 @@ WidgetCommon.clearNode = function(node) {
 /**
  * This function creates either an object or an embed element in order to load an SVG
  * @param {String} url
- * @param {String, Integer, Float} width
- * @param {String, Integer, Float} height
- * @param {Function} eventListener
  * @param {HTMLElement} parent
+ * @param {String, Integer, Float} [width]
+ * @param {String, Integer, Float} [height]
+ * @param {Function} [eventListener]
  * @return {HTMLElement}
  */
-WidgetCommon.createSVG = function (url, parent /* optional */, width,height,eventListener) {
+WidgetCommon.createSVG = function (url, parent, /* optional */ width,height,eventListener) {
 	var thedoc = parent.ownerDocument;
 	
 	// Non standard behavior, set by svgweb
