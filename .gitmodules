@@ -1,0 +1,4 @@
+[submodule "bioVapor/ensembl-exist-module/eXist"]
+	path = bioVapor/ensembl-exist-module/eXist
+	url = https://github.com/eXist-db/exist.git
+	branch = develop
