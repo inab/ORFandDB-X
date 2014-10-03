@@ -1,0 +1,6 @@
+build
+*.log
+*.pyc
+
+.project
+.classpath
