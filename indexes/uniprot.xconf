@@ -4,16 +4,22 @@
 	<index xmlns:u="http://uniprot.org/uniprot">
 		<fulltext default="none" attributes="false" alphanum="false" />
 		
+		<!--
 		<create path="//u:accession" type="xs:string"/>
 		<create path="//u:name" type="xs:string"/>
 		<create path="//u:taxon" type="xs:string"/>
+		-->
 		<!-- Links to other pieces of information -->
+		<!--
 		<create path="//u:dbReference/@type" type="xs:string"/>
 		<create path="//u:dbReference/@id" type="xs:string"/>
 		<create path="//u:dbReference/u:property/@value" type="xs:string"/>
 		<create path="//u:dbReference/u:property/@type" type="xs:string"/>
+		-->
 		<!-- Links to uniprotkw -->
+		<!--
 		<create path="//u:keyword/@id" type="xs:string"/>
+		-->
 		
 		<!-- And QName indexes -->
 		<create qname="u:accession" type="xs:string"/>
